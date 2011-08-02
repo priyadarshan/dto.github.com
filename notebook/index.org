@@ -1,0 +1,55 @@
+#+TITLE: Home page of David T. O'Toole
+
+* About 
+
+file:../images/dto-xface-orange-big.png
+
+  My name is Dave and this is my website. I am a [[http://en.wikipedia.org/wiki/Free_software][free software
+  volunteer]], [[http://www.gnu.org/software/emacs][GNU Emacs user]], [[file:games.org][video game programmer]] and concerned
+  citizen of the United States.
+  
+  You can [[mailto:dto@ioforms.org][email me]]. I can also be reached as "dto" on Internet Relay
+  Chat, freenode channel #lispgames.
+  
+  I also maintain a [[http://blocky.io/blog/][Lisp games development blog.]]
+
+* Pages on this site
+
+ - [[file:games.org][Games page]], with screenshots and free downloads for my games. You
+   can play now on Windows, Mac OSX, or GNU/Linux.
+ - [[http://lispgamesdev.blogspot.com/2010/12/opinion-independence-and-indie.html][Independence and Indie-dependence]], an opinion essay about what I
+   consider to be ominous trends in independent game development.
+ - [[http://dto.github.com/notebook/apple.html][Thoughts on iOS games]], an opinion essay on Apple's iOS SDK
+   development terms. They've since been changed and I may write a
+   follow-up essay.
+ - My [[http://dto.github.com/notebook/lgdc10-postmortem.html][postmortem writeup]] for my entry into the [[http://dto.github.com/notebook/lgdc.html][2010 Lisp Game Design
+   Challenge]].
+ - [[file:orgtutorial.org][Orgmode Tutorial]]. A tutorial I wrote for [[http://www.orgmode.org/][org-mode]]. Available in
+   five languages!
+ - [[file:require-cl.org][An interactive guide to the GNU Emacs CL package]]. Unfinished
+   programing tutorial.
+ - [[file:blog-2008-01-14-1205.org][Why you should support ELPA]] --- An opinion article about the Emacs
+   Lisp Package Archive. This article is now obsolete because [[http://old.nabble.com/Package.el-merged-td28909865.html][the ELPA
+   package manager has been merged into GNU Emacs.]]
+ - [[file:blog-2008-01-15-1034.html][Book Review: Clarence Irving Lewis, "Mind and the World Order" (1929)]].
+
+* Links to other people and places
+
+  + [[http://lispgames.org][The Lisp Games Wiki]] maintained by the #lispgames community
+  + [[http://www.squeak.org][Squeak]], an alternate universe full of interesting people and programs
+  + [[http://www.emacswiki.org/][The EmacsWiki]] is an extensive community website for Emacs users and
+    developers. 
+  + [[http://www.ariband.com/][Ari Charbonneau]] is a friend and fellow recording artist.
+  + [[http://delysid.org/][Mario Lang]] is a fellow Emacs user who writes audio-related elisp
+    (among other things.)
+  + [[http://mwolson.org/web/WelcomePage.html][Michael Olson]] is a fellow Emacs developer who works on Muse (see
+    his site for details.)
+  + The mathematician [[http://angg.twu.net/][Eduardo Ochs]] taught me how to /really/ program a computer. 
+  + [[http://staff.science.uva.nl/~dominik/][Carsten Dominik]] is the author of [[file:OrgMode.org][OrgMode]], my favorite personal
+    organization manager software.
+  + [[http://www.zogotounga.net/comp/csoundx.html][Stéphane Rollandin]] writes software to control [[http://csounds.com][csound]] from Emacs.
+  + [[http://richip.dhs.org/~sachac/notebook/wiki/WelcomePage.php][Sacha Chua]] is a software developer and self-described tech
+    evangelist conducting research into [[http://en.wikipedia.org/wiki/Human-computer_interaction][human-computer interaction.]]
+  + [[http://en.wikipedia.org/wiki/Brian_Jonestown_Massacre][The Brian Jonestown Massacre]] are an awesome band.
+  + Ryan Yeske, who wrote [[http://www.nongnu.org/nethack-el/][nethack-el]]
+  + ME! I can be reached at [[mailto:dto@gnu.org][dto1138@gmail.org]]
