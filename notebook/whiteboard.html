@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>whiteboard</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:22:54 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">whiteboard</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">About </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+Whiteboard is an experimental toy for <a href="GnuEmacs.html">GNU Emacs</a>. It allows two remote
+emacs users to: 
+</p>
+<ul>
+<li>chat (similar to IRC)
+</li>
+<li>share files via <b>rsync</b> 
+</li>
+<li>share buffers for taking notes or developing code snippets. this
+      is like having a private lisppaste server. 
+</li>
+</ul>
+
+
+<p>
+  More features are planned. Please keep in mind, at this stage
+  Whiteboard is an immature and experimental program. There are
+  known bugs. <b>Use at your own risk</b>.
+</p>
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1">Screenshot </h3>
+<div class="outline-text-3" id="text-1-1">
+
+
+<p>
+<img src="../images/whiteboard.png"  alt="../images/whiteboard.png" />
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2">Download </h3>
+<div class="outline-text-3" id="text-1-2">
+
+
+<ul>
+<li><a href="../e/whiteboard.el">whiteboard.el</a>
+</li>
+</ul>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Tasks </h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="todo TODO"> TODO</span> Fix wb-message-remain falling below 0 on long messages </h3>
+<div class="outline-text-3" id="text-2-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="todo TODO"> TODO</span> Don't give silly errors when killing process already dead in wb-terminate </h3>
+<div class="outline-text-3" id="text-2-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="done DONE"> DONE</span> Also show messages in echo area </h3>
+<div class="outline-text-3" id="text-2-3">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-12 Fri 05:14</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="todo TODO"> TODO</span> Fix "nil has parted" </h3>
+<div class="outline-text-3" id="text-2-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="todo TODO"> TODO</span> Implement buffer to collect all buttons and URLs from session </h3>
+<div class="outline-text-3" id="text-2-5">
+
+<ul>
+<li>extra optional arg to wb-console-insert, makes it reflect to log buffer
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="todo TODO"> TODO</span> Implement line breaking like auto-fill-mode, with (window-width) </h3>
+<div class="outline-text-3" id="text-2-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="done DONE"> DONE</span> Use asynchronous process to download files </h3>
+<div class="outline-text-3" id="text-2-7">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-12 Fri 04:45</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-8" class="outline-3">
+<h3 id="sec-2-8"><span class="todo TODO"> TODO</span> Clean up and refactor code </h3>
+<div class="outline-text-3" id="text-2-8">
+
+
+</div>
+
+<div id="outline-container-2-8-1" class="outline-4">
+<h4 id="sec-2-8-1"><span class="todo TODO"> TODO</span> Split into 3 clean parts: networking, console, whiteboard </h4>
+<div class="outline-text-4" id="text-2-8-1">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-9" class="outline-3">
+<h3 id="sec-2-9"><span class="todo TODO"> TODO</span> Keybindings for share file/share buffer </h3>
+<div class="outline-text-3" id="text-2-9">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10" class="outline-3">
+<h3 id="sec-2-10"><span class="todo TODO"> TODO</span> Don't pop up buffers </h3>
+<div class="outline-text-3" id="text-2-10">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-11" class="outline-3">
+<h3 id="sec-2-11"><span class="todo TODO"> TODO</span> Prompt for client input </h3>
+<div class="outline-text-3" id="text-2-11">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-12" class="outline-3">
+<h3 id="sec-2-12"><span class="todo TODO"> TODO</span> Write an automatic "dired-share-file" </h3>
+<div class="outline-text-3" id="text-2-12">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-13" class="outline-3">
+<h3 id="sec-2-13"><span class="todo TODO"> TODO</span> Somehow highlight changes in wb buffer </h3>
+<div class="outline-text-3" id="text-2-13">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-14" class="outline-3">
+<h3 id="sec-2-14"><span class="done DONE"> DONE</span> Multiuser capability </h3>
+<div class="outline-text-3" id="text-2-14">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-11 Thu 21:47</span></span><br/>
+</p>
+</div>
+
+<div id="outline-container-2-14-1" class="outline-4">
+<h4 id="sec-2-14-1"><span class="done DONE"> DONE</span> Terminate properly when wb-terminate on server </h4>
+<div class="outline-text-4" id="text-2-14-1">
+
+<p>     <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-11 Thu 21:05</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-14-2" class="outline-4">
+<h4 id="sec-2-14-2"><span class="done DONE"> DONE</span> Notify all nodes when users join/depart </h4>
+<div class="outline-text-4" id="text-2-14-2">
+
+<p>     <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-11 Thu 21:02</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-14-3" class="outline-4">
+<h4 id="sec-2-14-3"><span class="done DONE"> DONE</span> Write user management functions </h4>
+<div class="outline-text-4" id="text-2-14-3">
+
+<p>     <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-11 Thu 18:51</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-14-4" class="outline-4">
+<h4 id="sec-2-14-4"><span class="done DONE"> DONE</span> Alter wb-message to send to everyone in case of server </h4>
+<div class="outline-text-4" id="text-2-14-4">
+
+<p>     <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-11 Thu 19:53</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-14-5" class="outline-4">
+<h4 id="sec-2-14-5"><span class="done DONE"> DONE</span> Alter file sharing to include IP of sharer in each request </h4>
+<div class="outline-text-4" id="text-2-14-5">
+
+<p>     <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-11 Thu 20:02</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-14-6" class="outline-4">
+<h4 id="sec-2-14-6"><span class="done DONE"> DONE</span> Alter all message sends to be more self-contained </h4>
+<div class="outline-text-4" id="text-2-14-6">
+
+<p>     <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-11 Thu 20:02</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-14-7" class="outline-4">
+<h4 id="sec-2-14-7"><span class="done DONE"> DONE</span> Alter wb-execute-plist to respond to new messages </h4>
+<div class="outline-text-4" id="text-2-14-7">
+
+<p>     <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-11 Thu 20:43</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-14-8" class="outline-4">
+<h4 id="sec-2-14-8"><span class="done DONE"> DONE</span> Write wb-reflect </h4>
+<div class="outline-text-4" id="text-2-14-8">
+
+<p>     <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-11 Thu 19:40</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-14-9" class="outline-4">
+<h4 id="sec-2-14-9"><span class="done DONE"> DONE</span> Alter wb-message to broadcast in case of server </h4>
+<div class="outline-text-4" id="text-2-14-9">
+
+<p>     <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-11 Thu 19:40</span></span><br/>
+</p></div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:22:54 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

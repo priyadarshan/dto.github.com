@@ -1,0 +1,35 @@
+#+title: THz: A computer role-playing sci-fi shooter game
+#+author: David T. O'Toole <dto1138@gmail.com>
+
+file:../images/thz-logo.png
+
+- [[http://www.youtube.com/watch?v=6AGInhs2gaM][Early mission with vulnerable hero and ship combat]]
+- [[http://www.youtube.com/watch?v=MJHxUrMuVUI][Video showing redesigned dual-analog control]]
+- [[https://github.com/dto/terahertz/raw/master/thz.org][Latest design/code document]]
+
+"THz" (Terahertz) is a sci-fi computer role-playing shooter game. The
+action takes place in a 2-D pixeled future in which you fly a
+transforming humanoid/jet suit in both exterior space and interior
+environments while firing projectile and/or energy weapons at enemies
+and simultaneously avoidzing their fire. The story is largely told
+through text, represented in the game as data files, emails, or voice
+communications with a non-player character. Gameplay is tied into the
+story with missions that require balancing combat with exploration and
+puzzle solving. Certain high-speed scrolling stages evoke the feel of
+an 80's Japanese shoot-em-up, and provide transport between different
+areas of the game world. The fully object-oriented environment enables
+varying gameplay in a persistent environment.
+
+This game requires a USB joystick with two (2) analog sticks and at
+least six (6) buttons (four triggers and two face buttons.) most
+common PC game pads will work, as will PS3 controllers (and PS2
+controllers with a PS2->USB adapter).
+
+ *THz Episode 1* is slated for release in Q1 2011. See
+  http://lispgamesdev.blogspot.com for dev diary and other updates!
+
+In the meantime you can check out [[file:games.org][my other games.]]
+
+Note: THz is a reboot of the [[file:void.org][Void Mission]] franchise, with redesigned
+gameplay elements but re-using the story, assets, and much of the
+code. See that page for some older videos and write-ups.

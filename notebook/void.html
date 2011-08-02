@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Void Mission: a sci-fi action roguelike game in Common Lisp</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:22:55 EDT"/>
+<meta name="author" content="David T. O'Toole <dto@gnu.org> <dto1138@gmail.com>"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Void Mission: a sci-fi action roguelike game in Common Lisp</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Overview </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+"Void Mission" is a sci-fi action roguelike divided into three
+episodes. The action takes place in a 2-D pixeled future in which you
+fly a transforming humanoid/jet suit in both exterior space and
+interior environments while firing projectile and/or energy weapons at
+enemies and simultaneously avoiding their fire. The story is largely
+told through text, represented in the game as data files, emails, or
+voice communications with a non-player character. Gameplay is tied
+into the story with missions that require balancing combat with
+exploration and puzzle solving.
+</p>
+<p>
+Void Mission's game play is that of a rogue-like with simplified
+controls. Only the four cardinal directions are available for movement
+and firing, and the player can only carry or use a few (i.e. between 1
+and 5) items at a time. The player also has fewer stats than in a
+typical roguelike, but various upgrades make sure that character
+development is still central.
+</p>
+<p>
+Void Mission is slated for FREE release on Windows, Mac OSX (Intel
+only), and GNU/Linux on August 10 2010.
+</p>
+<p>
+Please visit the game's <a href="http://www.indiedb.com/games/void-mission">IndieDB</a> page for updates during development.
+</p>
+<p>
+My <a href="games.html">games page</a> has links to my other games.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Screenshots and video </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+<img src="../images/void1.png"  alt="../images/void1.png" />
+<img src="../images/void2.png"  alt="../images/void2.png" />
+</p>
+<ul>
+<li>Opening story movie on YouTube: <a href="http://www.youtube.com/watch?v=DsNBCSa9Ils">http://www.youtube.com/watch?v=DsNBCSa9Ils</a>
+</li>
+<li>Gameplay video on YouTube: <a href="http://www.youtube.com/watch?v=JsEEcrV8Qc8">http://www.youtube.com/watch?v=JsEEcrV8Qc8</a> 
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Setting </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+It's 2061. If only there were enough endurium!
+</p>
+<p>
+It's been known for decades that Humanity's reach within the Milky Way
+is limited only by the supply of endurium, its rare and precious
+fuel. The energy crises of C.E. 2021 and C.E. 2027-2031 caused global
+economic, social, and environmental disruption, and with this
+disorganization came the concentration of wealth and power in the
+hands of the government and corporate elites.
+</p>
+<p>
+Early attempts at control and regulation of endurium met with initial
+success. The space-faring nations&mdash;Russia, China, India, Japan,
+Brazil, and the United States&mdash;along with the ESA (European Space
+Agency), could quite naturally claim endurium for themselves. But
+economies of scale and espionage in spaceflight technology eventually
+brought smaller deposits and endurium dust streams throughout the
+interstellar neighborhood within the reach of multinational
+corporations and various non-state actors. The largest of these formed
+what they called a "sovereign", open, and successful market in
+endurium, spaceflight technology, and various otherwise-controlled
+materials. The split between the Spacefaring Nations on the one hand,
+and the United Nations on the other, threatens to break into
+full-scale interstellar war; as Earth's environment continues to
+decay, the demand for endurium has reached a critical point.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Plot </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p> 
+A new high-powered telescope operated by Xiomacs Corporation detects a
+pattern of gas streamers radiating high in the ultraviolet, within a
+cavernous void in galactic space. Subsequent observations show that
+the streamers are emitted from a string of black holes. The
+scientists, seeing the pattern's obviously artificial nature, guess at
+a propulsion method being used to drive a spacecraft, and begin to
+look for something at the trail's leading edge. A year later one of
+the flare-ups is observed, and the calculations fall into place: the
+source of the black holes is an object about as massive as Jupiter,
+but much smaller and far more dense. And it has been accelerating for
+1.2 billion years by riding on streams of gas being ejected from the
+black holes at relativistic speeds. It is given the name DVO1, for
+Deep Void Object 1.
+</p></div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:22:55 EDT</p>
+<p class="author">Author: David T. O'Toole <dto@gnu.org> <dto1138@gmail.com></p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

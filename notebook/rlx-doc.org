@@ -1,0 +1,820 @@
+** *ACTIVE-WIDGETS*
+*** Documentation
+List of active widget objects. 
+These widgets receive input events and are rendered to the screen by
+the console. See also `send-event-to-widgets'.
+
+Do not set this variable directly from a module; instead, call
+`install-widgets'.
+** *BROWSER*
+** *CHOOSE-DIRECTION-MENU*
+** *COLORS*
+** *COMPASS-DIRECTIONS*
+*** Documentation
+List of keywords representing the eight compass directions, plus :here.
+** *COMPASS-OPPOSITES*
+*** Documentation
+Property list mapping direction keywords to their 180-degree
+opposites.
+** *DEFAULT-ACTION-POINTS*
+** *DEFAULT-FONT*
+** *DEFAULT-FRAME-HEIGHT*
+** *DEFAULT-FRAME-WIDTH*
+** *DEFAULT-MESSAGE-VERBOSITIES*
+** *DEFAULT-WORLD-AXIS-SIZE*
+** *DEFAULT-WORLD-Z-SIZE*
+** *EVENT-HANDLER-FUNCTION*
+*** Documentation
+Function to be called with keypress events. This function should
+accept an event list of the form
+
+  (STRING . MODIFIERS)
+
+where STRING is a string representing the key, and MODIFIERS is a list
+of key modifier symbols like :shift, :control, :alt, and so on.
+
+The modifier list is sorted; thus, events can be compared for
+equality with `equal' and used as hashtable keys.
+
+The default event handler is `send-event-to-widgets', which see. An
+XE2 game can use the widget framework to do its drawing and event
+handling, or override `*event-handler-function*' and do something
+else.
+** *FRAME-RATE*
+** *FULLSCREEN*
+** *GENERIC-JOYSTICK-MAPPING*
+** *GRAMMAR*
+*** Documentation
+The current context-free grammar used for sentence generation.
+This is an association list of the form:
+
+    ((VARIABLE >> EXPANSIONS)
+     (VARIABLE >> EXPANSIONS)
+     ...)
+
+Where EXPANSIONS is a list of alternatives, each of which may be
+either (1) single symbols or (2) a list of symbols, representing
+concatenation.
+** *INITIALIZATION-HOOK*
+** *JOYSTICK-MAPPING*
+** *MESSAGE-LOGGING*
+** *MESSAGE-SEND-SYMBOL-SUFFIX*
+** *MESSAGE-SENDER*
+** *MESSAGE-VERBOSITIES*
+*** Documentation
+Property list mapping message keywords to the integers from 1-3.
+A message outputs if its verbosity level is less than or equal to the
+narration window's verbosity level. Level 1 is normal gameplay output,
+while levels 2 and 3 offer increading debug information. Values of nil
+and t mean to never (and always, respectively) output, regardless of
+verbosity level.
+** *MODULE-DIRECTORIES*
+** *MODULE-WIDGETS*
+*** Documentation
+List of widget objects in the current module.
+** *NEXT-MODULE*
+** *PS3-JOYSTICK-MAPPING*
+** *QUITTING*
+** *RESOURCE-HANDLERS*
+*** Documentation
+A property list mapping resource type keywords to handler functions.
+Each function should accept one resource record, and return an
+object (possibly driver-dependent). When a resource is loaded (with
+`load-resource'), the appropriate handler is looked up, and invoked on
+the resource record.  The return value is stored in the OBJECT field
+of the record.
+** *RESOURCE-TABLE*
+*** Documentation
+A hash table mapping resource names to resource records. All loaded
+resources go in this one hash table.
+** *SCREEN-HEIGHT*
+*** Documentation
+The height (in pixels) of the game
+window. Set this in the game startup file.
+** *SCREEN-WIDTH*
+*** Documentation
+The width (in pixels) of the game
+window. Set this in the game startup file.
+** *SENDER*
+*** Documentation
+This variable is bound to the object (if any) to
+receive sent messages.
+** *STANDARD-CATEGORIES*
+** *STARTUP*
+** *TIMER-INTERVAL*
+*** Documentation
+Number of frames to wait before sending each timer event.
+** *UNIVERSE*
+** *USE-SOUND*
+** *USER-INIT-FILE-NAME*
+** *USER-KEYBOARD-LAYOUT*
+** *WINDOW-TITLE*
+** *WORLD*
+*** Documentation
+The current world object. Only one may be active at a time. See also
+worlds.lisp. Cells are free to send messages to `*world*' at
+any time, because it is always bound to the world containing the cell
+at the time the cell method is run.
+** *X11-COLOR-DATA*
+** *ZOOM-FACTOR*
+** =ASTERISK=
+** =BROWSER=
+** =CELL=
+** =DIRECTION-CHOOSER=
+** =ENVIRONMENT=
+** =EQUIPMENT=
+** =FORMATTER=
+** =GATEWAY=
+** =GRAY-ASTERISK=
+** =INVENTORY=
+** =LAUNCHPAD=
+** =MENU-ITEM=
+** =MINIMAP=
+** =MISSION=
+** =NARRATOR=
+** =PAGER-PROMPT=
+** =PAGER=
+** =PROMPT=
+** =SPRITE=
+** =STACK=
+** =TEXTBOX=
+** =UNIVERSE=
+** =VIEWPORT=
+** =WIDGET=
+** =WORLD=
+** ADD-HOOK
+*** Arguments
+(HOOK FUNC)
+*** Documentation
+Arrange for FUNC to be invoked whenever HOOK is triggered with
+`run-hook'. The function should have no arguments.
+** ADD-MESSAGE-VERBOSITIES
+*** Arguments
+(PLIST)
+** ADD-OVERLAY
+** BIND-KEY-TO-METHOD
+*** Arguments
+(P KEY MODIFIERS METHOD-KEYWORD)
+** BIND-KEY-TO-PROMPT-INSERTION
+*** Arguments
+(P KEY MODIFIERS &OPTIONAL (INSERTION KEY))
+** BROWSER
+** CLONE
+*** Arguments
+(PROTOTYPE &REST INITARGS)
+*** Documentation
+Create a new object from PROTOTYPE and pass INITARGS to the
+initializer. The new object is created with fields for which INITFORMS
+were specified (if any; see `define-prototype'); the INITFORMS are
+evaluated, then any applicable initializer is triggered.
+** COMPOSE-BLANK-FIELDS
+*** Arguments
+(DESCRIPTORS)
+** CREATE-IMAGE
+*** Arguments
+(WIDTH HEIGHT)
+*** Documentation
+Create a new XE2 image of size (* WIDTH HEIGHT).
+** DEFCELL
+*** Arguments
+(&REST ARGS)
+** DEFINE-METHOD
+*** Arguments
+(&REST ARGS)
+*** Documentation
+Define a new method.
+
+METHOD-NAME is a symbol naming the method.  PROTOTYPE-NAME is the name
+of the prototype you are defining a method for. This should be a
+symbol (without equals signs---see Prototype Names. ARGLIST is
+the argument list for the method. If METHOD-BODY begins with a string,
+this string becomes the documentation string for the method.
+
+Any DECLARE forms must appear as the first non-string sexp.
+
+The forms in METHOD-BODY are executed when the method is invoked.
+The hidden argument `self' may be referred to as needed within
+the method body; it is bound to the object upon which the method
+was invoked.
+** DEFINE-PROTOTYPE
+*** Arguments
+(&REST ARGS)
+*** Documentation
+Create a new object prototype (possibly based on another prototype).
+
+NAME should be a symbol naming the prototype. A special variable is
+created, with equals signs bracketing the name; this variable's value
+is the resulting prototype. For example, if your prototype is named
+`foo', the special variable will be named `=foo=', and you create
+objects with:
+
+ (clone =foo=)
+
+See also `clone'. 
+
+The second argument is a property list of options for the
+prototype. Valid keys are:
+
+ :DOCUMENTATION     The documentation string for this prototype.
+ :PARENT            The parent prototype from which the new prototype will 
+                    inherit fields. This form is evaluated.
+                     
+DECLARATION-FIELD-DESCRIPTORS should be a list, each entry of which is
+either a list of the form
+
+  (FIELD-NAME . OPTIONS)
+
+or, simply a symbol naming the field---a shorthand for declaring a
+field with that name and no options. See also
+`transform-declaration-field-descriptor'.
+
+OPTIONS is a property list of field options. Valid keys are:
+
+ :INITFORM          A form evaluated to initialize the field
+                    upon cloning. If :initform is not provided,
+                    the value is inherited from the PARENT.
+                    With ":initform nil", the field is initialized 
+                    with the value nil.
+ :DOCUMENTATION     Documentation string for the field.
+** DEFSPRITE
+*** Arguments
+(&REST ARGS)
+** DIRECTION-TO
+*** Arguments
+(R1 C1 R2 C2)
+*** Documentation
+Return general direction of the ray from R1,C1 to R2,C2.
+** DIRECTORY-IS-MODULE-P
+*** Arguments
+(DIR)
+*** Documentation
+Test whether a PAK index file exists in a directory.
+** DISABLE-HELD-KEYS
+** DISABLE-TIMER
+*** Documentation
+Disable timer events.
+** DISPATCH-EVENT
+*** Arguments
+(EVENT)
+*** Documentation
+Send EVENT to the handler function.
+** DISTANCE
+*** Arguments
+(X1 Y1 X2 Y2)
+*** Documentation
+Compute the distance between the points X1,Y1 and X2,Y2.
+** DO-CELLS
+*** Arguments
+(&REST ARGS)
+** DRAW-BOX
+*** Arguments
+(X Y WIDTH HEIGHT &KEY (STROKE-COLOR .white) (COLOR .black) DESTINATION)
+*** Documentation
+Draw a filled rectangle at (X Y) of size (* WIDTH HEIGHT).
+** DRAW-CIRCLE
+*** Arguments
+(X Y RADIUS &KEY (COLOR .white) DESTINATION)
+** DRAW-IMAGE
+*** Arguments
+(IMAGE X Y &KEY (DESTINATION *DEFAULT-SURFACE*))
+*** Documentation
+Draw the IMAGE at offset (X Y) on the image DESTINATION.
+The default destination is the main window.
+** DRAW-LINE
+*** Arguments
+(X0 Y0 X1 Y1 &KEY (COLOR .white) DESTINATION)
+** DRAW-PIXEL
+*** Arguments
+(X Y &KEY (COLOR .white) DESTINATION)
+** DRAW-RECTANGLE
+*** Arguments
+(X Y WIDTH HEIGHT &KEY (COLOR .white) DESTINATION)
+** DRAW-RESOURCE-IMAGE
+*** Arguments
+(NAME X Y &KEY (DESTINATION *DEFAULT-SURFACE*))
+*** Documentation
+Draw the image named by NAME at offset (X Y) on the image DESTINATION.
+The default destination is the main window.
+** DRAW-STRING-SHADED
+*** Arguments
+(STRING X Y &OPTIONAL (FOREGROUND .white) (BACKGROUND .black) &KEY DESTINATION
+        (FONT *DEFAULT-FONT*))
+** DRAW-STRING-SOLID
+*** Arguments
+(STRING X Y &KEY DESTINATION (FONT *DEFAULT-FONT*) (COLOR .white))
+** ENABLE-HELD-KEYS
+*** Arguments
+(DELAY INTERVAL)
+** ENABLE-TIMER
+*** Documentation
+Enable timer events. The next scheduled event will be the first sent.
+** EXPANSIONS
+*** Arguments
+(VARIABLE)
+** FIELD-OPTION-VALUE
+*** Arguments
+(FIELD OBJECT OPTION)
+*** Documentation
+Return the value of the OPTION for FIELD in OBJECT.
+** FIELD-OPTIONS
+*** Arguments
+(FIELD OBJECT)
+*** Documentation
+Obtain the options property list for FIELD in OBJECT.
+** FIELD-REFERENCE-P
+*** Arguments
+(FORM)
+*** Documentation
+Return non-nil if FORM is a symbol like <foo>.
+** FIELD-VALUE
+*** Arguments
+(FIELD OBJECT &OPTIONAL NOERROR)
+*** Documentation
+Return the value of FIELD in OBJECT.
+If the FIELD has no value in OBJECT, then the object's parent is also
+checked, and so on. If a value is found during these checks, it is
+returned. If a value cannot be found, an error of type `no-such-field'
+is signaled, unless NOERROR is non-nil; in that case,
+`*lookup-failure*' is returned. See also `has-field'.
+** FIND-ALL-MODULES
+** FIND-MODULE-PATH
+*** Arguments
+(MODULE-NAME)
+*** Documentation
+Search the `*module-directories*' path for a directory with the
+name MODULE-NAME. Returns the pathname if found, otherwise nil.
+** FIND-MODULES-IN-DIRECTORY
+*** Arguments
+(DIR)
+*** Documentation
+Search DIR for modules and return a list of their names.
+** FIND-RESOURCE
+*** Arguments
+(NAME &OPTIONAL NOERROR)
+*** Documentation
+Obtain the resource named NAME, performing any necessary loading
+and/or transformations. Unless NOERROR is non-nil, signal an error
+when NAME cannot be found.
+** FIND-RESOURCE-OBJECT
+*** Arguments
+(NAME)
+*** Documentation
+Obtain the resource object named NAME, or signal an error if not
+found.
+** FIND-RESOURCE-PROPERTY
+*** Arguments
+(RESOURCE-NAME PROPERTY)
+*** Documentation
+Read the value of PROPERTY from the resource RESOURCE-NAME.
+** FONT-HEIGHT
+*** Arguments
+(FONT)
+** FONT-TEXT-EXTENTS
+*** Arguments
+(STRING FONT)
+** FONT-WIDTH
+*** Arguments
+(FONT)
+** FORMATTED-STRING-HEIGHT
+*** Arguments
+(S)
+** FORMATTED-STRING-WIDTH
+*** Arguments
+(S)
+** GENERATE
+*** Arguments
+(PHRASE)
+*** Documentation
+Generate a random phrase using the grammar in `*grammar*'.
+** GENSEQ
+*** Arguments
+(&OPTIONAL (X 0))
+** GET-COLOR
+** GET-SOME-OBJECT-NAME
+*** Arguments
+(OB)
+** GOAL
+** HALT-MUSIC
+*** Arguments
+(FADE-MILLISECONDS)
+** HAS-FIELD
+*** Arguments
+(FIELD OBJECT)
+*** Documentation
+Return non-nil if FIELD has any value in OBJECT.
+** ICON-IMAGE
+*** Arguments
+(KEY)
+*** Documentation
+Return an icon image name for KEY.
+** ICON-RESOURCE
+*** Arguments
+(KEY)
+*** Documentation
+Return an icon resource for the key KEY.
+The standard GEAR icon is used when no other applicable icon can be
+found.
+** INDEX-MODULE
+*** Arguments
+(MODULE-NAME)
+*** Documentation
+Add all the resources from the module MODULE-NAME to the resource
+table.
+** INDEX-RESOURCE
+*** Arguments
+(RESOURCE)
+*** Documentation
+Add the RESOURCE's record to the resource table.
+If a record with that name already exists, it is replaced.  However,
+if the resource is an :alias, just the string name of the target
+resource is stored; see also `find-resource'.
+** INITIALIZE-COLORS
+*** Documentation
+Load the X11 color data into the resource table.
+** INITIALIZE-ENGINE
+** INITIALIZE-RESOURCE-TABLE
+** INSTALL-WIDGETS
+*** Arguments
+(&REST WIDGETS)
+*** Documentation
+User-level function for setting the active widget set. Note that
+XE2 may override the current widget set at any time for system menus
+and the like.
+** IS-ZOOMED-RESOURCE
+*** Arguments
+(RESOURCE)
+** LEFT-HAND-SIDE
+*** Arguments
+(RULE)
+** LOAD-FONT-RESOURCE
+*** Arguments
+(RESOURCE)
+** LOAD-IMAGE-RESOURCE
+*** Arguments
+(RESOURCE)
+** LOAD-LISP-RESOURCE
+*** Arguments
+(RESOURCE)
+** LOAD-MODULE
+*** Arguments
+(MODULE)
+** LOAD-RESOURCE
+*** Arguments
+(RESOURCE)
+*** Documentation
+Load the driver-dependent object of RESOURCE into the OBJECT field
+so that it can be fed to the console.
+** LOAD-USER-INIT-FILE
+** MAKE-EVENT
+*** Arguments
+(SDL-KEY SDL-MODS)
+*** Documentation
+Create a normalized event out of the SDL data SDL-KEY and SDL-MODS.
+** MAKE-FIELD-INITIALIZER
+*** Arguments
+(DESCRIPTOR)
+*** Documentation
+Create a setf statement that initializes a field.
+The initform is taken from DESCRIPTOR. If there is no initform
+specified, no setf statement is generated, because in this case the
+slot value is inherited.
+** MAKE-FIELD-INITIALIZER-BODY
+** MAKE-FORMATTED-STRING
+** MAKE-KEY-MODIFIER-SYMBOL
+*** Arguments
+(SDL-MOD)
+*** Documentation
+Translate from the SDL key modifier symbol SDL-MOD to our own
+key event symbols.
+** MAKE-KEY-STRING
+*** Arguments
+(SDL-KEY)
+*** Documentation
+Translate from :SDL-KEY-X to the string "X".
+** MAKE-KEYWORD
+*** Arguments
+(S)
+*** Documentation
+Make the symbol or string S into a keyword symbol.
+** MAKE-OBJECT
+** MAKE-QUEUE
+*** Arguments
+(&KEY ((HEAD DUM412) NIL) ((TAIL DUM413) NIL) ((COUNT DUM414) NIL)
+ ((MAX DUM415) NIL))
+** MAKE-SPECIAL-VARIABLE-NAME
+*** Arguments
+(S)
+*** Documentation
+Make the symbol S into a special variable name. This is used to
+make the names of the objects made with `define-prototype'.
+** MAKE-STAT
+*** Arguments
+(&KEY BASE MIN MAX DELTA UNIT)
+** MESSAGE
+*** Arguments
+(FORMAT-STRING &REST ARGS)
+*** Documentation
+Print a log message to the standard output.
+** MESSAGE-SYMBOL
+*** Arguments
+(STRING DELIMITER)
+** MIDPOINT
+*** Arguments
+(A B)
+** NO-SUCH-FIELD
+** NORMALIZE-EVENT
+*** Arguments
+(EVENT)
+*** Documentation
+Convert EVENT to a normal form suitable for `equal' comparisons.
+** NULL-PARENT
+** OBJECT
+*** Arguments
+(CONDITION)
+** OBJECT-ADDRESS-STRING
+*** Arguments
+(OB)
+** OBJECT-FIELDS
+*** Arguments
+(INSTANCE)
+** OBJECT-NAME
+*** Arguments
+(INSTANCE)
+** OBJECT-PARENT
+*** Arguments
+(INSTANCE)
+** ONE-OF
+*** Arguments
+(SET)
+** OPERATION-SYMBOL
+*** Arguments
+(STRING DELIMITER)
+** OPPOSITE-DIRECTION
+*** Arguments
+(DIRECTION)
+*** Documentation
+Return the direction keyword that is the opposite direction from
+DIRECTION.
+** OVERLAY
+** PERCENT-OF-TIME
+*** Arguments
+(&REST ARGS)
+** PLASMA-RECT
+** PLAY
+*** Arguments
+(&OPTIONAL (MODULE-NAME standard))
+** PLAY-MUSIC
+*** Arguments
+(MUSIC-NAME &REST ARGS)
+** PLAY-SAMPLE
+*** Arguments
+(SAMPLE-NAME &REST ARGS)
+** POLL-JOYSTICK-AXIS
+*** Arguments
+(AXIS)
+** QUEUE
+*** Arguments
+(ITEM Q)
+** QUEUE-COUNT
+** QUEUE-HEAD
+** QUEUE-MAX
+** QUEUE-MESSAGE
+*** Arguments
+(SENDER METHOD-KEY RECEIVER ARGS)
+*** Documentation
+Enter a message into the current `*message-queue*'.
+** QUEUE-TAIL
+** QUEUED-MESSAGES-P
+*** Documentation
+Return non-nil if there are queued messages.
+** QUIT
+*** Arguments
+(&OPTIONAL SHUTDOWN)
+** RANDOM-DIRECTION
+** READ-PAK
+*** Arguments
+(FILENAME)
+*** Documentation
+Return a list of resources from the PAK file FILENAME.
+** READ-SEXP-FROM-FILE
+*** Arguments
+(FILENAME)
+** RENDER-FORMATTED-LINE
+*** Arguments
+(LINE X Y &KEY DESTINATION (FONT *DEFAULT-FONT*))
+*** Documentation
+Render the formatted LINE at position X,Y on the image DESTINATION.
+Return the height of the rendered line.
+** RENDER-FORMATTED-PARAGRAPH
+** RENDER-FORMATTED-STRING
+*** Arguments
+(FORMATTED-STRING X Y &KEY (TEXT-OFFSET 0) DESTINATION)
+*** Documentation
+Render the FORMATTED-STRING to position X,Y on the image DESTINATION.
+If TEXT-OFFSET is provided, add that many pixels to the Y coordinate
+for rendered text in the line. (This is used to make text align with
+inline images that are larger than the text height---see also
+`render-formatted-line').
+** RENDER-PLASMA
+*** Arguments
+(HEIGHT WIDTH &KEY (GRAININESS 1.0) ARRAY)
+** RESET
+*** Arguments
+(&OPTIONAL (MODULE-NAME standard))
+** RESET-JOYSTICK
+** RESOURCE
+** RESOURCE-TO-PLIST
+*** Arguments
+(RES)
+*** Documentation
+Convert the resource record RES into a property list.
+
+This prepares it for printing as part of a PAK file.
+** RIGHT-HAND-SIDE
+*** Arguments
+(RULE)
+** ROLL
+*** Arguments
+(ROLLS &OPTIONAL (SIDES 6) (ADDS 0))
+*** Documentation
+Total ROLLS rolls of a SIDES-sided die, then add ADDS.
+So 2d6+2 would be (roll 2 6 2).
+** ROLL-UNDER
+*** Arguments
+(N SIDES)
+** RUN
+** RUN-HOOK
+*** Arguments
+(HOOK)
+*** Documentation
+Call all the functions in HOOK, in list order.
+** SEEK-MUSIC
+** SELF
+** SEND
+*** Arguments
+(SENDER METHOD OBJECT &REST ARGS)
+*** Documentation
+Invoke the method identified by the keyword METHOD on the OBJECT with ARGS.
+If the method is not found, attempt to forward the message. The SENDER
+argument is ignored for now.
+** SEND-EVENT-TO-WIDGETS
+*** Arguments
+(EVENT)
+*** Documentation
+Attempt to deliver EVENT to each of the *active-widgets*
+one at a time (in list order) until one of them is found to have a
+matching keybinding, in which case the keybinding's corresponding
+function is triggered. If none of the widgets have a matching
+keybinding, nothing happens, and this function returns nil.
+** SEND-QUEUE
+*** Arguments
+(SENDER METHOD-KEY OBJECT &REST ARGS)
+*** Documentation
+Queue a message. Returns nil.
+** SEND-SUPER
+** SET-BROWSER
+** SET-FIELD-OPTION-VALUE
+*** Arguments
+(FIELD OBJECT OPTION VALUE)
+*** Documentation
+Set the value of the OPTION for FIELD in OBJECT to VALUE.
+** SET-FIELD-OPTIONS
+*** Arguments
+(FIELD OBJECT OPTIONS)
+*** Documentation
+Set the options property list to OPTIONS for FIELD in OBJECT.
+** SET-FIELD-VALUE
+*** Arguments
+(FIELD OBJECT VALUE)
+*** Documentation
+Set OBJECT's FIELD to VALUE.
+The new value overrides any inherited value.
+** SET-FRAME-RATE
+*** Arguments
+(RATE)
+** SET-MESSAGE-VERBOSITIES
+*** Arguments
+(PLIST &OPTIONAL (INCLUDE-DEFAULT T))
+** SET-MUSIC-VOLUME
+*** Arguments
+(NUMBER)
+** SET-SCREEN-HEIGHT
+*** Arguments
+(HEIGHT)
+** SET-SCREEN-WIDTH
+*** Arguments
+(WIDTH)
+** SET-TIMER-INTERVAL
+*** Arguments
+(INTERVAL)
+** SHOW-WIDGETS
+*** Documentation
+Draw the active widgets to the screen.
+** SPLIT-STRING-ON-LINES
+*** Arguments
+(STRING)
+** STAT-VALUE
+** STEP-IN-DIRECTION
+*** Arguments
+(ROW COLUMN DIRECTION &OPTIONAL (N 1))
+*** Documentation
+Return the point ROW, COLUMN moved by n squares in DIRECTION.
+** SUBDIVIDE-RECT
+*** Arguments
+(R)
+*** Documentation
+Subdivide rectangle R into four rectangles joined at the
+center point of the original R, and return the list of four
+rectangles, or NIL if they would be smaller than one pixel.
+** TRACE-COLUMN
+*** Arguments
+(TRACE-FUNCTION COLUMN Y0 Y1)
+** TRACE-LINE
+*** Arguments
+(TRACE-FUNCTION X0 Y0 X1 Y1)
+*** Documentation
+Trace a line between X0,Y0 and X1,Y1.
+calling TRACE-FUNCTION at each point of the line.
+** TRACE-OCTAGON
+*** Arguments
+(TRACE-FUNCTION CENTER-ROW CENTER-COLUMN RADIUS &OPTIONAL THICKEN)
+*** Documentation
+Call TRACE-FUNCTION for each point on the octagon of radius RADIUS
+centered at row ROW, column COLUMN. When THICKEN is non-nil, thicken
+the diagonals of the rectangle in order to facilitate raycasting.
+It's an ugly hack, but it helps reduce artifacts.
+** TRACE-RECTANGLE
+*** Arguments
+(TRACE-FUNCTION ROW COLUMN HEIGHT WIDTH &OPTIONAL FILL)
+*** Documentation
+Call TRACE-FUNCTION for each point on the rectangle of HEIGHT and
+WIDTH with top left corner at ROW COLUMN. When FILL is non-nil, fill
+the rectangle.
+** TRACE-ROW
+*** Arguments
+(TRACE-FUNCTION ROW X0 X1)
+** TRANSFORM-DECLARATION-FIELD-DESCRIPTOR
+*** Arguments
+(D)
+*** Documentation
+Convert the declaration-field-descriptor D into a canonical field
+descriptor.
+
+The descriptor D must be either a symbol, in which case a field is
+defined with no options, or a list of the form:
+
+ (:FIELD-NAME . OPTIONS)
+
+Where OPTIONS is a property list of field options.
+
+The returned entry will be of the form:
+
+ (:FIELD-NAME OPTIONS) 
+
+and will be suitable for use with the functions that operate on field
+descriptors, and for inclusion in the association list
+<field-descriptors>.
+
+See also `define-prototype'.
+** TRANSFORM-FIELD-REFERENCE
+*** Arguments
+(REF)
+*** Documentation
+Change the symbol REF from <foo> to (field-value :foo self).
+** TRANSFORM-METHOD-BODY
+*** Arguments
+(BODY)
+*** Documentation
+Process the forms in BODY to transform field references.
+** TRANSFORM-TREE
+*** Arguments
+(TESTER TRANSFORMER TREE)
+** UNQUEUE
+*** Arguments
+(Q)
+** UNQUEUE-MESSAGE
+*** Documentation
+Remove the next message from the queue. The returned message is a
+list of the form (METHOD-KEY RECEIVER ARGS).
+** WHILE
+*** Arguments
+(&REST ARGS)
+** WITH-MESSAGE-QUEUE
+*** Arguments
+(&REST ARGS)
+*** Documentation
+Run the BODY forms, capturing any queued output messages to the
+message queue resulting from the evaluation of EXPR.
+** WITH-MESSAGE-SENDER
+** WORLD
+** WRITE-PAK
+*** Arguments
+(FILENAME RESOURCES)
+*** Documentation
+Write the RESOURCES to the PAK file FILENAME.
+** WRITE-SEXP-TO-FILE
+*** Arguments
+(FILENAME SEXP)
+** ZOOM-IMAGE
+*** Arguments
+(IMAGE FACTOR)

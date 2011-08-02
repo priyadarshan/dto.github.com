@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>XIOTANK: An audio roguelike puzzle game in Common Lisp</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:22:44 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">XIOTANK: An audio roguelike puzzle game in Common Lisp</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">About </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+XIOTANK is my <a href="http://www.roguetemple.com/7drl/">2010 7-Day Roguelike Challenge</a> entry.  The game is <b>NOW RELEASED AS OF Sunday, March 14 2010</b> (US Eastern Time) for Linux,
+with Windows and Mac OSX versions following soon after.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Screenshots </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left"><img src="../images/xiotank1.png"  alt="../images/xiotank1.png" /></td><td class="left">file:../images/xiotank2.png</td></tr>
+<tr><td class="left"><img src="../images/xiotank3.png"  alt="../images/xiotank3.png" /></td><td class="left">file:../images/xiotank4.png</td></tr>
+</tbody>
+</table>
+
+
+<p>
+See also <a href="http://youtube.com/dto1138">http://youtube.com/dto1138</a> for contest videos.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Download XIOTANK </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+XIOTANK 7DRL is released, for Microsoft Windows, Macintosh OSX (Intel),
+and GNU/Linux.
+</p>
+<p>
+Please visit the <a href="http://github.com/dto/xe2/downloads">downloads page</a> to choose the right file for your
+platform.
+</p>
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1">Notes on the downloads&mdash;PLEASE READ </h3>
+<div class="outline-text-3" id="text-3-1">
+
+
+
+</div>
+
+<div id="outline-container-3-1-1" class="outline-4">
+<h4 id="sec-3-1-1">Windows users: </h4>
+<div class="outline-text-4" id="text-3-1-1">
+
+
+<p>
+Right now there is no fancy installer, but you can still download and
+run the game with a few clicks.
+</p>
+<p>
+First, your browser will probably ask you whether to <b>Open</b> the
+download, or <b>Save</b> it to disk. <b>CHOOSE SAVE TO DISK</b> and put it
+wherever you want. If you are just trying out the game, you can put it
+on your Windows desktop.
+</p>
+<p>
+Second, <b>RIGHT-CLICK</b> the <code>XIOTANK-win32.zip</code> file and choose EXTRACT or EXPAND or UNZIP
+(this may vary depending on your version of Windows.) If it asks for a
+destination folder, choose the Desktop.
+</p>
+<p>
+Third and finally, <b>DOUBLE-CLICK</b> the <code>xiotank-win32</code> folder that
+should now be on the Desktop. The folder should open into an Explorer
+window. Scroll down to <b>XIOTANK.EXE</b> and double-click it. That's it!
+Sorry, we are working on improving the installer.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3-1-2" class="outline-4">
+<h4 id="sec-3-1-2">Mac OSX users: </h4>
+<div class="outline-text-4" id="text-3-1-2">
+
+
+<p>
+Use CONTROL-P to pause, as there is no "pause" key on the Mac.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3-1-3" class="outline-4">
+<h4 id="sec-3-1-3">Linux users: </h4>
+<div class="outline-text-4" id="text-3-1-3">
+
+
+<ol>
+<li>You need the libsdl, libsdl-mixer, libsdl-image, and libsdl-gfx
+      libraries installed via your distribution's package manager.
+
+</li>
+<li>If the game complains about <code>libsdl_gfx</code> not found, it will give
+      you the option at the command line to choose between several
+      restarts. Choose CONTINUE and it should work. 
+
+</li>
+<li><b>If you get errors about paths and configuration</b> when trying to
+      start up, see <a href="http://github.com/dto/xe2/blob/master/BINARY-README">these notes</a> for a fix. In particular, you can add
+      a line like:
+</li>
+</ol>
+
+
+<pre class="example">
+(setf xe2:*module-directories* '(#P"/home/dto/xe2/"))
+</pre>
+
+
+<p>
+      to a file called <code>.xe2rc</code> in your home directory. We are working
+      on fixing this bug.
+</p>
+<ol>
+<li><b>If you get no sound</b>, you may need to install the pulseaudio
+      version of SDL-MIXER from your distribution's package library.
+      This will replace the raw ALSA version of SDL-MIXER and fix the
+      problem. The package name you want on Ubuntu Karmic is 
+      <code>libsdl1.2debian-pulseaudio</code>
+
+</li>
+<li>If you still can't get any of the binaries running, or if there
+      is no binary for your system, see <a href="http://github.com/dto/xe2/blob/master/INSTALL">the developer's install guide</a>
+      for instructions on making your own binary.
+</li>
+</ol>
+
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Support </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<ul>
+<li>irc.freenode.org#lispgames
+</li>
+<li><a href="mailto:dto1138@gmail.com">email me</a>
+</li>
+</ul>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Future </h2>
+<div class="outline-text-2" id="text-5">
+
+
+
+<p>
+I have quite a few plans for improvements. Who knows!?
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">Overview </h2>
+<div class="outline-text-2" id="text-6">
+
+
+<p>
+In another world, digital audio phenomena war against one
+another. It's one pilot against the Noise Armada in the battle for
+dominance of Blue Space.
+</p>
+<p>
+You control a tank with 8-way movement and firing. The tank can fire
+sound waves in order to destroy enemies or activate objects. Each area
+is tuned to a given "tone cluster", and you must turn on oscillators
+to produce just the right tones in order to unlock gates. You are
+trying to create ordered tone signals, whereas the enemies try to
+create dissonance and even data corruption.
+</p>
+<p>
+Out of the mad chaos of fractured signals and white noise, you must
+restore ordered tones and steady beats. Objects respond to tones and
+beats, enabling puzzles to be solved.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7">Sound waves </h2>
+<div class="outline-text-2" id="text-7">
+
+
+<p>
+Sound waves are the primary means of attacking enemies and interacting
+with objects in the game. Press CONTROL (or ALT) along with a
+directional key in order to fire in the corresponding direction.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8">Tone clusters </h2>
+<div class="outline-text-2" id="text-8">
+
+
+<p>
+A tone cluster is a set of distinct musical notes, usually three or
+more. The key to solving each level is sounding all the correct tones
+(via Oscillators, see below.)  and silencing tones that are not part
+of the cluster. This will open gates that lead to the exit. However,
+activating non-cluster tones may be required during the solution of a
+puzzle.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9">Oscillators </h2>
+<div class="outline-text-2" id="text-9">
+
+
+<p>
+Oscillators are objects that generate a pure tone when hit with a
+sound wave. A second wave hit will toggle the tone off. Each
+oscillator is tuned to a specific note; this note is displayed
+onscreen while the oscillator is on, and the corresponding tone is
+heard.
+</p>
+<p>
+Since sound waves toggle oscillators, enemy activity and combat can
+disupt your plans.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10">Pulsators </h2>
+<div class="outline-text-2" id="text-10">
+
+
+<p>
+The pulsator establishes a beat. There is only one pulsator on any
+given level. Other objects respond to the beat. The pulsator can be
+toggled on and off by hitting it with sound waves.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11">Delays </h2>
+<div class="outline-text-2" id="text-11">
+
+
+<p>
+Delays are impassable wall objects which are nonetheless permeable to
+light waves&mdash;with a delay imposed. The pulsating beat causes any
+previous wave fired in to be released.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12">Turrets </h2>
+<div class="outline-text-2" id="text-12">
+
+
+<p>
+Turrets fire waves with the beat. These also turn ninety degrees
+clockwise when fired upon. Use these when continuous fire is required
+to activate an element (for example, Gate elements.)
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="todo TODO"> TODO</span> Gate </h2>
+<div class="outline-text-2" id="text-13">
+
+
+<p>
+The Gate element opens for a brief time when hit with a wave.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14">Fences </h2>
+<div class="outline-text-2" id="text-14">
+
+
+<p>
+Fences are data elements that project an electrified instakill wire
+into the room, possibly obstructing access to important stuff. Each
+fence is attuned to a particular note, and the fence goes down (or
+up!) when the note is sounded.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15">Shockers </h2>
+<div class="outline-text-2" id="text-15">
+
+
+<p>
+Shockers are creepy magenta square wave shooters. These tend to wander
+unless the player gets near, then they pursue and fire. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-16" class="outline-2">
+<h2 id="sec-16">Corruptors </h2>
+<div class="outline-text-2" id="text-16">
+
+
+<p>
+Corruptors navigate the level leaving digital audio corruption. This is instakill.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-17" class="outline-2">
+<h2 id="sec-17">Drones </h2>
+<div class="outline-text-2" id="text-17">
+
+
+<p>
+Drones are robotic brainlike entities who monitor hallways and spawn
+countless copies of other evil programs.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-18" class="outline-2">
+<h2 id="sec-18"><span class="todo TODO"> TODO</span> Particles </h2>
+<div class="outline-text-2" id="text-18">
+
+</div>
+
+</div>
+
+<div id="outline-container-19" class="outline-2">
+<h2 id="sec-19">Resonators </h2>
+<div class="outline-text-2" id="text-19">
+
+
+<p>
+Resonators emit light and energy when a corresponding tone is heard.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-20" class="outline-2">
+<h2 id="sec-20"><span class="todo TODO"> TODO</span> Trigger (activates adjacent objects) </h2>
+<div class="outline-text-2" id="text-20">
+
+</div>
+
+</div>
+
+<div id="outline-container-21" class="outline-2">
+<h2 id="sec-21">Exit </h2>
+<div class="outline-text-2" id="text-21">
+
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:22:44 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

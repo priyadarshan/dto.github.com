@@ -1,0 +1,9 @@
+* DONE Desktop menu
+* DONE Window movement
+* DONE Desktop icons are minimized apps
+* TODO System monitor
+* TODO Fullscreen mode
+* TODO Panel 
+* TODO SD Cards
+* TODO CD Ripping and Burning (simultaneously!)
+

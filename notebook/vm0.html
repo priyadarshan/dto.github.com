@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Void Mission Zero </title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:22:55 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Void Mission Zero </h1>
+
+
+<div id="outline-container-1" class="outline-3">
+<h3 id="sec-1">Overview </h3>
+<div class="outline-text-3" id="text-1">
+
+
+<p>
+Void Mission Zero is a sci-fi roguelike game written in Common
+Lisp. You play a lone agent infiltrating an automated droid factory
+in order to destroy the enemy robots within. To win the game, you
+must fight your way through the corridors and chambers of the
+factory, cutting through the countless robots infesting the site,
+and make your way to the reactor area. There you must destroy the
+cooling towers, which will cause the reactor to explode and destroy
+the factory.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-3">
+<h3 id="sec-2">Basic weaponry </h3>
+<div class="outline-text-3" id="text-2">
+
+
+<p>
+You begin the game armed with a rusty wrench; at some point you obtain
+a ranged particle gun. The particle gun needs batteries; these can be
+found randomly in supply crates, or taken from the smashed remains of
+robots. (Sometimes supply crates have evil robots in them, too, who'll
+jump out and surprise you.)
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-3">
+<h3 id="sec-3">Grenades </h3>
+<div class="outline-text-3" id="text-3">
+
+
+<p>
+There are also two types of grenades. First we have electromagnetic
+pulse (EMP) grenades, which damage and temporarily freeze robots (and
+you, if you're not careful!). On the other hand, there are
+conventional explosive grenades, which do more damage and have no
+freezing effect.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-3">
+<h3 id="sec-4">Perceptors </h3>
+<div class="outline-text-3" id="text-4">
+
+
+<p>
+Enemies include various Perceptors (floating spheroid eye-bots with
+shock probes). Red perceptors tend to seek the player even when far
+away, but purple perceptors wander around randomly until the player
+comes near. These are very dangerous to the player, and he must have a
+ranged weapon in order to deal with them effectively.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-3">
+<h3 id="sec-5">Rooks </h3>
+<div class="outline-text-3" id="text-5">
+
+
+<p>
+Rooks are large, slow, tank-like turrets-on-wheels. Their roof-mounted
+particle cannons are accurate and extremely deadly, but have two
+disadvantages.  First, they cannot target immediately adjacent
+squares, so the player can survive by getting close and attacking with
+a melee weapon. Second, the particle cannon is slow to recharge,
+allowing a shot only once every few turns. 
+</p>
+<p>
+Being in an open area with several rooks is a bad idea&mdash;they'll blow
+you away. Instead you must lure them one by one into corridors and
+fight in close range&mdash;or freeze the group with EMP grenades and blast
+away.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-3">
+<h3 id="sec-6">The Diskarmor </h3>
+<div class="outline-text-3" id="text-6">
+
+
+<p>
+The Diskarmor Industries Model 1008 is a semi-autonomous rolling robo
+unit. It can be thrown in one of the eight compass directions; upon
+colliding with anything, it will do a good amount of damage, and
+release shots. So you could throw it down a corridor and have it take
+out a few robots when it hits the wall at the end. The Diskarmor will
+return to its operator after throwing. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-3">
+<h3 id="sec-7">Other </h3>
+<div class="outline-text-3" id="text-7">
+
+
+<p>
+Two types of levels: Corridors (i.e. long, unidirectional strip-like
+levels with many distinct sections or rooms) and Chambers (sprawling
+mazes or arenas.)
+</p>
+<p>
+Player attributes are a bit simplified when compared with a typical
+roguelike. Strength, Dexterity, Intelligence, Constitution, Hit
+Points, Psi Points, etc.
+</p>
+<ul>
+<li>Eyesight (intelligence)
+</li>
+<li>Hacking (intelligence, dexterity)
+</li>
+<li>Research (intelligence)
+</li>
+<li>Close combat (strength, dexterity)
+</li>
+<li>Ranged combat (strength, dexterity)
+</li>
+<li>Stealth (dexterity, intelligence)
+</li>
+<li>Vehicles (dexterity)
+</li>
+<li>Medicine (intelligence) 
+</li>
+</ul>
+
+
+
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:22:55 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

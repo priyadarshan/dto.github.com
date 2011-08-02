@@ -1,0 +1,104 @@
+#+TITLE: XIOBEAT: An improvisational video dance engine
+
+* About
+
+XIOBEAT is a "video dance engine", at once both a rhythm game and a
+music creation tool, and suitable for solo freestyling and group
+performance. Between one and four players may use the keyboard, mouse,
+USB dance pads, or virtually any other standard USB controller for
+creating and improvisationally performing sounds. USB camera and
+microphone support are also planned---record your song/dance
+performances and share the videos online.
+
+file:../images/xiobeat-montage.png
+
+The spreadsheet-like step chart editor allows tying of musical and
+graphical events to particular dance moves in each song module;
+following the steps on the beat causes the corresponding events to be
+triggered. 
+
+Create, remix, and share XIOBEAT song modules with your own custom
+music, images, and choreography. Depending on the song module one can
+improvise and even create new music by riffing on the module's
+available dance moves and adding your own sounds and steps to the mix.
+
+XIOBEAT is written in Common Lisp and will be available for Windows,
+Mac, and Linux. XIOBEAT is free software and will be supported by
+commissions on hardware sales done through the site. A premium edition
+with extra content will also be sold, both separately and/or bundled with a
+compatible dance pad (or dance pad adaptor for people who already own
+PS2 compatible pads.)
+
+* Images and video links
+
+ - XIOBEAT dev journal at [[http://dtogameblog.blogspot.com/][my game blog.]]
+ - Basic demo video of Stomp mode: http://www.youtube.com/watch?v=q2b9dKlMaw4
+ - Concept trailer: http://www.youtube.com/watch?v=BTveUHQoyyc
+ - Editor UI video: http://www.youtube.com/watch?v=bdlfQERedQI
+ - Some shots of the editor:
+   + file:../images/xiobeat-gesture.png 
+   + file:../images/xiobeat-chart.png 
+ - Browse the repository: http://github.com/dto/xe2/tree/master/xiobeat/
+
+* Status
+
+Currently in alpha. The first beta release of XIOBEAT is slated for
+late November 2010 and will include support for USB dance pads and USB
+cameras. (Playstation 2 compatible dance pads can be used with a
+compatible USB adapter.) XIOBEAT is written in Common Lisp and will be
+free software. See http://dtogameblog.blogspot.com for updates.
+
+Future plans include USB camera support (this should be available
+in the beta), USB microphone support, and live video effects.
+Remix and share your creations, record your performances, etc.
+
+* Dance gesture input
+
+The diagram below gives the standard dance pad layout for
+XIOBEAT. Many generic USB and/or game console compatible dance pads
+are marked this way. (Some pads are printed with "back" instead of
+"select").
+
+: 
+:    select  start
+:    -------------
+:    |B  |^  |A  |
+:    |___|___|___|
+:    |<  |   |>  |
+:    |___|___|___|
+:    |Y  |v  |X  |
+:    |   |   |	 |
+:    -------------
+: 
+
+A 10-button dance pad is required (i.e. all four corners must be
+buttons, as well as the orthogonal arrows and select/start.)  Konami's
+soft home pads lack the lower corner buttons, so they won't be usable
+even with a USB adapter. Most generic dance pads will work just
+fine. (Pads for Pump It Up might not work.)
+
+The Y and X buttons operate as modifiers (i.e. "shift") keys that are
+held down with one foot while the other foot uses the arrows and other
+buttons to execute commands.
+
+* Gameplay modes
+
+** Stomp mode
+
+Move your feet to create sound in Stomp mode using any Ogg Vorbis or
+XM (Extended Module) format song as a backing track, and load any WAV
+sample into each of the 8 dance pad buttons to be triggered by foot
+stomps.
+
+** Track mode 
+
+With the more sophisticated track mode you can create, improvise,
+or follow dance routines using XIOBEAT's dance gesture input
+system. 
+
+** Puzzle mode
+
+Puzzle mode is as yet undescribed, but details will follow
+soon---try to imagine falling blocks with dance phrases on them.
+
+

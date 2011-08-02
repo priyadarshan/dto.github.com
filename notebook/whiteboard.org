@@ -1,0 +1,67 @@
+* About
+
+Whiteboard is an experimental toy for [[file:GnuEmacs.org][GNU Emacs]]. It allows two remote
+emacs users to: 
+    
+    - chat (similar to IRC)
+    - share files via *rsync* 
+    - share buffers for taking notes or developing code snippets. this
+      is like having a private lisppaste server. 
+
+  More features are planned. Please keep in mind, at this stage
+  Whiteboard is an immature and experimental program. There are
+  known bugs. *Use at your own risk*.
+
+** Screenshot
+
+file:../images/whiteboard.png
+
+
+** Download
+
+ - [[file:../e/whiteboard.el][whiteboard.el]]
+
+
+
+* Tasks
+
+  
+** TODO [#A] Fix wb-message-remain falling below 0 on long messages
+** TODO Don't give silly errors when killing process already dead in wb-terminate
+** DONE Also show messages in echo area
+   CLOSED: [2006-05-12 Fri 05:14]
+** TODO Fix "nil has parted"
+** TODO [#C] Implement buffer to collect all buttons and URLs from session
+   - extra optional arg to wb-console-insert, makes it reflect to log buffer
+** TODO [#B] Implement line breaking like auto-fill-mode, with (window-width)
+** DONE [#A] Use asynchronous process to download files
+   CLOSED: [2006-05-12 Fri 04:45]
+** TODO Clean up and refactor code
+*** TODO Split into 3 clean parts: networking, console, whiteboard
+
+** TODO Keybindings for share file/share buffer
+** TODO Don't pop up buffers
+** TODO [#C] Prompt for client input
+** TODO [#C] Write an automatic "dired-share-file"
+** TODO Somehow highlight changes in wb buffer
+
+** DONE Multiuser capability
+   CLOSED: [2006-05-11 Thu 21:47]
+*** DONE Terminate properly when wb-terminate on server
+    CLOSED: [2006-05-11 Thu 21:05]
+*** DONE Notify all nodes when users join/depart
+    CLOSED: [2006-05-11 Thu 21:02]
+*** DONE Write user management functions
+    CLOSED: [2006-05-11 Thu 18:51]
+*** DONE Alter wb-message to send to everyone in case of server
+    CLOSED: [2006-05-11 Thu 19:53]
+*** DONE Alter file sharing to include IP of sharer in each request
+    CLOSED: [2006-05-11 Thu 20:02]
+*** DONE Alter all message sends to be more self-contained
+    CLOSED: [2006-05-11 Thu 20:02]
+*** DONE Alter wb-execute-plist to respond to new messages
+    CLOSED: [2006-05-11 Thu 20:43]
+*** DONE Write wb-reflect
+    CLOSED: [2006-05-11 Thu 19:40]
+*** DONE Alter wb-message to broadcast in case of server
+    CLOSED: [2006-05-11 Thu 19:40]

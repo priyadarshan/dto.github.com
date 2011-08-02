@@ -1,0 +1,4 @@
+./configure --prefix=/usr --enable-jack=yes LIBS=-ljack CFLAGS=-DHAVE_LIBJACK
+
+
+/usr/bin/jackd -v -R -dalsa -r44100 -p256 -n2 -D -Chw:2 -Phw:2 -m -H -M

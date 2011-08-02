@@ -1,0 +1,80 @@
+#+TITLE: Void Mission Zero 
+
+** Overview
+
+Void Mission Zero is a sci-fi roguelike game written in Common
+Lisp. You play a lone agent infiltrating an automated droid factory
+in order to destroy the enemy robots within. To win the game, you
+must fight your way through the corridors and chambers of the
+factory, cutting through the countless robots infesting the site,
+and make your way to the reactor area. There you must destroy the
+cooling towers, which will cause the reactor to explode and destroy
+the factory.
+
+** Basic weaponry
+
+You begin the game armed with a rusty wrench; at some point you obtain
+a ranged particle gun. The particle gun needs batteries; these can be
+found randomly in supply crates, or taken from the smashed remains of
+robots. (Sometimes supply crates have evil robots in them, too, who'll
+jump out and surprise you.)
+
+** Grenades
+
+There are also two types of grenades. First we have electromagnetic
+pulse (EMP) grenades, which damage and temporarily freeze robots (and
+you, if you're not careful!). On the other hand, there are
+conventional explosive grenades, which do more damage and have no
+freezing effect.
+
+** Perceptors
+
+Enemies include various Perceptors (floating spheroid eye-bots with
+shock probes). Red perceptors tend to seek the player even when far
+away, but purple perceptors wander around randomly until the player
+comes near. These are very dangerous to the player, and he must have a
+ranged weapon in order to deal with them effectively.
+
+** Rooks
+
+Rooks are large, slow, tank-like turrets-on-wheels. Their roof-mounted
+particle cannons are accurate and extremely deadly, but have two
+disadvantages.  First, they cannot target immediately adjacent
+squares, so the player can survive by getting close and attacking with
+a melee weapon. Second, the particle cannon is slow to recharge,
+allowing a shot only once every few turns. 
+
+Being in an open area with several rooks is a bad idea---they'll blow
+you away. Instead you must lure them one by one into corridors and
+fight in close range---or freeze the group with EMP grenades and blast
+away.
+
+** The Diskarmor
+
+The Diskarmor Industries Model 1008 is a semi-autonomous rolling robo
+unit. It can be thrown in one of the eight compass directions; upon
+colliding with anything, it will do a good amount of damage, and
+release shots. So you could throw it down a corridor and have it take
+out a few robots when it hits the wall at the end. The Diskarmor will
+return to its operator after throwing. 
+
+** Other 
+
+Two types of levels: Corridors (i.e. long, unidirectional strip-like
+levels with many distinct sections or rooms) and Chambers (sprawling
+mazes or arenas.)
+
+Player attributes are a bit simplified when compared with a typical
+roguelike. Strength, Dexterity, Intelligence, Constitution, Hit
+Points, Psi Points, etc.
+
+ - Eyesight (intelligence)
+ - Hacking (intelligence, dexterity)
+ - Research (intelligence)
+ - Close combat (strength, dexterity)
+ - Ranged combat (strength, dexterity)
+ - Stealth (dexterity, intelligence)
+ - Vehicles (dexterity)
+ - Medicine (intelligence) 
+
+

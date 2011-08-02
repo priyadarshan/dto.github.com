@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>XE2: A 2D Common Lisp Game Engine</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:22:48 EDT"/>
+<meta name="author" content="David T. O'Toole <dto@gnu.org>"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">XE2: A 2D Common Lisp Game Engine</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">What is XE2? </a></li>
+<li><a href="#sec-2">What is Common Lisp? </a></li>
+<li><a href="#sec-3">What if I need help? </a></li>
+<li><a href="#sec-4">Features </a></li>
+<li><a href="#sec-5">Preparing your XE2 development environment </a></li>
+<li><a href="#sec-6">Introducing CLON </a>
+<ul>
+<li><a href="#sec-6-1">What is an object in CLON? </a></li>
+<li><a href="#sec-6-2">Defining objects </a></li>
+<li><a href="#sec-6-3">Defining objects that inherit behavior from a parent </a></li>
+<li><a href="#sec-6-4">Accessing fields </a></li>
+<li><a href="#sec-6-5">Cloning and initialization </a></li>
+<li><a href="#sec-6-6">Defining methods </a></li>
+<li><a href="#sec-6-7">Serializing objects </a></li>
+<li><a href="#sec-6-8">clon.el: Emacs editing support for CLON </a></li>
+<li><a href="#sec-6-9">Message queueing </a></li>
+<li><a href="#sec-6-10">Message forwarding </a></li>
+</ul>
+</li>
+<li><a href="#sec-7">Design overview </a>
+<ul>
+<li><a href="#sec-7-1">CLON </a></li>
+<li><a href="#sec-7-2">The console </a></li>
+<li><a href="#sec-7-3">Interactive graphical widgets </a></li>
+<li><a href="#sec-7-4">Cells </a></li>
+<li><a href="#sec-7-5">Worlds composed of cells </a></li>
+<li><a href="#sec-7-6">Math routines </a></li>
+<li><a href="#sec-7-7">Pathfinding </a></li>
+</ul>
+</li>
+<li><a href="#sec-8">A tiny example breakout game </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">What is XE2? </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+<img src="../images/xe2.png"  alt="../images/xe2.png" />
+</p>
+<p>
+XE2 is a <a href="http://en.wikipedia.org/wiki/Free_software">free-software</a> Common Lisp 2D game engine. It is implemented
+mostly in its own custom prototype-based object system, an extension
+to Common Lisp called CLON.
+</p>
+<p>
+CLON uses a message passing model, so instead of being limited to
+straight function calls, you can optionally queue up, process,
+redirect, and forward messages very freely. Because there are no
+classes to restrict what methods may be invoked where, and because
+most of the XE2 engine's functionality is implemented in the same
+language as the gameworld and its behaviors, I've found that
+programming games with CLON has a bit of the "plug anything into
+anything" flavor that people attribute to "entity systems". However,
+CLON is not an entity system, and is rather more Smalltalk-inspired.
+Instead of class inheritance relationships determining control flow,
+objects can discriminate amongst themselves by categorizing each other
+with "tags" such as "actor" "opaque" "obstacle" "enemy" and so on.
+</p>
+<p>
+CLON and XE2 are presently in beta, but <a href="http://dto.github.com/notebook/games.html">several working games</a> have
+been delivered for the PC platform (Win/Mac/Linux). I'm currently
+making improvements in ease of use and adding developer documentation
+to prepare for a 1.0 release of XE2. I am also working on an
+interactive game creator/editor called <a href="xiomacs.html">XIOMACS</a>.
+</p>
+<ul>
+<li><a href="http://github.com/dto/xe2">XE2 Github repository</a>
+</li>
+<li><a href="http://github.com/dto/clon">CLON Github repository</a>
+</li>
+<li><a href="http://dto.github.com/notebook/games.html">Information about my games made with XE2</a>
+</li>
+<li><a href="http://dto.github.com/notebook/xe2-reference.html">XE2 developer's reference</a>. Needs updating.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">What is Common Lisp? </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+Common Lisp is the underlying programming language used to implement
+CLON, XE2, and any game for it.
+</p>
+<p>
+The <a href="http://en.wikipedia.org/wiki/Common_Lisp">wikipedia page on Common Lisp</a> has an overview, code examples, and
+links. Browsing through the examples there will familiarize you with
+the syntax, which will help a lot in getting started with XE2. Here is
+an <a href="http://abhishek.geek.nz/nanoc/docs/features-of-common-lisp/">interesting Common Lisp feature list</a>. There are also many <a href="http://www.lispmachine.net/">free lisp books</a> and other educational resources. Another option is <a href="http://www.cliki.net/Education">this cliki page</a> about getting started with Common Lisp.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">What if I need help? </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+If the links above and the XE2 source comments are not enough, or if
+you encounter errors, I will be happy to answer questions via <a href="mailto:dto1138@gmail.com">email</a>
+and interactively on IRC. Our community's IRC channel is at
+irc.freenode.net, and the channel name is #lispgames. I go by the
+hacker alias "DTO" there. (Actually it's just my initials.)
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Features </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+The XE2 game engine supports layered, tile-based 2D worlds with
+interacting, independent agents called "cells". These cells' behaviors
+are defined with CLON (Common Lisp Object Network) which adds
+prototype-oriented objects to Common Lisp with a custom
+syntax. Sprites are also supported, and these may collide with each
+other and with grid cell objects. Sprites may be arbitrarily sized and
+placed, whereas grid cells are uniform in size and are always
+grid-aligned. Both turn-based and realtime play are supported. XE2
+uses LISPBUILDER-SDL for cross-platform graphics and audio; games
+built with XE2 can be distributed as binaries for GNU/Linux, Mac OSX,
+and Microsoft Windows. (For an example, see <a href="http://dto.github.com/notebook/xong.html">XONG</a>.)  Other features
+include:
+</p>
+<ul>
+<li>Basic procedural content tools, including turtle graphics, generating sentences from context-free grammars, and plasma noise.
+</li>
+<li>Map editor (working, but in progress: see <a href="http://www.youtube.com/watch?vE5KmZxQxiJ0">this video</a> for a demo.)
+</li>
+<li>GUI widgets: formatted text output, simple text editing, an extensible interactive command prompt, and more.
+</li>
+<li>Ray-casting based lighting effects and line-of-sight.
+</li>
+<li>A-star pathfinding.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Preparing your XE2 development environment </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+First you need an operating system. Because XE2 runs on Linux, Mac,
+and Windows, you can develop games on any of those platforms. (All the
+development tools and libraries mentioned below are cross-platform and free).
+</p><ul>
+<li>GNU Emacs is strongly recommended for developing XE2 games, because
+   of Emacs' excellent Lisp editing support, and also because SLIME
+   allows you to develop and debug interactively from within the
+   editor.
+</li>
+<li>SLIME (Superior Lisp Interaction Mode for Emacs)
+</li>
+<li>clon.el &mdash; a short Emacs Lisp program that adds support for CLON
+   syntax editing to Emacs. This is included with CLON.
+</li>
+<li>SBCL (Steel Bank Common Lisp) is recommended.
+</li>
+<li>LISPBUILDER-SDL and its prerequisites are required.
+</li>
+<li>SDL, SDL-IMAGE, SDL-MIXER, SDL-GFX are required. You only need to
+   worry about this if you use Linux.
+</li>
+<li>GIMP, Audacity, Ardour, and so on can be used to edit audio and
+   image files used as game resources.
+</li>
+</ul>
+
+
+<p>
+Visit the repository to see the latest <a href="http://github.com/dto/xe2/tree/master/INSTALL">installation instructions</a> for
+getting started with LISPBUILDER-SDL, CLON, and XE2. Installing GNU
+Emacs, SLIME, or the other programs mentioned above is beyond the
+scope of this document, but most of them will have downloads available
+on their websites.
+</p>
+<p>
+In the future I would like to be able to deliver pre-made XE2
+development kits, downloadable for each platform. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">Introducing CLON </h2>
+<div class="outline-text-2" id="text-6">
+
+
+<p>
+CLON stands for Common Lisp Object Network. CLON is a prototype-based
+object system for Common Lisp. It is different from CLOS in several
+important ways:
+</p><ul>
+<li>CLON is prototype-based, not class-based. A prototype is a template
+   object from which other objects are "cloned".
+</li>
+<li>Method invocation happens via message-passing, not generic
+   functions; messages are conceptually different from synchronous
+   function calls and may be freely queued, forwarded, and filtered.
+</li>
+<li>Built-in support for serialization.
+</li>
+<li>Simple and small: as of August 2010, clon.lisp contains just over 1,000 lines
+   of code and commentary.
+</li>
+<li>Special syntax support for message sending:
+</li>
+</ul>
+
+
+<pre class="example">
+  (/method-name object arg1 arg2 ...)
+</pre>
+
+
+<p>
+   and for accessing fields (i.e. "slots" in CLOS terminology):
+</p>
+<pre class="example">
+  (setf &lt;field-name&gt; value)
+</pre>
+
+
+
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1">What is an object in CLON? </h3>
+<div class="outline-text-3" id="text-6-1">
+
+<p>A CLON object consists of a set of fields (keyword/value pairs),
+and optionally: 
+</p><ul>
+<li>a name (usually a symbol naming a special variable)
+</li>
+<li>a link to a parent object from which this object delegates slot lookups
+</li>
+</ul>
+
+<p><a href="../clon/clon.html#Object_data_structure">See also clon.lisp, "Object data structure"</a>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2">Defining objects </h3>
+<div class="outline-text-3" id="text-6-2">
+
+
+<p>
+First we must define a prototype and name its fields:
+</p>
+<pre class="example">
+(define-prototype rectangle ()
+  x y width height)
+</pre>
+
+
+<p>
+<a href="../clon/clon.html#Defining_prototypes">See also clon.lisp, "Defining prototypes"</a>
+</p>
+<p>
+We could also have provided initialization forms and documentation strings:
+</p>
+<pre class="example">
+(define-prototype rectangle ()
+  (x :initform 0 
+     :documentation "The x-coordinate of the rectangle's top-left corner.")
+  (y :initform 0 
+     :documentation "The y-coordinate of the rectangle's top-left corner.")
+  (width :documentation "The width of the rectangle.")
+  (height :documentation "The height of the rectangle."))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6-3" class="outline-3">
+<h3 id="sec-6-3">Defining objects that inherit behavior from a parent </h3>
+<div class="outline-text-3" id="text-6-3">
+
+
+<p>
+And if there were a Shape prototype that we would like to use as a
+template for Rectangle, we might have written:
+</p>
+<pre class="example">
+(define-prototype rectangle (:parent =shape=)
+  (x :initform 0 
+     :documentation "The x-coordinate of the rectangle's top-left corner.")
+  (y :initform 0 
+     :documentation "The y-coordinate of the rectangle's top-left corner.")
+  (width :documentation "The width of the rectangle.")
+  (height :documentation "The height of the rectangle."))
+</pre>
+
+
+<p>
+Notice the equals signs surrounding the parent object's name; all
+objects made with define-prototype are accessible via special
+variables with such names.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6-4" class="outline-3">
+<h3 id="sec-6-4">Accessing fields </h3>
+<div class="outline-text-3" id="text-6-4">
+
+
+<p>
+Field accesses can be written with the angle brackets; this
+works both for reading and for writing, so long as you use =setf= for
+the latter. 
+</p>
+<p>
+You can also bind fields to variables, using the macro WITH-FIELDS. In
+this way you can refer to fields like ordinary variables, and these
+work with SETF as place-forms:
+</p>
+<pre class="example">
+(define-method close browser ()
+  (with-fields (address tabs recently-closed) self
+    (let ((tab (pop tabs)))
+      (setf address nil)
+      (push (tab-address tab) recently-closed))))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6-5" class="outline-3">
+<h3 id="sec-6-5">Cloning and initialization </h3>
+<div class="outline-text-3" id="text-6-5">
+
+
+<p>
+The function CLONE is used to create new objects from these
+prototypes. Now we write an initializer, which is passed any creation
+arguments at the time of cloning:
+</p>
+<pre class="example">
+(define-method initialize rectangle (&amp;key width height)
+  (setf &lt;width&gt; width)
+  (setf &lt;height&gt; height))
+</pre>
+
+
+<p>
+(This may seem like overkill in the small example, but is very useful
+when you refer to a field many times in a method.)
+</p>
+<p>
+(All these ways of accessing fields are frontends for the functions
+FIELD-VALUE and SET-FIELD-VALUE, but using these is not normally
+necessary. )
+</p>
+<pre class="example">
+(define-method initialize rectangle (&amp;key width0 height0)
+  (with-fields (width height) self
+    (setf width width0)
+    (setf height height0)))
+</pre>
+
+
+<p>
+Now when you say:
+</p>
+<pre class="example">
+(clone =rectangle= :width 5 :height 12)
+</pre>
+
+
+<p>
+The rectangle's initializer method is invoked with those arguments,
+and a rectangle of the correct height and width is created.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6-6" class="outline-3">
+<h3 id="sec-6-6">Defining methods </h3>
+<div class="outline-text-3" id="text-6-6">
+
+
+<p>
+Now we define a few methods:
+</p>
+<pre class="example">
+(define-method area rectangle ()
+  (* &lt;width&gt; &lt;height&gt;))
+
+(define-method print rectangle (&amp;optional (stream t))
+  (format stream "height: ~A width: ~A area: ~A"
+        &lt;height&gt; &lt;width&gt; 
+        (/area self)))
+</pre>
+
+
+<p>
+And invoke them with the aforementioned special notation:
+</p>
+<pre class="example">
+(defvar rect (clone =rectangle= :width 10 :height 8))
+(/print rect)
+</pre>
+
+
+<p>
+The result: 
+</p>
+<pre class="example">
+"height: 8 width: 10 area: 80"
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6-7" class="outline-3">
+<h3 id="sec-6-7">Serializing objects </h3>
+<div class="outline-text-3" id="text-6-7">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6-8" class="outline-3">
+<h3 id="sec-6-8">clon.el: Emacs editing support for CLON </h3>
+<div class="outline-text-3" id="text-6-8">
+
+<p>CLON includes a small Emacs Lisp program that adds optional support
+for CLON syntax, complete with fontification. 
+To set up clon.el, add the following to your Emacs initialization file:
+</p><pre class="example">
+(add-to-list 'load-path "~/clon") ;; Change this to where you installed CLON
+(require 'clon)
+(add-hook 'lisp-mode-hook #'clon-do-font-lock)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6-9" class="outline-3">
+<h3 id="sec-6-9">Message queueing </h3>
+<div class="outline-text-3" id="text-6-9">
+
+<p>CLON also supports a concept called message queueing. When there is an
+active message queue, messages may be entered into the queue instead
+of directly invoking a method:
+</p><pre class="example">
+[queue&gt;&gt;render widget]
+[queue&gt;&gt;attack self :north]
+</pre>
+
+<p>The sender, receiver, method name, and arguments are all recorded in
+the queue. The developer can then filter or process them before
+sending.
+<a href="../clon/clon.html#Message_queueing">See also clon.lisp, "Message queueing"</a>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-10" class="outline-3">
+<h3 id="sec-6-10">Message forwarding </h3>
+<div class="outline-text-3" id="text-6-10">
+
+<p>And finally, I will mention message forwarding, which handles the case
+that an object has no handler for a particular method. This is akin to
+<a href="http://en.wikipedia.org/wiki/Smalltalk">Smalltalk's</a> "doesNotUnderstand" concept.
+<a href="../clon/clon.html#Message_forwarding">See also clon.lisp, "Message forwarding"</a>
+</p>
+<pre class="example">
+(define-method forward browser (method &amp;rest args)
+  (let ((tab (first &lt;tabs&gt;)))
+    (apply #'send self method tab args)))
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7">Design overview </h2>
+<div class="outline-text-2" id="text-7">
+
+
+<p>
+In this section we take a brief tour of the main areas of
+functionality from a design perspective. After that, we will delve
+into API details from a programmer's point of view. 
+</p>
+</div>
+
+<div id="outline-container-7-1" class="outline-3">
+<h3 id="sec-7-1">CLON </h3>
+<div class="outline-text-3" id="text-7-1">
+
+<p>CLON is an object system designed especially for games. It uses
+prototypes instead of classes, and has built-in support for
+serialization. Messages (i.e. method invocations) can be queued and
+pre-processed before sending to their recipients. Message forwarding
+(i.e. doesNotUnderstand) is also supported.
+See also <a href="http://github.com/dto/clon/blob/master/clon.lisp">clon.lisp</a>.
+</p></div>
+
+</div>
+
+<div id="outline-container-7-2" class="outline-3">
+<h3 id="sec-7-2">The console </h3>
+<div class="outline-text-3" id="text-7-2">
+
+<p>The "console" is an imaginary video game machine whose native language
+is Common Lisp. XE2 games are implemented as "modules" that plug in to
+the system, akin to old cartridges or tapes. All services of the
+engine (opening the screen, drawing text and images, playing sounds,
+joystick input) are provided here with a platform-neutral Common Lisp
+interface. Currently the console uses LISPBUILDER-SDL as a
+backend, but other backends are possible.
+See also <a href="http://github.com/dto/xe2/blob/master/console.lisp">console.lisp</a>.
+</p></div>
+
+</div>
+
+<div id="outline-container-7-3" class="outline-3">
+<h3 id="sec-7-3">Interactive graphical widgets </h3>
+<div class="outline-text-3" id="text-7-3">
+
+<p>Widgets are CLON graphical user interface objects. The console is
+designed to draw a set of "active widgets" to the screen for each
+video frame. The console also delivers event data to these
+widgets. Events are things like keystrokes, joystick buttons, timers,
+or mouse clicks. The keybinding system (where events are mapped to
+responses) draws inspiration from Emacs.
+Also included in <a href="http://github.com/dto/xe2/blob/master/widgets.lisp">widgets.lisp</a>:
+</p><ul>
+<li>basic layout widgets 
+</li>
+<li>an interactive command prompt 
+</li>
+<li>an Emacs-like formatter with fontification and inline images
+</li>
+<li>scrolling text box widget
+</li>
+<li>a "pager" to switch between different active widget layouts using hotkeys.
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-7-4" class="outline-3">
+<h3 id="sec-7-4">Cells </h3>
+<div class="outline-text-3" id="text-7-4">
+
+<p>"Cells" are interacting CLON objects. Each cell represents some
+in-game entity; player characters, enemies, weapons, items, walls and
+floors are all different types of cells. Game play occurs in a
+three-dimensional grid of cells called a World (see below).
+Cells may be stacked along the z-axis, and may also contain other
+cells. Cells interact by sending messages to one another and to other
+objects in the environment; these messages are queued and processed by
+the world for delivery to their recipients.
+In <a href="http://github.com/dto/xe2/blob/master/cells.lisp">cells.lisp</a>
+you will find some basic roguelike logic built into cells.
+</p><ul>
+<li>Basic features like name, description, and discovery.
+</li>
+<li>Unified container, inventory, and equipment system.
+</li>
+<li>Cells have an optional weight in kilograms, and the calculation
+    recursively includes containers and equipment.
+</li>
+<li>The "action points" system allocates game turns to different
+    cells. 
+</li>
+<li>Basic melee and ranged combat support.
+</li>
+<li>Equipment slot system (i.e. "paper doll") not restricted to humanoid actors.
+</li>
+<li>"Proxying", a feature used to implement drivable vehicles and/or demonic possession.
+</li>
+<li>"Stats", for numeric-valued attributes susceptible to temporary
+    and permanent effects (i.e. stat increases and drains, or
+    encumbrance). Also supports setting minimum and maximum values,
+    and keeping track of units (meters, kilograms.)
+</li>
+<li>"Categories" allow arbitrary tagging of objects, with some
+    categories having special interpretation by the engine.
+</li>
+</ul>
+
+<p>These are in effect a basic set of roleplaying rules or "physics". By
+defining new prototypes based on cells, you can change the rules and
+run the game the way you want.
+</p>
+<ul>
+<li>/NOTE: Some of the game logic described above is being factored out into an optional module./
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7-5" class="outline-3">
+<h3 id="sec-7-5">Worlds composed of cells </h3>
+<div class="outline-text-3" id="text-7-5">
+
+<p>A World object ties together all the elements of XE2 into a playable
+situation. A World is a 2.5D grid of interacting cells. This object
+performs the following tasks:
+</p><ul>
+<li>Keeps track of a single player and delivers command messages to the player cell
+</li>
+<li>Time and turns for player and CPU (the "Action Points system")
+</li>
+<li>Lighting and sound propagation
+</li>
+<li>Generating the map and placing cells on maps.
+</li>
+<li>Queueing and processing messages 
+</li>
+</ul>
+
+<p>There are also Universe objects composed of interlinked worlds.
+See also <a href="http://github.com/dto/xe2/blob/master/worlds.lisp">worlds.lisp</a>.
+</p></div>
+
+</div>
+
+<div id="outline-container-7-6" class="outline-3">
+<h3 id="sec-7-6">Math routines </h3>
+<div class="outline-text-3" id="text-7-6">
+
+<ul>
+<li>Basic dice rolls
+</li>
+<li>Distance, compass directions
+</li>
+<li>Drawing shapes made of cells
+</li>
+<li>Bresenham's line algorithm
+</li>
+<li>Random midpoint displacement "plasma"
+</li>
+</ul>
+
+<p> See also <a href="http://github.com/dto/xe2/blob/master/math.lisp">math.lisp.</a>
+</p></div>
+
+</div>
+
+<div id="outline-container-7-7" class="outline-3">
+<h3 id="sec-7-7">Pathfinding </h3>
+<div class="outline-text-3" id="text-7-7">
+
+<p>Not yet fully ported. See <a href="http://github.com/dto/xe2/blob/master/path.lisp">path.lisp.</a>
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8">A tiny example breakout game </h2>
+<div class="outline-text-2" id="text-8">
+
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:22:48 EDT</p>
+<p class="author">Author: David T. O'Toole <dto@gnu.org></p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

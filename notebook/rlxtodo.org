@@ -1,0 +1,169 @@
+#+TITLE: RLX Project TODO list
+#+AUTHOR: David O'Toole <dto@gnu.org>
+
+* TODO Example RLX game
+
+** Turn-based with abstract pseudo-ascii glyphs
+** Move and shoot in any of 8 directions
+** Loosely defined maze with different color areas
+** Single player is a green square
+** Enemies are red triangles and blue diamonds etc
+** Yellow/orange diamonds are energy crystals
+** Blue tanks are oxygen
+** Blue guns are ammo
+** Ammunition is limited --- take care with each shot
+** Message area
+** Different enemies have different movements and attacks
+** Dark blue background, cyan walls
+** Heart beat sound
+** life, oxygen and energy meters with cool chunky E O L letters next to them
+
+* Gameplay redesign principles
+
+ - Reduce workload by refitting the game design to already written code.
+ - Implement static missions and campaigns first, and get something
+   playable sooner. 
+ - Implement cooler dynamic procedural generation stuff later. 
+
+* Gameplay design
+
+Void Mission is a "mech sim RPG" for Windows, Macintosh, and GNU/Linux.
+
+** Assemble and pilot a mech composed of interchangeable parts.
+*** Core
+*** Head
+*** Arms
+*** Legs
+*** Generator
+*** Radiator
+*** Booster
+*** Right Arm Unit
+*** Left Arm Unit
+*** Right Back Unit
+*** Left Back Unit
+*** Fire Control System
+*** Radar
+*** Extension
+** Buy and sell parts, ammunition
+** Profit-and-loss after each sortie
+** Turn-based action in a 16x16 tile-based world... true-color + transparency
+** Radar display in top-right corner. May or may not also display map contours (depends on equipped part)
+** Different locations and planets, each with unique missions
+** A balance of ranged combat and close-quarters melee
+** Mission-based gameplay, with missions arranged into story-oriented campaigns.
+** Users can create new missions, parts, enemies, mods, music/textures
+** Boosting allows your mech to move very quickly for a short period (determined by generator/radiator etc)
+** Parts and actions have heat ratings, you must manage environmental and mech-generated heat
+** Radar jamming
+
+** Variety of gameplay styles depending on mission and parts equipped
+*** Shooter
+*** Arena Duel
+*** Exploration/investigation/stealth
+*** Survival/puzzle
+
+** Tactical movement system: 
+
+Roguelike-ish play feel, but: all actions have an AP (action points)
+cost, including moving the targeting reticle, so you must target
+carefully.
+ 
+Different FCS (fire control systems) will have different size/shape
+targeting reticles and different movement/targeting costs.
+
+** Shield barriers help you deal with many enemies at once
+
+* Software design principles
+
+** Common Lisp implementation
+** Emacs-based mission editor and development environment
+** Game objects create the UI (for example the targeting 
+
+* Detailed software design.
+
+** Console
+
+The console is the imaginary RLX home game machine. It can do several things:
+
+*** TODO Open a window of a specified pixel size
+*** TODO Accept user input
+*** TODO Draw PNG bitmaps with transparency
+*** TODO Draw text and lines, boxes etc
+*** TODO Load and utilize game code and resources from a "cart" (see below)
+*** TODO Play sound effects and music
+*** TODO Save and restore game state
+*** TODO  Dump screenshots
+
+** Resources
+
+A resource is an image, sound, text, or lisp program etc. implementing
+some part of an RLX game. Each resource has a string identifier and an
+associated file; .ogg or .wav for audio, .png for images, .lisp for
+game code and object definitions, .rlx for some custom resources like
+object maps, missions, cart definitions, etc.
+
+A resource pack is a .tar.gz with various resource files and a
+metadata file. The metadata file contains a lisp property list readable
+by both Emacs Lisp and Common Lisp, and it maps resource names to
+various data about them (including the resource type and relative file
+name within the resource pack directory.)
+
+It  would be  nice  if the  elisp-and-cl-compatible  .rlx files  could
+contain a lot  of the game data, because this would  make it easier to
+build more emacs-based editors and previewers.
+
+Things to consider: 
+
+ - Internationalization
+ - Licensing information included
+
+** Widgets 
+
+Widgets are UI elements that draw themselves by issuing commands to
+the console. M-x gets a command line. The commands can also be
+explored via a menu system.
+
+Example widgets: map display, numeric display, message window, button,
+command line
+
+--- BOBF, ignore everything after this, old notes etc.
+
+* TODO Review old notes from rlx.org etc
+
+* TODO Read RLX code and take design change notes
+** TODO Multiple layers
+*** TODO Device driver (default impl is SDL)
+*** TODO Command processor / menu system
+*** TODO Game logic (tactics, or roguelike, or pacman etc)
+** TODO menu-oriented with ps2-style controller support (HOW WILL 8-way dirs work???)
+** TODO Different actions cost different AP amounts
+** TODO support both Tactics module and Roguelike module??
+
+* TODO Play games
+** TODO XMESS
+** TODO Controller
+** TODO video encoder card?
+** TODO 2nd head?
+
+* TODO More detailed design treatment for VM
+
+* TODO Relaunch website
+** TODO Choose a website update tool (rsync?) by asking mamalala
+** TODO Reconfigure org-publish-project-alist to publish to ~/public_html
+** TODO Mirror ~/public_html to mamalala.org
+** TODO Contact Bastien re: blorg bugs
+** TODO Fix stylesheet and templates
+** TODO Easy way to paste images into a post
+** TODO Video capture?
+
+* TODO Come up with company name
+
+* TODO Clean up studio
+** DONE Finish carpet tiles in corner
+** DONE Get rid of fridge
+   CLOSED: [2008-06-19 Thu 11:50]
+** DONE Clean/organize shelves
+CLOSED: [2008-07-05 Sat 08:53]
+** TODO Vaccuum carpets
+** DONE Reduce furniture clutter
+CLOSED: [2008-07-05 Sat 08:53]

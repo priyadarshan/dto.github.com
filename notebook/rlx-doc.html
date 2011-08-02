@@ -1,0 +1,4006 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>rlx-doc</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:23:01 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">rlx-doc</h1>
+
+
+<div id="outline-container-1" class="outline-3">
+<h3 id="sec-1"><b>ACTIVE-WIDGETS</b> </h3>
+<div class="outline-text-3" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-4">
+<h4 id="sec-1-1">Documentation </h4>
+<div class="outline-text-4" id="text-1-1">
+
+<p>List of active widget objects. 
+These widgets receive input events and are rendered to the screen by
+the console. See also `send-event-to-widgets'.
+</p>
+<p>
+Do not set this variable directly from a module; instead, call
+`install-widgets'.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-3">
+<h3 id="sec-2"><b>BROWSER</b> </h3>
+<div class="outline-text-3" id="text-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-3">
+<h3 id="sec-3"><b>CHOOSE-DIRECTION-MENU</b> </h3>
+<div class="outline-text-3" id="text-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-3">
+<h3 id="sec-4"><b>COLORS</b> </h3>
+<div class="outline-text-3" id="text-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-3">
+<h3 id="sec-5"><b>COMPASS-DIRECTIONS</b> </h3>
+<div class="outline-text-3" id="text-5">
+
+
+</div>
+
+<div id="outline-container-5-1" class="outline-4">
+<h4 id="sec-5-1">Documentation </h4>
+<div class="outline-text-4" id="text-5-1">
+
+<p>List of keywords representing the eight compass directions, plus :here.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-3">
+<h3 id="sec-6"><b>COMPASS-OPPOSITES</b> </h3>
+<div class="outline-text-3" id="text-6">
+
+
+</div>
+
+<div id="outline-container-6-1" class="outline-4">
+<h4 id="sec-6-1">Documentation </h4>
+<div class="outline-text-4" id="text-6-1">
+
+<p>Property list mapping direction keywords to their 180-degree
+opposites.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-3">
+<h3 id="sec-7"><b>DEFAULT-ACTION-POINTS</b> </h3>
+<div class="outline-text-3" id="text-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-3">
+<h3 id="sec-8"><b>DEFAULT-FONT</b> </h3>
+<div class="outline-text-3" id="text-8">
+
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-3">
+<h3 id="sec-9"><b>DEFAULT-FRAME-HEIGHT</b> </h3>
+<div class="outline-text-3" id="text-9">
+
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-3">
+<h3 id="sec-10"><b>DEFAULT-FRAME-WIDTH</b> </h3>
+<div class="outline-text-3" id="text-10">
+
+</div>
+
+</div>
+
+<div id="outline-container-11" class="outline-3">
+<h3 id="sec-11"><b>DEFAULT-MESSAGE-VERBOSITIES</b> </h3>
+<div class="outline-text-3" id="text-11">
+
+</div>
+
+</div>
+
+<div id="outline-container-12" class="outline-3">
+<h3 id="sec-12"><b>DEFAULT-WORLD-AXIS-SIZE</b> </h3>
+<div class="outline-text-3" id="text-12">
+
+</div>
+
+</div>
+
+<div id="outline-container-13" class="outline-3">
+<h3 id="sec-13"><b>DEFAULT-WORLD-Z-SIZE</b> </h3>
+<div class="outline-text-3" id="text-13">
+
+</div>
+
+</div>
+
+<div id="outline-container-14" class="outline-3">
+<h3 id="sec-14"><b>EVENT-HANDLER-FUNCTION</b> </h3>
+<div class="outline-text-3" id="text-14">
+
+
+</div>
+
+<div id="outline-container-14-1" class="outline-4">
+<h4 id="sec-14-1">Documentation </h4>
+<div class="outline-text-4" id="text-14-1">
+
+<p>Function to be called with keypress events. This function should
+accept an event list of the form
+</p>
+<p>
+  (STRING . MODIFIERS)
+</p>
+<p>
+where STRING is a string representing the key, and MODIFIERS is a list
+of key modifier symbols like :shift, :control, :alt, and so on.
+</p>
+<p>
+The modifier list is sorted; thus, events can be compared for
+equality with `equal' and used as hashtable keys.
+</p>
+<p>
+The default event handler is `send-event-to-widgets', which see. An
+XE2 game can use the widget framework to do its drawing and event
+handling, or override `*event-handler-function*' and do something
+else.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-15" class="outline-3">
+<h3 id="sec-15"><b>FRAME-RATE</b> </h3>
+<div class="outline-text-3" id="text-15">
+
+</div>
+
+</div>
+
+<div id="outline-container-16" class="outline-3">
+<h3 id="sec-16"><b>FULLSCREEN</b> </h3>
+<div class="outline-text-3" id="text-16">
+
+</div>
+
+</div>
+
+<div id="outline-container-17" class="outline-3">
+<h3 id="sec-17"><b>GENERIC-JOYSTICK-MAPPING</b> </h3>
+<div class="outline-text-3" id="text-17">
+
+</div>
+
+</div>
+
+<div id="outline-container-18" class="outline-3">
+<h3 id="sec-18"><b>GRAMMAR</b> </h3>
+<div class="outline-text-3" id="text-18">
+
+
+</div>
+
+<div id="outline-container-18-1" class="outline-4">
+<h4 id="sec-18-1">Documentation </h4>
+<div class="outline-text-4" id="text-18-1">
+
+<p>The current context-free grammar used for sentence generation.
+This is an association list of the form:
+</p>
+<p>
+    ((VARIABLE &gt;&gt; EXPANSIONS)
+     (VARIABLE &gt;&gt; EXPANSIONS)
+     &hellip;)
+</p>
+<p>
+Where EXPANSIONS is a list of alternatives, each of which may be
+either (1) single symbols or (2) a list of symbols, representing
+concatenation.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-19" class="outline-3">
+<h3 id="sec-19"><b>INITIALIZATION-HOOK</b> </h3>
+<div class="outline-text-3" id="text-19">
+
+</div>
+
+</div>
+
+<div id="outline-container-20" class="outline-3">
+<h3 id="sec-20"><b>JOYSTICK-MAPPING</b> </h3>
+<div class="outline-text-3" id="text-20">
+
+</div>
+
+</div>
+
+<div id="outline-container-21" class="outline-3">
+<h3 id="sec-21"><b>MESSAGE-LOGGING</b> </h3>
+<div class="outline-text-3" id="text-21">
+
+</div>
+
+</div>
+
+<div id="outline-container-22" class="outline-3">
+<h3 id="sec-22"><b>MESSAGE-SEND-SYMBOL-SUFFIX</b> </h3>
+<div class="outline-text-3" id="text-22">
+
+</div>
+
+</div>
+
+<div id="outline-container-23" class="outline-3">
+<h3 id="sec-23"><b>MESSAGE-SENDER</b> </h3>
+<div class="outline-text-3" id="text-23">
+
+</div>
+
+</div>
+
+<div id="outline-container-24" class="outline-3">
+<h3 id="sec-24"><b>MESSAGE-VERBOSITIES</b> </h3>
+<div class="outline-text-3" id="text-24">
+
+
+</div>
+
+<div id="outline-container-24-1" class="outline-4">
+<h4 id="sec-24-1">Documentation </h4>
+<div class="outline-text-4" id="text-24-1">
+
+<p>Property list mapping message keywords to the integers from 1-3.
+A message outputs if its verbosity level is less than or equal to the
+narration window's verbosity level. Level 1 is normal gameplay output,
+while levels 2 and 3 offer increading debug information. Values of nil
+and t mean to never (and always, respectively) output, regardless of
+verbosity level.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-25" class="outline-3">
+<h3 id="sec-25"><b>MODULE-DIRECTORIES</b> </h3>
+<div class="outline-text-3" id="text-25">
+
+</div>
+
+</div>
+
+<div id="outline-container-26" class="outline-3">
+<h3 id="sec-26"><b>MODULE-WIDGETS</b> </h3>
+<div class="outline-text-3" id="text-26">
+
+
+</div>
+
+<div id="outline-container-26-1" class="outline-4">
+<h4 id="sec-26-1">Documentation </h4>
+<div class="outline-text-4" id="text-26-1">
+
+<p>List of widget objects in the current module.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-27" class="outline-3">
+<h3 id="sec-27"><b>NEXT-MODULE</b> </h3>
+<div class="outline-text-3" id="text-27">
+
+</div>
+
+</div>
+
+<div id="outline-container-28" class="outline-3">
+<h3 id="sec-28"><b>PS3-JOYSTICK-MAPPING</b> </h3>
+<div class="outline-text-3" id="text-28">
+
+</div>
+
+</div>
+
+<div id="outline-container-29" class="outline-3">
+<h3 id="sec-29"><b>QUITTING</b> </h3>
+<div class="outline-text-3" id="text-29">
+
+</div>
+
+</div>
+
+<div id="outline-container-30" class="outline-3">
+<h3 id="sec-30"><b>RESOURCE-HANDLERS</b> </h3>
+<div class="outline-text-3" id="text-30">
+
+
+</div>
+
+<div id="outline-container-30-1" class="outline-4">
+<h4 id="sec-30-1">Documentation </h4>
+<div class="outline-text-4" id="text-30-1">
+
+<p>A property list mapping resource type keywords to handler functions.
+Each function should accept one resource record, and return an
+object (possibly driver-dependent). When a resource is loaded (with
+`load-resource'), the appropriate handler is looked up, and invoked on
+the resource record.  The return value is stored in the OBJECT field
+of the record.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-31" class="outline-3">
+<h3 id="sec-31"><b>RESOURCE-TABLE</b> </h3>
+<div class="outline-text-3" id="text-31">
+
+
+</div>
+
+<div id="outline-container-31-1" class="outline-4">
+<h4 id="sec-31-1">Documentation </h4>
+<div class="outline-text-4" id="text-31-1">
+
+<p>A hash table mapping resource names to resource records. All loaded
+resources go in this one hash table.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-32" class="outline-3">
+<h3 id="sec-32"><b>SCREEN-HEIGHT</b> </h3>
+<div class="outline-text-3" id="text-32">
+
+
+</div>
+
+<div id="outline-container-32-1" class="outline-4">
+<h4 id="sec-32-1">Documentation </h4>
+<div class="outline-text-4" id="text-32-1">
+
+<p>The height (in pixels) of the game
+window. Set this in the game startup file.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-33" class="outline-3">
+<h3 id="sec-33"><b>SCREEN-WIDTH</b> </h3>
+<div class="outline-text-3" id="text-33">
+
+
+</div>
+
+<div id="outline-container-33-1" class="outline-4">
+<h4 id="sec-33-1">Documentation </h4>
+<div class="outline-text-4" id="text-33-1">
+
+<p>The width (in pixels) of the game
+window. Set this in the game startup file.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-34" class="outline-3">
+<h3 id="sec-34"><b>SENDER</b> </h3>
+<div class="outline-text-3" id="text-34">
+
+
+</div>
+
+<div id="outline-container-34-1" class="outline-4">
+<h4 id="sec-34-1">Documentation </h4>
+<div class="outline-text-4" id="text-34-1">
+
+<p>This variable is bound to the object (if any) to
+receive sent messages.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-35" class="outline-3">
+<h3 id="sec-35"><b>STANDARD-CATEGORIES</b> </h3>
+<div class="outline-text-3" id="text-35">
+
+</div>
+
+</div>
+
+<div id="outline-container-36" class="outline-3">
+<h3 id="sec-36"><b>STARTUP</b> </h3>
+<div class="outline-text-3" id="text-36">
+
+</div>
+
+</div>
+
+<div id="outline-container-37" class="outline-3">
+<h3 id="sec-37"><b>TIMER-INTERVAL</b> </h3>
+<div class="outline-text-3" id="text-37">
+
+
+</div>
+
+<div id="outline-container-37-1" class="outline-4">
+<h4 id="sec-37-1">Documentation </h4>
+<div class="outline-text-4" id="text-37-1">
+
+<p>Number of frames to wait before sending each timer event.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-38" class="outline-3">
+<h3 id="sec-38"><b>UNIVERSE</b> </h3>
+<div class="outline-text-3" id="text-38">
+
+</div>
+
+</div>
+
+<div id="outline-container-39" class="outline-3">
+<h3 id="sec-39"><b>USE-SOUND</b> </h3>
+<div class="outline-text-3" id="text-39">
+
+</div>
+
+</div>
+
+<div id="outline-container-40" class="outline-3">
+<h3 id="sec-40"><b>USER-INIT-FILE-NAME</b> </h3>
+<div class="outline-text-3" id="text-40">
+
+</div>
+
+</div>
+
+<div id="outline-container-41" class="outline-3">
+<h3 id="sec-41"><b>USER-KEYBOARD-LAYOUT</b> </h3>
+<div class="outline-text-3" id="text-41">
+
+</div>
+
+</div>
+
+<div id="outline-container-42" class="outline-3">
+<h3 id="sec-42"><b>WINDOW-TITLE</b> </h3>
+<div class="outline-text-3" id="text-42">
+
+</div>
+
+</div>
+
+<div id="outline-container-43" class="outline-3">
+<h3 id="sec-43"><b>WORLD</b> </h3>
+<div class="outline-text-3" id="text-43">
+
+
+</div>
+
+<div id="outline-container-43-1" class="outline-4">
+<h4 id="sec-43-1">Documentation </h4>
+<div class="outline-text-4" id="text-43-1">
+
+<p>The current world object. Only one may be active at a time. See also
+worlds.lisp. Cells are free to send messages to `*world*' at
+any time, because it is always bound to the world containing the cell
+at the time the cell method is run.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-44" class="outline-3">
+<h3 id="sec-44"><b>X11-COLOR-DATA</b> </h3>
+<div class="outline-text-3" id="text-44">
+
+</div>
+
+</div>
+
+<div id="outline-container-45" class="outline-3">
+<h3 id="sec-45"><b>ZOOM-FACTOR</b> </h3>
+<div class="outline-text-3" id="text-45">
+
+</div>
+
+</div>
+
+<div id="outline-container-46" class="outline-3">
+<h3 id="sec-46"><code>ASTERISK</code> </h3>
+<div class="outline-text-3" id="text-46">
+
+</div>
+
+</div>
+
+<div id="outline-container-47" class="outline-3">
+<h3 id="sec-47"><code>BROWSER</code> </h3>
+<div class="outline-text-3" id="text-47">
+
+</div>
+
+</div>
+
+<div id="outline-container-48" class="outline-3">
+<h3 id="sec-48"><code>CELL</code> </h3>
+<div class="outline-text-3" id="text-48">
+
+</div>
+
+</div>
+
+<div id="outline-container-49" class="outline-3">
+<h3 id="sec-49"><code>DIRECTION-CHOOSER</code> </h3>
+<div class="outline-text-3" id="text-49">
+
+</div>
+
+</div>
+
+<div id="outline-container-50" class="outline-3">
+<h3 id="sec-50"><code>ENVIRONMENT</code> </h3>
+<div class="outline-text-3" id="text-50">
+
+</div>
+
+</div>
+
+<div id="outline-container-51" class="outline-3">
+<h3 id="sec-51"><code>EQUIPMENT</code> </h3>
+<div class="outline-text-3" id="text-51">
+
+</div>
+
+</div>
+
+<div id="outline-container-52" class="outline-3">
+<h3 id="sec-52"><code>FORMATTER</code> </h3>
+<div class="outline-text-3" id="text-52">
+
+</div>
+
+</div>
+
+<div id="outline-container-53" class="outline-3">
+<h3 id="sec-53"><code>GATEWAY</code> </h3>
+<div class="outline-text-3" id="text-53">
+
+</div>
+
+</div>
+
+<div id="outline-container-54" class="outline-3">
+<h3 id="sec-54"><code>GRAY-ASTERISK</code> </h3>
+<div class="outline-text-3" id="text-54">
+
+</div>
+
+</div>
+
+<div id="outline-container-55" class="outline-3">
+<h3 id="sec-55"><code>INVENTORY</code> </h3>
+<div class="outline-text-3" id="text-55">
+
+</div>
+
+</div>
+
+<div id="outline-container-56" class="outline-3">
+<h3 id="sec-56"><code>LAUNCHPAD</code> </h3>
+<div class="outline-text-3" id="text-56">
+
+</div>
+
+</div>
+
+<div id="outline-container-57" class="outline-3">
+<h3 id="sec-57"><code>MENU-ITEM</code> </h3>
+<div class="outline-text-3" id="text-57">
+
+</div>
+
+</div>
+
+<div id="outline-container-58" class="outline-3">
+<h3 id="sec-58"><code>MINIMAP</code> </h3>
+<div class="outline-text-3" id="text-58">
+
+</div>
+
+</div>
+
+<div id="outline-container-59" class="outline-3">
+<h3 id="sec-59"><code>MISSION</code> </h3>
+<div class="outline-text-3" id="text-59">
+
+</div>
+
+</div>
+
+<div id="outline-container-60" class="outline-3">
+<h3 id="sec-60"><code>NARRATOR</code> </h3>
+<div class="outline-text-3" id="text-60">
+
+</div>
+
+</div>
+
+<div id="outline-container-61" class="outline-3">
+<h3 id="sec-61"><code>PAGER-PROMPT</code> </h3>
+<div class="outline-text-3" id="text-61">
+
+</div>
+
+</div>
+
+<div id="outline-container-62" class="outline-3">
+<h3 id="sec-62"><code>PAGER</code> </h3>
+<div class="outline-text-3" id="text-62">
+
+</div>
+
+</div>
+
+<div id="outline-container-63" class="outline-3">
+<h3 id="sec-63"><code>PROMPT</code> </h3>
+<div class="outline-text-3" id="text-63">
+
+</div>
+
+</div>
+
+<div id="outline-container-64" class="outline-3">
+<h3 id="sec-64"><code>SPRITE</code> </h3>
+<div class="outline-text-3" id="text-64">
+
+</div>
+
+</div>
+
+<div id="outline-container-65" class="outline-3">
+<h3 id="sec-65"><code>STACK</code> </h3>
+<div class="outline-text-3" id="text-65">
+
+</div>
+
+</div>
+
+<div id="outline-container-66" class="outline-3">
+<h3 id="sec-66"><code>TEXTBOX</code> </h3>
+<div class="outline-text-3" id="text-66">
+
+</div>
+
+</div>
+
+<div id="outline-container-67" class="outline-3">
+<h3 id="sec-67"><code>UNIVERSE</code> </h3>
+<div class="outline-text-3" id="text-67">
+
+</div>
+
+</div>
+
+<div id="outline-container-68" class="outline-3">
+<h3 id="sec-68"><code>VIEWPORT</code> </h3>
+<div class="outline-text-3" id="text-68">
+
+</div>
+
+</div>
+
+<div id="outline-container-69" class="outline-3">
+<h3 id="sec-69"><code>WIDGET</code> </h3>
+<div class="outline-text-3" id="text-69">
+
+</div>
+
+</div>
+
+<div id="outline-container-70" class="outline-3">
+<h3 id="sec-70"><code>WORLD</code> </h3>
+<div class="outline-text-3" id="text-70">
+
+</div>
+
+</div>
+
+<div id="outline-container-71" class="outline-3">
+<h3 id="sec-71">ADD-HOOK </h3>
+<div class="outline-text-3" id="text-71">
+
+
+</div>
+
+<div id="outline-container-71-1" class="outline-4">
+<h4 id="sec-71-1">Arguments </h4>
+<div class="outline-text-4" id="text-71-1">
+
+<p>(HOOK FUNC)
+</p></div>
+
+</div>
+
+<div id="outline-container-71-2" class="outline-4">
+<h4 id="sec-71-2">Documentation </h4>
+<div class="outline-text-4" id="text-71-2">
+
+<p>Arrange for FUNC to be invoked whenever HOOK is triggered with
+`run-hook'. The function should have no arguments.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-72" class="outline-3">
+<h3 id="sec-72">ADD-MESSAGE-VERBOSITIES </h3>
+<div class="outline-text-3" id="text-72">
+
+
+</div>
+
+<div id="outline-container-72-1" class="outline-4">
+<h4 id="sec-72-1">Arguments </h4>
+<div class="outline-text-4" id="text-72-1">
+
+<p>(PLIST)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-73" class="outline-3">
+<h3 id="sec-73">ADD-OVERLAY </h3>
+<div class="outline-text-3" id="text-73">
+
+</div>
+
+</div>
+
+<div id="outline-container-74" class="outline-3">
+<h3 id="sec-74">BIND-KEY-TO-METHOD </h3>
+<div class="outline-text-3" id="text-74">
+
+
+</div>
+
+<div id="outline-container-74-1" class="outline-4">
+<h4 id="sec-74-1">Arguments </h4>
+<div class="outline-text-4" id="text-74-1">
+
+<p>(P KEY MODIFIERS METHOD-KEYWORD)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-75" class="outline-3">
+<h3 id="sec-75">BIND-KEY-TO-PROMPT-INSERTION </h3>
+<div class="outline-text-3" id="text-75">
+
+
+</div>
+
+<div id="outline-container-75-1" class="outline-4">
+<h4 id="sec-75-1">Arguments </h4>
+<div class="outline-text-4" id="text-75-1">
+
+<p>(P KEY MODIFIERS &amp;OPTIONAL (INSERTION KEY))
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-76" class="outline-3">
+<h3 id="sec-76">BROWSER </h3>
+<div class="outline-text-3" id="text-76">
+
+</div>
+
+</div>
+
+<div id="outline-container-77" class="outline-3">
+<h3 id="sec-77">CLONE </h3>
+<div class="outline-text-3" id="text-77">
+
+
+</div>
+
+<div id="outline-container-77-1" class="outline-4">
+<h4 id="sec-77-1">Arguments </h4>
+<div class="outline-text-4" id="text-77-1">
+
+<p>(PROTOTYPE &amp;REST INITARGS)
+</p></div>
+
+</div>
+
+<div id="outline-container-77-2" class="outline-4">
+<h4 id="sec-77-2">Documentation </h4>
+<div class="outline-text-4" id="text-77-2">
+
+<p>Create a new object from PROTOTYPE and pass INITARGS to the
+initializer. The new object is created with fields for which INITFORMS
+were specified (if any; see `define-prototype'); the INITFORMS are
+evaluated, then any applicable initializer is triggered.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-78" class="outline-3">
+<h3 id="sec-78">COMPOSE-BLANK-FIELDS </h3>
+<div class="outline-text-3" id="text-78">
+
+
+</div>
+
+<div id="outline-container-78-1" class="outline-4">
+<h4 id="sec-78-1">Arguments </h4>
+<div class="outline-text-4" id="text-78-1">
+
+<p>(DESCRIPTORS)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-79" class="outline-3">
+<h3 id="sec-79">CREATE-IMAGE </h3>
+<div class="outline-text-3" id="text-79">
+
+
+</div>
+
+<div id="outline-container-79-1" class="outline-4">
+<h4 id="sec-79-1">Arguments </h4>
+<div class="outline-text-4" id="text-79-1">
+
+<p>(WIDTH HEIGHT)
+</p></div>
+
+</div>
+
+<div id="outline-container-79-2" class="outline-4">
+<h4 id="sec-79-2">Documentation </h4>
+<div class="outline-text-4" id="text-79-2">
+
+<p>Create a new XE2 image of size (* WIDTH HEIGHT).
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-80" class="outline-3">
+<h3 id="sec-80">DEFCELL </h3>
+<div class="outline-text-3" id="text-80">
+
+
+</div>
+
+<div id="outline-container-80-1" class="outline-4">
+<h4 id="sec-80-1">Arguments </h4>
+<div class="outline-text-4" id="text-80-1">
+
+<p>(&amp;REST ARGS)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-81" class="outline-3">
+<h3 id="sec-81">DEFINE-METHOD </h3>
+<div class="outline-text-3" id="text-81">
+
+
+</div>
+
+<div id="outline-container-81-1" class="outline-4">
+<h4 id="sec-81-1">Arguments </h4>
+<div class="outline-text-4" id="text-81-1">
+
+<p>(&amp;REST ARGS)
+</p></div>
+
+</div>
+
+<div id="outline-container-81-2" class="outline-4">
+<h4 id="sec-81-2">Documentation </h4>
+<div class="outline-text-4" id="text-81-2">
+
+<p>Define a new method.
+</p>
+<p>
+METHOD-NAME is a symbol naming the method.  PROTOTYPE-NAME is the name
+of the prototype you are defining a method for. This should be a
+symbol (without equals signs&mdash;see Prototype Names. ARGLIST is
+the argument list for the method. If METHOD-BODY begins with a string,
+this string becomes the documentation string for the method.
+</p>
+<p>
+Any DECLARE forms must appear as the first non-string sexp.
+</p>
+<p>
+The forms in METHOD-BODY are executed when the method is invoked.
+The hidden argument `self' may be referred to as needed within
+the method body; it is bound to the object upon which the method
+was invoked.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-82" class="outline-3">
+<h3 id="sec-82">DEFINE-PROTOTYPE </h3>
+<div class="outline-text-3" id="text-82">
+
+
+</div>
+
+<div id="outline-container-82-1" class="outline-4">
+<h4 id="sec-82-1">Arguments </h4>
+<div class="outline-text-4" id="text-82-1">
+
+<p>(&amp;REST ARGS)
+</p></div>
+
+</div>
+
+<div id="outline-container-82-2" class="outline-4">
+<h4 id="sec-82-2">Documentation </h4>
+<div class="outline-text-4" id="text-82-2">
+
+<p>Create a new object prototype (possibly based on another prototype).
+</p>
+<p>
+NAME should be a symbol naming the prototype. A special variable is
+created, with equals signs bracketing the name; this variable's value
+is the resulting prototype. For example, if your prototype is named
+`foo', the special variable will be named `=foo=', and you create
+objects with:
+</p>
+<p>
+ (clone <code>foo</code>)
+</p>
+<p>
+See also `clone'. 
+</p>
+<p>
+The second argument is a property list of options for the
+prototype. Valid keys are:
+</p>
+<p>
+ :DOCUMENTATION     The documentation string for this prototype.
+ :PARENT            The parent prototype from which the new prototype will 
+                    inherit fields. This form is evaluated.
+</p>
+<p>                     
+DECLARATION-FIELD-DESCRIPTORS should be a list, each entry of which is
+either a list of the form
+</p>
+<p>
+  (FIELD-NAME . OPTIONS)
+</p>
+<p>
+or, simply a symbol naming the field&mdash;a shorthand for declaring a
+field with that name and no options. See also
+`transform-declaration-field-descriptor'.
+</p>
+<p>
+OPTIONS is a property list of field options. Valid keys are:
+</p>
+<p>
+ :INITFORM          A form evaluated to initialize the field
+                    upon cloning. If :initform is not provided,
+                    the value is inherited from the PARENT.
+                    With ":initform nil", the field is initialized 
+                    with the value nil.
+ :DOCUMENTATION     Documentation string for the field.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-83" class="outline-3">
+<h3 id="sec-83">DEFSPRITE </h3>
+<div class="outline-text-3" id="text-83">
+
+
+</div>
+
+<div id="outline-container-83-1" class="outline-4">
+<h4 id="sec-83-1">Arguments </h4>
+<div class="outline-text-4" id="text-83-1">
+
+<p>(&amp;REST ARGS)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-84" class="outline-3">
+<h3 id="sec-84">DIRECTION-TO </h3>
+<div class="outline-text-3" id="text-84">
+
+
+</div>
+
+<div id="outline-container-84-1" class="outline-4">
+<h4 id="sec-84-1">Arguments </h4>
+<div class="outline-text-4" id="text-84-1">
+
+<p>(R1 C1 R2 C2)
+</p></div>
+
+</div>
+
+<div id="outline-container-84-2" class="outline-4">
+<h4 id="sec-84-2">Documentation </h4>
+<div class="outline-text-4" id="text-84-2">
+
+<p>Return general direction of the ray from R1,C1 to R2,C2.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-85" class="outline-3">
+<h3 id="sec-85">DIRECTORY-IS-MODULE-P </h3>
+<div class="outline-text-3" id="text-85">
+
+
+</div>
+
+<div id="outline-container-85-1" class="outline-4">
+<h4 id="sec-85-1">Arguments </h4>
+<div class="outline-text-4" id="text-85-1">
+
+<p>(DIR)
+</p></div>
+
+</div>
+
+<div id="outline-container-85-2" class="outline-4">
+<h4 id="sec-85-2">Documentation </h4>
+<div class="outline-text-4" id="text-85-2">
+
+<p>Test whether a PAK index file exists in a directory.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-86" class="outline-3">
+<h3 id="sec-86">DISABLE-HELD-KEYS </h3>
+<div class="outline-text-3" id="text-86">
+
+</div>
+
+</div>
+
+<div id="outline-container-87" class="outline-3">
+<h3 id="sec-87">DISABLE-TIMER </h3>
+<div class="outline-text-3" id="text-87">
+
+
+</div>
+
+<div id="outline-container-87-1" class="outline-4">
+<h4 id="sec-87-1">Documentation </h4>
+<div class="outline-text-4" id="text-87-1">
+
+<p>Disable timer events.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-88" class="outline-3">
+<h3 id="sec-88">DISPATCH-EVENT </h3>
+<div class="outline-text-3" id="text-88">
+
+
+</div>
+
+<div id="outline-container-88-1" class="outline-4">
+<h4 id="sec-88-1">Arguments </h4>
+<div class="outline-text-4" id="text-88-1">
+
+<p>(EVENT)
+</p></div>
+
+</div>
+
+<div id="outline-container-88-2" class="outline-4">
+<h4 id="sec-88-2">Documentation </h4>
+<div class="outline-text-4" id="text-88-2">
+
+<p>Send EVENT to the handler function.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-89" class="outline-3">
+<h3 id="sec-89">DISTANCE </h3>
+<div class="outline-text-3" id="text-89">
+
+
+</div>
+
+<div id="outline-container-89-1" class="outline-4">
+<h4 id="sec-89-1">Arguments </h4>
+<div class="outline-text-4" id="text-89-1">
+
+<p>(X1 Y1 X2 Y2)
+</p></div>
+
+</div>
+
+<div id="outline-container-89-2" class="outline-4">
+<h4 id="sec-89-2">Documentation </h4>
+<div class="outline-text-4" id="text-89-2">
+
+<p>Compute the distance between the points X1,Y1 and X2,Y2.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-90" class="outline-3">
+<h3 id="sec-90">DO-CELLS </h3>
+<div class="outline-text-3" id="text-90">
+
+
+</div>
+
+<div id="outline-container-90-1" class="outline-4">
+<h4 id="sec-90-1">Arguments </h4>
+<div class="outline-text-4" id="text-90-1">
+
+<p>(&amp;REST ARGS)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-91" class="outline-3">
+<h3 id="sec-91">DRAW-BOX </h3>
+<div class="outline-text-3" id="text-91">
+
+
+</div>
+
+<div id="outline-container-91-1" class="outline-4">
+<h4 id="sec-91-1">Arguments </h4>
+<div class="outline-text-4" id="text-91-1">
+
+<p>(X Y WIDTH HEIGHT &amp;KEY (STROKE-COLOR .white) (COLOR .black) DESTINATION)
+</p></div>
+
+</div>
+
+<div id="outline-container-91-2" class="outline-4">
+<h4 id="sec-91-2">Documentation </h4>
+<div class="outline-text-4" id="text-91-2">
+
+<p>Draw a filled rectangle at (X Y) of size (* WIDTH HEIGHT).
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-92" class="outline-3">
+<h3 id="sec-92">DRAW-CIRCLE </h3>
+<div class="outline-text-3" id="text-92">
+
+
+</div>
+
+<div id="outline-container-92-1" class="outline-4">
+<h4 id="sec-92-1">Arguments </h4>
+<div class="outline-text-4" id="text-92-1">
+
+<p>(X Y RADIUS &amp;KEY (COLOR .white) DESTINATION)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-93" class="outline-3">
+<h3 id="sec-93">DRAW-IMAGE </h3>
+<div class="outline-text-3" id="text-93">
+
+
+</div>
+
+<div id="outline-container-93-1" class="outline-4">
+<h4 id="sec-93-1">Arguments </h4>
+<div class="outline-text-4" id="text-93-1">
+
+<p>(IMAGE X Y &amp;KEY (DESTINATION <b>DEFAULT-SURFACE</b>))
+</p></div>
+
+</div>
+
+<div id="outline-container-93-2" class="outline-4">
+<h4 id="sec-93-2">Documentation </h4>
+<div class="outline-text-4" id="text-93-2">
+
+<p>Draw the IMAGE at offset (X Y) on the image DESTINATION.
+The default destination is the main window.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-94" class="outline-3">
+<h3 id="sec-94">DRAW-LINE </h3>
+<div class="outline-text-3" id="text-94">
+
+
+</div>
+
+<div id="outline-container-94-1" class="outline-4">
+<h4 id="sec-94-1">Arguments </h4>
+<div class="outline-text-4" id="text-94-1">
+
+<p>(X0 Y0 X1 Y1 &amp;KEY (COLOR .white) DESTINATION)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-95" class="outline-3">
+<h3 id="sec-95">DRAW-PIXEL </h3>
+<div class="outline-text-3" id="text-95">
+
+
+</div>
+
+<div id="outline-container-95-1" class="outline-4">
+<h4 id="sec-95-1">Arguments </h4>
+<div class="outline-text-4" id="text-95-1">
+
+<p>(X Y &amp;KEY (COLOR .white) DESTINATION)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-96" class="outline-3">
+<h3 id="sec-96">DRAW-RECTANGLE </h3>
+<div class="outline-text-3" id="text-96">
+
+
+</div>
+
+<div id="outline-container-96-1" class="outline-4">
+<h4 id="sec-96-1">Arguments </h4>
+<div class="outline-text-4" id="text-96-1">
+
+<p>(X Y WIDTH HEIGHT &amp;KEY (COLOR .white) DESTINATION)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-97" class="outline-3">
+<h3 id="sec-97">DRAW-RESOURCE-IMAGE </h3>
+<div class="outline-text-3" id="text-97">
+
+
+</div>
+
+<div id="outline-container-97-1" class="outline-4">
+<h4 id="sec-97-1">Arguments </h4>
+<div class="outline-text-4" id="text-97-1">
+
+<p>(NAME X Y &amp;KEY (DESTINATION <b>DEFAULT-SURFACE</b>))
+</p></div>
+
+</div>
+
+<div id="outline-container-97-2" class="outline-4">
+<h4 id="sec-97-2">Documentation </h4>
+<div class="outline-text-4" id="text-97-2">
+
+<p>Draw the image named by NAME at offset (X Y) on the image DESTINATION.
+The default destination is the main window.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-98" class="outline-3">
+<h3 id="sec-98">DRAW-STRING-SHADED </h3>
+<div class="outline-text-3" id="text-98">
+
+
+</div>
+
+<div id="outline-container-98-1" class="outline-4">
+<h4 id="sec-98-1">Arguments </h4>
+<div class="outline-text-4" id="text-98-1">
+
+<p>(STRING X Y &amp;OPTIONAL (FOREGROUND .white) (BACKGROUND .black) &amp;KEY DESTINATION
+        (FONT <b>DEFAULT-FONT</b>))
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-99" class="outline-3">
+<h3 id="sec-99">DRAW-STRING-SOLID </h3>
+<div class="outline-text-3" id="text-99">
+
+
+</div>
+
+<div id="outline-container-99-1" class="outline-4">
+<h4 id="sec-99-1">Arguments </h4>
+<div class="outline-text-4" id="text-99-1">
+
+<p>(STRING X Y &amp;KEY DESTINATION (FONT <b>DEFAULT-FONT</b>) (COLOR .white))
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-100" class="outline-3">
+<h3 id="sec-100">ENABLE-HELD-KEYS </h3>
+<div class="outline-text-3" id="text-100">
+
+
+</div>
+
+<div id="outline-container-100-1" class="outline-4">
+<h4 id="sec-100-1">Arguments </h4>
+<div class="outline-text-4" id="text-100-1">
+
+<p>(DELAY INTERVAL)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-101" class="outline-3">
+<h3 id="sec-101">ENABLE-TIMER </h3>
+<div class="outline-text-3" id="text-101">
+
+
+</div>
+
+<div id="outline-container-101-1" class="outline-4">
+<h4 id="sec-101-1">Documentation </h4>
+<div class="outline-text-4" id="text-101-1">
+
+<p>Enable timer events. The next scheduled event will be the first sent.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-102" class="outline-3">
+<h3 id="sec-102">EXPANSIONS </h3>
+<div class="outline-text-3" id="text-102">
+
+
+</div>
+
+<div id="outline-container-102-1" class="outline-4">
+<h4 id="sec-102-1">Arguments </h4>
+<div class="outline-text-4" id="text-102-1">
+
+<p>(VARIABLE)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-103" class="outline-3">
+<h3 id="sec-103">FIELD-OPTION-VALUE </h3>
+<div class="outline-text-3" id="text-103">
+
+
+</div>
+
+<div id="outline-container-103-1" class="outline-4">
+<h4 id="sec-103-1">Arguments </h4>
+<div class="outline-text-4" id="text-103-1">
+
+<p>(FIELD OBJECT OPTION)
+</p></div>
+
+</div>
+
+<div id="outline-container-103-2" class="outline-4">
+<h4 id="sec-103-2">Documentation </h4>
+<div class="outline-text-4" id="text-103-2">
+
+<p>Return the value of the OPTION for FIELD in OBJECT.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-104" class="outline-3">
+<h3 id="sec-104">FIELD-OPTIONS </h3>
+<div class="outline-text-3" id="text-104">
+
+
+</div>
+
+<div id="outline-container-104-1" class="outline-4">
+<h4 id="sec-104-1">Arguments </h4>
+<div class="outline-text-4" id="text-104-1">
+
+<p>(FIELD OBJECT)
+</p></div>
+
+</div>
+
+<div id="outline-container-104-2" class="outline-4">
+<h4 id="sec-104-2">Documentation </h4>
+<div class="outline-text-4" id="text-104-2">
+
+<p>Obtain the options property list for FIELD in OBJECT.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-105" class="outline-3">
+<h3 id="sec-105">FIELD-REFERENCE-P </h3>
+<div class="outline-text-3" id="text-105">
+
+
+</div>
+
+<div id="outline-container-105-1" class="outline-4">
+<h4 id="sec-105-1">Arguments </h4>
+<div class="outline-text-4" id="text-105-1">
+
+<p>(FORM)
+</p></div>
+
+</div>
+
+<div id="outline-container-105-2" class="outline-4">
+<h4 id="sec-105-2">Documentation </h4>
+<div class="outline-text-4" id="text-105-2">
+
+<p>Return non-nil if FORM is a symbol like &lt;foo&gt;.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-106" class="outline-3">
+<h3 id="sec-106">FIELD-VALUE </h3>
+<div class="outline-text-3" id="text-106">
+
+
+</div>
+
+<div id="outline-container-106-1" class="outline-4">
+<h4 id="sec-106-1">Arguments </h4>
+<div class="outline-text-4" id="text-106-1">
+
+<p>(FIELD OBJECT &amp;OPTIONAL NOERROR)
+</p></div>
+
+</div>
+
+<div id="outline-container-106-2" class="outline-4">
+<h4 id="sec-106-2">Documentation </h4>
+<div class="outline-text-4" id="text-106-2">
+
+<p>Return the value of FIELD in OBJECT.
+If the FIELD has no value in OBJECT, then the object's parent is also
+checked, and so on. If a value is found during these checks, it is
+returned. If a value cannot be found, an error of type `no-such-field'
+is signaled, unless NOERROR is non-nil; in that case,
+`*lookup-failure*' is returned. See also `has-field'.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-107" class="outline-3">
+<h3 id="sec-107">FIND-ALL-MODULES </h3>
+<div class="outline-text-3" id="text-107">
+
+</div>
+
+</div>
+
+<div id="outline-container-108" class="outline-3">
+<h3 id="sec-108">FIND-MODULE-PATH </h3>
+<div class="outline-text-3" id="text-108">
+
+
+</div>
+
+<div id="outline-container-108-1" class="outline-4">
+<h4 id="sec-108-1">Arguments </h4>
+<div class="outline-text-4" id="text-108-1">
+
+<p>(MODULE-NAME)
+</p></div>
+
+</div>
+
+<div id="outline-container-108-2" class="outline-4">
+<h4 id="sec-108-2">Documentation </h4>
+<div class="outline-text-4" id="text-108-2">
+
+<p>Search the `*module-directories*' path for a directory with the
+name MODULE-NAME. Returns the pathname if found, otherwise nil.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-109" class="outline-3">
+<h3 id="sec-109">FIND-MODULES-IN-DIRECTORY </h3>
+<div class="outline-text-3" id="text-109">
+
+
+</div>
+
+<div id="outline-container-109-1" class="outline-4">
+<h4 id="sec-109-1">Arguments </h4>
+<div class="outline-text-4" id="text-109-1">
+
+<p>(DIR)
+</p></div>
+
+</div>
+
+<div id="outline-container-109-2" class="outline-4">
+<h4 id="sec-109-2">Documentation </h4>
+<div class="outline-text-4" id="text-109-2">
+
+<p>Search DIR for modules and return a list of their names.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-110" class="outline-3">
+<h3 id="sec-110">FIND-RESOURCE </h3>
+<div class="outline-text-3" id="text-110">
+
+
+</div>
+
+<div id="outline-container-110-1" class="outline-4">
+<h4 id="sec-110-1">Arguments </h4>
+<div class="outline-text-4" id="text-110-1">
+
+<p>(NAME &amp;OPTIONAL NOERROR)
+</p></div>
+
+</div>
+
+<div id="outline-container-110-2" class="outline-4">
+<h4 id="sec-110-2">Documentation </h4>
+<div class="outline-text-4" id="text-110-2">
+
+<p>Obtain the resource named NAME, performing any necessary loading
+and/or transformations. Unless NOERROR is non-nil, signal an error
+when NAME cannot be found.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-111" class="outline-3">
+<h3 id="sec-111">FIND-RESOURCE-OBJECT </h3>
+<div class="outline-text-3" id="text-111">
+
+
+</div>
+
+<div id="outline-container-111-1" class="outline-4">
+<h4 id="sec-111-1">Arguments </h4>
+<div class="outline-text-4" id="text-111-1">
+
+<p>(NAME)
+</p></div>
+
+</div>
+
+<div id="outline-container-111-2" class="outline-4">
+<h4 id="sec-111-2">Documentation </h4>
+<div class="outline-text-4" id="text-111-2">
+
+<p>Obtain the resource object named NAME, or signal an error if not
+found.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-112" class="outline-3">
+<h3 id="sec-112">FIND-RESOURCE-PROPERTY </h3>
+<div class="outline-text-3" id="text-112">
+
+
+</div>
+
+<div id="outline-container-112-1" class="outline-4">
+<h4 id="sec-112-1">Arguments </h4>
+<div class="outline-text-4" id="text-112-1">
+
+<p>(RESOURCE-NAME PROPERTY)
+</p></div>
+
+</div>
+
+<div id="outline-container-112-2" class="outline-4">
+<h4 id="sec-112-2">Documentation </h4>
+<div class="outline-text-4" id="text-112-2">
+
+<p>Read the value of PROPERTY from the resource RESOURCE-NAME.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-113" class="outline-3">
+<h3 id="sec-113">FONT-HEIGHT </h3>
+<div class="outline-text-3" id="text-113">
+
+
+</div>
+
+<div id="outline-container-113-1" class="outline-4">
+<h4 id="sec-113-1">Arguments </h4>
+<div class="outline-text-4" id="text-113-1">
+
+<p>(FONT)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-114" class="outline-3">
+<h3 id="sec-114">FONT-TEXT-EXTENTS </h3>
+<div class="outline-text-3" id="text-114">
+
+
+</div>
+
+<div id="outline-container-114-1" class="outline-4">
+<h4 id="sec-114-1">Arguments </h4>
+<div class="outline-text-4" id="text-114-1">
+
+<p>(STRING FONT)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-115" class="outline-3">
+<h3 id="sec-115">FONT-WIDTH </h3>
+<div class="outline-text-3" id="text-115">
+
+
+</div>
+
+<div id="outline-container-115-1" class="outline-4">
+<h4 id="sec-115-1">Arguments </h4>
+<div class="outline-text-4" id="text-115-1">
+
+<p>(FONT)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-116" class="outline-3">
+<h3 id="sec-116">FORMATTED-STRING-HEIGHT </h3>
+<div class="outline-text-3" id="text-116">
+
+
+</div>
+
+<div id="outline-container-116-1" class="outline-4">
+<h4 id="sec-116-1">Arguments </h4>
+<div class="outline-text-4" id="text-116-1">
+
+<p>(S)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-117" class="outline-3">
+<h3 id="sec-117">FORMATTED-STRING-WIDTH </h3>
+<div class="outline-text-3" id="text-117">
+
+
+</div>
+
+<div id="outline-container-117-1" class="outline-4">
+<h4 id="sec-117-1">Arguments </h4>
+<div class="outline-text-4" id="text-117-1">
+
+<p>(S)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-118" class="outline-3">
+<h3 id="sec-118">GENERATE </h3>
+<div class="outline-text-3" id="text-118">
+
+
+</div>
+
+<div id="outline-container-118-1" class="outline-4">
+<h4 id="sec-118-1">Arguments </h4>
+<div class="outline-text-4" id="text-118-1">
+
+<p>(PHRASE)
+</p></div>
+
+</div>
+
+<div id="outline-container-118-2" class="outline-4">
+<h4 id="sec-118-2">Documentation </h4>
+<div class="outline-text-4" id="text-118-2">
+
+<p>Generate a random phrase using the grammar in `*grammar*'.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-119" class="outline-3">
+<h3 id="sec-119">GENSEQ </h3>
+<div class="outline-text-3" id="text-119">
+
+
+</div>
+
+<div id="outline-container-119-1" class="outline-4">
+<h4 id="sec-119-1">Arguments </h4>
+<div class="outline-text-4" id="text-119-1">
+
+<p>(&amp;OPTIONAL (X 0))
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-120" class="outline-3">
+<h3 id="sec-120">GET-COLOR </h3>
+<div class="outline-text-3" id="text-120">
+
+</div>
+
+</div>
+
+<div id="outline-container-121" class="outline-3">
+<h3 id="sec-121">GET-SOME-OBJECT-NAME </h3>
+<div class="outline-text-3" id="text-121">
+
+
+</div>
+
+<div id="outline-container-121-1" class="outline-4">
+<h4 id="sec-121-1">Arguments </h4>
+<div class="outline-text-4" id="text-121-1">
+
+<p>(OB)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-122" class="outline-3">
+<h3 id="sec-122">GOAL </h3>
+<div class="outline-text-3" id="text-122">
+
+</div>
+
+</div>
+
+<div id="outline-container-123" class="outline-3">
+<h3 id="sec-123">HALT-MUSIC </h3>
+<div class="outline-text-3" id="text-123">
+
+
+</div>
+
+<div id="outline-container-123-1" class="outline-4">
+<h4 id="sec-123-1">Arguments </h4>
+<div class="outline-text-4" id="text-123-1">
+
+<p>(FADE-MILLISECONDS)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-124" class="outline-3">
+<h3 id="sec-124">HAS-FIELD </h3>
+<div class="outline-text-3" id="text-124">
+
+
+</div>
+
+<div id="outline-container-124-1" class="outline-4">
+<h4 id="sec-124-1">Arguments </h4>
+<div class="outline-text-4" id="text-124-1">
+
+<p>(FIELD OBJECT)
+</p></div>
+
+</div>
+
+<div id="outline-container-124-2" class="outline-4">
+<h4 id="sec-124-2">Documentation </h4>
+<div class="outline-text-4" id="text-124-2">
+
+<p>Return non-nil if FIELD has any value in OBJECT.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-125" class="outline-3">
+<h3 id="sec-125">ICON-IMAGE </h3>
+<div class="outline-text-3" id="text-125">
+
+
+</div>
+
+<div id="outline-container-125-1" class="outline-4">
+<h4 id="sec-125-1">Arguments </h4>
+<div class="outline-text-4" id="text-125-1">
+
+<p>(KEY)
+</p></div>
+
+</div>
+
+<div id="outline-container-125-2" class="outline-4">
+<h4 id="sec-125-2">Documentation </h4>
+<div class="outline-text-4" id="text-125-2">
+
+<p>Return an icon image name for KEY.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-126" class="outline-3">
+<h3 id="sec-126">ICON-RESOURCE </h3>
+<div class="outline-text-3" id="text-126">
+
+
+</div>
+
+<div id="outline-container-126-1" class="outline-4">
+<h4 id="sec-126-1">Arguments </h4>
+<div class="outline-text-4" id="text-126-1">
+
+<p>(KEY)
+</p></div>
+
+</div>
+
+<div id="outline-container-126-2" class="outline-4">
+<h4 id="sec-126-2">Documentation </h4>
+<div class="outline-text-4" id="text-126-2">
+
+<p>Return an icon resource for the key KEY.
+The standard GEAR icon is used when no other applicable icon can be
+found.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-127" class="outline-3">
+<h3 id="sec-127">INDEX-MODULE </h3>
+<div class="outline-text-3" id="text-127">
+
+
+</div>
+
+<div id="outline-container-127-1" class="outline-4">
+<h4 id="sec-127-1">Arguments </h4>
+<div class="outline-text-4" id="text-127-1">
+
+<p>(MODULE-NAME)
+</p></div>
+
+</div>
+
+<div id="outline-container-127-2" class="outline-4">
+<h4 id="sec-127-2">Documentation </h4>
+<div class="outline-text-4" id="text-127-2">
+
+<p>Add all the resources from the module MODULE-NAME to the resource
+table.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-128" class="outline-3">
+<h3 id="sec-128">INDEX-RESOURCE </h3>
+<div class="outline-text-3" id="text-128">
+
+
+</div>
+
+<div id="outline-container-128-1" class="outline-4">
+<h4 id="sec-128-1">Arguments </h4>
+<div class="outline-text-4" id="text-128-1">
+
+<p>(RESOURCE)
+</p></div>
+
+</div>
+
+<div id="outline-container-128-2" class="outline-4">
+<h4 id="sec-128-2">Documentation </h4>
+<div class="outline-text-4" id="text-128-2">
+
+<p>Add the RESOURCE's record to the resource table.
+If a record with that name already exists, it is replaced.  However,
+if the resource is an :alias, just the string name of the target
+resource is stored; see also `find-resource'.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-129" class="outline-3">
+<h3 id="sec-129">INITIALIZE-COLORS </h3>
+<div class="outline-text-3" id="text-129">
+
+
+</div>
+
+<div id="outline-container-129-1" class="outline-4">
+<h4 id="sec-129-1">Documentation </h4>
+<div class="outline-text-4" id="text-129-1">
+
+<p>Load the X11 color data into the resource table.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-130" class="outline-3">
+<h3 id="sec-130">INITIALIZE-ENGINE </h3>
+<div class="outline-text-3" id="text-130">
+
+</div>
+
+</div>
+
+<div id="outline-container-131" class="outline-3">
+<h3 id="sec-131">INITIALIZE-RESOURCE-TABLE </h3>
+<div class="outline-text-3" id="text-131">
+
+</div>
+
+</div>
+
+<div id="outline-container-132" class="outline-3">
+<h3 id="sec-132">INSTALL-WIDGETS </h3>
+<div class="outline-text-3" id="text-132">
+
+
+</div>
+
+<div id="outline-container-132-1" class="outline-4">
+<h4 id="sec-132-1">Arguments </h4>
+<div class="outline-text-4" id="text-132-1">
+
+<p>(&amp;REST WIDGETS)
+</p></div>
+
+</div>
+
+<div id="outline-container-132-2" class="outline-4">
+<h4 id="sec-132-2">Documentation </h4>
+<div class="outline-text-4" id="text-132-2">
+
+<p>User-level function for setting the active widget set. Note that
+XE2 may override the current widget set at any time for system menus
+and the like.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-133" class="outline-3">
+<h3 id="sec-133">IS-ZOOMED-RESOURCE </h3>
+<div class="outline-text-3" id="text-133">
+
+
+</div>
+
+<div id="outline-container-133-1" class="outline-4">
+<h4 id="sec-133-1">Arguments </h4>
+<div class="outline-text-4" id="text-133-1">
+
+<p>(RESOURCE)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-134" class="outline-3">
+<h3 id="sec-134">LEFT-HAND-SIDE </h3>
+<div class="outline-text-3" id="text-134">
+
+
+</div>
+
+<div id="outline-container-134-1" class="outline-4">
+<h4 id="sec-134-1">Arguments </h4>
+<div class="outline-text-4" id="text-134-1">
+
+<p>(RULE)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-135" class="outline-3">
+<h3 id="sec-135">LOAD-FONT-RESOURCE </h3>
+<div class="outline-text-3" id="text-135">
+
+
+</div>
+
+<div id="outline-container-135-1" class="outline-4">
+<h4 id="sec-135-1">Arguments </h4>
+<div class="outline-text-4" id="text-135-1">
+
+<p>(RESOURCE)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-136" class="outline-3">
+<h3 id="sec-136">LOAD-IMAGE-RESOURCE </h3>
+<div class="outline-text-3" id="text-136">
+
+
+</div>
+
+<div id="outline-container-136-1" class="outline-4">
+<h4 id="sec-136-1">Arguments </h4>
+<div class="outline-text-4" id="text-136-1">
+
+<p>(RESOURCE)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-137" class="outline-3">
+<h3 id="sec-137">LOAD-LISP-RESOURCE </h3>
+<div class="outline-text-3" id="text-137">
+
+
+</div>
+
+<div id="outline-container-137-1" class="outline-4">
+<h4 id="sec-137-1">Arguments </h4>
+<div class="outline-text-4" id="text-137-1">
+
+<p>(RESOURCE)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-138" class="outline-3">
+<h3 id="sec-138">LOAD-MODULE </h3>
+<div class="outline-text-3" id="text-138">
+
+
+</div>
+
+<div id="outline-container-138-1" class="outline-4">
+<h4 id="sec-138-1">Arguments </h4>
+<div class="outline-text-4" id="text-138-1">
+
+<p>(MODULE)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-139" class="outline-3">
+<h3 id="sec-139">LOAD-RESOURCE </h3>
+<div class="outline-text-3" id="text-139">
+
+
+</div>
+
+<div id="outline-container-139-1" class="outline-4">
+<h4 id="sec-139-1">Arguments </h4>
+<div class="outline-text-4" id="text-139-1">
+
+<p>(RESOURCE)
+</p></div>
+
+</div>
+
+<div id="outline-container-139-2" class="outline-4">
+<h4 id="sec-139-2">Documentation </h4>
+<div class="outline-text-4" id="text-139-2">
+
+<p>Load the driver-dependent object of RESOURCE into the OBJECT field
+so that it can be fed to the console.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-140" class="outline-3">
+<h3 id="sec-140">LOAD-USER-INIT-FILE </h3>
+<div class="outline-text-3" id="text-140">
+
+</div>
+
+</div>
+
+<div id="outline-container-141" class="outline-3">
+<h3 id="sec-141">MAKE-EVENT </h3>
+<div class="outline-text-3" id="text-141">
+
+
+</div>
+
+<div id="outline-container-141-1" class="outline-4">
+<h4 id="sec-141-1">Arguments </h4>
+<div class="outline-text-4" id="text-141-1">
+
+<p>(SDL-KEY SDL-MODS)
+</p></div>
+
+</div>
+
+<div id="outline-container-141-2" class="outline-4">
+<h4 id="sec-141-2">Documentation </h4>
+<div class="outline-text-4" id="text-141-2">
+
+<p>Create a normalized event out of the SDL data SDL-KEY and SDL-MODS.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-142" class="outline-3">
+<h3 id="sec-142">MAKE-FIELD-INITIALIZER </h3>
+<div class="outline-text-3" id="text-142">
+
+
+</div>
+
+<div id="outline-container-142-1" class="outline-4">
+<h4 id="sec-142-1">Arguments </h4>
+<div class="outline-text-4" id="text-142-1">
+
+<p>(DESCRIPTOR)
+</p></div>
+
+</div>
+
+<div id="outline-container-142-2" class="outline-4">
+<h4 id="sec-142-2">Documentation </h4>
+<div class="outline-text-4" id="text-142-2">
+
+<p>Create a setf statement that initializes a field.
+The initform is taken from DESCRIPTOR. If there is no initform
+specified, no setf statement is generated, because in this case the
+slot value is inherited.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-143" class="outline-3">
+<h3 id="sec-143">MAKE-FIELD-INITIALIZER-BODY </h3>
+<div class="outline-text-3" id="text-143">
+
+</div>
+
+</div>
+
+<div id="outline-container-144" class="outline-3">
+<h3 id="sec-144">MAKE-FORMATTED-STRING </h3>
+<div class="outline-text-3" id="text-144">
+
+</div>
+
+</div>
+
+<div id="outline-container-145" class="outline-3">
+<h3 id="sec-145">MAKE-KEY-MODIFIER-SYMBOL </h3>
+<div class="outline-text-3" id="text-145">
+
+
+</div>
+
+<div id="outline-container-145-1" class="outline-4">
+<h4 id="sec-145-1">Arguments </h4>
+<div class="outline-text-4" id="text-145-1">
+
+<p>(SDL-MOD)
+</p></div>
+
+</div>
+
+<div id="outline-container-145-2" class="outline-4">
+<h4 id="sec-145-2">Documentation </h4>
+<div class="outline-text-4" id="text-145-2">
+
+<p>Translate from the SDL key modifier symbol SDL-MOD to our own
+key event symbols.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-146" class="outline-3">
+<h3 id="sec-146">MAKE-KEY-STRING </h3>
+<div class="outline-text-3" id="text-146">
+
+
+</div>
+
+<div id="outline-container-146-1" class="outline-4">
+<h4 id="sec-146-1">Arguments </h4>
+<div class="outline-text-4" id="text-146-1">
+
+<p>(SDL-KEY)
+</p></div>
+
+</div>
+
+<div id="outline-container-146-2" class="outline-4">
+<h4 id="sec-146-2">Documentation </h4>
+<div class="outline-text-4" id="text-146-2">
+
+<p>Translate from :SDL-KEY-X to the string "X".
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-147" class="outline-3">
+<h3 id="sec-147">MAKE-KEYWORD </h3>
+<div class="outline-text-3" id="text-147">
+
+
+</div>
+
+<div id="outline-container-147-1" class="outline-4">
+<h4 id="sec-147-1">Arguments </h4>
+<div class="outline-text-4" id="text-147-1">
+
+<p>(S)
+</p></div>
+
+</div>
+
+<div id="outline-container-147-2" class="outline-4">
+<h4 id="sec-147-2">Documentation </h4>
+<div class="outline-text-4" id="text-147-2">
+
+<p>Make the symbol or string S into a keyword symbol.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-148" class="outline-3">
+<h3 id="sec-148">MAKE-OBJECT </h3>
+<div class="outline-text-3" id="text-148">
+
+</div>
+
+</div>
+
+<div id="outline-container-149" class="outline-3">
+<h3 id="sec-149">MAKE-QUEUE </h3>
+<div class="outline-text-3" id="text-149">
+
+
+</div>
+
+<div id="outline-container-149-1" class="outline-4">
+<h4 id="sec-149-1">Arguments </h4>
+<div class="outline-text-4" id="text-149-1">
+
+<p>(&amp;KEY ((HEAD DUM412) NIL) ((TAIL DUM413) NIL) ((COUNT DUM414) NIL)
+ ((MAX DUM415) NIL))
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-150" class="outline-3">
+<h3 id="sec-150">MAKE-SPECIAL-VARIABLE-NAME </h3>
+<div class="outline-text-3" id="text-150">
+
+
+</div>
+
+<div id="outline-container-150-1" class="outline-4">
+<h4 id="sec-150-1">Arguments </h4>
+<div class="outline-text-4" id="text-150-1">
+
+<p>(S)
+</p></div>
+
+</div>
+
+<div id="outline-container-150-2" class="outline-4">
+<h4 id="sec-150-2">Documentation </h4>
+<div class="outline-text-4" id="text-150-2">
+
+<p>Make the symbol S into a special variable name. This is used to
+make the names of the objects made with `define-prototype'.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-151" class="outline-3">
+<h3 id="sec-151">MAKE-STAT </h3>
+<div class="outline-text-3" id="text-151">
+
+
+</div>
+
+<div id="outline-container-151-1" class="outline-4">
+<h4 id="sec-151-1">Arguments </h4>
+<div class="outline-text-4" id="text-151-1">
+
+<p>(&amp;KEY BASE MIN MAX DELTA UNIT)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-152" class="outline-3">
+<h3 id="sec-152">MESSAGE </h3>
+<div class="outline-text-3" id="text-152">
+
+
+</div>
+
+<div id="outline-container-152-1" class="outline-4">
+<h4 id="sec-152-1">Arguments </h4>
+<div class="outline-text-4" id="text-152-1">
+
+<p>(FORMAT-STRING &amp;REST ARGS)
+</p></div>
+
+</div>
+
+<div id="outline-container-152-2" class="outline-4">
+<h4 id="sec-152-2">Documentation </h4>
+<div class="outline-text-4" id="text-152-2">
+
+<p>Print a log message to the standard output.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-153" class="outline-3">
+<h3 id="sec-153">MESSAGE-SYMBOL </h3>
+<div class="outline-text-3" id="text-153">
+
+
+</div>
+
+<div id="outline-container-153-1" class="outline-4">
+<h4 id="sec-153-1">Arguments </h4>
+<div class="outline-text-4" id="text-153-1">
+
+<p>(STRING DELIMITER)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-154" class="outline-3">
+<h3 id="sec-154">MIDPOINT </h3>
+<div class="outline-text-3" id="text-154">
+
+
+</div>
+
+<div id="outline-container-154-1" class="outline-4">
+<h4 id="sec-154-1">Arguments </h4>
+<div class="outline-text-4" id="text-154-1">
+
+<p>(A B)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-155" class="outline-3">
+<h3 id="sec-155">NO-SUCH-FIELD </h3>
+<div class="outline-text-3" id="text-155">
+
+</div>
+
+</div>
+
+<div id="outline-container-156" class="outline-3">
+<h3 id="sec-156">NORMALIZE-EVENT </h3>
+<div class="outline-text-3" id="text-156">
+
+
+</div>
+
+<div id="outline-container-156-1" class="outline-4">
+<h4 id="sec-156-1">Arguments </h4>
+<div class="outline-text-4" id="text-156-1">
+
+<p>(EVENT)
+</p></div>
+
+</div>
+
+<div id="outline-container-156-2" class="outline-4">
+<h4 id="sec-156-2">Documentation </h4>
+<div class="outline-text-4" id="text-156-2">
+
+<p>Convert EVENT to a normal form suitable for `equal' comparisons.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-157" class="outline-3">
+<h3 id="sec-157">NULL-PARENT </h3>
+<div class="outline-text-3" id="text-157">
+
+</div>
+
+</div>
+
+<div id="outline-container-158" class="outline-3">
+<h3 id="sec-158">OBJECT </h3>
+<div class="outline-text-3" id="text-158">
+
+
+</div>
+
+<div id="outline-container-158-1" class="outline-4">
+<h4 id="sec-158-1">Arguments </h4>
+<div class="outline-text-4" id="text-158-1">
+
+<p>(CONDITION)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-159" class="outline-3">
+<h3 id="sec-159">OBJECT-ADDRESS-STRING </h3>
+<div class="outline-text-3" id="text-159">
+
+
+</div>
+
+<div id="outline-container-159-1" class="outline-4">
+<h4 id="sec-159-1">Arguments </h4>
+<div class="outline-text-4" id="text-159-1">
+
+<p>(OB)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-160" class="outline-3">
+<h3 id="sec-160">OBJECT-FIELDS </h3>
+<div class="outline-text-3" id="text-160">
+
+
+</div>
+
+<div id="outline-container-160-1" class="outline-4">
+<h4 id="sec-160-1">Arguments </h4>
+<div class="outline-text-4" id="text-160-1">
+
+<p>(INSTANCE)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-161" class="outline-3">
+<h3 id="sec-161">OBJECT-NAME </h3>
+<div class="outline-text-3" id="text-161">
+
+
+</div>
+
+<div id="outline-container-161-1" class="outline-4">
+<h4 id="sec-161-1">Arguments </h4>
+<div class="outline-text-4" id="text-161-1">
+
+<p>(INSTANCE)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-162" class="outline-3">
+<h3 id="sec-162">OBJECT-PARENT </h3>
+<div class="outline-text-3" id="text-162">
+
+
+</div>
+
+<div id="outline-container-162-1" class="outline-4">
+<h4 id="sec-162-1">Arguments </h4>
+<div class="outline-text-4" id="text-162-1">
+
+<p>(INSTANCE)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-163" class="outline-3">
+<h3 id="sec-163">ONE-OF </h3>
+<div class="outline-text-3" id="text-163">
+
+
+</div>
+
+<div id="outline-container-163-1" class="outline-4">
+<h4 id="sec-163-1">Arguments </h4>
+<div class="outline-text-4" id="text-163-1">
+
+<p>(SET)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-164" class="outline-3">
+<h3 id="sec-164">OPERATION-SYMBOL </h3>
+<div class="outline-text-3" id="text-164">
+
+
+</div>
+
+<div id="outline-container-164-1" class="outline-4">
+<h4 id="sec-164-1">Arguments </h4>
+<div class="outline-text-4" id="text-164-1">
+
+<p>(STRING DELIMITER)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-165" class="outline-3">
+<h3 id="sec-165">OPPOSITE-DIRECTION </h3>
+<div class="outline-text-3" id="text-165">
+
+
+</div>
+
+<div id="outline-container-165-1" class="outline-4">
+<h4 id="sec-165-1">Arguments </h4>
+<div class="outline-text-4" id="text-165-1">
+
+<p>(DIRECTION)
+</p></div>
+
+</div>
+
+<div id="outline-container-165-2" class="outline-4">
+<h4 id="sec-165-2">Documentation </h4>
+<div class="outline-text-4" id="text-165-2">
+
+<p>Return the direction keyword that is the opposite direction from
+DIRECTION.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-166" class="outline-3">
+<h3 id="sec-166">OVERLAY </h3>
+<div class="outline-text-3" id="text-166">
+
+</div>
+
+</div>
+
+<div id="outline-container-167" class="outline-3">
+<h3 id="sec-167">PERCENT-OF-TIME </h3>
+<div class="outline-text-3" id="text-167">
+
+
+</div>
+
+<div id="outline-container-167-1" class="outline-4">
+<h4 id="sec-167-1">Arguments </h4>
+<div class="outline-text-4" id="text-167-1">
+
+<p>(&amp;REST ARGS)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-168" class="outline-3">
+<h3 id="sec-168">PLASMA-RECT </h3>
+<div class="outline-text-3" id="text-168">
+
+</div>
+
+</div>
+
+<div id="outline-container-169" class="outline-3">
+<h3 id="sec-169">PLAY </h3>
+<div class="outline-text-3" id="text-169">
+
+
+</div>
+
+<div id="outline-container-169-1" class="outline-4">
+<h4 id="sec-169-1">Arguments </h4>
+<div class="outline-text-4" id="text-169-1">
+
+<p>(&amp;OPTIONAL (MODULE-NAME standard))
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-170" class="outline-3">
+<h3 id="sec-170">PLAY-MUSIC </h3>
+<div class="outline-text-3" id="text-170">
+
+
+</div>
+
+<div id="outline-container-170-1" class="outline-4">
+<h4 id="sec-170-1">Arguments </h4>
+<div class="outline-text-4" id="text-170-1">
+
+<p>(MUSIC-NAME &amp;REST ARGS)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-171" class="outline-3">
+<h3 id="sec-171">PLAY-SAMPLE </h3>
+<div class="outline-text-3" id="text-171">
+
+
+</div>
+
+<div id="outline-container-171-1" class="outline-4">
+<h4 id="sec-171-1">Arguments </h4>
+<div class="outline-text-4" id="text-171-1">
+
+<p>(SAMPLE-NAME &amp;REST ARGS)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-172" class="outline-3">
+<h3 id="sec-172">POLL-JOYSTICK-AXIS </h3>
+<div class="outline-text-3" id="text-172">
+
+
+</div>
+
+<div id="outline-container-172-1" class="outline-4">
+<h4 id="sec-172-1">Arguments </h4>
+<div class="outline-text-4" id="text-172-1">
+
+<p>(AXIS)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-173" class="outline-3">
+<h3 id="sec-173">QUEUE </h3>
+<div class="outline-text-3" id="text-173">
+
+
+</div>
+
+<div id="outline-container-173-1" class="outline-4">
+<h4 id="sec-173-1">Arguments </h4>
+<div class="outline-text-4" id="text-173-1">
+
+<p>(ITEM Q)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-174" class="outline-3">
+<h3 id="sec-174">QUEUE-COUNT </h3>
+<div class="outline-text-3" id="text-174">
+
+</div>
+
+</div>
+
+<div id="outline-container-175" class="outline-3">
+<h3 id="sec-175">QUEUE-HEAD </h3>
+<div class="outline-text-3" id="text-175">
+
+</div>
+
+</div>
+
+<div id="outline-container-176" class="outline-3">
+<h3 id="sec-176">QUEUE-MAX </h3>
+<div class="outline-text-3" id="text-176">
+
+</div>
+
+</div>
+
+<div id="outline-container-177" class="outline-3">
+<h3 id="sec-177">QUEUE-MESSAGE </h3>
+<div class="outline-text-3" id="text-177">
+
+
+</div>
+
+<div id="outline-container-177-1" class="outline-4">
+<h4 id="sec-177-1">Arguments </h4>
+<div class="outline-text-4" id="text-177-1">
+
+<p>(SENDER METHOD-KEY RECEIVER ARGS)
+</p></div>
+
+</div>
+
+<div id="outline-container-177-2" class="outline-4">
+<h4 id="sec-177-2">Documentation </h4>
+<div class="outline-text-4" id="text-177-2">
+
+<p>Enter a message into the current `*message-queue*'.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-178" class="outline-3">
+<h3 id="sec-178">QUEUE-TAIL </h3>
+<div class="outline-text-3" id="text-178">
+
+</div>
+
+</div>
+
+<div id="outline-container-179" class="outline-3">
+<h3 id="sec-179">QUEUED-MESSAGES-P </h3>
+<div class="outline-text-3" id="text-179">
+
+
+</div>
+
+<div id="outline-container-179-1" class="outline-4">
+<h4 id="sec-179-1">Documentation </h4>
+<div class="outline-text-4" id="text-179-1">
+
+<p>Return non-nil if there are queued messages.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-180" class="outline-3">
+<h3 id="sec-180">QUIT </h3>
+<div class="outline-text-3" id="text-180">
+
+
+</div>
+
+<div id="outline-container-180-1" class="outline-4">
+<h4 id="sec-180-1">Arguments </h4>
+<div class="outline-text-4" id="text-180-1">
+
+<p>(&amp;OPTIONAL SHUTDOWN)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-181" class="outline-3">
+<h3 id="sec-181">RANDOM-DIRECTION </h3>
+<div class="outline-text-3" id="text-181">
+
+</div>
+
+</div>
+
+<div id="outline-container-182" class="outline-3">
+<h3 id="sec-182">READ-PAK </h3>
+<div class="outline-text-3" id="text-182">
+
+
+</div>
+
+<div id="outline-container-182-1" class="outline-4">
+<h4 id="sec-182-1">Arguments </h4>
+<div class="outline-text-4" id="text-182-1">
+
+<p>(FILENAME)
+</p></div>
+
+</div>
+
+<div id="outline-container-182-2" class="outline-4">
+<h4 id="sec-182-2">Documentation </h4>
+<div class="outline-text-4" id="text-182-2">
+
+<p>Return a list of resources from the PAK file FILENAME.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-183" class="outline-3">
+<h3 id="sec-183">READ-SEXP-FROM-FILE </h3>
+<div class="outline-text-3" id="text-183">
+
+
+</div>
+
+<div id="outline-container-183-1" class="outline-4">
+<h4 id="sec-183-1">Arguments </h4>
+<div class="outline-text-4" id="text-183-1">
+
+<p>(FILENAME)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-184" class="outline-3">
+<h3 id="sec-184">RENDER-FORMATTED-LINE </h3>
+<div class="outline-text-3" id="text-184">
+
+
+</div>
+
+<div id="outline-container-184-1" class="outline-4">
+<h4 id="sec-184-1">Arguments </h4>
+<div class="outline-text-4" id="text-184-1">
+
+<p>(LINE X Y &amp;KEY DESTINATION (FONT <b>DEFAULT-FONT</b>))
+</p></div>
+
+</div>
+
+<div id="outline-container-184-2" class="outline-4">
+<h4 id="sec-184-2">Documentation </h4>
+<div class="outline-text-4" id="text-184-2">
+
+<p>Render the formatted LINE at position X,Y on the image DESTINATION.
+Return the height of the rendered line.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-185" class="outline-3">
+<h3 id="sec-185">RENDER-FORMATTED-PARAGRAPH </h3>
+<div class="outline-text-3" id="text-185">
+
+</div>
+
+</div>
+
+<div id="outline-container-186" class="outline-3">
+<h3 id="sec-186">RENDER-FORMATTED-STRING </h3>
+<div class="outline-text-3" id="text-186">
+
+
+</div>
+
+<div id="outline-container-186-1" class="outline-4">
+<h4 id="sec-186-1">Arguments </h4>
+<div class="outline-text-4" id="text-186-1">
+
+<p>(FORMATTED-STRING X Y &amp;KEY (TEXT-OFFSET 0) DESTINATION)
+</p></div>
+
+</div>
+
+<div id="outline-container-186-2" class="outline-4">
+<h4 id="sec-186-2">Documentation </h4>
+<div class="outline-text-4" id="text-186-2">
+
+<p>Render the FORMATTED-STRING to position X,Y on the image DESTINATION.
+If TEXT-OFFSET is provided, add that many pixels to the Y coordinate
+for rendered text in the line. (This is used to make text align with
+inline images that are larger than the text height&mdash;see also
+`render-formatted-line').
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-187" class="outline-3">
+<h3 id="sec-187">RENDER-PLASMA </h3>
+<div class="outline-text-3" id="text-187">
+
+
+</div>
+
+<div id="outline-container-187-1" class="outline-4">
+<h4 id="sec-187-1">Arguments </h4>
+<div class="outline-text-4" id="text-187-1">
+
+<p>(HEIGHT WIDTH &amp;KEY (GRAININESS 1.0) ARRAY)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-188" class="outline-3">
+<h3 id="sec-188">RESET </h3>
+<div class="outline-text-3" id="text-188">
+
+
+</div>
+
+<div id="outline-container-188-1" class="outline-4">
+<h4 id="sec-188-1">Arguments </h4>
+<div class="outline-text-4" id="text-188-1">
+
+<p>(&amp;OPTIONAL (MODULE-NAME standard))
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-189" class="outline-3">
+<h3 id="sec-189">RESET-JOYSTICK </h3>
+<div class="outline-text-3" id="text-189">
+
+</div>
+
+</div>
+
+<div id="outline-container-190" class="outline-3">
+<h3 id="sec-190">RESOURCE </h3>
+<div class="outline-text-3" id="text-190">
+
+</div>
+
+</div>
+
+<div id="outline-container-191" class="outline-3">
+<h3 id="sec-191">RESOURCE-TO-PLIST </h3>
+<div class="outline-text-3" id="text-191">
+
+
+</div>
+
+<div id="outline-container-191-1" class="outline-4">
+<h4 id="sec-191-1">Arguments </h4>
+<div class="outline-text-4" id="text-191-1">
+
+<p>(RES)
+</p></div>
+
+</div>
+
+<div id="outline-container-191-2" class="outline-4">
+<h4 id="sec-191-2">Documentation </h4>
+<div class="outline-text-4" id="text-191-2">
+
+<p>Convert the resource record RES into a property list.
+</p>
+<p>
+This prepares it for printing as part of a PAK file.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-192" class="outline-3">
+<h3 id="sec-192">RIGHT-HAND-SIDE </h3>
+<div class="outline-text-3" id="text-192">
+
+
+</div>
+
+<div id="outline-container-192-1" class="outline-4">
+<h4 id="sec-192-1">Arguments </h4>
+<div class="outline-text-4" id="text-192-1">
+
+<p>(RULE)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-193" class="outline-3">
+<h3 id="sec-193">ROLL </h3>
+<div class="outline-text-3" id="text-193">
+
+
+</div>
+
+<div id="outline-container-193-1" class="outline-4">
+<h4 id="sec-193-1">Arguments </h4>
+<div class="outline-text-4" id="text-193-1">
+
+<p>(ROLLS &amp;OPTIONAL (SIDES 6) (ADDS 0))
+</p></div>
+
+</div>
+
+<div id="outline-container-193-2" class="outline-4">
+<h4 id="sec-193-2">Documentation </h4>
+<div class="outline-text-4" id="text-193-2">
+
+<p>Total ROLLS rolls of a SIDES-sided die, then add ADDS.
+So 2d6+2 would be (roll 2 6 2).
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-194" class="outline-3">
+<h3 id="sec-194">ROLL-UNDER </h3>
+<div class="outline-text-3" id="text-194">
+
+
+</div>
+
+<div id="outline-container-194-1" class="outline-4">
+<h4 id="sec-194-1">Arguments </h4>
+<div class="outline-text-4" id="text-194-1">
+
+<p>(N SIDES)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-195" class="outline-3">
+<h3 id="sec-195">RUN </h3>
+<div class="outline-text-3" id="text-195">
+
+</div>
+
+</div>
+
+<div id="outline-container-196" class="outline-3">
+<h3 id="sec-196">RUN-HOOK </h3>
+<div class="outline-text-3" id="text-196">
+
+
+</div>
+
+<div id="outline-container-196-1" class="outline-4">
+<h4 id="sec-196-1">Arguments </h4>
+<div class="outline-text-4" id="text-196-1">
+
+<p>(HOOK)
+</p></div>
+
+</div>
+
+<div id="outline-container-196-2" class="outline-4">
+<h4 id="sec-196-2">Documentation </h4>
+<div class="outline-text-4" id="text-196-2">
+
+<p>Call all the functions in HOOK, in list order.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-197" class="outline-3">
+<h3 id="sec-197">SEEK-MUSIC </h3>
+<div class="outline-text-3" id="text-197">
+
+</div>
+
+</div>
+
+<div id="outline-container-198" class="outline-3">
+<h3 id="sec-198">SELF </h3>
+<div class="outline-text-3" id="text-198">
+
+</div>
+
+</div>
+
+<div id="outline-container-199" class="outline-3">
+<h3 id="sec-199">SEND </h3>
+<div class="outline-text-3" id="text-199">
+
+
+</div>
+
+<div id="outline-container-199-1" class="outline-4">
+<h4 id="sec-199-1">Arguments </h4>
+<div class="outline-text-4" id="text-199-1">
+
+<p>(SENDER METHOD OBJECT &amp;REST ARGS)
+</p></div>
+
+</div>
+
+<div id="outline-container-199-2" class="outline-4">
+<h4 id="sec-199-2">Documentation </h4>
+<div class="outline-text-4" id="text-199-2">
+
+<p>Invoke the method identified by the keyword METHOD on the OBJECT with ARGS.
+If the method is not found, attempt to forward the message. The SENDER
+argument is ignored for now.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-200" class="outline-3">
+<h3 id="sec-200">SEND-EVENT-TO-WIDGETS </h3>
+<div class="outline-text-3" id="text-200">
+
+
+</div>
+
+<div id="outline-container-200-1" class="outline-4">
+<h4 id="sec-200-1">Arguments </h4>
+<div class="outline-text-4" id="text-200-1">
+
+<p>(EVENT)
+</p></div>
+
+</div>
+
+<div id="outline-container-200-2" class="outline-4">
+<h4 id="sec-200-2">Documentation </h4>
+<div class="outline-text-4" id="text-200-2">
+
+<p>Attempt to deliver EVENT to each of the <b>active-widgets</b>
+one at a time (in list order) until one of them is found to have a
+matching keybinding, in which case the keybinding's corresponding
+function is triggered. If none of the widgets have a matching
+keybinding, nothing happens, and this function returns nil.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-201" class="outline-3">
+<h3 id="sec-201">SEND-QUEUE </h3>
+<div class="outline-text-3" id="text-201">
+
+
+</div>
+
+<div id="outline-container-201-1" class="outline-4">
+<h4 id="sec-201-1">Arguments </h4>
+<div class="outline-text-4" id="text-201-1">
+
+<p>(SENDER METHOD-KEY OBJECT &amp;REST ARGS)
+</p></div>
+
+</div>
+
+<div id="outline-container-201-2" class="outline-4">
+<h4 id="sec-201-2">Documentation </h4>
+<div class="outline-text-4" id="text-201-2">
+
+<p>Queue a message. Returns nil.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-202" class="outline-3">
+<h3 id="sec-202">SEND-SUPER </h3>
+<div class="outline-text-3" id="text-202">
+
+</div>
+
+</div>
+
+<div id="outline-container-203" class="outline-3">
+<h3 id="sec-203">SET-BROWSER </h3>
+<div class="outline-text-3" id="text-203">
+
+</div>
+
+</div>
+
+<div id="outline-container-204" class="outline-3">
+<h3 id="sec-204">SET-FIELD-OPTION-VALUE </h3>
+<div class="outline-text-3" id="text-204">
+
+
+</div>
+
+<div id="outline-container-204-1" class="outline-4">
+<h4 id="sec-204-1">Arguments </h4>
+<div class="outline-text-4" id="text-204-1">
+
+<p>(FIELD OBJECT OPTION VALUE)
+</p></div>
+
+</div>
+
+<div id="outline-container-204-2" class="outline-4">
+<h4 id="sec-204-2">Documentation </h4>
+<div class="outline-text-4" id="text-204-2">
+
+<p>Set the value of the OPTION for FIELD in OBJECT to VALUE.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-205" class="outline-3">
+<h3 id="sec-205">SET-FIELD-OPTIONS </h3>
+<div class="outline-text-3" id="text-205">
+
+
+</div>
+
+<div id="outline-container-205-1" class="outline-4">
+<h4 id="sec-205-1">Arguments </h4>
+<div class="outline-text-4" id="text-205-1">
+
+<p>(FIELD OBJECT OPTIONS)
+</p></div>
+
+</div>
+
+<div id="outline-container-205-2" class="outline-4">
+<h4 id="sec-205-2">Documentation </h4>
+<div class="outline-text-4" id="text-205-2">
+
+<p>Set the options property list to OPTIONS for FIELD in OBJECT.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-206" class="outline-3">
+<h3 id="sec-206">SET-FIELD-VALUE </h3>
+<div class="outline-text-3" id="text-206">
+
+
+</div>
+
+<div id="outline-container-206-1" class="outline-4">
+<h4 id="sec-206-1">Arguments </h4>
+<div class="outline-text-4" id="text-206-1">
+
+<p>(FIELD OBJECT VALUE)
+</p></div>
+
+</div>
+
+<div id="outline-container-206-2" class="outline-4">
+<h4 id="sec-206-2">Documentation </h4>
+<div class="outline-text-4" id="text-206-2">
+
+<p>Set OBJECT's FIELD to VALUE.
+The new value overrides any inherited value.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-207" class="outline-3">
+<h3 id="sec-207">SET-FRAME-RATE </h3>
+<div class="outline-text-3" id="text-207">
+
+
+</div>
+
+<div id="outline-container-207-1" class="outline-4">
+<h4 id="sec-207-1">Arguments </h4>
+<div class="outline-text-4" id="text-207-1">
+
+<p>(RATE)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-208" class="outline-3">
+<h3 id="sec-208">SET-MESSAGE-VERBOSITIES </h3>
+<div class="outline-text-3" id="text-208">
+
+
+</div>
+
+<div id="outline-container-208-1" class="outline-4">
+<h4 id="sec-208-1">Arguments </h4>
+<div class="outline-text-4" id="text-208-1">
+
+<p>(PLIST &amp;OPTIONAL (INCLUDE-DEFAULT T))
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-209" class="outline-3">
+<h3 id="sec-209">SET-MUSIC-VOLUME </h3>
+<div class="outline-text-3" id="text-209">
+
+
+</div>
+
+<div id="outline-container-209-1" class="outline-4">
+<h4 id="sec-209-1">Arguments </h4>
+<div class="outline-text-4" id="text-209-1">
+
+<p>(NUMBER)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-210" class="outline-3">
+<h3 id="sec-210">SET-SCREEN-HEIGHT </h3>
+<div class="outline-text-3" id="text-210">
+
+
+</div>
+
+<div id="outline-container-210-1" class="outline-4">
+<h4 id="sec-210-1">Arguments </h4>
+<div class="outline-text-4" id="text-210-1">
+
+<p>(HEIGHT)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-211" class="outline-3">
+<h3 id="sec-211">SET-SCREEN-WIDTH </h3>
+<div class="outline-text-3" id="text-211">
+
+
+</div>
+
+<div id="outline-container-211-1" class="outline-4">
+<h4 id="sec-211-1">Arguments </h4>
+<div class="outline-text-4" id="text-211-1">
+
+<p>(WIDTH)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-212" class="outline-3">
+<h3 id="sec-212">SET-TIMER-INTERVAL </h3>
+<div class="outline-text-3" id="text-212">
+
+
+</div>
+
+<div id="outline-container-212-1" class="outline-4">
+<h4 id="sec-212-1">Arguments </h4>
+<div class="outline-text-4" id="text-212-1">
+
+<p>(INTERVAL)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-213" class="outline-3">
+<h3 id="sec-213">SHOW-WIDGETS </h3>
+<div class="outline-text-3" id="text-213">
+
+
+</div>
+
+<div id="outline-container-213-1" class="outline-4">
+<h4 id="sec-213-1">Documentation </h4>
+<div class="outline-text-4" id="text-213-1">
+
+<p>Draw the active widgets to the screen.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-214" class="outline-3">
+<h3 id="sec-214">SPLIT-STRING-ON-LINES </h3>
+<div class="outline-text-3" id="text-214">
+
+
+</div>
+
+<div id="outline-container-214-1" class="outline-4">
+<h4 id="sec-214-1">Arguments </h4>
+<div class="outline-text-4" id="text-214-1">
+
+<p>(STRING)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-215" class="outline-3">
+<h3 id="sec-215">STAT-VALUE </h3>
+<div class="outline-text-3" id="text-215">
+
+</div>
+
+</div>
+
+<div id="outline-container-216" class="outline-3">
+<h3 id="sec-216">STEP-IN-DIRECTION </h3>
+<div class="outline-text-3" id="text-216">
+
+
+</div>
+
+<div id="outline-container-216-1" class="outline-4">
+<h4 id="sec-216-1">Arguments </h4>
+<div class="outline-text-4" id="text-216-1">
+
+<p>(ROW COLUMN DIRECTION &amp;OPTIONAL (N 1))
+</p></div>
+
+</div>
+
+<div id="outline-container-216-2" class="outline-4">
+<h4 id="sec-216-2">Documentation </h4>
+<div class="outline-text-4" id="text-216-2">
+
+<p>Return the point ROW, COLUMN moved by n squares in DIRECTION.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-217" class="outline-3">
+<h3 id="sec-217">SUBDIVIDE-RECT </h3>
+<div class="outline-text-3" id="text-217">
+
+
+</div>
+
+<div id="outline-container-217-1" class="outline-4">
+<h4 id="sec-217-1">Arguments </h4>
+<div class="outline-text-4" id="text-217-1">
+
+<p>(R)
+</p></div>
+
+</div>
+
+<div id="outline-container-217-2" class="outline-4">
+<h4 id="sec-217-2">Documentation </h4>
+<div class="outline-text-4" id="text-217-2">
+
+<p>Subdivide rectangle R into four rectangles joined at the
+center point of the original R, and return the list of four
+rectangles, or NIL if they would be smaller than one pixel.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-218" class="outline-3">
+<h3 id="sec-218">TRACE-COLUMN </h3>
+<div class="outline-text-3" id="text-218">
+
+
+</div>
+
+<div id="outline-container-218-1" class="outline-4">
+<h4 id="sec-218-1">Arguments </h4>
+<div class="outline-text-4" id="text-218-1">
+
+<p>(TRACE-FUNCTION COLUMN Y0 Y1)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-219" class="outline-3">
+<h3 id="sec-219">TRACE-LINE </h3>
+<div class="outline-text-3" id="text-219">
+
+
+</div>
+
+<div id="outline-container-219-1" class="outline-4">
+<h4 id="sec-219-1">Arguments </h4>
+<div class="outline-text-4" id="text-219-1">
+
+<p>(TRACE-FUNCTION X0 Y0 X1 Y1)
+</p></div>
+
+</div>
+
+<div id="outline-container-219-2" class="outline-4">
+<h4 id="sec-219-2">Documentation </h4>
+<div class="outline-text-4" id="text-219-2">
+
+<p>Trace a line between X0,Y0 and X1,Y1.
+calling TRACE-FUNCTION at each point of the line.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-220" class="outline-3">
+<h3 id="sec-220">TRACE-OCTAGON </h3>
+<div class="outline-text-3" id="text-220">
+
+
+</div>
+
+<div id="outline-container-220-1" class="outline-4">
+<h4 id="sec-220-1">Arguments </h4>
+<div class="outline-text-4" id="text-220-1">
+
+<p>(TRACE-FUNCTION CENTER-ROW CENTER-COLUMN RADIUS &amp;OPTIONAL THICKEN)
+</p></div>
+
+</div>
+
+<div id="outline-container-220-2" class="outline-4">
+<h4 id="sec-220-2">Documentation </h4>
+<div class="outline-text-4" id="text-220-2">
+
+<p>Call TRACE-FUNCTION for each point on the octagon of radius RADIUS
+centered at row ROW, column COLUMN. When THICKEN is non-nil, thicken
+the diagonals of the rectangle in order to facilitate raycasting.
+It's an ugly hack, but it helps reduce artifacts.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-221" class="outline-3">
+<h3 id="sec-221">TRACE-RECTANGLE </h3>
+<div class="outline-text-3" id="text-221">
+
+
+</div>
+
+<div id="outline-container-221-1" class="outline-4">
+<h4 id="sec-221-1">Arguments </h4>
+<div class="outline-text-4" id="text-221-1">
+
+<p>(TRACE-FUNCTION ROW COLUMN HEIGHT WIDTH &amp;OPTIONAL FILL)
+</p></div>
+
+</div>
+
+<div id="outline-container-221-2" class="outline-4">
+<h4 id="sec-221-2">Documentation </h4>
+<div class="outline-text-4" id="text-221-2">
+
+<p>Call TRACE-FUNCTION for each point on the rectangle of HEIGHT and
+WIDTH with top left corner at ROW COLUMN. When FILL is non-nil, fill
+the rectangle.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-222" class="outline-3">
+<h3 id="sec-222">TRACE-ROW </h3>
+<div class="outline-text-3" id="text-222">
+
+
+</div>
+
+<div id="outline-container-222-1" class="outline-4">
+<h4 id="sec-222-1">Arguments </h4>
+<div class="outline-text-4" id="text-222-1">
+
+<p>(TRACE-FUNCTION ROW X0 X1)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-223" class="outline-3">
+<h3 id="sec-223">TRANSFORM-DECLARATION-FIELD-DESCRIPTOR </h3>
+<div class="outline-text-3" id="text-223">
+
+
+</div>
+
+<div id="outline-container-223-1" class="outline-4">
+<h4 id="sec-223-1">Arguments </h4>
+<div class="outline-text-4" id="text-223-1">
+
+<p>(D)
+</p></div>
+
+</div>
+
+<div id="outline-container-223-2" class="outline-4">
+<h4 id="sec-223-2">Documentation </h4>
+<div class="outline-text-4" id="text-223-2">
+
+<p>Convert the declaration-field-descriptor D into a canonical field
+descriptor.
+</p>
+<p>
+The descriptor D must be either a symbol, in which case a field is
+defined with no options, or a list of the form:
+</p>
+<p>
+ (:FIELD-NAME . OPTIONS)
+</p>
+<p>
+Where OPTIONS is a property list of field options.
+</p>
+<p>
+The returned entry will be of the form:
+</p>
+<p>
+ (:FIELD-NAME OPTIONS) 
+</p>
+<p>
+and will be suitable for use with the functions that operate on field
+descriptors, and for inclusion in the association list
+&lt;field-descriptors&gt;.
+</p>
+<p>
+See also `define-prototype'.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-224" class="outline-3">
+<h3 id="sec-224">TRANSFORM-FIELD-REFERENCE </h3>
+<div class="outline-text-3" id="text-224">
+
+
+</div>
+
+<div id="outline-container-224-1" class="outline-4">
+<h4 id="sec-224-1">Arguments </h4>
+<div class="outline-text-4" id="text-224-1">
+
+<p>(REF)
+</p></div>
+
+</div>
+
+<div id="outline-container-224-2" class="outline-4">
+<h4 id="sec-224-2">Documentation </h4>
+<div class="outline-text-4" id="text-224-2">
+
+<p>Change the symbol REF from &lt;foo&gt; to (field-value :foo self).
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-225" class="outline-3">
+<h3 id="sec-225">TRANSFORM-METHOD-BODY </h3>
+<div class="outline-text-3" id="text-225">
+
+
+</div>
+
+<div id="outline-container-225-1" class="outline-4">
+<h4 id="sec-225-1">Arguments </h4>
+<div class="outline-text-4" id="text-225-1">
+
+<p>(BODY)
+</p></div>
+
+</div>
+
+<div id="outline-container-225-2" class="outline-4">
+<h4 id="sec-225-2">Documentation </h4>
+<div class="outline-text-4" id="text-225-2">
+
+<p>Process the forms in BODY to transform field references.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-226" class="outline-3">
+<h3 id="sec-226">TRANSFORM-TREE </h3>
+<div class="outline-text-3" id="text-226">
+
+
+</div>
+
+<div id="outline-container-226-1" class="outline-4">
+<h4 id="sec-226-1">Arguments </h4>
+<div class="outline-text-4" id="text-226-1">
+
+<p>(TESTER TRANSFORMER TREE)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-227" class="outline-3">
+<h3 id="sec-227">UNQUEUE </h3>
+<div class="outline-text-3" id="text-227">
+
+
+</div>
+
+<div id="outline-container-227-1" class="outline-4">
+<h4 id="sec-227-1">Arguments </h4>
+<div class="outline-text-4" id="text-227-1">
+
+<p>(Q)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-228" class="outline-3">
+<h3 id="sec-228">UNQUEUE-MESSAGE </h3>
+<div class="outline-text-3" id="text-228">
+
+
+</div>
+
+<div id="outline-container-228-1" class="outline-4">
+<h4 id="sec-228-1">Documentation </h4>
+<div class="outline-text-4" id="text-228-1">
+
+<p>Remove the next message from the queue. The returned message is a
+list of the form (METHOD-KEY RECEIVER ARGS).
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-229" class="outline-3">
+<h3 id="sec-229">WHILE </h3>
+<div class="outline-text-3" id="text-229">
+
+
+</div>
+
+<div id="outline-container-229-1" class="outline-4">
+<h4 id="sec-229-1">Arguments </h4>
+<div class="outline-text-4" id="text-229-1">
+
+<p>(&amp;REST ARGS)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-230" class="outline-3">
+<h3 id="sec-230">WITH-MESSAGE-QUEUE </h3>
+<div class="outline-text-3" id="text-230">
+
+
+</div>
+
+<div id="outline-container-230-1" class="outline-4">
+<h4 id="sec-230-1">Arguments </h4>
+<div class="outline-text-4" id="text-230-1">
+
+<p>(&amp;REST ARGS)
+</p></div>
+
+</div>
+
+<div id="outline-container-230-2" class="outline-4">
+<h4 id="sec-230-2">Documentation </h4>
+<div class="outline-text-4" id="text-230-2">
+
+<p>Run the BODY forms, capturing any queued output messages to the
+message queue resulting from the evaluation of EXPR.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-231" class="outline-3">
+<h3 id="sec-231">WITH-MESSAGE-SENDER </h3>
+<div class="outline-text-3" id="text-231">
+
+</div>
+
+</div>
+
+<div id="outline-container-232" class="outline-3">
+<h3 id="sec-232">WORLD </h3>
+<div class="outline-text-3" id="text-232">
+
+</div>
+
+</div>
+
+<div id="outline-container-233" class="outline-3">
+<h3 id="sec-233">WRITE-PAK </h3>
+<div class="outline-text-3" id="text-233">
+
+
+</div>
+
+<div id="outline-container-233-1" class="outline-4">
+<h4 id="sec-233-1">Arguments </h4>
+<div class="outline-text-4" id="text-233-1">
+
+<p>(FILENAME RESOURCES)
+</p></div>
+
+</div>
+
+<div id="outline-container-233-2" class="outline-4">
+<h4 id="sec-233-2">Documentation </h4>
+<div class="outline-text-4" id="text-233-2">
+
+<p>Write the RESOURCES to the PAK file FILENAME.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-234" class="outline-3">
+<h3 id="sec-234">WRITE-SEXP-TO-FILE </h3>
+<div class="outline-text-3" id="text-234">
+
+
+</div>
+
+<div id="outline-container-234-1" class="outline-4">
+<h4 id="sec-234-1">Arguments </h4>
+<div class="outline-text-4" id="text-234-1">
+
+<p>(FILENAME SEXP)
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-235" class="outline-3">
+<h3 id="sec-235">ZOOM-IMAGE </h3>
+<div class="outline-text-3" id="text-235">
+
+
+</div>
+
+<div id="outline-container-235-1" class="outline-4">
+<h4 id="sec-235-1">Arguments </h4>
+<div class="outline-text-4" id="text-235-1">
+
+<p>(IMAGE FACTOR)
+</p></div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:23:01 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

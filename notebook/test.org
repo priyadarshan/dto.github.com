@@ -1,0 +1,13 @@
+
+* First level heading --> h1 tag
+** Second level heading --> h2
+*** Third...
+
+ - Numbered lists
+ - 
+ - 
+
+http://dto.mamalala.org
+
+
+ /italics/ *bold* 

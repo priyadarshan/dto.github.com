@@ -1,0 +1,977 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>XIOMACS</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:22:47 EDT"/>
+<meta name="author" content="David T. O'Toole "/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">XIOMACS</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">xiomacs.org &mdash; hypermedia metaprogramming with org-babel </h2>
+<div class="outline-text-2" id="text-1">
+
+
+
+<p>
+XIOMACS is a format-agnostic media creation and processing tool
+suitable for making games and other interactive applications. 
+</p>
+<p>
+XIOMACS is based on <a href="http://www.gnu.org/software/emacs">GNU Emacs</a>. It delegates content processing to
+external <a href="http://lispgames.ath.cx/index.php/UsefulApplications">applications</a> like the GIMP, Pure Data, ImageMagick, FFMPEG,
+SBCL, and so on. XIOMACS uses <a href="http://en.wikipedia.org/wiki/Digital_asset_management">Digital Asset Management</a> (DAM)
+techniques to tag, annotate, store, and search a project's various
+text and binary files (code, images, sounds) as well as metadata
+describing the files. Because XIOMACS knows what applications are
+available to edit and process data of various formats, the user can
+forget about organizing hundreds of files and instead launch their
+favorite editors from a hierarchical <a href="http://orgmode.org">org-mode</a> tree view of the
+assets. The use of plain text files for metadata enables simple
+grep-based searches.
+</p>
+<p>
+With <a href="http://en.wikipedia.org/wiki/Dataflow">dataflow</a> and <a href="http://en.wikipedia.org/wiki/Literate_programming">literate programming</a> concepts from <a href="http://orgmode.org/worg/org-contrib/babel/">org-babel</a>, one
+can write Lisp programs that create or process assets automatically or
+semi-interactively. For example:
+</p>
+<ul>
+<li>Generating thumbnails for images. Image-dired already does this.
+</li>
+<li>Using ImageMagick to resample or otherwise process images
+</li>
+<li>Using Ecasound to play back or record sound via ecasound.el
+</li>
+<li>Converting an HD source video to lower definition and automatically
+   updating the result when the original is changed
+</li>
+<li>Converting Milkytracker XM to Ogg Vorbis automatically
+</li>
+<li>Control JACKD from emacs
+</li>
+<li>Live streaming
+</li>
+</ul>
+
+
+<p>
+Asset metadata can conform to the <a href="http://en.wikipedia.org/wiki/Dublin_Core">Dublin Core metadata</a> standard, and
+may also contain application-specific Lisp data meant for use by game
+engines. This metadata can be exported to a very simple text file
+format called PAK. PAK is trivially readable by both Common Lisp and
+Emacs Lisp, and simple reading/writing routines are included.
+</p>
+<p>
+Because Emacs' version control support is integrated with org-mode,
+you can version all the assets in a project from within Emacs.
+</p>
+
+
+
+<pre class="src src-emacs-lisp"><span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">Copyright (C) 2010  David O'Toole</span>
+
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">Author: David O'Toole &lt;<a href="mailto:dto&#64;gnu.org">dto&#64;gnu.org</a>&gt;</span>
+
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">This program is free software; you can redistribute it and/or modify</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">it under the terms of the GNU General Public License as published by</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">the Free Software Foundation, either version 3 of the License, or</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">(at your option) any later version.</span>
+
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">This program is distributed in the hope that it will be useful,</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">GNU General Public License for more details.</span>
+
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">You should have received a copy of the GNU General Public License</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</span>
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><a name="ID-eb7a8142-57e9-4dc2-b67b-5b6b328cdaa4" id="ID-eb7a8142-57e9-4dc2-b67b-5b6b328cdaa4"></a>Introduction </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+This work-in-progress article describes my approach to designing and
+developing games in Common Lisp, in a so-called <a href="http://en.wikipedia.org/wiki/Literate_programming">literate</a> style using
+<a href="http://www.gnu.org/software/emacs">GNU Emacs</a> and <a href="http://orgmode.org/worg/org-contrib/babel/">Org Babel.</a> My configurations and custom code are
+collected here in an org-mode essay containing executable Emacs Lisp
+code for a simple <a href="http://en.wikipedia.org/wiki/Digital_asset_management">Digital Asset Management</a> (DAM) system called
+"Xiomacs". The name is short for "<a href="http://en.wikipedia.org/wiki/Hypermedia">hypermedia</a> programming".
+</p>
+<p>
+Although this workbook is readable as a web page, it is best
+used interactively by opening it within GNU Emacs. Please download
+the raw version of this workbook, <a href="http://dto.github.com/notebook/xiomacs.org">xiomacs.org</a>
+</p>
+<p>
+The github page for this workbook is <a href="http://github.com/dto/xiomacs">http://github.com/dto/xiomacs</a>.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Motivation </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+In games development, especially solo or small-team scenarios,
+organizing assets becomes a significant problem. The "assets" of most
+programming projects are just code, and, if you're lucky, some
+documentation. Each object of the programmer's problem domain is
+associated with (probably) a chunk of code and a chunk of
+documentation.
+</p>
+<p>
+The typical literate programming solution covers writing and
+transforming related chunks of documentation and code, but there is no
+general notion of asset management where related assets can be of
+different types: Lisp code, Emacs Lisp code, C code, PNG images, WAV
+sounds, OGG music, plain text, formatted text, and more.
+</p>
+<p>
+In a video game, a game object (for example, an enemy spaceship) may
+be associated with any number of such resources. There will certainly
+be AI code (C, Lisp, etc), images, 3d models, textures, sounds, and so
+on. Creating, re-using, and re-mixing hundreds of game objects is hard
+when you have to maintain all these associations between files and
+code manually.  So that when I want to edit "the image associated with
+that yellow alien over there", I often have to hunt down the actual
+PNG files to edit, because the name of the PNG file never appears in
+the Lisp code&mdash;there's a third file mapping resource names to
+files. The indirection makes the engine more flexible, but it's
+another file to maintain.
+</p>
+<p>
+My experiments with Xiomacs are an attempt to apply <a href="http://orgmode.org/">Orgmode</a>
+organizational, publishing, and workflow tools to the problems of solo
+and small-group games development, with custom code and the unifying
+theme of literate programming.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Prerequisites </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+Xiomacs is based on <a href="http://orgmode.org">Orgmode</a> and <a href="http://orgmode.org/worg/org-contrib/babel/">Org Babel</a>, which are both <a href="http://www.gnu.org/software/emacs">GNU Emacs</a>
+packages. Being familiar with these programs will help understanding
+the rest of this document.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Hypermedia programming with Xiomacs </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+There are a few new terms to worry about: workbook, entry, asset,
+attachment, and chunk.
+</p>
+<p>
+Each "workbook" is just an org file&mdash;a collection of org entries
+describing collections of related assets and metadata. An asset is any
+relevant fragment of data, whether an external binary file (PNG, WAV)
+or data embedded in the entry itself (lisp, html, plaintext.) Each
+entry is given a unique UUID (<a href="http://en.wikipedia.org/wiki/Universally_Unique_Identifier">Universally Unique Identifier)</a> and the
+org entry with that UUID contains related asset data:
+</p>
+<ol>
+<li>Properties: for metadata. stored in the org properties drawer
+</li>
+<li>Attachments: to external asset chunks, with operations possible on those.
+               This is based on org's existing link/attachment
+               functionality. 
+</li>
+</ol>
+
+
+</div>
+
+<div id="outline-container-5-1" class="outline-4">
+<h4 id="sec-5-1"><span class="todo TODO"> TODO</span> does this work with binary files? </h4>
+<div class="outline-text-4" id="text-5-1">
+
+<ol>
+<li>Chunks: of embedded asset text (lisp code, plain text, c
+        code, etc) with org-babel
+</li>
+</ol>
+
+
+<p>
+I use the term "workbook" because with Babel the workflow and project
+management features of Org are now integrated into the programming
+process. You can use org tags to categorize and search entries by
+category across multiple workbooks. You can use TODO and work logging,
+version control, and launch external editors like the Gimp and
+Audacity. Publishing support means you can share workbooks easily on
+the Web, and Babel's noweb-style tangling means you can use true
+Literate Programming (in the classic Knuthian sense). Collaboration is
+possible with worg, and so on. And using org properties drawers to
+store metadata enables property search and processing via the org
+Properties API. Command-line media transcoding tools can be triggered
+by Babel, allowing further media workflow management.
+</p>
+<p>
+Because different kinds of media are being linked/embedded into one
+document, and because Org Babel can actually use external programs to
+execute and process all kinds of program data and files and commands,
+this could be a step toward a kind of language-agnostic "hypermedia
+programming".
+</p>
+<p>
+There will also be support for managing asset libraries, and packaging
+workbooks into self-contained tarballs for Web collaboration and
+publishing.
+</p>
+<p>
+These links provide some more background information:
+</p>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Hypermedia">Wikipedia page on Hypermedia</a>
+</li>
+<li><a href="http://en.wikipedia.org/wiki/Digital_asset_management">Digital Asset Management</a>
+</li>
+<li><a href="http://en.wikipedia.org/wiki/Dublin_Core">Dublin Core metadata on wikipedia</a>
+</li>
+<li><a href="http://dublincore.org/documents/usageguide/">Official Dublin Core users guide</a>
+</li>
+<li><a href="http://www.jboecker.de/2010/04/14/general-reference-filing-with-org-mode.html">General reference filing with Org Mode</a>
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">Entries: the building blocks of workbooks </h2>
+<div class="outline-text-2" id="text-6">
+
+
+<p>
+"Entry" is just a general term for an org heading and its content,
+which can of course contain any arrangement of further entries, each
+with its own properties and attachments. 
+</p>
+<p>
+See also @<i>&lt;info:org:Document Structure&gt;@</i> for more information on how Org
+files are organized.
+</p>
+<p>
+Entries are assigned UUID's (Universally Unique Identifiers)
+automatically when needed by org-mode.
+</p>
+
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="todo TODO"> TODO</span> tempo configuration and usage </h3>
+<div class="outline-text-3" id="text-6-1">
+
+
+
+
+
+<pre class="src src-emacs-lisp">(tempo-define-template <span style="color: #8b7d7b;">"chunk"</span>
+  '(n <span style="color: #8b7d7b;">"#+source: "</span> (p <span style="color: #8b7d7b;">"Chunk name: "</span>) 
+    n <span style="color: #8b7d7b;">"#+begin_src "</span> (p <span style="color: #8b7d7b;">"Language: "</span>)
+    n <span style="color: #8b7d7b;">"#+end_src "</span>)
+  <span style="color: #8b7d7b;">"##chunk"</span>)
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="todo TODO"> TODO</span> interactive function to create new entry </h3>
+<div class="outline-text-3" id="text-6-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="todo TODO"> TODO</span> automatic ID upon creation </h3>
+<div class="outline-text-3" id="text-6-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="todo TODO"> TODO</span> automatic metadata properties template </h3>
+<div class="outline-text-3" id="text-6-4">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7">Chunks </h2>
+<div class="outline-text-2" id="text-7">
+
+
+<p>
+Chunks are the basic building blocks of hypermedia programs. Chunks
+can be of different media types, and may be stored either as an
+attached file (see "Attachments", below), or inline (as text between
+"#+begin<sub>src</sub>" and "#+end<sub>src</sub>" tags, see also @<i>&lt;info:org:Literal examples&gt;@</i>.) Examples of file chunks are PNG, OGG, and OGV files. Inline
+data chunks may be in any text format, such as Common Lisp, HTML, or
+C++.
+</p>
+<p>
+Each chunk has a unique UUID&mdash;the UUID of the entry containing the
+chunk.
+</p>
+<p>
+The following data structure stores information about a chunk. This
+can be used for caching metadata and also for export. See "Data
+Interchange" below.
+</p>
+
+
+
+<pre class="src src-emacs-lisp">(<span style="color: #f47321; font-weight: bold;">defstruct</span> <span style="color: #83a525;">chunk-info</span> 
+  name <span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">Unique string name (or UUID) for the described chunk.</span>
+  properties <span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">List of :keyword value pairs.</span>
+  file <span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">Filename of file chunk, if any.</span>
+  data <span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">A string with text data, if any (i.e. inline chunks.) </span>
+  )
+</pre>
+
+
+
+
+
+</div>
+
+<div id="outline-container-7-1" class="outline-3">
+<h3 id="sec-7-1">Properties for metadata </h3>
+<div class="outline-text-3" id="text-7-1">
+
+
+<p>
+Any ontology can be used to describe chunks via
+ @<i>&lt;info:org:Properties and Columns&gt;@</i>. 
+The Dublin Core metadata standard is a reasonable
+starting place, and defines these basic fields for use in describing
+and indexing resources of almost any kind:
+</p>
+
+
+
+<pre class="src src-emacs-lisp"><span style="color: #62124b;">:Title:</span>
+  <span style="color: #62124b;">:Creator:</span>
+  <span style="color: #62124b;">:Subject:</span>
+  <span style="color: #62124b;">:Description:</span>
+  <span style="color: #62124b;">:Publisher:</span>
+  <span style="color: #62124b;">:Contributor:</span>
+  <span style="color: #62124b;">:Date:</span>
+  <span style="color: #62124b;">:Type:</span>
+  <span style="color: #62124b;">:Format:</span>
+  <span style="color: #62124b;">:Identifier:</span>
+  <span style="color: #62124b;">:Source:</span>
+  <span style="color: #62124b;">:Language:</span>
+  <span style="color: #62124b;">:Relation:</span>
+  <span style="color: #62124b;">:Coverage:</span>
+  <span style="color: #62124b;">:Rights:</span>
+</pre>
+
+
+
+
+
+<pre class="src src-emacs-lisp">(<span style="color: #f47321; font-weight: bold;">defvar</span> <span style="color: #da70d6; font-weight: bold;">xiomacs-properties-template</span> <span style="color: #8b7d7b;">"</span>
+<span style="color: #8b7d7b;">&lt;&lt;dublin-core-template&gt;&gt;</span>
+<span style="color: #8b7d7b;">"</span>
+<span style="color: #dd1144;">"Text of org properties drawer entries to insert upon creating a new entry."</span>)
+
+(<span style="color: #f47321; font-weight: bold;">defun</span> <span style="color: #9370db; font-weight: bold;">xiomacs-insert-properties-template</span> ()
+  (interactive)
+    (<span style="color: #f47321; font-weight: bold;">save-excursion</span>
+      (<span style="color: #f47321; font-weight: bold;">destructuring-bind</span> (beg . end) 
+          (org-get-property-block nil nil <span style="color: #62124b;">:force</span>)
+        (goto-char beg)
+        (insert xiomacs-properties-template))))
+</pre>
+
+
+
+
+<p>
+For more information about Dublin Core, see these pages:
+</p>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Dublin_Core">Dublin Core metadata on wikipedia</a>
+</li>
+<li><a href="http://dublincore.org/documents/usageguide/">Official Dublin Core users guide</a>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7-2" class="outline-3">
+<h3 id="sec-7-2">Application-specific metadata </h3>
+<div class="outline-text-3" id="text-7-2">
+
+
+<p>
+Chunk properties may be used to embed control data for other
+applications. See "Resource data interchange" below.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7-3" class="outline-3">
+<h3 id="sec-7-3">Operations on chunks </h3>
+<div class="outline-text-3" id="text-7-3">
+
+
+</div>
+
+<div id="outline-container-7-3-1" class="outline-4">
+<h4 id="sec-7-3-1">Open in program </h4>
+<div class="outline-text-4" id="text-7-3-1">
+
+
+
+
+
+<pre class="src src-emacs-lisp">(describe-variable 'org-file-apps)
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7-3-2" class="outline-4">
+<h4 id="sec-7-3-2">Process to create an output (wav-&gt;ogg) </h4>
+<div class="outline-text-4" id="text-7-3-2">
+
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><a name="ID-24d5addc-a73c-4471-86e3-aaaefc88e0a2" id="ID-24d5addc-a73c-4471-86e3-aaaefc88e0a2"></a>Attachments </h2>
+<div class="outline-text-2" id="text-8">
+
+
+<p>
+Attachments are version-controlled external files associated with an
+entry. The entry's properties data and other content are taken to
+describe the attachment. See also @<i>&lt;info:org:Attachments&gt;@</i>. 
+</p>
+<p>
+Orgmode will automatically commit changes to git-controlled
+attachments, if the current workbook's <code>org-attach-directory</code> is also
+under git control.
+</p>
+
+</div>
+
+<div id="outline-container-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="todo TODO"> TODO</span> Exporting workbooks as compressed binaries with all attachments </h3>
+<div class="outline-text-3" id="text-8-1">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"></h2>
+<div class="outline-text-2" id="text-9">
+
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><a name="ID-955c44fc-c271-472c-ac24-1df1edaccad4" id="ID-955c44fc-c271-472c-ac24-1df1edaccad4"></a>Interface enhancements </h2>
+<div class="outline-text-2" id="text-10">
+
+
+
+</div>
+
+<div id="outline-container-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="todo TODO"> TODO</span> Consistent global key layout on F9-F12 </h3>
+<div class="outline-text-3" id="text-10-1">
+
+
+<p>
+Because viewing and browsing workbooks may involve various Org tree
+views and hidden source block bodies, there will be many hidden
+sections represented by an ellipsis at the end of the text
+line. Pressing TAB on most such lines will toggle display of the
+hidden text.
+</p>
+<p>
+To make these hidden portions of text more obvious we can highlight
+chunks headers, and also the ellipses used to indicate hidden text.
+</p>
+
+
+
+<pre class="src src-emacs-lisp">(<span style="color: #f47321; font-weight: bold;">defface</span> <span style="color: #da70d6; font-weight: bold;">xiomacs-chunk-header-face</span> '((t (<span style="color: #62124b;">:foreground</span> <span style="color: #8b7d7b;">"red"</span> <span style="color: #62124b;">:bold</span> t <span style="color: #62124b;">:weight</span> bold))) <span style="color: #dd1144;">"Face for chunk header lines."</span>)
+(<span style="color: #f47321; font-weight: bold;">defvar</span> <span style="color: #da70d6; font-weight: bold;">xiomacs-chunk-header-face</span> 'xiomacs-chunk-header-face)
+
+  (<span style="color: #f47321; font-weight: bold;">defvar</span> <span style="color: #da70d6; font-weight: bold;">xiomacs-chunk-regexp</span> <span style="color: #8b7d7b;">"^#\\+</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">(</span><span style="color: #8b7d7b;">source:</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">|</span><span style="color: #8b7d7b;">srcname:</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">|</span><span style="color: #8b7d7b;">function:</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">)</span><span style="color: #8b7d7b;">"</span>)
+
+  (<span style="color: #f47321; font-weight: bold;">defun*</span> <span style="color: #9370db; font-weight: bold;">xiomacs-fontify-chunk</span> (limit)
+    (<span style="color: #f47321; font-weight: bold;">while</span> (re-search-forward xiomacs-chunk-regexp limit <span style="color: #62124b;">:noerror</span>)
+      (<span style="color: #f47321; font-weight: bold;">let</span> ((beg (match-beginning 1))
+            (end (match-end 1)))
+        (add-text-properties beg end (list 'display (propertize (match-string 1) 'face xiomacs-chunk-header-face)
+                                           'font-lock-fontified t)))))
+</pre>
+
+
+
+
+
+<pre class="src src-emacs-lisp">(<span style="color: #f47321; font-weight: bold;">defface</span> <span style="color: #da70d6; font-weight: bold;">xiomacs-hidden-face</span> '((t (<span style="color: #62124b;">:foreground</span> <span style="color: #8b7d7b;">"yellow"</span> <span style="color: #62124b;">:underline</span> <span style="color: #8b7d7b;">"red"</span>))) <span style="color: #dd1144;">"Face for hidden xiomacs text."</span>)
+(<span style="color: #f47321; font-weight: bold;">defvar</span> <span style="color: #da70d6; font-weight: bold;">xiomacs-hidden-face</span> 'xiomacs-hidden-face)
+</pre>
+
+
+
+
+
+
+<pre class="src src-emacs-lisp">(<span style="color: #f47321; font-weight: bold;">defun</span> <span style="color: #9370db; font-weight: bold;">xiomacs-fontify-blocks</span> ()
+  (interactive)
+  (<span style="color: #f47321; font-weight: bold;">save-excursion</span> 
+    (goto-char (point-min))
+    (<span style="color: #f47321; font-weight: bold;">while</span> (re-search-forward <span style="color: #8b7d7b;">"^#\\+begin_src[ ]+</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">(</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">(</span><span style="color: #8b7d7b;">\\w</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">|</span><span style="color: #8b7d7b;">-</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">)</span><span style="color: #8b7d7b;">+</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">)</span><span style="color: #8b7d7b;">"</span> nil t)
+      (forward-line)
+      (<span style="color: #f47321; font-weight: bold;">let*</span> ((begin (point))
+             (end nil)
+             (language (match-string 1))
+             (mode-command (intern (concat language <span style="color: #8b7d7b;">"-mode"</span>)))
+             (fontified-output
+              (<span style="color: #f47321; font-weight: bold;">when</span> (re-search-forward <span style="color: #8b7d7b;">"^#\\+end_src"</span> nil t)
+                (forward-line -1)
+                (setf end (point))
+                (<span style="color: #f47321; font-weight: bold;">let</span> ((string (buffer-substring-no-properties begin end)))
+                  (<span style="color: #f47321; font-weight: bold;">with-temp-buffer</span>
+                    (insert string)
+                    (funcall mode-command)
+                    (font-lock-fontify-buffer)
+                    (buffer-substring (point-min) (point-max)))))))
+        (<span style="color: #f47321; font-weight: bold;">when</span> fontified-output
+          (goto-char begin)
+          (delete-region begin end)
+          (insert fontified-output))))))
+</pre>
+
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11">Mouse menus </h2>
+<div class="outline-text-2" id="text-11">
+
+
+
+
+
+<pre class="src src-emacs-lisp">(add-hook 'org-mode-hook
+                    (<span style="color: #f47321; font-weight: bold;">lambda</span> () (imenu-add-to-menubar <span style="color: #8b7d7b;">"Imenu"</span>)))
+(setf org-imenu-depth 5)
+</pre>
+
+
+
+
+
+</div>
+
+<div id="outline-container-11-1" class="outline-3">
+<h3 id="sec-11-1"><span class="todo TODO"> TODO</span> get mouse menus working for code blocks </h3>
+<div class="outline-text-3" id="text-11-1">
+
+
+
+
+<pre class="src src-emacs-lisp">(push (list <span style="color: #8b7d7b;">"Source code chunks"</span> <span style="color: #8b7d7b;">"^#\\+</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">(</span><span style="color: #8b7d7b;">source:</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">|</span><span style="color: #8b7d7b;">srcname:</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">|</span><span style="color: #8b7d7b;">function:</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">)</span><span style="color: #8b7d7b;"> </span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">(</span><span style="color: #8b7d7b;">.*</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">)</span><span style="color: #8b7d7b;">$"</span> 2)
+      imenu-generic-expression)
+</pre>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><a name="ID-4d7eb09f-11a8-4db0-8ab1-627e7800d57d" id="ID-4d7eb09f-11a8-4db0-8ab1-627e7800d57d"></a>Configuration </h2>
+<div class="outline-text-2" id="text-12">
+
+
+<p>
+You can use the following elisp chunks to activate the visibility
+enhancements&mdash;either interactively with C-c C-c, or by copying the
+code to your emacs initialization file.
+</p>
+
+
+
+<pre class="src src-emacs-lisp">(add-hook 'org-font-lock-hook #'xiomacs-fontify-chunk)
+</pre>
+
+
+
+
+
+<pre class="src src-emacs-lisp">(remove-hook 'org-font-lock-hook #'xiomacs-fontify-chunk)
+</pre>
+
+
+
+
+
+<pre class="src src-emacs-lisp">(setf org-ellipsis xiomacs-hidden-face)
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13">Processes for creating and transforming chunks </h2>
+<div class="outline-text-2" id="text-13">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><a name="ID-13a1e5df-8185-4633-9d62-ae9cab244f07" id="ID-13a1e5df-8185-4633-9d62-ae9cab244f07"></a>How the Xiomacs source is made </h2>
+<div class="outline-text-2" id="text-14">
+
+
+<p>
+Using Babel, the Emacs Lisp source code for Xiomacs itself is extracted
+from this workbook (or "tangled", in literate programming
+terminology), to produce an output file called <code>xiomacs.el</code>. 
+</p>
+<p>
+There are also configuration chunks, snippets of elisp code you can
+execute in place (with C-c C-c) or copy to your emacs init file. 
+</p>
+<p>
+To make <code>xiomacs.el</code> from this workbook, execute the following elisp code
+chunk by placing point on it and pressing C-c C-c:
+</p>
+
+
+
+<pre class="src src-emacs-lisp">(org-babel-tangle)
+</pre>
+
+
+
+
+<p>
+Assuming <code>xiomacs.el</code> is somewhere in your Emacs load-path, you can load
+it by executing this chunk:
+</p>
+
+
+
+<pre class="src src-emacs-lisp">(<span style="color: #f47321; font-weight: bold;">require</span> '<span style="color: #f68d47;">xiomacs</span>)
+</pre>
+
+
+
+
+<p>
+However, you can do a shortcut and use the following command to tangle
+the elisp code and load it into emacs in one step:
+</p>
+
+
+
+<pre class="src src-emacs-lisp">(org-babel-load-file (buffer-file-name))
+</pre>
+
+
+
+
+<p>
+Here is an overview of the output file's organization. 
+</p>
+
+
+
+<pre class="src src-emacs-lisp">&lt;&lt;legal-notices&gt;&gt;
+&lt;&lt;prerequisites&gt;&gt;
+&lt;&lt;chunk-info-structure&gt;&gt;
+&lt;&lt;auto-inserting-properties-templates&gt;&gt;
+&lt;&lt;auto-inserting-chunks&gt;&gt;
+&lt;&lt;visible-chunks&gt;&gt;
+&lt;&lt;visible-ellipsis&gt;&gt;
+&lt;&lt;postamble&gt;&gt;
+</pre>
+
+
+
+
+<p>
+The <code>&lt;&lt;chunk-name&gt;&gt;</code> tags above will be replaced by their
+corresponding definition chunks, defined elsewhere in this workbook,
+during the tangle process. Notice the ":tangle yes" argument; this is
+the only such block in this workbook. It means that in order to appear
+in the output file "xiomacs.el", a chunk must be referenced somewhere in
+the expansion of this tangled chunk.
+</p>
+<p>
+If you want the opposite behavior, use "#+property: tangle yes" as a
+control line in your org file, and ":tangle no" to turn it off for
+particular chunks.
+</p>
+<p>
+Now we move on to some required libraries and other snippets needed in
+the final elisp file:
+</p>
+
+
+
+<pre class="src src-emacs-lisp">(<span style="color: #f47321; font-weight: bold;">require</span> '<span style="color: #f68d47;">cl</span>) 
+(<span style="color: #f47321; font-weight: bold;">require</span> '<span style="color: #f68d47;">ob-lisp</span>)
+(<span style="color: #f47321; font-weight: bold;">require</span> '<span style="color: #f68d47;">tempo</span>)
+</pre>
+
+
+
+
+
+<pre class="src src-emacs-lisp">(<span style="color: #f47321; font-weight: bold;">provide</span> '<span style="color: #f68d47;">xiomacs</span>)
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15">Recommended reading </h2>
+<div class="outline-text-2" id="text-15">
+
+
+<p>
+The ideas, techniques, and terminology used in this paper have a
+variety of sources. 
+</p>
+<ul>
+<li>Donald Knuth, <i>Literate Programming</i>. This book is a reprinting of
+    Knuth's original papers on the subject.
+
+</li>
+<li>Tim Evans, <a href="http://www.cosc.canterbury.ac.nz/research/reports/HonsReps/1999/hons_9902.pdf">A meta-model for literate programming.</a> This research
+    paper generalizes literate programming practice by abstracting
+    away the details of media type and processing behavior. In this
+    model, "chunks" of content appear as nodes in an <a href="http://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph</a>, 
+    with edges as relations between chunks. Attached to these
+    edges are "processes" transforming chunks of one type into one or 
+    more other chunks or files.
+
+<p>
+    The resulting object model can be used to specify literate
+    programming tools and actually generate them, and a simple example
+    is given in Python.
+</p>
+<p>
+    Emacs Lisp is ideal for this sort of work, and I believe I'll
+    benefit especially from Emacs Lisp's portability, its excellent
+    text processing tools, and its knack for gluing together diverse
+    formats and programs.
+</p>
+<p>
+    The meta model in Evans' paper can be mapped more or less directly
+    into org-mode's features, and on top of this I've layered some
+    more ideas and code. I've simplified some parts and elaborated on
+    others, often re-using Emacs Lisp code from other projects of
+    mine.
+</p>
+<ul>
+<li>
+</li>
+</ul>
+
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-16" class="outline-2">
+<h2 id="sec-16"><a name="ID-5032e227-8a3f-4226-b5c8-efcd5746b22e" id="ID-5032e227-8a3f-4226-b5c8-efcd5746b22e"></a>Footer </h2>
+<div class="outline-text-2" id="text-16">
+
+
+<p>
+The last entry in a workbook is a good place to put odd pieces of
+text, TODO notes that aren't part of the document, and any control
+data that needs to be at the end of the file (for example file-local
+Emacs variables; see @<i>&lt;info:emacs:Specifying File Variables&gt;@</i>.)
+</p>
+
+
+
+<pre class="src src-emacs-lisp">(htmlfontify-buffer nil <span style="color: #8b7d7b;">"xiomacs-pretty.html"</span>)
+</pre>
+
+
+
+
+
+
+</div>
+
+<div id="outline-container-16-1" class="outline-3">
+<h3 id="sec-16-1">Ideas &nbsp;&nbsp;&nbsp;<span class="tag"><span class="meta">meta</span></span></h3>
+<div class="outline-text-3" id="text-16-1">
+
+
+</div>
+
+<div id="outline-container-16-1-1" class="outline-4">
+<h4 id="sec-16-1-1"><span class="todo TODO"> TODO</span> org-file-apps </h4>
+<div class="outline-text-4" id="text-16-1-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-16-1-2" class="outline-4">
+<h4 id="sec-16-1-2"><span class="todo TODO"> TODO</span> preview with inline-images / image-dired </h4>
+<div class="outline-text-4" id="text-16-1-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-16-1-3" class="outline-4">
+<h4 id="sec-16-1-3"><span class="todo TODO"> TODO</span> org-icons </h4>
+<div class="outline-text-4" id="text-16-1-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-16-1-4" class="outline-4">
+<h4 id="sec-16-1-4"><span class="todo TODO"> TODO</span> button toolbar? IDE? CEDET? </h4>
+<div class="outline-text-4" id="text-16-1-4">
+
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:22:47 EDT</p>
+<p class="author">Author: David T. O'Toole </p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Building the X2: USB external drive enclosures</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:22:57 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Building the X2: USB external drive enclosures</h1>
+
+<p>The first shipment of parts for the X2 arrived today in a giant
+box. After checking the contents of the box against the packing list,
+I opened the Vantec NexStar 3 USB external HDD enclosures (two black,
+one red) and the Seagate 500GB IDE HDD I'd ordered. Here's the red
+enclosure and the HDD in an unopened state:
+</p>
+<p>
+<img src="../images/usb-drive-enclosures-000.jpg"  alt="../images/usb-drive-enclosures-000.jpg" />
+</p>
+<p>
+Unpacking the contents of the NexStar 3, I found the drive enclosure
+itself, a useless driver CD-ROM, a little baggie with appropriate
+screws, a USB cable, a plastic "Playstation2" style vertical stand,
+and a power supply.
+</p>
+<p>
+<img src="../images/usb-drive-enclosures-001.jpg"  alt="../images/usb-drive-enclosures-001.jpg" />
+</p>
+<p>
+The power supply's transformer is large and oddly-shaped, so that it
+tends to block spare outlets&mdash;even on power strips with several
+"transformer-spaced" sockets. No big deal, but it's an annoyance.
+</p>
+<p>
+First, I used a small pair of pliers to change the jumper on the back
+of the drive to MASTER:
+</p>
+<p>
+<img src="../images/usb-drive-enclosures-002.jpg"  alt="../images/usb-drive-enclosures-002.jpg" />
+</p>
+<p>
+Then I connected the enclosure's IDE and power cables to the drive:
+</p>
+<p>
+<img src="../images/usb-drive-enclosures-003.jpg"  alt="../images/usb-drive-enclosures-003.jpg" />
+</p>
+<p>
+I carefully folded the short IDE cable so that it would not crimp when
+the case was closed, and then mounted the drive inside the enclosure
+with the provided screws:
+</p>
+<p>
+<img src="../images/usb-drive-enclosures-004.jpg"  alt="../images/usb-drive-enclosures-004.jpg" />
+</p>
+<p>
+Then I attached the LED cable (not shown) and closed up the case:
+</p>
+<p>
+<img src="../images/usb-drive-enclosures-005.jpg"  alt="../images/usb-drive-enclosures-005.jpg" />
+</p>
+<p>
+(The shadow in the lower left corner of some of these photos is the
+camera's giant zoom lens blocking the light of the flash. HP cameras
+are such crap&mdash;I'm only using THIS one because my OTHER HP camera
+only works intermittently&mdash;because, once again, HP cameras are crap.)
+</p>
+<p>
+Here's the completed drive!
+</p>
+<p>
+<img src="../images/usb-drive-enclosures-006.jpg"  alt="../images/usb-drive-enclosures-006.jpg" />
+</p>
+<p>
+I plugged it into my USB hub and turned on the power. The
+power/activity LED is very bright! 
+</p>
+<p>
+<img src="../images/usb-drive-enclosures-007.jpg"  alt="../images/usb-drive-enclosures-007.jpg" />
+</p>
+<p>
+Within a few moments Linux had detected the drive:
+</p>
+<pre class="example">
+Nov  8 14:23:30 monad kernel: usb 4-4.2: new high speed USB device using ehci_hcd and address 49
+Nov  8 14:23:31 monad kernel: usb 4-4.2: configuration #1 chosen from 1 choice
+Nov  8 14:23:31 monad kernel: scsi11 : SCSI emulation for USB Mass Storage devices
+Nov  8 14:23:36 monad kernel: scsi 11:0:0:0: Direct-Access     ST350063 0A               3.AA PQ: 0 ANSI: 0
+Nov  8 14:23:36 monad kernel: sd 11:0:0:0: [sdb] 976773168 512-byte hardware sectors (500108 MB)
+Nov  8 14:23:36 monad kernel: sd 11:0:0:0: [sdb] Write Protect is off
+Nov  8 14:23:36 monad kernel: sd 11:0:0:0: [sdb] 976773168 512-byte hardware sectors (500108 MB)
+Nov  8 14:23:36 monad kernel: sd 11:0:0:0: [sdb] Write Protect is off
+Nov  8 14:23:36 monad kernel:  sdb: unknown partition table
+Nov  8 14:23:36 monad kernel: sd 11:0:0:0: [sdb] Attached SCSI disk
+</pre>
+
+
+<p>
+I had expected to see "unknown partition table", because the drive is
+unformatted. I used <b>cfdisk</b> to create a new partition table, with one
+big 500GB partition. At that point, /dev/sdb1 showed up in
+/var/log/messages. So I created an XFS filesystem on the disk:
+</p>
+<pre class="example">
+/sbin/mkfs.xfs /dev/sdb1
+</pre>
+
+
+<p>
+I did a test mount and copied some large files to/from the
+drive. Seems quite snappy!
+</p>
+<p>
+Now I had to build two more NexStar enclosures to accommodate the
+original Pod's existing RAID array, which is being moved into the
+server room in order to make room for the X2's larger SATA
+array. 
+</p>
+<p>
+These IDE disks hold several years' worth of audio work. Here's a
+photo of the drives in their old CoolerMaster internal 5.25" bay
+enclosures, sitting next to their new homes before installation:
+</p>
+<p>
+<img src="../images/usb-drive-enclosures-008.jpg"  alt="../images/usb-drive-enclosures-008.jpg" />
+</p>
+<p>
+I did the same routine twice over again for these disks. Don't forget
+the crucial MASTER jumper setting on each drive, or you'll have to
+take apart the entire enclosure.
+</p>
+<p>
+<img src="../images/usb-drive-enclosures-009.jpg"  alt="../images/usb-drive-enclosures-009.jpg" />
+</p>
+<p>
+Here's the completed stack of drives:
+</p>
+<p>
+<img src="../images/usb-drive-enclosures-010.jpg"  alt="../images/usb-drive-enclosures-010.jpg" />
+</p>
+<p>
+Because the two black enclosures were made with drives from an
+existing Linux Software RAID setup, all I had to do was tell <b>mdadm</b>
+where to find the drives in /etc/mdadm/mdadm.conf. However, USB Mass
+Storage devices don't always have the same device files; sometimes
+it's /dev/sdb, other times /dev/sde, depending on the order things
+were plugged in. Luckily, <b>mdadm</b> can scan for attached RAID arrays,
+and tell you their UUIDs:
+</p>
+<pre class="example">
+monad:~# mdadm --examine --scan
+ARRAY /dev/md0 level=raid1 num-devices=2 UUID=ae06d67d:e7fff002:b4843d7b:cea3c2d9
+</pre>
+
+
+<p>
+I pasted that output into /etc/mdadm/mdadm.conf, and then brought the
+array up:
+</p>
+<pre class="example">
+monad:~# mdadm --assemble --scan
+mdadm: /dev/md0 has been started with 2 drives.
+monad:~# mount /md0
+monad:~# ls /md0
+album1797.wav  cam                 export.wav  mickslow.wav    pd           zoom
+archive        drop                fedora-iso  mountain_music  samples
+archive2       dto-BIGBACKUP.tar.gz  insanity  ogg             sessions
+ari          ecaspace              jams        oldies          tmp
+backups        elysiumbeat.wav             jennytruth  osb-1-silver    wikinews
+boston-tracks  export3.wav         lost+found  other_music     yes-live-74
+monad:~# 
+</pre>
+
+
+<p>
+(NOTE: In my /etc/fstab, the mount point for "/dev/md0" happens to be
+"/md0"&mdash;you can mount it wherever you like.)
+</p>
+<p>
+Much more to come when "Building the X2" continues tomorrow!
+</p></div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:22:57 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

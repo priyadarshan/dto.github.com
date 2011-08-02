@@ -1,0 +1,971 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Void Mission Zero Design</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:22:56 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Void Mission Zero Design</h1>
+
+<p>This is the design document for the RLX demo game Void Mission
+Zero.
+</p>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Snapshots </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+Alpha gameplay in running engine:
+</p>
+<p>
+<img src="../images/vm0-alpha-gameplay.png"  alt="../images/vm0-alpha-gameplay.png" />
+</p>
+<p>
+Early sketches:
+</p>
+<p>
+<img src="../images/vm0-mockup.png"  alt="../images/vm0-mockup.png" />
+</p>
+<p>
+<img src="../images/vm02-mockup.png"  alt="../images/vm02-mockup.png" />
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Overview </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+<img src="../images/big-player.png"  alt="../images/big-player.png" />
+</p>
+<p>
+Void Mission Zero is a sci-fi roguelike game written in Common
+Lisp. You play a lone agent infiltrating an automated droid factory in
+order to destroy the enemy robots within. To win the game, you must
+fight your way through the corridors and chambers of the factory,
+cutting through the countless robots infesting the site, and make your
+way to the reactor area on level 10. There you must destroy the
+cooling towers, which will cause the reactor to explode and destroy
+the factory.
+</p>
+<p>
+The main ideas of Void Mission gameplay are:
+</p>
+<ul>
+<li>Turn-based strategic ranged and hand combat utilizing particle
+   guns, robot suits, and vehicles, often with dozens of enemies at
+   once
+</li>
+<li>Destructible and persistent environments
+</li>
+<li>Exploration and discovery
+</li>
+<li>Diverse gameplay styles (shooter, stealth, rpg)
+</li>
+<li>Randomly generated settings for a new experience each time.
+</li>
+<li>Atmospheric enhancement, with optional mood music. 
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Setting and structure </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+The story of Void Mission takes place in a remote research outpost
+called Installation 774. It is the size of a small city and is
+composed of square, uniformly-sized, interconnected modules whose
+interiors may be configured for different purposes and environmental
+conditions. For example:
+</p>
+<ul>
+<li>Cold storage
+</li>
+<li>Datacenter
+</li>
+<li>Crew barracks
+</li>
+<li>Recreation area
+</li>
+<li>Command center 
+</li>
+<li>Laboratory
+</li>
+<li>Garage (armored suits, trucks, repair)
+</li>
+<li>Medical (health items)
+</li>
+<li>Robotics lab
+</li>
+</ul>
+
+
+<p>
+These modules are about the size of one city block, approx 60x60
+cells. Various airlocks separate the modules from one another. Some
+modules have become depressurized and therefore you need an armored
+robo suit to explore them. Some areas are so radioactive or toxic that
+only a remote-controlled bot can enter.
+</p>
+<p>
+The city is designed to house about 1,000 employees, contractors,
+military personnel, and various visitors.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Stats </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+You have the following stats to keep track of:
+</p>
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="done DONE"> DONE</span> Action points (AP). </h3>
+<div class="outline-text-3" id="text-4-1">
+
+
+<p>
+Every action has an AP cost.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="done DONE"> DONE</span> Speed (SPD). </h3>
+<div class="outline-text-3" id="text-4-2">
+
+
+<p>
+ Number of action points to spend each turn.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="done DONE"> DONE</span> Hit points (HP). </h3>
+<div class="outline-text-3" id="text-4-3">
+
+
+<p>
+When this reaches zero, you die:
+<img src="../images/death.png"  alt="../images/death.png" />
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="done DONE"> DONE</span> Energy (EN). </h3>
+<div class="outline-text-3" id="text-4-4">
+
+
+<p>
+Energy weapons use up these points when fired.  When this reaches
+zero, you cannot fire energy weapons until you recharge at least part
+of the gauge.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="todo TODO"> TODO</span> Oxygen level (OX). </h3>
+<div class="outline-text-3" id="text-4-5">
+
+
+<p>
+When this reaches zero, you rapidly lose HP until you die.
+</p>
+<p>
+You can pick up items like Energy capsules to refill the EN gauge,
+Oxygen tanks for the OX gauge, and Medpacks for the HP gauge.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Terrain </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+At the beginning of each randomly generated mission, the Corporation
+will air-drop you into the area of operations, and you begin fighting.
+</p>
+<p>
+Mission terrain varies, and will include sand with rocky outcroppings,
+ice canyons, machine highways, deep mazes, and massive droid-infested
+factories. 
+</p>
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="done DONE"> DONE</span> Basic factory/maze &nbsp;&nbsp;&nbsp;<span class="tag"><span class="alpha">alpha</span></span></h3>
+<div class="outline-text-3" id="text-5-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="todo TODO"> TODO</span> More mission types &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h3>
+<div class="outline-text-3" id="text-5-2">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">Combat </h2>
+<div class="outline-text-2" id="text-6">
+
+
+
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="done DONE"> DONE</span> Ranged combat &nbsp;&nbsp;&nbsp;<span class="tag"><span class="alpha">alpha</span></span></h3>
+<div class="outline-text-3" id="text-6-1">
+
+
+<p>
+<img src="../images/rlx-tweaked-1.png"  alt="../images/rlx-tweaked-1.png" />
+</p>
+<p>
+Ranged combat dominates the game. There are two firing modes;
+directional mode, in which you fire in a straight line along one of
+the eight compass directions; and targeted mode, in which a targeting
+cursor can be moved around the screen to fire at particular enemies:
+</p>
+<pre class="example">
+
+              $
+   @.
+     ......
+          ..:::
+         $  :$:
+            :::
+
+   KEY: @=player $=enemy .=shot :=cursor
+</pre>
+
+
+
+</div>
+
+<div id="outline-container-6-1-1" class="outline-4">
+<h4 id="sec-6-1-1"><span class="done DONE"> DONE</span> Directional ranged combat &nbsp;&nbsp;&nbsp;<span class="tag"><span class="alpha">alpha</span></span></h4>
+<div class="outline-text-4" id="text-6-1-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-1-2" class="outline-4">
+<h4 id="sec-6-1-2"><span class="todo TODO"> TODO</span> Targeted ranged combat &nbsp;&nbsp;&nbsp;<span class="tag"><span class="alpha">alpha</span></span></h4>
+<div class="outline-text-4" id="text-6-1-2">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2">Melee combat &nbsp;&nbsp;&nbsp;<span class="tag"><span class="alpha">alpha</span></span></h3>
+<div class="outline-text-3" id="text-6-2">
+
+<p> <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2008-12-07 Sun 10:32</span></span><br/>
+</p>
+<p>
+Melee combat serves two purposes:
+</p>
+<ol>
+<li>The rusty wrench is a ready fall-back weapon in situations where
+     you run out of ammo or energy.
+</li>
+<li>Balancing powerful weapons. For example an energy blade weapon
+     could be very devastating, but not useful against very fast
+     opponents.
+</li>
+</ol>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="done DONE"> DONE</span> Wrench &nbsp;&nbsp;&nbsp;<span class="tag"><span class="alpha">alpha</span></span></h3>
+<div class="outline-text-3" id="text-6-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="todo TODO"> TODO</span> Energy blade &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h3>
+<div class="outline-text-3" id="text-6-4">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7">Enemies </h2>
+<div class="outline-text-2" id="text-7">
+
+
+<p>
+The enemies may be human employees of other corporations, or hostile
+alien/robot forms.
+</p>
+
+</div>
+
+<div id="outline-container-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="done DONE"> DONE</span> Perceptors &nbsp;&nbsp;&nbsp;<span class="tag"><span class="alpha">alpha</span></span></h3>
+<div class="outline-text-3" id="text-7-1">
+
+<p> <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2008-11-25 Tue 15:20</span></span><br/>
+</p>
+<p>
+"Perceptors" are (floating spheroid eye-bots with shock probes). Red
+perceptors tend to seek the player even when far away, but purple
+perceptors wander around randomly until the player comes near. These
+are very dangerous to the player, and he must have a ranged weapon in
+order to deal with them effectively.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="todo TODO"> TODO</span> Pathfinding Graviceptor &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h3>
+<div class="outline-text-3" id="text-7-2">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="todo TODO"> TODO</span> Rooks &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h3>
+<div class="outline-text-3" id="text-7-3">
+
+
+<p>
+Rooks are large, slow, tank-like turrets-on-wheels. Their roof-mounted
+particle cannons are accurate and extremely deadly, but have two
+disadvantages.  First, they cannot target immediately adjacent
+squares, so the player can survive by getting close and attacking with
+a melee weapon. Second, the particle cannon is slow to recharge,
+allowing a shot only once every few turns.
+</p>
+<p>
+Being in an open area with several rooks is a bad idea&mdash;they'll blow
+you away. Instead you must lure them one by one into corridors and
+fight in close range&mdash;or freeze the group with EMP grenades and blast
+away.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7-4" class="outline-3">
+<h3 id="sec-7-4"><span class="todo TODO"> TODO</span> Bases &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h3>
+<div class="outline-text-3" id="text-7-4">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="done DONE"> DONE</span> Ion Shield &nbsp;&nbsp;&nbsp;<span class="tag"><span class="alpha">alpha</span></span></h2>
+<div class="outline-text-2" id="text-8">
+
+
+<p>
+<img src="../images/shield.png"  alt="../images/shield.png" />
+</p>
+<p>
+The shield creates a barrier around you.
+</p>
+<pre class="example">
+
+ +-----+
+ |     |
+ |  @  |
+ |     |
+ +-----+
+
+ KEY: @=player +-|=shield
+</pre>
+
+
+<p>
+The shield doesn't move with you.
+</p>
+<pre class="example">
+
+ +-----+
+ |     |
+ |     |
+ |   @ |
+ +-----+
+
+ KEY: @=player +-|=shield
+</pre>
+
+
+<p>
+The shield fades after a few turns. It can also be damaged by shots:
+</p>
+<pre class="example">
+
+
+                  ...$
+            .......
+ +-- --......
+ |     |
+ |  @ ...........$
+ |     |
+ +-----+
+
+ KEY: @=player .=shot $=enemy
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="todo TODO"> TODO</span> Environmental Conditions &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h2>
+<div class="outline-text-2" id="text-9">
+
+
+
+</div>
+
+<div id="outline-container-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="todo TODO"> TODO</span> Environment suit </h3>
+<div class="outline-text-3" id="text-9-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="todo TODO"> TODO</span> Oxygen </h3>
+<div class="outline-text-3" id="text-9-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-3" class="outline-3">
+<h3 id="sec-9-3"><span class="todo TODO"> TODO</span> Pressure </h3>
+<div class="outline-text-3" id="text-9-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-4" class="outline-3">
+<h3 id="sec-9-4"><span class="todo TODO"> TODO</span> Contaminants </h3>
+<div class="outline-text-3" id="text-9-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-5" class="outline-3">
+<h3 id="sec-9-5"><span class="todo TODO"> TODO</span> Radioactivity </h3>
+<div class="outline-text-3" id="text-9-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-6" class="outline-3">
+<h3 id="sec-9-6"><span class="todo TODO"> TODO</span> Temperature </h3>
+<div class="outline-text-3" id="text-9-6">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="todo TODO"> TODO</span> Lighting and Radar &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h2>
+<div class="outline-text-2" id="text-10">
+
+
+
+</div>
+
+<div id="outline-container-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="todo TODO"> TODO</span> Write this </h3>
+<div class="outline-text-3" id="text-10-1">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="todo TODO"> TODO</span> Music and SFX &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h2>
+<div class="outline-text-2" id="text-11">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="todo TODO"> TODO</span> Older notes being merged into above sections </h2>
+<div class="outline-text-2" id="text-12">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13">Ideas for roguelike activities </h2>
+<div class="outline-text-2" id="text-13">
+
+
+<ul>
+<li>Confront dozens or even hundreds of enemies at a time
+</li>
+<li>Wreak havoc in highly destructible environments
+</li>
+<li>Mine minerals and manufacture stuff with them
+</li>
+<li>Run around placing bombs on other objects/enemies, then run away
+   and explode them! This idea is stolen from the PlayStation game
+   "Silent Bomber."
+</li>
+<li>Feel the paranoia of never knowing what is around the corner
+</li>
+<li>Pit yourself against time as maps fill up with water or poison gas
+</li>
+<li>Destroy security cameras to prevent the BLS from seeing you
+</li>
+<li>Create temporary force fields to block enemies and protect yourself.
+</li>
+<li>Upgrade skills with chips/software/modules. You can find them by
+   taking apart other machines.
+</li>
+<li>Locate schematics for fantastic devices and build them using raw
+   materials and manufacturing work stations.
+</li>
+<li>Remote-control a limited robot in areas with too much radiation for humans to explore
+</li>
+<li>Get radiation sickness and take antidotes
+</li>
+<li>Experience and deal with extremes of temperature
+</li>
+<li>Researching objects, requires a workstation and research skill
+</li>
+<li>Stealth play, sneaking through dark areas to avoid detection
+</li>
+<li>Explore a machine-hollowed planetoid whose surface is speckled with
+   numerous robotic installations and mysterious crash sites from a
+   previous expedition
+</li>
+<li>Homage to Compile: a roguelike inspired by Zanac, Aleste, and Guardian Legend
+   (this could absorb many of the ideas above)
+</li>
+<li>Surround yourself with slave robots who do your bidding and defend you from enemies
+</li>
+<li>Wear mecha suits of different types and capabilities. 
+</li>
+<li>Dyson sphere exploration (whoa)
+</li>
+<li>Opening of game: ship runs out of fuel soon after. You're stuck
+   with no weapons, no fuel = no unassisted overworld travel.
+</li>
+<li>The ship in orbit guides you through the early part of the game and
+   helps introduce the backplot, via radio, but they are destroyed by
+   the BLS after the game's first real challenge.
+</li>
+<li>OK so i'm going to steal the rather cliche concept of a
+   hyper-powerful race of Ancients who leave artifacts behind. Except,
+   they did not inhabit our galaxy and only left behind a few sites,
+   maybe three, which are jealously guarded and exploited by the
+   Corporation for their technological value. What you discover is
+   that this planet was a research station for the ancients, which
+   makes it extraordinarily valuable in terms of technology and
+   information.  Thus, the Corporation and the Authority, already in
+   deep conflict, are both vying for control of this planet. The
+   ancients are not gone, they just left the milky way out of fear of
+   the BLS once it took over. The BLS is one of their experiments gone
+   wrong. The Ancients created the faster-than-light drive, which
+   humans discovered in a ship floating derelict. In fact perhaps the
+   Corporation and the Authority have a monopoly on FTL travel and
+   control it very strictly.
+</li>
+</ul>
+
+
+
+</div>
+
+<div id="outline-container-13-1" class="outline-3">
+<h3 id="sec-13-1">Stats </h3>
+<div class="outline-text-3" id="text-13-1">
+
+
+<p>   
+In the RPG system for Void Mission, numeric quantities like skills and
+characteristics are subsumed into one idea: <b>stats</b>.
+</p>
+<p>
+Both characteristics and skills enable you to do something, and can
+change:
+</p><ul>
+<li>permanently, as when leveling up
+</li>
+<li>temporarily while certain items are equipped 
+</li>
+<li>temporarily while a certain effect is active
+</li>
+</ul>
+
+
+<p>
+Stat values factor into various computations: for example, eyesight
+could determine the radius of your vision under normal lighting. 
+</p>
+
+</div>
+
+<div id="outline-container-13-1-1" class="outline-4">
+<h4 id="sec-13-1-1">Basic stats </h4>
+<div class="outline-text-4" id="text-13-1-1">
+
+
+<ul>
+<li>Strength (attack power).                     
+</li>
+<li>Intelligence (perception, etc)
+</li>
+<li>Dexterity (attack/defence success)
+</li>
+<li>Constitution
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-13-1-2" class="outline-4">
+<h4 id="sec-13-1-2">Secondary stats </h4>
+<div class="outline-text-4" id="text-13-1-2">
+
+
+<ul>
+<li>Hit Points (HP) - from Constitution and Strength
+</li>
+<li>Psi Points - from Constitution and Intelligence
+</li>
+<li>Fatigue Points - From Constitution and battle fatigue
+</li>
+<li>Speed - From Dexterity and Strength and Intelligence
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-13-1-3" class="outline-4">
+<h4 id="sec-13-1-3">Skills </h4>
+<div class="outline-text-4" id="text-13-1-3">
+
+
+<ul>
+<li>Eyesight (intelligence)
+</li>
+<li>Hacking (intelligence, dexterity)
+</li>
+<li>Research (intelligence)
+</li>
+<li>Close combat (strength, dexterity)
+</li>
+<li>Ranged combat (strength, dexterity)
+</li>
+<li>Stealth (dexterity, intelligence)
+</li>
+<li>Vehicles (dexterity)
+</li>
+<li>Medicine (intelligence) 
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-13-2" class="outline-3">
+<h3 id="sec-13-2">Rolls </h3>
+<div class="outline-text-3" id="text-13-2">
+
+
+<p>
+Make it so that "average" skill of 10 is about equally likely to fail
+as succeed. Must roll less than or equal to controlling stat to succeed. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-13-3" class="outline-3">
+<h3 id="sec-13-3">Improving stats and skills: experience and leveling up </h3>
+<div class="outline-text-3" id="text-13-3">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-13-4" class="outline-3">
+<h3 id="sec-13-4">Combat </h3>
+<div class="outline-text-3" id="text-13-4">
+
+
+<ul>
+<li>Player signals attack with M-direction
+</li>
+</ul>
+
+
+<pre class="example">
+:action :attack :to attacker :from direction
+</pre>
+
+
+<ul>
+<li>This is resolved to: 
+</li>
+</ul>
+
+
+<pre class="example">
+:action :attack :to attacker :from defender 
+</pre>
+
+
+<ul>
+<li>Attacker rolls dexterity for hit/miss. 
+</li>
+<li>Attacker hits!
+</li>
+<li>Attacker rolls Strength for damage power, add to weapon roll
+</li>
+<li>Defender rolls Dexterity for dodge
+</li>
+<li>If hit, roll Strength, modify by weapon strength and close/ranged combat skill  
+</li>
+</ul>
+
+
+<pre class="example">
+:action :defend :to defender :from attacker :detail points
+</pre>
+
+
+<ul>
+<li>Defender rolls Strength to resist damage, modify by armor class, sends to self: 
+</li>
+</ul>
+
+
+<pre class="example">
+:action damage :to self(defender) :detail points
+</pre>
+
+
+<p>
+Is this too complicated? 
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14">Places to visit </h2>
+<div class="outline-text-2" id="text-14">
+
+
+<p>
+Each place will have associated enemies, items, and a selection of
+special things to do.
+</p>
+<ul>
+<li>Cold storage 665&hellip; find strange items
+</li>
+<li>Highway 291-M (randomly generated name).. with a vehicle you can
+   speedily navigate the universe
+</li>
+<li>Caves with minerals to mine and freaky insects to defeat
+</li>
+<li>Power transfer stations&hellip; radiation!
+</li>
+<li>There was originally just an outpost on this planet, a research
+   station&hellip; but eventually IT took over and hollowed out the
+   planet&hellip;
+</li>
+</ul>
+
+
+
+
+</div>
+
+<div id="outline-container-14-1" class="outline-3">
+<h3 id="sec-14-1">Grenades </h3>
+<div class="outline-text-3" id="text-14-1">
+
+
+<p>
+There are also two types of grenades. First we have electromagnetic
+pulse (EMP) grenades, which damage and temporarily freeze robots (and
+you, if you're not careful!). On the other hand, there are
+conventional explosive grenades, which do more damage and have no
+freezing effect.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-14-2" class="outline-3">
+<h3 id="sec-14-2">Other </h3>
+<div class="outline-text-3" id="text-14-2">
+
+
+<p>
+Two types of levels: Corridors (i.e. long, unidirectional strip-like
+levels with many distinct sections or rooms) and Chambers (sprawling
+mazes or arenas.)
+</p>
+<p>
+Player attributes are a bit simplified when compared with a typical
+roguelike. Strength, Dexterity, Intelligence, Constitution, Hit
+Points, Psi Points, etc.
+</p>
+<ul>
+<li>Eyesight (intelligence)
+</li>
+<li>Hacking (intelligence, dexterity)
+</li>
+<li>Research (intelligence)
+</li>
+<li>Close combat (strength, dexterity)
+</li>
+<li>Ranged combat (strength, dexterity)
+</li>
+<li>Stealth (dexterity, intelligence)
+</li>
+<li>Vehicles (dexterity)
+</li>
+<li>Medicine (intelligence) 
+</li>
+</ul>
+
+
+
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:22:56 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

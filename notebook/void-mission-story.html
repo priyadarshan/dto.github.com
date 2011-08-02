@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>void-mission-story</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:22:55 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">void-mission-story</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Dashboard </h2>
+<div class="outline-text-2" id="text-1">
+
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="todo TODO"> TODO</span> annotate missions with asset/coding todos </h3>
+<div class="outline-text-3" id="text-1-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="todo TODO"> TODO</span> move all cons assets into void/ dir </h3>
+<div class="outline-text-3" id="text-1-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="todo TODO"> TODO</span> get basic nebula map running </h3>
+<div class="outline-text-3" id="text-1-3">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Overview </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+"Void Mission" is a sci-fi action role playing game
+divided into three episodes. The action takes place in a 2-D pixeled
+future in which you fly a transforming humanoid/jet suit in both
+exterior space and interior environments while firing projectile
+and/or energy weapons at enemies and simultaneously avoiding their
+fire. The story is largely told through text, represented in the game
+as data files, emails, or voice communications with a non-player
+character. Gameplay is tied into the story with missions that require
+balancing combat with exploration and puzzle solving.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Gameplay design </h2>
+<div class="outline-text-2" id="text-3">
+
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1">Flow </h3>
+<div class="outline-text-3" id="text-3-1">
+
+
+<p>
+Gameplay is mission-based, with one mission leading to another in more
+or less linear fashion, perhaps with side missions. Each mission is
+self contained, and the player and his inventory are all that survive
+a mission. Progress is managed using a mission structure (see mission.lisp)
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2">Presentation </h3>
+<div class="outline-text-3" id="text-3-2">
+
+
+<ul>
+<li>2-D grid based world, with 16x16 pixel objects and characters, with
+   additional sprite support for a blend of tile/sprite approaches.
+</li>
+<li>1280x720 widescreen HD
+</li>
+<li>use public-domain NASA imagery for textures, plain black for space background
+</li>
+<li>try filling the screen with black and creating transparent text controls that go on top
+</li>
+<li>rez-like vivid stylized vector graphixxx on top of the hubble stuff
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3-3" class="outline-3">
+<h3 id="sec-3-3">Player </h3>
+<div class="outline-text-3" id="text-3-3">
+
+
+<p>
+The player spends the entire game inside an Olvac mimetic-plasteel
+environment suit, and can move freely between interior and exterior
+scenes. This suit has two modes: humanoid mode, in which the suit acts
+as an exoskeleton for exploring human-scale environments, and a
+fighter mode with high-speed jetpack and wide, micro-thin plasteel
+wings for extra-vehicular activity and combat.
+</p>
+<p>
+The suit's energy shield is its sole defense; when SP (shield points)
+drop to zero, you die. 
+</p>
+<p>
+All gameworld interaction is accomplished with the arrow keys, shift,
+and the keys Z and X:
+</p>
+<ul>
+<li>Arrow keys (or numeric keypad) for player movement.
+</li>
+<li>Shift-arrow for activating the selected inventory item.
+    If this is a gun for example, you fire in that direction.
+</li>
+<li>Z to change the selected inventory item
+</li>
+<li>X for picking up items, activating switches, and so on.
+</li>
+<li>C to drop the selected inventory item
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Story background </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+It's 2061. If only there were enough endurium!
+</p>
+<p>
+It's been known for decades that Humanity's reach within the Milky Way
+is limited only by the supply of endurium, its rare and precious
+fuel. The energy crises of C.E. 2021 and C.E. 2027-2031 caused global
+economic, social, and environmental disruption, and with this
+disorganization came the concentration of wealth and power in the
+hands of the government and corporate elites.
+</p>
+<p>
+Early attempts at control and regulation of endurium met with initial
+success. The space-faring nations&mdash;Russia, China, India, Japan,
+Brazil, and the United States&mdash;along with the ESA (European Space
+Agency), could quite naturally claim endurium for themselves. But
+economies of scale and espionage in spaceflight technology eventually
+brought smaller deposits and endurium dust streams throughout the
+interstellar neighborhood within the reach of multinational
+corporations and various non-state actors. The largest of these formed
+what they called a "sovereign", open, and successful market in
+endurium, spaceflight technology, and various otherwise-controlled
+materials. The split between the Spacefaring Nations on the one hand,
+and the United Nations on the other, threatens to break into
+full-scale interstellar war; as Earth's environment continues to
+decay, the demand for endurium has reached a critical point.
+</p>
+<p>
+A new high-powered telescope operated by Xiomacs Corporation detects a
+pattern of gas streamers radiating high in the ultraviolet, within a
+cavernous void in galactic space. Subsequent observations show that
+the streamers are emitted from a string of black holes. The
+scientists, seeing the pattern's obviously artificial nature, guess at
+a propulsion method being used to drive a spacecraft, and begin to
+look for something at the trail's leading edge. A year later one of
+the flare-ups is observed, and the calculations fall into place: the
+source of the black holes is an object about as massive as Jupiter,
+but much smaller and far more dense. And it has been accelerating for
+1.2 billion years by riding on streams of gas being ejected from the
+black holes at relativistic speeds. It is given the name DVO1, for
+Deep Void Object 1.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Plot for the "End of Line" story arc </h2>
+<div class="outline-text-2" id="text-5">
+
+
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1">Episode 1 </h3>
+<div class="outline-text-3" id="text-5-1">
+
+
+<p>
+A mysterious Xiomacs operative named Brennan stays in the Void Rider
+as mission commander, while you take off in an Olvac multi-environment
+suit. Your mission is to rendezvous with the DVO and make initial
+discoveries.
+</p>
+
+</div>
+
+<div id="outline-container-5-1-1" class="outline-4">
+<h4 id="sec-5-1-1">1.1: Take cloud measurements </h4>
+<div class="outline-text-4" id="text-5-1-1">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="todo TODO"> TODO</span> Create large nebula image </h3>
+<div class="outline-text-3" id="text-5-2">
+
+
+<p>
+The cloud obscuring the DVO is meant as a shield to protect it from
+the ultraviolet radiation caused by the black holes that propel it
+across the universe. Drop scanning devices at each of 3 nav points
+surrounding the cloud to complete this mission.
+</p>
+<p>
+A strange transmission burst is received after the 1st scanning device
+is placed. The game's first enemies strike after the 2nd scanning
+device is placed.
+</p>
+<p>
+The measurement data enable plotting a path through the cloud to the
+DVO itself.
+</p>
+
+</div>
+
+<div id="outline-container-5-2-1" class="outline-4">
+<h4 id="sec-5-2-1">1.2: Enter DVO orbit </h4>
+<div class="outline-text-4" id="text-5-2-1">
+
+
+<p>
+Fight your way through the cloud and enter orbit around the DVO. You
+discover a large cruiser already in orbit, a dead hulk with no energy
+or life signs. At this point it becomes obvious that you are not the
+first human to visit the DVO, and that at least one other Corporation
+has reached orbit and possibly the DVO itself.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-2-2" class="outline-4">
+<h4 id="sec-5-2-2">1.3: Retrieve memory card </h4>
+<div class="outline-text-4" id="text-5-2-2">
+
+
+<p>
+You must restore power to the cruiser and retrieve a memory card with
+a copy of the map. Once power is restored, security gates will
+activate, and you must throw switches to turn them off. Once you get
+the memory card, this is combined with new information (ancient texts)
+possessed by Xiomacs. This helps Brennan choose an appropriate landing
+site on the DVO.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5-3" class="outline-3">
+<h3 id="sec-5-3">Episode 2 </h3>
+<div class="outline-text-3" id="text-5-3">
+
+
+
+</div>
+
+<div id="outline-container-5-3-1" class="outline-4">
+<h4 id="sec-5-3-1">2.1 Investigate landing site </h4>
+<div class="outline-text-4" id="text-5-3-1">
+
+
+<p>
+You find yourself in a windswept ocean of grey sands with outcroppings
+of black glass. This more ambient level involves radar searching and
+some digging with charges, as well as a climactic boss encounter with
+a big sprite :)
+</p>
+<p>
+You find some supplies and a high-bandwidth transmitter at the
+scattered camp sites of the previous expedition's landing.
+</p>
+<p>
+After defeating this boss you may enter the DVO itself. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-3-2" class="outline-4">
+<h4 id="sec-5-3-2">2.2 Investigate DVO origins and purpose </h4>
+<div class="outline-text-4" id="text-5-3-2">
+
+
+<p>
+You discover the probe carries the last embryos and the encoded
+knowledge of a dying species. The probe is automatically carrying out
+its mission to escape a replicating, matter-rearranging mechanical
+menace known as the Black Metal. The goal is for the probe to tear a
+portion of the universe away from ours at the moment of the Heat
+Death, so that the new universe and the old will be absolutely
+causally unconnected; only in this way can the Black Metal be escaped,
+and their race renewed. 
+</p>
+<p>
+The Ancients calculated that the Black Metal would grow forever,
+dominating matter and space without limit, and therefore all
+information and energy. It would be the extinction of all life, and
+eventually of all phenomena; a true Heat Death. (The metric expansion
+of space and the DVO's great speed ensure that any pursuing Black
+Metal objects could never reach the DVO.)
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-3-3" class="outline-4">
+<h4 id="sec-5-3-3">2.3 Return to surface </h4>
+<div class="outline-text-4" id="text-5-3-3">
+
+
+<p>
+You receive an urgent message from Brennan but he is cut off in
+mid-sentence, something about getting back to the ship. When you reach
+the surface, fighting many enemies along the way, the computer decides
+to speak, and tells you that you've come 31 million years in the
+future, and Brennan (and the rest of Humanity) are long dead.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5-4" class="outline-3">
+<h3 id="sec-5-4">Episode 3 </h3>
+<div class="outline-text-3" id="text-5-4">
+
+
+
+</div>
+
+<div id="outline-container-5-4-1" class="outline-4">
+<h4 id="sec-5-4-1">3.1 Return to Void Rider </h4>
+<div class="outline-text-4" id="text-5-4-1">
+
+
+<p>
+The computer explains that it just awoke, and cannot control its
+malfunctioning defense systems (i.e. the enemies you have encountered
+up until this point.) Furthermore, the entire mission is in danger,
+because a tiny capsule of dormant Black Metal had been secretly
+installed aboard the Void Rider, still orbiting the DVO and now slowly
+being transformed. In fact the whole mission is a plot to take over
+all the DVO's, a plot organized and executed by the Black Metal
+itself, who manipulated Xiomacs Corporation through various human
+contact personalities. By contaminating the DVOs with Black Metal, the
+substance could survive and flourish in the new "tear-away" universes,
+and enlarge its dominion to the total range of possible universes; a
+dark consciousness that has absorbed literally Everything. The only
+way to destroy the Void Rider is to steer it into the path of one of
+the black holes as it is ejected from the DVO.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-4-2" class="outline-4">
+<h4 id="sec-5-4-2">3.2 Reprogram flight computer </h4>
+<div class="outline-text-4" id="text-5-4-2">
+
+
+<p>
+Go aboard the Void Rider and reprogram the flight computer so that it
+flies into the path of the next black hole. Along the way one must
+find two encryption keys to unlock doors. Here one discovers documents
+and logs relating to the failed mission and what happened to Brennan
+and the Void Rider after you disappeared. You learn that Brennan may
+be alive, in stasis somewhere on the DVO. Furthermore the cosmological
+speculations of another crew member hint at manifold
+possibilities. After Brennan left for the DVO, the remaining crew ran
+out of supplies and starved. But before this happened, there were
+glimmers of a way back in time; by traveling in a shuttle along the
+trail of black holes left by the DVO, one could reverse time and
+travel to the point and time of the object's origin.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-4-3" class="outline-4">
+<h4 id="sec-5-4-3">3.3 Restore engine power </h4>
+<div class="outline-text-4" id="text-5-4-3">
+
+
+<p>
+Reactivate the Void Rider's engines so that the flight computer can
+steer it into the path of the black hole, and then escape back to the
+DVO.
+</p>
+<p>
+The DVO fires a black hole, and the Void Rider is destroyed
+utterly. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-4-4" class="outline-4">
+<h4 id="sec-5-4-4">3.4 Investigate stasis chamber </h4>
+<div class="outline-text-4" id="text-5-4-4">
+
+
+<p>
+The computer gets unusual levels of electromagnetic noise in one spot
+on the surface; you are led to a stasis chamber where you discover
+Brennan frozen in time. After un-freezing he takes the Black Metal
+capsule from his pocket and reveals that the Black Capsule contains
+sufficient Black Metal to dominate any new universe formed by the DVO,
+and that the hive mind has promised long life and vast powers to those
+who advance its cause. After a climactic battle with Brennan, the
+Black Capsule falls into the player's hands.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-4-5" class="outline-4">
+<h4 id="sec-5-4-5">3.5 Destroy black capsule </h4>
+<div class="outline-text-4" id="text-5-4-5">
+
+
+<p>
+You take the black capsule to the propulsion lab, where it is disposed
+of in a black hole before ejection.
+</p>
+<p>
+The computer explains that in order to travel back to your own epoch,
+you need a much longer trail of black holes to accelerate along. The
+computer calculates that you'd need to wait many billions of years, so
+you enter a stasis chamber and awaken sometime just before the Heat
+Death, into a nearly featureless cosmos. The DVO has decayed
+significantly and seems barely able to continue its mission. The
+computer itself is tired of consciousness.
+</p>
+<p>
+You enter a stasis chamber and launch yourself back along the trail of
+black holes, slingshotting from one event horizon to another, and
+arrive in an unknown area.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:22:55 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

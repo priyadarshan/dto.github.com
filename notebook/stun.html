@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>XIOMACS: a stumpwm/emacs oriented desktop hyper environment</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:22:58 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">XIOMACS: a stumpwm/emacs oriented desktop hyper environment</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Overview </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+The XIOMACS desktop environment combines stumpwm, emacs, and various
+small modules to create a complete power-user desktop. Goals include
+100% keyboard AND mouse control, pervasive discoverability, and
+seamless integration between the Common Lisp and Emacs Lisp components
+of the experience.
+</p>
+<p>
+The center of the XIOMACS experience is the xiomacs desktop manager panel
+which sits at the bottom of the screen like an Emacs mode-line. This
+is where one can find the menu, notifications, buttons, and launchers
+etc.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Scenarios </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<ul>
+<li>The user presses a command hotkey and keyboard focus moves to the
+   panel, which becomes blank except for a blinking cursor and a
+   "Command:" prompt. The user types in <a href="http://www.google.com/">http://www.google.com/</a> and
+   hits RETURN. The user's configured web browser opens to google.com.
+</li>
+<li>The user types <code>stumpwm://fnext</code> and stumpwm moves to the next frame.
+</li>
+<li>The user types <code>mpd://next</code> and the music changes.
+</li>
+<li>The user types <code>eject</code> and the default cd-rom drive ejects.
+</li>
+<li>Obviously we can build graphical controls that issue those commands
+   too. In fact the text commands are defined first, and their
+   implementations are in the modules (whether in elisp or CL). XIOMACS
+   merely provides a GUI toolkit for getting input and widgets that
+   trigger such commands.
+</li>
+<li>The user plugs an SD card or external HDD. A drive icon with volume
+   name MUSIC appears in the panel. It is highlighted for a few
+   seconds, then fades to normal brightness. The user right-clicks the
+   icon; it expands into several side by side buttons in the panel:
+
+<p>
+   <img src="../images/panel.png"  alt="../images/panel.png" />
+</p>
+<p>
+   (alternatively, the user types <code>mount music</code> at the panel prompt
+   and hits Enter. just plain "mount" should default to the last
+   plugged volume.)
+</p>
+<p>
+   The user clicks <code>browse</code> and a special Emacs frame pops up with
+   dired (or image-dired, as appropriate) open on the MUSIC drive.
+</p>
+</li>
+<li>The user previews a few files, then decides to copy them all to his
+   ~/incoming directory using dired.
+
+</li>
+<li>The user tries to unmount the drive via the panel, and is told that
+   the emacs process is still using the drive. (Usually gnome doesn't
+   tell you what program is using it, but you can find this out with
+   <code>lsof</code> so i see no reason not to tell the user.)
+
+</li>
+<li>The user closes the emacs window and clicks unmount again,
+   unmounting the disk.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Features and status </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<ul>
+<li>WORKING: Custom CLOS GUI widget toolkit with minimalistic (but themeable) appearance.
+</li>
+<li>WORKING: Modeline-style panel window as the center of operations
+</li>
+<li>WORKING: Disk mounter system can mount disks by UUID and update /etc/fstab for you.
+</li>
+<li>DESIGN: General purpose notification area and status monitor
+</li>
+<li>DESIGN: Menu widget
+</li>
+<li>DESIGN: Unified command syntax with custom <code>protocol://linkdata</code> style link handlers
+</li>
+<li>DESIGN: Switch stumpwm groups with a panel click
+</li>
+<li>PLANNED: Emacs Dired as graphical file manager and image browser
+</li>
+<li>PLANNED: Jack Audio Connection Kit daemon manager panel widget
+</li>
+<li>PROGRESS: Color-coded icons for document and program types, some of these are already drawn:
+   <img src="../images/stun-icons.png"  alt="../images/stun-icons.png" />
+</li>
+</ul>
+
+
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:22:58 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

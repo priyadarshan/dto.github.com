@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>XIOBEAT: An improvisational video dance engine</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:22:47 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">XIOBEAT: An improvisational video dance engine</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">About </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+XIOBEAT is a "video dance engine", at once both a rhythm game and a
+music creation tool, and suitable for solo freestyling and group
+performance. Between one and four players may use the keyboard, mouse,
+USB dance pads, or virtually any other standard USB controller for
+creating and improvisationally performing sounds. USB camera and
+microphone support are also planned&mdash;record your song/dance
+performances and share the videos online.
+</p>
+<p>
+<img src="../images/xiobeat-montage.png"  alt="../images/xiobeat-montage.png" />
+</p>
+<p>
+The spreadsheet-like step chart editor allows tying of musical and
+graphical events to particular dance moves in each song module;
+following the steps on the beat causes the corresponding events to be
+triggered. 
+</p>
+<p>
+Create, remix, and share XIOBEAT song modules with your own custom
+music, images, and choreography. Depending on the song module one can
+improvise and even create new music by riffing on the module's
+available dance moves and adding your own sounds and steps to the mix.
+</p>
+<p>
+XIOBEAT is written in Common Lisp and will be available for Windows,
+Mac, and Linux. XIOBEAT is free software and will be supported by
+commissions on hardware sales done through the site. A premium edition
+with extra content will also be sold, both separately and/or bundled with a
+compatible dance pad (or dance pad adaptor for people who already own
+PS2 compatible pads.)
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Images and video links </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<ul>
+<li>XIOBEAT dev journal at <a href="http://dtogameblog.blogspot.com/">my game blog.</a>
+</li>
+<li>Basic demo video of Stomp mode: <a href="http://www.youtube.com/watch?v=q2b9dKlMaw4">http://www.youtube.com/watch?v=q2b9dKlMaw4</a>
+</li>
+<li>Concept trailer: <a href="http://www.youtube.com/watch?v=BTveUHQoyyc">http://www.youtube.com/watch?v=BTveUHQoyyc</a>
+</li>
+<li>Editor UI video: <a href="http://www.youtube.com/watch?v=bdlfQERedQI">http://www.youtube.com/watch?v=bdlfQERedQI</a>
+</li>
+<li>Some shots of the editor:
+<ul>
+<li><img src="../images/xiobeat-gesture.png"  alt="../images/xiobeat-gesture.png" /> 
+</li>
+<li><img src="../images/xiobeat-chart.png"  alt="../images/xiobeat-chart.png" /> 
+</li>
+</ul>
+
+</li>
+<li>Browse the repository: <a href="http://github.com/dto/xe2/tree/master/xiobeat/">http://github.com/dto/xe2/tree/master/xiobeat/</a>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Status </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+Currently in alpha. The first beta release of XIOBEAT is slated for
+late November 2010 and will include support for USB dance pads and USB
+cameras. (Playstation 2 compatible dance pads can be used with a
+compatible USB adapter.) XIOBEAT is written in Common Lisp and will be
+free software. See <a href="http://dtogameblog.blogspot.com">http://dtogameblog.blogspot.com</a> for updates.
+</p>
+<p>
+Future plans include USB camera support (this should be available
+in the beta), USB microphone support, and live video effects.
+Remix and share your creations, record your performances, etc.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Dance gesture input </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+The diagram below gives the standard dance pad layout for
+XIOBEAT. Many generic USB and/or game console compatible dance pads
+are marked this way. (Some pads are printed with "back" instead of
+"select").
+</p>
+<pre class="example">
+
+   select  start
+   -------------
+   |B  |^  |A  |
+   |___|___|___|
+   |&lt;  |   |&gt;  |
+   |___|___|___|
+   |Y  |v  |X  |
+   |   |   |   |
+   -------------
+
+</pre>
+
+
+<p>
+A 10-button dance pad is required (i.e. all four corners must be
+buttons, as well as the orthogonal arrows and select/start.)  Konami's
+soft home pads lack the lower corner buttons, so they won't be usable
+even with a USB adapter. Most generic dance pads will work just
+fine. (Pads for Pump It Up might not work.)
+</p>
+<p>
+The Y and X buttons operate as modifiers (i.e. "shift") keys that are
+held down with one foot while the other foot uses the arrows and other
+buttons to execute commands.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Gameplay modes </h2>
+<div class="outline-text-2" id="text-5">
+
+
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1">Stomp mode </h3>
+<div class="outline-text-3" id="text-5-1">
+
+
+<p>
+Move your feet to create sound in Stomp mode using any Ogg Vorbis or
+XM (Extended Module) format song as a backing track, and load any WAV
+sample into each of the 8 dance pad buttons to be triggered by foot
+stomps.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2">Track mode </h3>
+<div class="outline-text-3" id="text-5-2">
+
+
+<p>
+With the more sophisticated track mode you can create, improvise,
+or follow dance routines using XIOBEAT's dance gesture input
+system. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-3" class="outline-3">
+<h3 id="sec-5-3">Puzzle mode </h3>
+<div class="outline-text-3" id="text-5-3">
+
+
+<p>
+Puzzle mode is as yet undescribed, but details will follow
+soon&mdash;try to imagine falling blocks with dance phrases on them.
+</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:22:47 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

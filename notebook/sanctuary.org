@@ -1,0 +1,109 @@
+#+TITLE: Sanctuary: The Roguelike
+
+* About
+
+ *Sanctuary* is a small [[http://en.wikipedia.org/wiki/Roguelike][roguelike]] game set in an original post-apocalyptic
+fantasy universe. 
+
+* Screenshots
+
+file:../images/snow.png
+file:../images/tundra.png
+
+* Videos
+
+ - [[http://www.youtube.com/watch?v=MapxH02RehY][2nd gameplay video]] with game sound AND commentary.
+ - [[http://www.youtube.com/watch?v=yytT3B2UnxA][gameplay video at youtube]]. This video includes the sound from the actual game, with no commentary.
+ - [[http://www.youtube.com/watch?v=V_EGvdM5s6Q][commentary video at youtube]]. Better video quality, but not the sound of the game---it's a voiceover instead, explaining the game.
+ - [[http://youtube.com/dto1138][all my videos]]
+
+* Downloads
+
+Visit the [[http://github.com/dto/xe2/downloads][downloads page]] and choose the right Sanctuary download for
+your platform.
+
+** Notes on the downloads---PLEASE READ
+
+*** Windows users:
+
+ *A KNOWN BUG IN THE RELEASE* is that NUMLOCK must be turned off in
+order to fire the bow with the numeric keypad. If you can't fire, try
+turning off NUMLOCK on your keyboard.
+
+Right now there is no fancy installer, but you can still download and
+run the game with a few clicks.
+
+First, your browser will probably ask you whether to *Open* the
+download, or *Save* it to disk. *CHOOSE SAVE TO DISK* and put it
+wherever you want. If you are just trying out the game, you can put it
+on your Windows desktop.
+
+Second, *RIGHT-CLICK* the =sanctuary-beta.zip= file and choose EXTRACT or EXPAND or UNZIP
+(this may vary depending on your version of Windows.) If it asks for a
+destination folder, choose the Desktop.
+
+Third and finally, *DOUBLE-CLICK* the =sanctuary-beta= folder that
+should now be on the Desktop. The folder should open into an Explorer
+window. Scroll down to *SANCTUARY.EXE* and double-click it. That's it!
+Sorry, we are working on improving the installer.
+
+*** Linux users:
+
+   1. You need the libsdl, libsdl-mixer, libsdl-image, and libsdl-gfx
+      libraries installed via your distribution's package manager.
+   
+   2. If the game complains about =libsdl_gfx= not found, it will give
+      you the option at the command line to choose between several
+      restarts. Choose CONTINUE and it should work. 
+
+   3. *If you get errors about paths and configuration* when trying to
+      start up, see [[http://github.com/dto/xe2/blob/master/BINARY-README][these notes]] for a fix. In particular, you can add
+      a line like:
+
+: (setf xe2:*module-directories* '(#P"/home/dto/xe2/"))
+
+      to a file called =.xe2rc= in your home directory. We are working
+      on fixing this bug.
+
+   4. *If you get no sound*, you may need to install the pulseaudio
+      version of SDL-MIXER from your distribution's package library.
+      This will replace the raw ALSA version of SDL-MIXER and fix the
+      problem. The package name you want on Ubuntu Karmic is 
+      =libsdl1.2debian-pulseaudio=
+
+   5. If you still can't get any of the binaries running, or if there
+      is no binary for your system, see [[http://github.com/dto/xe2/blob/master/INSTALL][the developer's install guide]]
+      for instructions on making your own binary.
+
+* Support
+
+ - irc.freenode.org#lispgames
+ - [[mailto:dto1138@gmail.com][email me]]
+
+* Future
+
+I have quite a few plans for improvements. Who knows!?
+
+Follow Sanctuary development (and my other games) on the [[http://lispgamesdev.blogspot.com][Lisp games
+dev blog]].
+
+* Story
+
+You are an archer and initiate monk of the Sanctuary Order. Humanity
+and the four continents of the Known World have fallen into a dark
+age, where undead horrors from the deeps of the earth have scoured the
+land of its people and polluted its very soil. The third Aentis Oscori
+(literally "Dark Age") is predicted by ancient tablets to last 100,000
+years, and the Sanctuary Order is charged with protecting the few
+lands still fertile and the few people still living in the Known
+World. In their libraries they preserve the knowledge of ages past in
+the hope that a distant future generation may retake the Earth and
+restore Humanity to its rightful place.
+
+You live in a time nearly 1,000 years after the falling of the Dark
+Age. Armed lightly with bow and arrow, wool clothing, and leather
+armor, you set out from Nothbess town heading south through the
+wilderness toward your destination, Valisade Monastery. You've been
+summoned to Valisade for unknown reasons, and commanded to make haste
+through the mountains instead of the safer route to the southwest.
+

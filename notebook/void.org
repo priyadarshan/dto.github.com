@@ -1,0 +1,78 @@
+#+title: Void Mission: a sci-fi action roguelike game in Common Lisp
+#+author: David T. O'Toole <dto@gnu.org> <dto1138@gmail.com>
+
+* Overview
+
+"Void Mission" is a sci-fi action roguelike divided into three
+episodes. The action takes place in a 2-D pixeled future in which you
+fly a transforming humanoid/jet suit in both exterior space and
+interior environments while firing projectile and/or energy weapons at
+enemies and simultaneously avoiding their fire. The story is largely
+told through text, represented in the game as data files, emails, or
+voice communications with a non-player character. Gameplay is tied
+into the story with missions that require balancing combat with
+exploration and puzzle solving.
+
+Void Mission's game play is that of a rogue-like with simplified
+controls. Only the four cardinal directions are available for movement
+and firing, and the player can only carry or use a few (i.e. between 1
+and 5) items at a time. The player also has fewer stats than in a
+typical roguelike, but various upgrades make sure that character
+development is still central.
+
+Void Mission is slated for FREE release on Windows, Mac OSX (Intel
+only), and GNU/Linux on August 10 2010.
+
+Please visit the game's [[http://www.indiedb.com/games/void-mission][IndieDB]] page for updates during development.
+
+My [[file:games.org][games page]] has links to my other games.
+
+* Screenshots and video
+
+file:../images/void1.png
+file:../images/void2.png
+
+ - Opening story movie on YouTube: http://www.youtube.com/watch?v=DsNBCSa9Ils
+ - Gameplay video on YouTube: http://www.youtube.com/watch?v=JsEEcrV8Qc8 
+
+* Setting
+
+It's 2061. If only there were enough endurium!
+
+It's been known for decades that Humanity's reach within the Milky Way
+is limited only by the supply of endurium, its rare and precious
+fuel. The energy crises of C.E. 2021 and C.E. 2027-2031 caused global
+economic, social, and environmental disruption, and with this
+disorganization came the concentration of wealth and power in the
+hands of the government and corporate elites.
+
+Early attempts at control and regulation of endurium met with initial
+success. The space-faring nations---Russia, China, India, Japan,
+Brazil, and the United States---along with the ESA (European Space
+Agency), could quite naturally claim endurium for themselves. But
+economies of scale and espionage in spaceflight technology eventually
+brought smaller deposits and endurium dust streams throughout the
+interstellar neighborhood within the reach of multinational
+corporations and various non-state actors. The largest of these formed
+what they called a "sovereign", open, and successful market in
+endurium, spaceflight technology, and various otherwise-controlled
+materials. The split between the Spacefaring Nations on the one hand,
+and the United Nations on the other, threatens to break into
+full-scale interstellar war; as Earth's environment continues to
+decay, the demand for endurium has reached a critical point.
+
+* Plot
+ 
+A new high-powered telescope operated by Xiomacs Corporation detects a
+pattern of gas streamers radiating high in the ultraviolet, within a
+cavernous void in galactic space. Subsequent observations show that
+the streamers are emitted from a string of black holes. The
+scientists, seeing the pattern's obviously artificial nature, guess at
+a propulsion method being used to drive a spacecraft, and begin to
+look for something at the trail's leading edge. A year later one of
+the flare-ups is observed, and the calculations fall into place: the
+source of the black holes is an object about as massive as Jupiter,
+but much smaller and far more dense. And it has been accelerating for
+1.2 billion years by riding on streams of gas being ejected from the
+black holes at relativistic speeds. It is given the name DVO1, for
+Deep Void Object 1.

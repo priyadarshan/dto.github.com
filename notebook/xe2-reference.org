@@ -1,0 +1,4973 @@
+#+OPTIONS: toc:2 *:nil 
+#+TITLE: XE2 Developer's Guide and Reference
+* Introducing XE2
+file:../images/xe2.png
+XE2 is a portable [[http://en.wikipedia.org/wiki/Free_software][free-software]] graphical 2D game engine written in
+[[http://en.wikipedia.org/wiki/Common_lisp][Common Lisp]].
+* Introducing CLON 
+CLON stands for Common Lisp Object Network. CLON is a prototype-based
+object system for Common Lisp. It is different from CLOS in several
+important ways:
+ - CLON is prototype-based, not class-based. A prototype is a template
+   object from which other objects are "cloned".
+ - Method invocation happens via message-passing, not generic
+   functions; messages are conceptually different from synchronous
+   function calls and may be freely queued, forwarded, and filtered.
+ - Built-in support for serialization.
+ - Simple and small: as of December 2008, clon.lisp contains about 750 lines
+   of code and commentary.
+ - Special syntax support for message sending:
+ 
+:   [method-name object arg1 arg2 ...]
+   and for accessing fields (i.e. "slots" in CLOS terminology):
+:   (setf <slot-name> value)
+    - [[http://en.wikipedia.org/wiki/Prototype-based_programming][Wikipedia page on Prototype-based programming]]
+    - [[http://en.wikipedia.org/wiki/Message_passing][Wikipedia page on Message passing]]
+    - http://www.cliki.net/Garnet
+    - http://iolanguage.com/about/
+** clon.el: Emacs editing support for CLON
+CLON includes a small Emacs Lisp program that adds optional support
+for CLON syntax, complete with fontification. 
+To set up clon.el, add the following to your Emacs initialization file:
+: (add-to-list 'load-path "~/clon") ;; Change this to where you installed CLON
+: (require 'clon)
+: (add-hook 'lisp-mode-hook #'clon-do-font-lock)
+** Code examples
+*** What is an object in CLON?
+An object in CLON consists of a set of fields (keyword/value pairs),
+and optionally: 
+      - a name (a symbol)
+      - a link to a parent object from which this object delegates slot lookups
+[[file:../clon/clon.html#Object_data_structure][See also clon.lisp, "Object data structure"]]
+*** Defclass-like prototype definitions
+First we must define a prototype and name its fields:
+: (define-prototype rectangle ()
+:   x y width height)
+[[file:../clon/clon.html#Defining_prototypes][See also clon.lisp, "Defining prototypes"]]
+We could also have provided initialization forms for the slots, and
+documentation strings:
+: (define-prototype rectangle ()
+:   (x :initform 0 
+:      :documentation "The x-coordinate of the rectangle's top-left corner.")
+:   (y :initform 0 
+:      :documentation "The y-coordinate of the rectangle's top-left corner.")
+:   (width :documentation "The width of the rectangle.")
+:   (height :documentation "The height of the rectangle."))
+*** Single inheritance
+And if there was a "shape" prototype, from which we would like
+"rectangle" to inherit data and methods, we might have written:
+: (define-prototype rectangle (:parent =shape=)
+:   (x :initform 0 
+:      :documentation "The x-coordinate of the rectangle's top-left corner.")
+:   (y :initform 0 
+:      :documentation "The y-coordinate of the rectangle's top-left corner.")
+:   (width :documentation "The width of the rectangle.")
+:   (height :documentation "The height of the rectangle."))
+Notice the equals signs surrounding the parent object's name; all
+objects made with define-prototype are accessible via special
+variables with such names. 
+The reason for this is that usually you want to call a widget a
+widget, but if that name is taken for a special variable "widget"
+whose value was the prototype for all widgets, then you will have to
+use some other probably less effective name for the binding, like "w"
+or "wt" or "wydget", everywhere you want to just talk about a "widget"
+in your code. So instead we only reserve the equals-sign-delimited
+name:
+:  =WIDGET=
+*** Cloning objects
+The function CLON:CLONE is used to create new objects from these
+prototypes. Now we write an initializer, which is passed any creation
+arguments at the time of cloning.
+: (define-method initialize rectangle (&key width height)
+:   (setf <width> width)
+:   (setf <height> height))
+[[file:../clon/clon.html#Cloning_objects][See also clon.lisp, "Cloning objects".]]
+Notice how field accesses can be written with the angle brackets; this
+works both for reading and for writing, so long as you use "setf" for
+the latter. 
+[[file:../clon/clon.html#Field_reference_syntax][See also "Field reference syntax".]]
+Now when you say:
+: (setf rectangle (clone =rectangle= :width 5 :height 12))
+The rectangle's initializer method is invoked with those arguments,
+and a rectangle of the correct height and width is created.
+*** Basic field access
+: (field-value :width rectangle)
+: (setf (field-value :height rectangle) 7)
+[[file:../clon/clon.html#Fields][See also clon.lisp, "Fields"]]
+*** Methods
+Now we define a few methods:
+: (define-method area rectangle ()
+:   (* <width> <height>))
+: 
+: (define-method print rectangle (&optional (stream t))
+:   (format stream "height: ~A width: ~A area: ~A"
+: 	  <height> <width> 
+: 	  [area self]))
+[[file:../clon/clon.html#Methods_and_messages][See also clon.lisp, "Methods and messages"]]
+And invoke them with the aforementioned square bracket notation.
+: (defvar rect (clone =rectangle= :width 10 :height 8))
+:
+: [print rect]
+The result: 
+: "height: 8 width: 10 area: 80"
+*** Message queueing
+CLON also supports a concept called message queueing. When there is an
+active message queue, messages may be entered into the queue instead
+of directly invoking a method:
+: [queue>>render widget]
+: [queue>>attack self :north]
+The sender, receiver, method name, and arguments are all recorded in
+the queue. The developer can then filter or process them before
+sending.
+[[file:../clon/clon.html#Message_queueing][See also clon.lisp, "Message queueing"]]
+*** Message forwarding
+And finally, I will mention message forwarding, which handles the case
+that an object has no handler for a particular method. This is akin to
+[[http://en.wikipedia.org/wiki/Smalltalk][Smalltalk's]] "doesNotUnderstand" concept.
+[[file:../clon/clon.html#Message_forwarding][See also clon.lisp, "Message forwarding"]]
+* A simple example
+Before we move on to the reference dictionary of the objects,
+functions, and variables of XE2, here's an example game to
+peek at: [[http://github.com/dto/xe2/blob/master/example/example.lisp][example.lisp]]
+You can try it by running (xe2:play "example") at the SLIME REPL.
+There's more to making an XE2 module than just a Lisp file; you must
+have resource files (.png, .ogg) and a resource index (.pak file).
+See http://github.com/dto/xe2/tree/master/example/ for the full list
+of files in the example game.
+* Support links
+If you have questions about XE2 or have problems, feel free to use the
+following lines of support:
+ - IRC channel #lispgames on irc.freenode.net
+ - [[mailto:dto@gnu.org][email me]].
+ - Join our [[http://common-lisp.net/mailman/listinfo/lisp-game-dev][mailing list]].
+* Symbol dictionary
+The remainder of this reference lists documentation for all the
+exported symbols, in the following order:
+  - Prototypes 
+    + Fields
+    + Methods, in alphabetical order
+  - Special variables, in alphabetical order
+  - Macros, functions, and variables, in alphabetical order
+* =BROWSER= (prototype)
+** Parent prototype
+: =FORMATTER=
+*** Fields
+**** COLLECTION (field)
+***** Documentation
+The vector of browsable CLON objects being browsed.
+**** CURSOR (field)
+***** Documentation
+The array index of the currently selected object.
+***** Initialization form
+: 0
+**** VISIBLE (field)
+**** HISTORY (field)
+***** Documentation
+Recently browsed collections.
+**** PROMPT (field)
+***** Documentation
+Prompt to receive command messages.
+**** LINES (field)
+***** Documentation
+Vector of lines.
+**** CURRENT-LINE (field)
+***** Documentation
+Formatted line currently being composed.
+**** KEYMAP (field)
+***** Documentation
+A hash table mapping keylists to lambdas.
+**** IMAGE (field)
+***** Documentation
+The offscreen image buffer containing the widget's rendered output.
+**** WIDTH (field)
+***** Documentation
+The current allocated image width of the widget, in pixels.
+**** HEIGHT (field)
+***** Documentation
+The current allocated image height of the widget, in pixels.
+**** VISIBLE (field)
+***** Documentation
+The boolean visibility of the widget.
+***** Initialization form
+: T
+**** X (field)
+***** Documentation
+The screen x-coordinate of the left side of the widget's display area.
+**** Y (field)
+***** Documentation
+The screen y-coordinate of the top of the widget's display area.
+** BACK [BROWSER] (method)
+*** Arguments
+NIL
+** CURSOR-ITEM [BROWSER] (method)
+*** Arguments
+NIL
+** CURSOR-NEXT [BROWSER] (method)
+*** Arguments
+NIL
+** CURSOR-PREVIOUS [BROWSER] (method)
+*** Arguments
+NIL
+** FOLLOW [BROWSER] (method)
+*** Arguments
+NIL
+** INITIALIZE [BROWSER] (method)
+*** Arguments
+NIL
+** PRINT-OBJECT [BROWSER] (method)
+*** Arguments
+(OBJECT &OPTIONAL SELECTED-P)
+*** Documentation
+Print the OBJECT in the browser as a new formatted line.
+When SELECTED-P is non-nil, draw the highlighted (or otherwise
+visually distinguished) version of the line.
+** SET-COLLECTION [BROWSER] (method)
+*** Arguments
+(COLLECTION)
+** SET-COLLECTION-FROM-MENU-SPEC [BROWSER] (method)
+*** Arguments
+(MENU-SPEC)
+** SET-PROMPT [BROWSER] (method)
+*** Arguments
+(PROMPT)
+** UPDATE [BROWSER] (method)
+*** Arguments
+NIL
+* =BUTTON-CELL= (prototype)
+** Parent prototype
+: =CELL=
+*** Fields
+**** BUTTON (field)
+**** CLOCK (field)
+**** TYPE (field)
+**** AUTO-LOADOUT (field)
+***** Documentation
+When non-nil, the :loadout method is invoked upon entry into a world.
+**** TEAM (field)
+***** Documentation
+Keyword symbol of team, if any.
+**** WEIGHT (field)
+***** Documentation
+Recursively calculate the weight of this cell.
+**** WIDGET (field)
+***** Documentation
+XE2 widget object, if any.
+**** TILE (field)
+***** Documentation
+Resource name of image. 
+When nil, the method DRAW is invoked instead of using a tile.
+**** RENDER-CELL (field)
+***** Documentation
+Subcell to render. See load-sprite-sheet-resource.
+**** ROW (field)
+***** Documentation
+When non-nil, the current row location of the cell.
+**** COLUMN (field)
+***** Documentation
+When non-nil, the current column of the cell.
+**** CATEGORIES (field)
+***** Documentation
+List of category keyword symbols
+**** LIGHT-RADIUS (field)
+***** Documentation
+Strength of light cast by this object.
+***** Initialization form
+: 0
+**** MENU (field)
+***** Documentation
+Menu objects.
+**** SPEED (field)
+***** Documentation
+The number of action points alloted each phase.
+***** Initialization form
+: '(:BASE 10)
+**** PHASE-NUMBER (field)
+***** Documentation
+An integer giving the last phase this cell has completed.
+***** Initialization form
+: 0
+**** ACTION-POINTS (field)
+***** Documentation
+An integer giving the ability of a cell to take turns on a given round.
+***** Initialization form
+: 0
+**** DEFAULT-COST (field)
+***** Documentation
+Cost for basic actions.
+***** Initialization form
+: '(:BASE 5 :MIN NIL :MAX NIL :DELTA NIL)
+**** STEPPING (field)
+***** Documentation
+Whether to generate step events where you walk.
+**** MOVEMENT-COST (field)
+***** Documentation
+Base cost of moving one square.
+***** Initialization form
+: '(:BASE 10 :MIN NIL :MAX NIL :DELTA NIL)
+**** TOOLTIP (field)
+***** Documentation
+A formatted line giving dev help or information about the cell.
+**** NAME (field)
+***** Documentation
+The name of this cell.
+**** DESCRIPTION (field)
+***** Documentation
+A description of the cell.
+**** UNKNOWN-NAME (field)
+***** Documentation
+The name of this cell, when it is unknown.
+**** UNKNOWN-DESCRIPTION (field)
+***** Documentation
+A description of the cell, when it is unknown.
+**** EQUIPMENT (field)
+***** Documentation
+Property list of :slot -> cell pairs.
+**** EQUIPMENT-SLOTS (field)
+***** Documentation
+List of keyword symbols identifying available equipment slots.
+***** Initialization form
+: '(:HEAD :NECK :LEFT-HAND :RIGHT-HAND :HANDS :FEET :LEGS :TORSO :ARMS :PACK
+    :BELT)
+**** USING-SLOT (field)
+***** Documentation
+Keyword symbol of the currently selected equipment slot.
+**** ATTACKING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected weapon slot.
+**** FIRING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected firing weapon slot.
+**** EQUIP-FOR (field)
+***** Documentation
+List of keyword symbols showing where this item may be equipped.
+**** EQUIPPER (field)
+***** Documentation
+When non-nil, the character currently equipping this item.
+**** INVENTORY (field)
+***** Documentation
+The contents (if any) of the cell.
+**** MAX-WEIGHT (field)
+***** Documentation
+Maximum weight this container can hold.
+**** MAX-ITEMS (field)
+***** Documentation
+Maximum number of items this container can hold.
+**** PARENT-CONTAINER (field)
+***** Documentation
+Link to containing cell, if any.
+**** LABEL (field)
+***** Documentation
+Label (string or formatted line) to be used as display in forms.
+**** OCCUPANT (field)
+***** Documentation
+Occupant cell, used to implement drivable vehicles.
+**** PROXY (field)
+***** Documentation
+Make this cell a proxy for OCCUPANT.
+**** COMBINATION-AMOUNT (field)
+***** Documentation
+Amount of item this cell represents.
+***** Initialization form
+: 0
+**** COMBINATION-KEY (field)
+***** Documentation
+Only items matching this key will be combined.
+**** EXCLUDED-FIELDS (field)
+** COMPUTE [BUTTON-CELL] (method)
+*** Arguments
+NIL
+** GET [BUTTON-CELL] (method)
+*** Arguments
+NIL
+** INITIALIZE [BUTTON-CELL] (method)
+*** Arguments
+(&KEY CLOSURE TEXT)
+** SELECT [BUTTON-CELL] (method)
+*** Arguments
+NIL
+** SET [BUTTON-CELL] (method)
+*** Arguments
+(BUTTON)
+* =CELL= (prototype)
+** Documentation
+`Cells' are interacting CLON objects. Each cell represents some
+in-game entity; player characters, enemies, weapons, items, walls and
+floors are all different types of cells. Game play occurs in a
+three-dimensional grid of cells called a World (see below).
+
+Cells may be stacked along the z-axis, and may also contain other
+cells. Cells interact by sending messages to one another and to other
+objects in the environment; these messages are queued and processed by
+the world for delivery to their recipients.
+
+In cells.lisp you will find some basic roguelike logic built into
+cells.
+
+  - Basic features like name, description, and discovery.
+  - Unified container, inventory, and equipment system.
+  - Cells have an optional weight in kilograms, and the calculation
+    recursively includes containers and equipment.
+  - The `action points' system allocates game turns to different
+    cells. 
+  - Basic melee and ranged combat support.
+  - Equipment slot system (i.e. `paper doll') not restricted to humanoid actors.
+  - `Proxying', a feature used to implement drivable vehicles and/or demonic possession.
+  - `Stats', for numeric-valued attributes susceptible to temporary
+    and permanent effects (i.e. stat increases and drains, or
+    encumbrance). Also supports setting minimum and maximum values,
+    and keeping track of units (meters, kilograms.)
+  - `Categories' allow arbitrary tagging of objects, with some
+    categories having special interpretation by the engine.
+
+These are in effect a basic set of mostly optional roleplaying
+rules. By defining new prototypes based on cells, you can change the
+rules and run the game the way you want.
+Sprites are also based on cells. See `defsprite'.
+*** Fields
+**** TYPE (field)
+**** AUTO-LOADOUT (field)
+***** Documentation
+When non-nil, the :loadout method is invoked upon entry into a world.
+**** TEAM (field)
+***** Documentation
+Keyword symbol of team, if any.
+**** WEIGHT (field)
+***** Documentation
+Recursively calculate the weight of this cell.
+**** WIDGET (field)
+***** Documentation
+XE2 widget object, if any.
+**** TILE (field)
+***** Documentation
+Resource name of image. 
+When nil, the method DRAW is invoked instead of using a tile.
+**** RENDER-CELL (field)
+***** Documentation
+Subcell to render. See load-sprite-sheet-resource.
+**** ROW (field)
+***** Documentation
+When non-nil, the current row location of the cell.
+**** COLUMN (field)
+***** Documentation
+When non-nil, the current column of the cell.
+**** CATEGORIES (field)
+***** Documentation
+List of category keyword symbols
+**** LIGHT-RADIUS (field)
+***** Documentation
+Strength of light cast by this object.
+***** Initialization form
+: 0
+**** MENU (field)
+***** Documentation
+Menu objects.
+**** SPEED (field)
+***** Documentation
+The number of action points alloted each phase.
+***** Initialization form
+: '(:BASE 10)
+**** PHASE-NUMBER (field)
+***** Documentation
+An integer giving the last phase this cell has completed.
+***** Initialization form
+: 0
+**** ACTION-POINTS (field)
+***** Documentation
+An integer giving the ability of a cell to take turns on a given round.
+***** Initialization form
+: 0
+**** DEFAULT-COST (field)
+***** Documentation
+Cost for basic actions.
+***** Initialization form
+: '(:BASE 5 :MIN NIL :MAX NIL :DELTA NIL)
+**** STEPPING (field)
+***** Documentation
+Whether to generate step events where you walk.
+**** MOVEMENT-COST (field)
+***** Documentation
+Base cost of moving one square.
+***** Initialization form
+: '(:BASE 10 :MIN NIL :MAX NIL :DELTA NIL)
+**** TOOLTIP (field)
+***** Documentation
+A formatted line giving dev help or information about the cell.
+**** NAME (field)
+***** Documentation
+The name of this cell.
+**** DESCRIPTION (field)
+***** Documentation
+A description of the cell.
+**** UNKNOWN-NAME (field)
+***** Documentation
+The name of this cell, when it is unknown.
+**** UNKNOWN-DESCRIPTION (field)
+***** Documentation
+A description of the cell, when it is unknown.
+**** EQUIPMENT (field)
+***** Documentation
+Property list of :slot -> cell pairs.
+**** EQUIPMENT-SLOTS (field)
+***** Documentation
+List of keyword symbols identifying available equipment slots.
+***** Initialization form
+: '(:HEAD :NECK :LEFT-HAND :RIGHT-HAND :HANDS :FEET :LEGS :TORSO :ARMS :PACK
+    :BELT)
+**** USING-SLOT (field)
+***** Documentation
+Keyword symbol of the currently selected equipment slot.
+**** ATTACKING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected weapon slot.
+**** FIRING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected firing weapon slot.
+**** EQUIP-FOR (field)
+***** Documentation
+List of keyword symbols showing where this item may be equipped.
+**** EQUIPPER (field)
+***** Documentation
+When non-nil, the character currently equipping this item.
+**** INVENTORY (field)
+***** Documentation
+The contents (if any) of the cell.
+**** MAX-WEIGHT (field)
+***** Documentation
+Maximum weight this container can hold.
+**** MAX-ITEMS (field)
+***** Documentation
+Maximum number of items this container can hold.
+**** PARENT-CONTAINER (field)
+***** Documentation
+Link to containing cell, if any.
+**** LABEL (field)
+***** Documentation
+Label (string or formatted line) to be used as display in forms.
+**** OCCUPANT (field)
+***** Documentation
+Occupant cell, used to implement drivable vehicles.
+**** PROXY (field)
+***** Documentation
+Make this cell a proxy for OCCUPANT.
+**** COMBINATION-AMOUNT (field)
+***** Documentation
+Amount of item this cell represents.
+***** Initialization form
+: 0
+**** COMBINATION-KEY (field)
+***** Documentation
+Only items matching this key will be combined.
+**** EXCLUDED-FIELDS (field)
+** ADD-CATEGORY [CELL] (method)
+*** Arguments
+(CATEGORY)
+*** Documentation
+Add this cell to the specified CATEGORY.
+** ADD-EQUIPMENT [CELL] (method)
+*** Arguments
+(ITEM &OPTIONAL SLOT)
+** ADD-ITEM [CELL] (method)
+*** Arguments
+(ITEM)
+*** Documentation
+Add the ITEM to the cell's <inventory>.
+Return the new integer position if successful, nil otherwise.
+** ADJACENT-TO-PLAYER [CELL] (method)
+*** Arguments
+NIL
+** ATTACK [CELL] (method)
+*** Arguments
+(TARGET)
+** BEGIN-PHASE [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Give the cell its allotment of action points to begin a phase.
+If the last action of the previous turn brought the AP score into the
+negative, then you'll come up that much short.
+** CAN-ACT [CELL] (method)
+*** Arguments
+(PHASE)
+*** Documentation
+Determine whether the cell has enough action points to take some
+action during PHASE.
+
+The Action Points system is XE2's model of roguelike time; Time is
+divided into discrete episodes called phases.  Each phase consists
+of one or more actions, each of which lasts a certain number of
+action points' worth of time. During an action, the cell may modify
+its own fields, invoke methods on itself, or send queued messages
+to other cells in the environment. When a cell runs out of action
+points, its phase ends and another cell's phase begins.
+
+`Action points' (or `AP') control an actor cell's ability to take
+actions during a phase. The AP score for a cell's phase starts at
+ [stat-value cell :speed]. The AP cost of an action is determined by
+the corresponding method's use of `expend-action-points'; see below. 
+
+First your turn comes up, and XE2 waits for your input.  Once you
+issue a command, some AP may be used up. When your AP is gone, the
+computer's phase begins. The results are displayed, and if you're
+still alive, the player phase begins again.
+
+ (In realtime mode, XE2 does not wait for input.)
+
+The queued messages' targets can be keywords like :world, :browser,
+or :narrator instead of direct references to objects; the world
+processes the messages before delivery and sends them to the right
+place. (See also worlds.lisp)
+** CANCEL [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+This cell was scheduled for drop and possible loadout in a world,
+but this was canceled. A canceled cell should update any global state
+to reflect its disappearance; this is different from a dying cell.
+** CLEAR-LOCATION [CELL] (method)
+*** Arguments
+NIL
+** COMPUTE [CELL] (method)
+*** Arguments
+NIL
+** DAMAGE [CELL] (method)
+*** Arguments
+(DAMAGE-POINTS)
+** DELETE-CATEGORY [CELL] (method)
+*** Arguments
+(CATEGORY)
+*** Documentation
+Remove this cell from the specified CATEGORY.
+** DELETE-EQUIPMENT [CELL] (method)
+*** Arguments
+(SLOT)
+** DELETE-FROM-WORLD [CELL] (method)
+*** Arguments
+NIL
+** DEQUIP [CELL] (method)
+*** Arguments
+(SLOT)
+** DESCRIBE [CELL] (method)
+*** Arguments
+(&OPTIONAL DESCRIPTION)
+*** Documentation
+Narrate a description of the object. By default, uses
+the :description field of the cell.
+** DIE [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Abandon this cell to the garbage collector.
+** DIRECTION-TO-PLAYER [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Calculate the general compass direction of the player.
+** DISEMBARK [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Eject the occupant.
+** DISLOCATE [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Remove any location data from the cell.
+** DISTANCE-TO-PLAYER [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Calculate the distance from the current location to the player.
+** DO-COLLISION [CELL] (method)
+*** Arguments
+(OBJECT)
+*** Documentation
+Respond to a collision detected with OBJECT.
+** DO-POST-UNPROXIED [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+This method is invoked on the unproxied former occupant cell after
+unproxying. By default, it does nothing.
+** DRAW [CELL] (method)
+*** Arguments
+(X Y IMAGE)
+*** Documentation
+Use XE2 drawing commands to render a presentation of this cell at
+X, Y to the offscreen image IMAGE.  This method is invoked to draw a
+cell when its TILE field is nil, or when it is in the
+category :drawn. See also viewport.lisp.
+** DROP [CELL] (method)
+*** Arguments
+(CELL &KEY LOADOUT (EXCLUSIVE NIL))
+*** Documentation
+Add CELL to the world at the current location. By default,
+EXCLUSIVE is nil; this allows one to drop objects on top of oneself.
+When LOADOUT is non-nil, call the :loadout method.
+** DROP-ITEM [CELL] (method)
+*** Arguments
+(POS)
+*** Documentation
+Drop the item at inventory position POS.
+** DROP-SPRITE [CELL] (method)
+*** Arguments
+(SPRITE X Y)
+*** Documentation
+Add SPRITE to the world at location X,Y.
+** EMBARK [CELL] (method)
+*** Arguments
+(&OPTIONAL V)
+*** Documentation
+Enter a vehicle V.
+** END-PHASE [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+End this cell's phase.
+** EQUIP [CELL] (method)
+*** Arguments
+(&OPTIONAL REFERENCE SLOT)
+** EQUIPMENT-MATCH [CELL] (method)
+*** Arguments
+(ITEM)
+*** Documentation
+Return a list of possible slots on which this cell could equip
+ITEM. Returns nil if no such match is possible.
+** EQUIPMENT-SLOT [CELL] (method)
+*** Arguments
+(SLOT)
+*** Documentation
+Return the equipment item (if any) in the slot named SLOT.
+** EXIT [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+This method is invoked on a player cell when it leaves a world.
+** EXPEND-ACTION-POINTS [CELL] (method)
+*** Arguments
+(POINTS &OPTIONAL MIN)
+*** Documentation
+Expend POINTS action points, possibly going into the negative.
+** EXPEND-DEFAULT-ACTION-POINTS [CELL] (method)
+*** Arguments
+NIL
+** EXPEND-ENERGY [CELL] (method)
+*** Arguments
+(AMOUNT)
+** FIND [CELL] (method)
+*** Arguments
+(&KEY (DIRECTION HERE) (INDEX TOP) CATEGORY)
+** FIRE [CELL] (method)
+*** Arguments
+(DIRECTION)
+** FIRST-OPEN-SLOT [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Return the integer position of the first open inventory slot, or
+nil if none.
+** FORM-HEIGHT [CELL] (method)
+*** Arguments
+NIL
+** FORM-LABEL [CELL] (method)
+*** Arguments
+NIL
+** FORM-RENDER [CELL] (method)
+*** Arguments
+(IMAGE X Y WIDTH)
+** FORM-WIDTH [CELL] (method)
+*** Arguments
+NIL
+** FORWARD [CELL] (method)
+*** Arguments
+(METHOD &REST ARGS)
+*** Documentation
+Attempt to deliver the failed message to the occupant, if any.
+** GET [CELL] (method)
+*** Arguments
+NIL
+** GET-ACTIONS [CELL] (method)
+*** Arguments
+NIL
+** GET-MAX-ITEMS [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Return the maximum number of items this container can hold.
+** GRID-COORDINATES [CELL] (method)
+*** Arguments
+NIL
+** HIT [CELL] (method)
+*** Arguments
+(&OPTIONAL OTHER)
+** IMAGE-COORDINATES [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Return as values X,Y the viewport image coordinates of CELL.
+** IN-CATEGORY [CELL] (method)
+*** Arguments
+(CATEGORY)
+*** Documentation
+Return non-nil if this cell is in the specified CATEGORY.
+
+Cells may be placed into categories that influence their processing by
+the engine. The field `<categories>' is a set of keyword symbols; if a
+symbol `:foo' is in the list, then the cell is in the category `:foo'.
+
+Although a game built on XE2 can define whatever categories are
+needed, certain base categories are built-in and have a fixed
+interpretation:
+
+ -    :actor --- This cell is active and may be controlled by either the
+      user or the CPU. Only actor cells receive `:run' messages
+      every turn. Other cells are purely `reactive'. Actor
+      cells participate in the Action Points system.
+ -    :target --- This cell is susceptible to targeting.
+ -    :proxy --- This cell is a proxy for another cell.
+ -    :drawn --- This cell has a [draw] method used for custom drawing.
+ -    :proxied  --- This cell is an occupant of a proxy.
+ -    :dead --- This cell is no longer receiving run messages.
+ -    :player --- Only one cell (your player avatar) has this category.
+ -    :enemy --- This cell is playing against you.
+ -    :exclusive --- Prevent some objects from stacking. See also the method `drop-cell' in worlds.lisp
+ -    :obstacle --- Blocks movement and causes collisions
+ -    :pushable --- Can be pushed by impacts.
+ -    :ephemeral --- This cell is not preserved when exiting a world.
+ -    :combining --- This cell automatically combines units with other cells in a container.
+ -    :light-source --- This object casts light. 
+ -    :opaque --- Blocks line-of-sight, casts shadows. 
+ -    :container --- This cell contains other cells, and has an <inventory> field
+ -    :contained ---  This cell is contained in another cell (i.e. not in open space on the map)
+ -    :item --- A potential inventory item. 
+ -    :equipper --- Uses equipment. 
+ -    :equipped --- This item is currently equipped.
+ -    :equipment --- This item can be equipped. 
+** IS-ACTOR [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Return non-nil if this cell is an actor. Actor cells receive a :run
+message every frame.
+** IS-CONTAINER [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Returns non-nil if this cell is a container.
+** IS-EQUIPMENT [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Return non-nil if this cell is a piece of equipment.
+** IS-ITEM [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Returns non-nil if this cell is a potential inventory item.
+** IS-LIGHT-SOURCE [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Returns non-nil if this cell is a light source.
+** IS-LOCATED [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Returns non-nil if this cell is located somewhere on the grid.
+** IS-PLAYER [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Return non-nil if this is the player.
+** ITEM-AT [CELL] (method)
+*** Arguments
+(POS)
+*** Documentation
+Return the item at inventory position POS.
+** LOADOUT [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+This is called for cells after being dropped in a world, with a
+non-nil :loadout argument. It can also be triggered manually.  Use
+`loadout' for things that have to be done while in a world. (During
+your cell's normal CLON `initialize' method, the cell will not be in a
+world or have a location.
+** MAKE-EQUIPMENT [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Create an empty equipment property list.
+** MAKE-INVENTORY [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Create an empty <inventory> of length <max-items>.
+** MOVE [CELL] (method)
+*** Arguments
+(DIRECTION &OPTIONAL IGNORE-OBSTACLES)
+*** Documentation
+Move this cell one step in DIRECTION on the grid. If
+IGNORE-OBSTACLES is non-nil, the move will occur even if an obstacle
+is in the way. Returns non-nil if a move occurred.
+** MOVE-TO [CELL] (method)
+*** Arguments
+(R C)
+** PHASE-HOOK [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Invoked once at the beginning of each phase.
+** PLAY-SAMPLE [CELL] (method)
+*** Arguments
+(SAMPLE-NAME)
+*** Documentation
+Play the sample SAMPLE-NAME.
+May be affected by the player's :hearing-range stat, if any.
+** PROXY [CELL] (method)
+*** Arguments
+(OCCUPANT)
+*** Documentation
+Make this cell a proxy for OCCUPANT.
+** PUSH [CELL] (method)
+*** Arguments
+(DIRECTION)
+** REMOVE-ITEM [CELL] (method)
+*** Arguments
+(ITEM)
+*** Documentation
+Remove ITEM from the <inventory>.
+Return ITEM if successful, nil otherwise.
+** REPLACE-ITEM-AT [CELL] (method)
+*** Arguments
+(ITEM POS)
+*** Documentation
+Replace the inventory item at position POS with ITEM.
+** RESOLVE [CELL] (method)
+*** Arguments
+(REFERENCE &OPTIONAL CATEGORY)
+*** Documentation
+Accept a REFERENCE to a cell, and try to get the real cell.
+The REFERENCE may be an object, one of the `*compass-directions*', an
+equipment slot keyword, or an integer denoting the nth inventory
+slot.
+** SAY [CELL] (method)
+*** Arguments
+(FORMAT-STRING &REST ARGS)
+*** Documentation
+Print a string to the message narration window. Arguments
+are as with `format'.
+** SCREEN-COORDINATES [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Return as values X,Y the screen coordinates of CELL.
+** SELECT [CELL] (method)
+*** Arguments
+NIL
+** SET [CELL] (method)
+*** Arguments
+(DATA)
+** SET-CONTAINER [CELL] (method)
+*** Arguments
+(CONTAINER)
+*** Documentation
+Set the container pointer of this cell to CONTAINER.
+All contained cells maintain a pointer to their containers.
+** SET-LOCATION [CELL] (method)
+*** Arguments
+(R C)
+*** Documentation
+Set the row R and column C of the cell.
+** START [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+This method is invoked on the player whenever entering a new world map.
+** STAT-EFFECT [CELL] (method)
+*** Arguments
+(STAT-NAME VAL &OPTIONAL (COMPONENT BASE) (CLAMPING T))
+*** Documentation
+Add VAL, which may be negative, to the COMPONENT part of the stat
+field named by STAT-NAME. The default is to change the :base value.
+** STAT-VALUE [CELL] (method)
+*** Arguments
+(STAT-NAME &OPTIONAL COMPONENT (CLAMPING T))
+*** Documentation
+Compute the current value of the statistic in field STAT-NAME.
+If a COMPONENT keyword is provided, return that component of the stat
+instead of computing the value.
+
+Characters and objects may have numeric-valued attributes like
+Strength and Dexterity that have a minimum and maximum value
+ (perhaps decided on the basis of class) as well as temporary and
+permanent effects. In this case you want to store a base value,
+minimum, maximum, and current delta, and compute the value at run
+time.
+
+Stats are just property lists with four different components: :base
+:min :max and :delta.
+** STEP [CELL] (method)
+*** Arguments
+(STEPPER)
+*** Documentation
+Respond to being stepped on by the STEPPER.
+** STEP-ON-CURRENT-SQUARE [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Send :step events to all the cells on the current square.
+** TAKE [CELL] (method)
+*** Arguments
+(&KEY (DIRECTION HERE) INDEX CATEGORY)
+*** Documentation
+Take the item and return non-nil if successful.
+** UNPROXY [CELL] (method)
+*** Arguments
+(&KEY DR DC DX DY)
+*** Documentation
+Remove the occupant from this cell, dropping it on top.
+** USE [CELL] (method)
+*** Arguments
+(USER)
+*** Documentation
+Return non-nil if cell is used up and should disappear.
+** VIEWPORT-COORDINATES [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Return as values X,Y the world coordinates of CELL.
+** WEIGHT [CELL] (method)
+*** Arguments
+NIL
+*** Documentation
+Recursively calculate the weight of this cell.
+** XY-COORDINATES [CELL] (method)
+*** Arguments
+NIL
+* =COMMENT-CELL= (prototype)
+** Parent prototype
+: =CELL=
+*** Fields
+**** COMMENT (field)
+**** TYPE (field)
+**** AUTO-LOADOUT (field)
+***** Documentation
+When non-nil, the :loadout method is invoked upon entry into a world.
+**** TEAM (field)
+***** Documentation
+Keyword symbol of team, if any.
+**** WEIGHT (field)
+***** Documentation
+Recursively calculate the weight of this cell.
+**** WIDGET (field)
+***** Documentation
+XE2 widget object, if any.
+**** TILE (field)
+***** Documentation
+Resource name of image. 
+When nil, the method DRAW is invoked instead of using a tile.
+**** RENDER-CELL (field)
+***** Documentation
+Subcell to render. See load-sprite-sheet-resource.
+**** ROW (field)
+***** Documentation
+When non-nil, the current row location of the cell.
+**** COLUMN (field)
+***** Documentation
+When non-nil, the current column of the cell.
+**** CATEGORIES (field)
+***** Documentation
+List of category keyword symbols
+**** LIGHT-RADIUS (field)
+***** Documentation
+Strength of light cast by this object.
+***** Initialization form
+: 0
+**** MENU (field)
+***** Documentation
+Menu objects.
+**** SPEED (field)
+***** Documentation
+The number of action points alloted each phase.
+***** Initialization form
+: '(:BASE 10)
+**** PHASE-NUMBER (field)
+***** Documentation
+An integer giving the last phase this cell has completed.
+***** Initialization form
+: 0
+**** ACTION-POINTS (field)
+***** Documentation
+An integer giving the ability of a cell to take turns on a given round.
+***** Initialization form
+: 0
+**** DEFAULT-COST (field)
+***** Documentation
+Cost for basic actions.
+***** Initialization form
+: '(:BASE 5 :MIN NIL :MAX NIL :DELTA NIL)
+**** STEPPING (field)
+***** Documentation
+Whether to generate step events where you walk.
+**** MOVEMENT-COST (field)
+***** Documentation
+Base cost of moving one square.
+***** Initialization form
+: '(:BASE 10 :MIN NIL :MAX NIL :DELTA NIL)
+**** TOOLTIP (field)
+***** Documentation
+A formatted line giving dev help or information about the cell.
+**** NAME (field)
+***** Documentation
+The name of this cell.
+**** DESCRIPTION (field)
+***** Documentation
+A description of the cell.
+**** UNKNOWN-NAME (field)
+***** Documentation
+The name of this cell, when it is unknown.
+**** UNKNOWN-DESCRIPTION (field)
+***** Documentation
+A description of the cell, when it is unknown.
+**** EQUIPMENT (field)
+***** Documentation
+Property list of :slot -> cell pairs.
+**** EQUIPMENT-SLOTS (field)
+***** Documentation
+List of keyword symbols identifying available equipment slots.
+***** Initialization form
+: '(:HEAD :NECK :LEFT-HAND :RIGHT-HAND :HANDS :FEET :LEGS :TORSO :ARMS :PACK
+    :BELT)
+**** USING-SLOT (field)
+***** Documentation
+Keyword symbol of the currently selected equipment slot.
+**** ATTACKING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected weapon slot.
+**** FIRING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected firing weapon slot.
+**** EQUIP-FOR (field)
+***** Documentation
+List of keyword symbols showing where this item may be equipped.
+**** EQUIPPER (field)
+***** Documentation
+When non-nil, the character currently equipping this item.
+**** INVENTORY (field)
+***** Documentation
+The contents (if any) of the cell.
+**** MAX-WEIGHT (field)
+***** Documentation
+Maximum weight this container can hold.
+**** MAX-ITEMS (field)
+***** Documentation
+Maximum number of items this container can hold.
+**** PARENT-CONTAINER (field)
+***** Documentation
+Link to containing cell, if any.
+**** LABEL (field)
+***** Documentation
+Label (string or formatted line) to be used as display in forms.
+**** OCCUPANT (field)
+***** Documentation
+Occupant cell, used to implement drivable vehicles.
+**** PROXY (field)
+***** Documentation
+Make this cell a proxy for OCCUPANT.
+**** COMBINATION-AMOUNT (field)
+***** Documentation
+Amount of item this cell represents.
+***** Initialization form
+: 0
+**** COMBINATION-KEY (field)
+***** Documentation
+Only items matching this key will be combined.
+**** EXCLUDED-FIELDS (field)
+** COMPUTE [COMMENT-CELL] (method)
+*** Arguments
+NIL
+** GET [COMMENT-CELL] (method)
+*** Arguments
+NIL
+** INITIALIZE [COMMENT-CELL] (method)
+*** Arguments
+(COMMENT)
+** SET [COMMENT-CELL] (method)
+*** Arguments
+(COMMENT)
+* =DATA-CELL= (prototype)
+** Parent prototype
+: =CELL=
+*** Fields
+**** DATA (field)
+**** TYPE (field)
+**** AUTO-LOADOUT (field)
+***** Documentation
+When non-nil, the :loadout method is invoked upon entry into a world.
+**** TEAM (field)
+***** Documentation
+Keyword symbol of team, if any.
+**** WEIGHT (field)
+***** Documentation
+Recursively calculate the weight of this cell.
+**** WIDGET (field)
+***** Documentation
+XE2 widget object, if any.
+**** TILE (field)
+***** Documentation
+Resource name of image. 
+When nil, the method DRAW is invoked instead of using a tile.
+**** RENDER-CELL (field)
+***** Documentation
+Subcell to render. See load-sprite-sheet-resource.
+**** ROW (field)
+***** Documentation
+When non-nil, the current row location of the cell.
+**** COLUMN (field)
+***** Documentation
+When non-nil, the current column of the cell.
+**** CATEGORIES (field)
+***** Documentation
+List of category keyword symbols
+**** LIGHT-RADIUS (field)
+***** Documentation
+Strength of light cast by this object.
+***** Initialization form
+: 0
+**** MENU (field)
+***** Documentation
+Menu objects.
+**** SPEED (field)
+***** Documentation
+The number of action points alloted each phase.
+***** Initialization form
+: '(:BASE 10)
+**** PHASE-NUMBER (field)
+***** Documentation
+An integer giving the last phase this cell has completed.
+***** Initialization form
+: 0
+**** ACTION-POINTS (field)
+***** Documentation
+An integer giving the ability of a cell to take turns on a given round.
+***** Initialization form
+: 0
+**** DEFAULT-COST (field)
+***** Documentation
+Cost for basic actions.
+***** Initialization form
+: '(:BASE 5 :MIN NIL :MAX NIL :DELTA NIL)
+**** STEPPING (field)
+***** Documentation
+Whether to generate step events where you walk.
+**** MOVEMENT-COST (field)
+***** Documentation
+Base cost of moving one square.
+***** Initialization form
+: '(:BASE 10 :MIN NIL :MAX NIL :DELTA NIL)
+**** TOOLTIP (field)
+***** Documentation
+A formatted line giving dev help or information about the cell.
+**** NAME (field)
+***** Documentation
+The name of this cell.
+**** DESCRIPTION (field)
+***** Documentation
+A description of the cell.
+**** UNKNOWN-NAME (field)
+***** Documentation
+The name of this cell, when it is unknown.
+**** UNKNOWN-DESCRIPTION (field)
+***** Documentation
+A description of the cell, when it is unknown.
+**** EQUIPMENT (field)
+***** Documentation
+Property list of :slot -> cell pairs.
+**** EQUIPMENT-SLOTS (field)
+***** Documentation
+List of keyword symbols identifying available equipment slots.
+***** Initialization form
+: '(:HEAD :NECK :LEFT-HAND :RIGHT-HAND :HANDS :FEET :LEGS :TORSO :ARMS :PACK
+    :BELT)
+**** USING-SLOT (field)
+***** Documentation
+Keyword symbol of the currently selected equipment slot.
+**** ATTACKING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected weapon slot.
+**** FIRING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected firing weapon slot.
+**** EQUIP-FOR (field)
+***** Documentation
+List of keyword symbols showing where this item may be equipped.
+**** EQUIPPER (field)
+***** Documentation
+When non-nil, the character currently equipping this item.
+**** INVENTORY (field)
+***** Documentation
+The contents (if any) of the cell.
+**** MAX-WEIGHT (field)
+***** Documentation
+Maximum weight this container can hold.
+**** MAX-ITEMS (field)
+***** Documentation
+Maximum number of items this container can hold.
+**** PARENT-CONTAINER (field)
+***** Documentation
+Link to containing cell, if any.
+**** LABEL (field)
+***** Documentation
+Label (string or formatted line) to be used as display in forms.
+**** OCCUPANT (field)
+***** Documentation
+Occupant cell, used to implement drivable vehicles.
+**** PROXY (field)
+***** Documentation
+Make this cell a proxy for OCCUPANT.
+**** COMBINATION-AMOUNT (field)
+***** Documentation
+Amount of item this cell represents.
+***** Initialization form
+: 0
+**** COMBINATION-KEY (field)
+***** Documentation
+Only items matching this key will be combined.
+**** EXCLUDED-FIELDS (field)
+** COMPUTE [DATA-CELL] (method)
+*** Arguments
+NIL
+** GET [DATA-CELL] (method)
+*** Arguments
+NIL
+** SET [DATA-CELL] (method)
+*** Arguments
+(DATA)
+* =EVENT-CELL= (prototype)
+** Parent prototype
+: =CELL=
+*** Fields
+**** EVENT (field)
+**** CAPTURING (field)
+**** TYPE (field)
+**** AUTO-LOADOUT (field)
+***** Documentation
+When non-nil, the :loadout method is invoked upon entry into a world.
+**** TEAM (field)
+***** Documentation
+Keyword symbol of team, if any.
+**** WEIGHT (field)
+***** Documentation
+Recursively calculate the weight of this cell.
+**** WIDGET (field)
+***** Documentation
+XE2 widget object, if any.
+**** TILE (field)
+***** Documentation
+Resource name of image. 
+When nil, the method DRAW is invoked instead of using a tile.
+**** RENDER-CELL (field)
+***** Documentation
+Subcell to render. See load-sprite-sheet-resource.
+**** ROW (field)
+***** Documentation
+When non-nil, the current row location of the cell.
+**** COLUMN (field)
+***** Documentation
+When non-nil, the current column of the cell.
+**** CATEGORIES (field)
+***** Documentation
+List of category keyword symbols
+**** LIGHT-RADIUS (field)
+***** Documentation
+Strength of light cast by this object.
+***** Initialization form
+: 0
+**** MENU (field)
+***** Documentation
+Menu objects.
+**** SPEED (field)
+***** Documentation
+The number of action points alloted each phase.
+***** Initialization form
+: '(:BASE 10)
+**** PHASE-NUMBER (field)
+***** Documentation
+An integer giving the last phase this cell has completed.
+***** Initialization form
+: 0
+**** ACTION-POINTS (field)
+***** Documentation
+An integer giving the ability of a cell to take turns on a given round.
+***** Initialization form
+: 0
+**** DEFAULT-COST (field)
+***** Documentation
+Cost for basic actions.
+***** Initialization form
+: '(:BASE 5 :MIN NIL :MAX NIL :DELTA NIL)
+**** STEPPING (field)
+***** Documentation
+Whether to generate step events where you walk.
+**** MOVEMENT-COST (field)
+***** Documentation
+Base cost of moving one square.
+***** Initialization form
+: '(:BASE 10 :MIN NIL :MAX NIL :DELTA NIL)
+**** TOOLTIP (field)
+***** Documentation
+A formatted line giving dev help or information about the cell.
+**** NAME (field)
+***** Documentation
+The name of this cell.
+**** DESCRIPTION (field)
+***** Documentation
+A description of the cell.
+**** UNKNOWN-NAME (field)
+***** Documentation
+The name of this cell, when it is unknown.
+**** UNKNOWN-DESCRIPTION (field)
+***** Documentation
+A description of the cell, when it is unknown.
+**** EQUIPMENT (field)
+***** Documentation
+Property list of :slot -> cell pairs.
+**** EQUIPMENT-SLOTS (field)
+***** Documentation
+List of keyword symbols identifying available equipment slots.
+***** Initialization form
+: '(:HEAD :NECK :LEFT-HAND :RIGHT-HAND :HANDS :FEET :LEGS :TORSO :ARMS :PACK
+    :BELT)
+**** USING-SLOT (field)
+***** Documentation
+Keyword symbol of the currently selected equipment slot.
+**** ATTACKING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected weapon slot.
+**** FIRING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected firing weapon slot.
+**** EQUIP-FOR (field)
+***** Documentation
+List of keyword symbols showing where this item may be equipped.
+**** EQUIPPER (field)
+***** Documentation
+When non-nil, the character currently equipping this item.
+**** INVENTORY (field)
+***** Documentation
+The contents (if any) of the cell.
+**** MAX-WEIGHT (field)
+***** Documentation
+Maximum weight this container can hold.
+**** MAX-ITEMS (field)
+***** Documentation
+Maximum number of items this container can hold.
+**** PARENT-CONTAINER (field)
+***** Documentation
+Link to containing cell, if any.
+**** LABEL (field)
+***** Documentation
+Label (string or formatted line) to be used as display in forms.
+**** OCCUPANT (field)
+***** Documentation
+Occupant cell, used to implement drivable vehicles.
+**** PROXY (field)
+***** Documentation
+Make this cell a proxy for OCCUPANT.
+**** COMBINATION-AMOUNT (field)
+***** Documentation
+Amount of item this cell represents.
+***** Initialization form
+: 0
+**** COMBINATION-KEY (field)
+***** Documentation
+Only items matching this key will be combined.
+**** EXCLUDED-FIELDS (field)
+** COMPUTE [EVENT-CELL] (method)
+*** Arguments
+NIL
+** GET [EVENT-CELL] (method)
+*** Arguments
+NIL
+** HANDLE-KEY [EVENT-CELL] (method)
+*** Arguments
+(EVENT)
+** SELECT [EVENT-CELL] (method)
+*** Arguments
+NIL
+** SET [EVENT-CELL] (method)
+*** Arguments
+(EVENT)
+* =FORM= (prototype)
+** Parent prototype
+: =WIDGET=
+** Documentation
+An interactive graphical spreadsheet.
+*** Fields
+**** PAGE-NAME (field)
+**** WORLD (field)
+***** Documentation
+The xe2:=world= of objects to be displayed.
+**** ROWS (field)
+**** COLUMNS (field)
+**** ENTERED (field)
+***** Documentation
+When non-nil, forward key events to the entry and/or any attached widget.
+**** CURSOR-ROW (field)
+**** CURSOR-COLUMN (field)
+**** CURSOR-COLOR (field)
+**** ORIGIN-ROW (field)
+***** Documentation
+Row number of top-left displayed cell.
+***** Initialization form
+: 0
+**** ORIGIN-COLUMN (field)
+***** Documentation
+Column number of top-left displayed cell.
+***** Initialization form
+: 0
+**** COLUMN-WIDTHS (field)
+***** Documentation
+A vector of integers where v[x] is the pixel width of form column x.
+**** ROW-HEIGHTS (field)
+***** Documentation
+A vector of integers where v[x] is the pixel height of form row x.
+**** COLUMN-STYLES (field)
+***** Documentation
+A vector of property lists used to customize the appearance of columns.
+**** ROW-SPACING (field)
+***** Documentation
+Number of pixels to add between rows.
+***** Initialization form
+: 1
+**** ZEBRA-STRIPES (field)
+***** Documentation
+When non-nil, zebra stripes are drawn.
+**** ROW-STYLES (field)
+***** Documentation
+A vector of property lists used to customize the appearance of rows.
+**** BORDER-STYLE (field)
+***** Documentation
+When non-nil, draw cell borders.
+***** Initialization form
+: T
+**** DRAW-BLANKS (field)
+***** Documentation
+When non-nil, draw blank cells.
+***** Initialization form
+: T
+**** HEADER-STYLE (field)
+***** Documentation
+When non-nil, draw row and column headers.
+***** Initialization form
+: T
+**** HEADER-LINE (field)
+***** Documentation
+Formatted line to be displayed at top of window above spreadsheet.
+**** STATUS-LINE (field)
+***** Documentation
+Formatted line to be displayed at top of window above spreadsheet.
+**** SELECTED-TOOL (field)
+***** Documentation
+Keyword symbol identifying the method to be applied.
+**** TOOL-DATA (field)
+***** Documentation
+Arguments for tool method invocation.
+**** KEYMAP (field)
+***** Documentation
+A hash table mapping keylists to lambdas.
+**** IMAGE (field)
+***** Documentation
+The offscreen image buffer containing the widget's rendered output.
+**** WIDTH (field)
+***** Documentation
+The current allocated image width of the widget, in pixels.
+**** HEIGHT (field)
+***** Documentation
+The current allocated image height of the widget, in pixels.
+**** VISIBLE (field)
+***** Documentation
+The boolean visibility of the widget.
+***** Initialization form
+: T
+**** X (field)
+***** Documentation
+The screen x-coordinate of the left side of the widget's display area.
+**** Y (field)
+***** Documentation
+The screen y-coordinate of the top of the widget's display area.
+** CELL-AT [FORM] (method)
+*** Arguments
+(ROW COLUMN)
+** COLUMN-WIDTH [FORM] (method)
+*** Arguments
+(COLUMN)
+** COMPUTE [FORM] (method)
+*** Arguments
+NIL
+** COMPUTE-GEOMETRY [FORM] (method)
+*** Arguments
+NIL
+** CURRENT-CELL [FORM] (method)
+*** Arguments
+NIL
+** DRAW-CURSOR [FORM] (method)
+*** Arguments
+(X Y WIDTH HEIGHT)
+** ENTER [FORM] (method)
+*** Arguments
+NIL
+** EXIT [FORM] (method)
+*** Arguments
+NIL
+** HANDLE-KEY [FORM] (method)
+*** Arguments
+(EVENT)
+** INITIALIZE [FORM] (method)
+*** Arguments
+(&OPTIONAL (PAGE *DEFAULT-PAGE-NAME*))
+** INSTALL-KEYBINDINGS [FORM] (method)
+*** Arguments
+NIL
+** MOVE-CURSOR [FORM] (method)
+*** Arguments
+(DIRECTION)
+** MOVE-CURSOR-DOWN [FORM] (method)
+*** Arguments
+NIL
+** MOVE-CURSOR-LEFT [FORM] (method)
+*** Arguments
+NIL
+** MOVE-CURSOR-RIGHT [FORM] (method)
+*** Arguments
+NIL
+** MOVE-CURSOR-UP [FORM] (method)
+*** Arguments
+NIL
+** RENDER [FORM] (method)
+*** Arguments
+NIL
+** ROW-HEIGHT [FORM] (method)
+*** Arguments
+(ROW)
+** SAY [FORM] (method)
+*** Arguments
+(TEXT)
+** SELECT [FORM] (method)
+*** Arguments
+NIL
+** VISIT [FORM] (method)
+*** Arguments
+(&OPTIONAL (PAGE *DEFAULT-PAGE-NAME*))
+*** Documentation
+Visit the page PAGE with the current form.
+* =FORMATTER= (prototype)
+** Parent prototype
+: =WIDGET=
+** Documentation
+=FORMATTER= is a simple output formatting widget for the
+presentation of messages and other in-game data. Foreground and
+background colors are supported, as well as displaying images
+in-line with text of different fonts.
+
+A formatted line is a list of formatted strings. A formatted 
+string is a cons of (STRING . PROPERTIES), where the keys in
+PROPERTIES are chosen from:
+
+  - :FOREGROUND --- Foreground color. A color resource name.
+  - :BACKGROUND --- Background color. A color resource name.
+  - :IMAGE --- Image to be displayed instead of STRING.
+      If this is a string, the corresponding resource image is 
+      found and displayed. If this is an image object, the image 
+      itself is displayed.
+  - :WIDTH --- Occupy this pixel width if set to an integer.
+  - :FONT ---  Font name. Defaults to *default-font*.
+*** Fields
+**** LINES (field)
+***** Documentation
+Vector of lines.
+**** CURRENT-LINE (field)
+***** Documentation
+Formatted line currently being composed.
+**** KEYMAP (field)
+***** Documentation
+A hash table mapping keylists to lambdas.
+**** IMAGE (field)
+***** Documentation
+The offscreen image buffer containing the widget's rendered output.
+**** WIDTH (field)
+***** Documentation
+The current allocated image width of the widget, in pixels.
+**** HEIGHT (field)
+***** Documentation
+The current allocated image height of the widget, in pixels.
+**** VISIBLE (field)
+***** Documentation
+The boolean visibility of the widget.
+***** Initialization form
+: T
+**** X (field)
+***** Documentation
+The screen x-coordinate of the left side of the widget's display area.
+**** Y (field)
+***** Documentation
+The screen y-coordinate of the top of the widget's display area.
+** DELETE-ALL-LINES [FORMATTER] (method)
+*** Arguments
+NIL
+** DELETE-LINE [FORMATTER] (method)
+*** Arguments
+(&OPTIONAL (NUM-LINES 1))
+** INITIALIZE [FORMATTER] (method)
+*** Arguments
+NIL
+** NEWLINE [FORMATTER] (method)
+*** Arguments
+NIL
+*** Documentation
+Add the current line to the display, and start a fresh offscreen
+line.
+** PRINT [FORMATTER] (method)
+*** Arguments
+(STRING &REST KEYS &KEY IMAGE FOREGROUND BACKGROUND FONT)
+*** Documentation
+Add a formatted STRING to the end of the current line.
+Example: [print my-formatter "hello" :foreground "red"]
+** PRINT-FORMATTED-STRING [FORMATTER] (method)
+*** Arguments
+(FORMATTED-STRING)
+** PRINT-IMAGE [FORMATTER] (method)
+*** Arguments
+(IMAGE)
+** PRINT-OBJECT-TAG [FORMATTER] (method)
+*** Arguments
+(OB)
+** PRINT-SEPARATOR [FORMATTER] (method)
+*** Arguments
+NIL
+** PRINTLN [FORMATTER] (method)
+*** Arguments
+(&REST ARGS)
+*** Documentation
+Print the ARGS as a formatted string, following up with a newline.
+** RENDER [FORMATTER] (method)
+*** Arguments
+NIL
+** RESET-LINES [FORMATTER] (method)
+*** Arguments
+NIL
+** SPACE [FORMATTER] (method)
+*** Arguments
+NIL
+** UPDATE [FORMATTER] (method)
+*** Arguments
+NIL
+*** Documentation
+Invoked before each render. Replace this method for custom
+auto-updated displays.
+* =GATEWAY= (prototype)
+** Parent prototype
+: =CELL=
+*** Fields
+**** TILE (field)
+**** NAME (field)
+**** CATEGORIES (field)
+**** ADDRESS (field)
+**** TYPE (field)
+**** AUTO-LOADOUT (field)
+***** Documentation
+When non-nil, the :loadout method is invoked upon entry into a world.
+**** TEAM (field)
+***** Documentation
+Keyword symbol of team, if any.
+**** WEIGHT (field)
+***** Documentation
+Recursively calculate the weight of this cell.
+**** WIDGET (field)
+***** Documentation
+XE2 widget object, if any.
+**** TILE (field)
+***** Documentation
+Resource name of image. 
+When nil, the method DRAW is invoked instead of using a tile.
+**** RENDER-CELL (field)
+***** Documentation
+Subcell to render. See load-sprite-sheet-resource.
+**** ROW (field)
+***** Documentation
+When non-nil, the current row location of the cell.
+**** COLUMN (field)
+***** Documentation
+When non-nil, the current column of the cell.
+**** CATEGORIES (field)
+***** Documentation
+List of category keyword symbols
+**** LIGHT-RADIUS (field)
+***** Documentation
+Strength of light cast by this object.
+***** Initialization form
+: 0
+**** MENU (field)
+***** Documentation
+Menu objects.
+**** SPEED (field)
+***** Documentation
+The number of action points alloted each phase.
+***** Initialization form
+: '(:BASE 10)
+**** PHASE-NUMBER (field)
+***** Documentation
+An integer giving the last phase this cell has completed.
+***** Initialization form
+: 0
+**** ACTION-POINTS (field)
+***** Documentation
+An integer giving the ability of a cell to take turns on a given round.
+***** Initialization form
+: 0
+**** DEFAULT-COST (field)
+***** Documentation
+Cost for basic actions.
+***** Initialization form
+: '(:BASE 5 :MIN NIL :MAX NIL :DELTA NIL)
+**** STEPPING (field)
+***** Documentation
+Whether to generate step events where you walk.
+**** MOVEMENT-COST (field)
+***** Documentation
+Base cost of moving one square.
+***** Initialization form
+: '(:BASE 10 :MIN NIL :MAX NIL :DELTA NIL)
+**** TOOLTIP (field)
+***** Documentation
+A formatted line giving dev help or information about the cell.
+**** NAME (field)
+***** Documentation
+The name of this cell.
+**** DESCRIPTION (field)
+***** Documentation
+A description of the cell.
+**** UNKNOWN-NAME (field)
+***** Documentation
+The name of this cell, when it is unknown.
+**** UNKNOWN-DESCRIPTION (field)
+***** Documentation
+A description of the cell, when it is unknown.
+**** EQUIPMENT (field)
+***** Documentation
+Property list of :slot -> cell pairs.
+**** EQUIPMENT-SLOTS (field)
+***** Documentation
+List of keyword symbols identifying available equipment slots.
+***** Initialization form
+: '(:HEAD :NECK :LEFT-HAND :RIGHT-HAND :HANDS :FEET :LEGS :TORSO :ARMS :PACK
+    :BELT)
+**** USING-SLOT (field)
+***** Documentation
+Keyword symbol of the currently selected equipment slot.
+**** ATTACKING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected weapon slot.
+**** FIRING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected firing weapon slot.
+**** EQUIP-FOR (field)
+***** Documentation
+List of keyword symbols showing where this item may be equipped.
+**** EQUIPPER (field)
+***** Documentation
+When non-nil, the character currently equipping this item.
+**** INVENTORY (field)
+***** Documentation
+The contents (if any) of the cell.
+**** MAX-WEIGHT (field)
+***** Documentation
+Maximum weight this container can hold.
+**** MAX-ITEMS (field)
+***** Documentation
+Maximum number of items this container can hold.
+**** PARENT-CONTAINER (field)
+***** Documentation
+Link to containing cell, if any.
+**** LABEL (field)
+***** Documentation
+Label (string or formatted line) to be used as display in forms.
+**** OCCUPANT (field)
+***** Documentation
+Occupant cell, used to implement drivable vehicles.
+**** PROXY (field)
+***** Documentation
+Make this cell a proxy for OCCUPANT.
+**** COMBINATION-AMOUNT (field)
+***** Documentation
+Amount of item this cell represents.
+***** Initialization form
+: 0
+**** COMBINATION-KEY (field)
+***** Documentation
+Only items matching this key will be combined.
+**** EXCLUDED-FIELDS (field)
+** ACTIVATE [GATEWAY] (method)
+*** Arguments
+NIL
+** INITIALIZE [GATEWAY] (method)
+*** Arguments
+(&KEY ADDRESS TILE NAME)
+* =LABEL= (prototype)
+** Parent prototype
+: =CELL=
+*** Fields
+**** CATEGORIES (field)
+**** TEXT (field)
+**** STROKE-COLOR (field)
+**** BACKGROUND-COLOR (field)
+**** TIMEOUT (field)
+**** TYPE (field)
+**** AUTO-LOADOUT (field)
+***** Documentation
+When non-nil, the :loadout method is invoked upon entry into a world.
+**** TEAM (field)
+***** Documentation
+Keyword symbol of team, if any.
+**** WEIGHT (field)
+***** Documentation
+Recursively calculate the weight of this cell.
+**** WIDGET (field)
+***** Documentation
+XE2 widget object, if any.
+**** TILE (field)
+***** Documentation
+Resource name of image. 
+When nil, the method DRAW is invoked instead of using a tile.
+**** RENDER-CELL (field)
+***** Documentation
+Subcell to render. See load-sprite-sheet-resource.
+**** ROW (field)
+***** Documentation
+When non-nil, the current row location of the cell.
+**** COLUMN (field)
+***** Documentation
+When non-nil, the current column of the cell.
+**** CATEGORIES (field)
+***** Documentation
+List of category keyword symbols
+**** LIGHT-RADIUS (field)
+***** Documentation
+Strength of light cast by this object.
+***** Initialization form
+: 0
+**** MENU (field)
+***** Documentation
+Menu objects.
+**** SPEED (field)
+***** Documentation
+The number of action points alloted each phase.
+***** Initialization form
+: '(:BASE 10)
+**** PHASE-NUMBER (field)
+***** Documentation
+An integer giving the last phase this cell has completed.
+***** Initialization form
+: 0
+**** ACTION-POINTS (field)
+***** Documentation
+An integer giving the ability of a cell to take turns on a given round.
+***** Initialization form
+: 0
+**** DEFAULT-COST (field)
+***** Documentation
+Cost for basic actions.
+***** Initialization form
+: '(:BASE 5 :MIN NIL :MAX NIL :DELTA NIL)
+**** STEPPING (field)
+***** Documentation
+Whether to generate step events where you walk.
+**** MOVEMENT-COST (field)
+***** Documentation
+Base cost of moving one square.
+***** Initialization form
+: '(:BASE 10 :MIN NIL :MAX NIL :DELTA NIL)
+**** TOOLTIP (field)
+***** Documentation
+A formatted line giving dev help or information about the cell.
+**** NAME (field)
+***** Documentation
+The name of this cell.
+**** DESCRIPTION (field)
+***** Documentation
+A description of the cell.
+**** UNKNOWN-NAME (field)
+***** Documentation
+The name of this cell, when it is unknown.
+**** UNKNOWN-DESCRIPTION (field)
+***** Documentation
+A description of the cell, when it is unknown.
+**** EQUIPMENT (field)
+***** Documentation
+Property list of :slot -> cell pairs.
+**** EQUIPMENT-SLOTS (field)
+***** Documentation
+List of keyword symbols identifying available equipment slots.
+***** Initialization form
+: '(:HEAD :NECK :LEFT-HAND :RIGHT-HAND :HANDS :FEET :LEGS :TORSO :ARMS :PACK
+    :BELT)
+**** USING-SLOT (field)
+***** Documentation
+Keyword symbol of the currently selected equipment slot.
+**** ATTACKING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected weapon slot.
+**** FIRING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected firing weapon slot.
+**** EQUIP-FOR (field)
+***** Documentation
+List of keyword symbols showing where this item may be equipped.
+**** EQUIPPER (field)
+***** Documentation
+When non-nil, the character currently equipping this item.
+**** INVENTORY (field)
+***** Documentation
+The contents (if any) of the cell.
+**** MAX-WEIGHT (field)
+***** Documentation
+Maximum weight this container can hold.
+**** MAX-ITEMS (field)
+***** Documentation
+Maximum number of items this container can hold.
+**** PARENT-CONTAINER (field)
+***** Documentation
+Link to containing cell, if any.
+**** LABEL (field)
+***** Documentation
+Label (string or formatted line) to be used as display in forms.
+**** OCCUPANT (field)
+***** Documentation
+Occupant cell, used to implement drivable vehicles.
+**** PROXY (field)
+***** Documentation
+Make this cell a proxy for OCCUPANT.
+**** COMBINATION-AMOUNT (field)
+***** Documentation
+Amount of item this cell represents.
+***** Initialization form
+: 0
+**** COMBINATION-KEY (field)
+***** Documentation
+Only items matching this key will be combined.
+**** EXCLUDED-FIELDS (field)
+** DRAW [LABEL] (method)
+*** Arguments
+(X Y IMAGE)
+** INITIALIZE [LABEL] (method)
+*** Arguments
+(&KEY TEXT (STROKE-COLOR .white) (BACKGROUND-COLOR .gray30) (STYLE LABEL)
+ (TIMEOUT NIL) NAME TILE DESCRIPTION)
+** RUN [LABEL] (method)
+*** Arguments
+NIL
+* =LAUNCHPAD= (prototype)
+** Parent prototype
+: =GATEWAY=
+*** Fields
+**** TILE (field)
+**** CATEGORIES (field)
+**** DESCRIPTION (field)
+**** TILE (field)
+**** NAME (field)
+**** CATEGORIES (field)
+**** ADDRESS (field)
+**** TYPE (field)
+**** AUTO-LOADOUT (field)
+***** Documentation
+When non-nil, the :loadout method is invoked upon entry into a world.
+**** TEAM (field)
+***** Documentation
+Keyword symbol of team, if any.
+**** WEIGHT (field)
+***** Documentation
+Recursively calculate the weight of this cell.
+**** WIDGET (field)
+***** Documentation
+XE2 widget object, if any.
+**** TILE (field)
+***** Documentation
+Resource name of image. 
+When nil, the method DRAW is invoked instead of using a tile.
+**** RENDER-CELL (field)
+***** Documentation
+Subcell to render. See load-sprite-sheet-resource.
+**** ROW (field)
+***** Documentation
+When non-nil, the current row location of the cell.
+**** COLUMN (field)
+***** Documentation
+When non-nil, the current column of the cell.
+**** CATEGORIES (field)
+***** Documentation
+List of category keyword symbols
+**** LIGHT-RADIUS (field)
+***** Documentation
+Strength of light cast by this object.
+***** Initialization form
+: 0
+**** MENU (field)
+***** Documentation
+Menu objects.
+**** SPEED (field)
+***** Documentation
+The number of action points alloted each phase.
+***** Initialization form
+: '(:BASE 10)
+**** PHASE-NUMBER (field)
+***** Documentation
+An integer giving the last phase this cell has completed.
+***** Initialization form
+: 0
+**** ACTION-POINTS (field)
+***** Documentation
+An integer giving the ability of a cell to take turns on a given round.
+***** Initialization form
+: 0
+**** DEFAULT-COST (field)
+***** Documentation
+Cost for basic actions.
+***** Initialization form
+: '(:BASE 5 :MIN NIL :MAX NIL :DELTA NIL)
+**** STEPPING (field)
+***** Documentation
+Whether to generate step events where you walk.
+**** MOVEMENT-COST (field)
+***** Documentation
+Base cost of moving one square.
+***** Initialization form
+: '(:BASE 10 :MIN NIL :MAX NIL :DELTA NIL)
+**** TOOLTIP (field)
+***** Documentation
+A formatted line giving dev help or information about the cell.
+**** NAME (field)
+***** Documentation
+The name of this cell.
+**** DESCRIPTION (field)
+***** Documentation
+A description of the cell.
+**** UNKNOWN-NAME (field)
+***** Documentation
+The name of this cell, when it is unknown.
+**** UNKNOWN-DESCRIPTION (field)
+***** Documentation
+A description of the cell, when it is unknown.
+**** EQUIPMENT (field)
+***** Documentation
+Property list of :slot -> cell pairs.
+**** EQUIPMENT-SLOTS (field)
+***** Documentation
+List of keyword symbols identifying available equipment slots.
+***** Initialization form
+: '(:HEAD :NECK :LEFT-HAND :RIGHT-HAND :HANDS :FEET :LEGS :TORSO :ARMS :PACK
+    :BELT)
+**** USING-SLOT (field)
+***** Documentation
+Keyword symbol of the currently selected equipment slot.
+**** ATTACKING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected weapon slot.
+**** FIRING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected firing weapon slot.
+**** EQUIP-FOR (field)
+***** Documentation
+List of keyword symbols showing where this item may be equipped.
+**** EQUIPPER (field)
+***** Documentation
+When non-nil, the character currently equipping this item.
+**** INVENTORY (field)
+***** Documentation
+The contents (if any) of the cell.
+**** MAX-WEIGHT (field)
+***** Documentation
+Maximum weight this container can hold.
+**** MAX-ITEMS (field)
+***** Documentation
+Maximum number of items this container can hold.
+**** PARENT-CONTAINER (field)
+***** Documentation
+Link to containing cell, if any.
+**** LABEL (field)
+***** Documentation
+Label (string or formatted line) to be used as display in forms.
+**** OCCUPANT (field)
+***** Documentation
+Occupant cell, used to implement drivable vehicles.
+**** PROXY (field)
+***** Documentation
+Make this cell a proxy for OCCUPANT.
+**** COMBINATION-AMOUNT (field)
+***** Documentation
+Amount of item this cell represents.
+***** Initialization form
+: 0
+**** COMBINATION-KEY (field)
+***** Documentation
+Only items matching this key will be combined.
+**** EXCLUDED-FIELDS (field)
+** ACTIVATE [LAUNCHPAD] (method)
+*** Arguments
+NIL
+* =MENU-ITEM= (prototype)
+** Parent prototype
+: =WIDGET=
+*** Fields
+**** TILE (field)
+**** NAME (field)
+**** KEY (field)
+**** DESCRIPTION (field)
+**** SUB-MENU (field)
+**** COMMAND-STRING (field)
+**** KEYMAP (field)
+***** Documentation
+A hash table mapping keylists to lambdas.
+**** IMAGE (field)
+***** Documentation
+The offscreen image buffer containing the widget's rendered output.
+**** WIDTH (field)
+***** Documentation
+The current allocated image width of the widget, in pixels.
+**** HEIGHT (field)
+***** Documentation
+The current allocated image height of the widget, in pixels.
+**** VISIBLE (field)
+***** Documentation
+The boolean visibility of the widget.
+***** Initialization form
+: T
+**** X (field)
+***** Documentation
+The screen x-coordinate of the left side of the widget's display area.
+**** Y (field)
+***** Documentation
+The screen y-coordinate of the top of the widget's display area.
+** INITIALIZE [MENU-ITEM] (method)
+*** Arguments
+(&OPTIONAL ITEM-SPEC)
+** OPEN [MENU-ITEM] (method)
+*** Arguments
+NIL
+* =MINIMAP= (prototype)
+** Parent prototype
+: =VIEWPORT=
+*** Fields
+**** CATEGORY-MAP (field)
+**** BACKGROUND-COLOR (field)
+**** BORDER-COLOR (field)
+**** WORLD (field)
+***** Documentation
+The world object to be displayed.
+**** OVERLAYS (field)
+***** Documentation
+List of closures.
+**** USE-OVERLAYS (field)
+**** PENDING-DRAWS (field)
+**** MARGIN (field)
+***** Documentation
+Scroll margin.
+***** Initialization form
+: 6
+**** ORIGIN-X (field)
+***** Documentation
+The world x-coordinate of the tile at the viewport's origin.
+***** Initialization form
+: 0
+**** ORIGIN-Y (field)
+***** Documentation
+The world y-coordinate of the tile at the viewport's origin.
+***** Initialization form
+: 0
+**** ORIGIN-WIDTH (field)
+***** Documentation
+The width in tiles of the viewport.
+***** Initialization form
+: 10
+**** ORIGIN-HEIGHT (field)
+***** Documentation
+The height in tiles of the viewport.
+***** Initialization form
+: 10
+**** TILE-SIZE (field)
+***** Documentation
+Size in pixels of a tile. They must be square.
+***** Initialization form
+: 16
+**** EXCLUDED-FIELDS (field)
+**** KEYMAP (field)
+***** Documentation
+A hash table mapping keylists to lambdas.
+**** IMAGE (field)
+***** Documentation
+The offscreen image buffer containing the widget's rendered output.
+**** WIDTH (field)
+***** Documentation
+The current allocated image width of the widget, in pixels.
+**** HEIGHT (field)
+***** Documentation
+The current allocated image height of the widget, in pixels.
+**** VISIBLE (field)
+***** Documentation
+The boolean visibility of the widget.
+***** Initialization form
+: T
+**** X (field)
+***** Documentation
+The screen x-coordinate of the left side of the widget's display area.
+**** Y (field)
+***** Documentation
+The screen y-coordinate of the top of the widget's display area.
+** HIT [MINIMAP] (method)
+*** Arguments
+(X Y)
+** RENDER [MINIMAP] (method)
+*** Arguments
+NIL
+** SELECT [MINIMAP] (method)
+*** Arguments
+NIL
+* =NARRATOR= (prototype)
+** Parent prototype
+: =FORMATTER=
+*** Fields
+**** VERBOSITY (field)
+***** Documentation
+Integer between 0 and 3 (inclusive).
+***** Initialization form
+: 0
+**** PASSIVE-VOICE-ACTIONS (field)
+***** Documentation
+List of action words to use passive voice in narrating.
+http://en.wikipedia.org/wiki/Passive_voice
+**** REPEAT-COUNT (field)
+**** LAST-LINE (field)
+**** LINE-NUMBER (field)
+**** LINES (field)
+***** Documentation
+Vector of lines.
+**** CURRENT-LINE (field)
+***** Documentation
+Formatted line currently being composed.
+**** KEYMAP (field)
+***** Documentation
+A hash table mapping keylists to lambdas.
+**** IMAGE (field)
+***** Documentation
+The offscreen image buffer containing the widget's rendered output.
+**** WIDTH (field)
+***** Documentation
+The current allocated image width of the widget, in pixels.
+**** HEIGHT (field)
+***** Documentation
+The current allocated image height of the widget, in pixels.
+**** VISIBLE (field)
+***** Documentation
+The boolean visibility of the widget.
+***** Initialization form
+: T
+**** X (field)
+***** Documentation
+The screen x-coordinate of the left side of the widget's display area.
+**** Y (field)
+***** Documentation
+The screen y-coordinate of the top of the widget's display area.
+** NARRATE [NARRATOR] (method)
+*** Arguments
+(CONTROL-STRING &REST ARGS)
+** NARRATE-MESSAGE [NARRATOR] (method)
+*** Arguments
+(SENDER ACTION RECEIVER ARGS &OPTIONAL FORCE)
+** NARRATELN [NARRATOR] (method)
+*** Arguments
+(CONTROL-STRING &REST ARGS)
+** SAY [NARRATOR] (method)
+*** Arguments
+(CONTROL-STRING &REST ARGS)
+** SET-VERBOSITY [NARRATOR] (method)
+*** Arguments
+(&OPTIONAL (VALUE 1))
+* =PAGER= (prototype)
+** Parent prototype
+: =WIDGET=
+*** Fields
+**** PAGES (field)
+**** CURRENT-PAGE (field)
+***** Documentation
+Keyword name of current page.
+**** PAGER-MESSAGE (field)
+***** Documentation
+Formatted string to be displayed to right of tabs.
+**** PAGER-HEIGHT (field)
+***** Documentation
+Height in pixels of the pager
+***** Initialization form
+: 20
+**** BACKGROUND-COLOR (field)
+**** PREFIX-STRING (field)
+**** NUMBER-SEPARATOR-STRING (field)
+**** SEPARATOR-STRING (field)
+**** STYLE (field)
+***** Documentation
+Text style properties for pager display
+***** Initialization form
+: '(:FOREGROUND ".gray60")
+**** HIGHLIGHTED-STYLE (field)
+**** PROPERTIES (field)
+**** KEYMAP (field)
+***** Documentation
+A hash table mapping keylists to lambdas.
+**** IMAGE (field)
+***** Documentation
+The offscreen image buffer containing the widget's rendered output.
+**** WIDTH (field)
+***** Documentation
+The current allocated image width of the widget, in pixels.
+**** HEIGHT (field)
+***** Documentation
+The current allocated image height of the widget, in pixels.
+**** VISIBLE (field)
+***** Documentation
+The boolean visibility of the widget.
+***** Initialization form
+: T
+**** X (field)
+***** Documentation
+The screen x-coordinate of the left side of the widget's display area.
+**** Y (field)
+***** Documentation
+The screen y-coordinate of the top of the widget's display area.
+** ADD-PAGE [PAGER] (method)
+*** Arguments
+(KEYWORD WIDGETS &REST PROPERTIES)
+** AUTO-POSITION [PAGER] (method)
+*** Arguments
+(&KEY (WIDTH *SCREEN-WIDTH*))
+** GET-PAGE-NAMES [PAGER] (method)
+*** Arguments
+NIL
+** INITIALIZE [PAGER] (method)
+*** Arguments
+NIL
+** MESSAGE [PAGER] (method)
+*** Arguments
+(FORMATTED-STRING)
+** PAGE-PROPERTY [PAGER] (method)
+*** Arguments
+(PAGE-NAME PROPERTY-KEYWORD)
+** RENDER [PAGER] (method)
+*** Arguments
+NIL
+** SELECT [PAGER] (method)
+*** Arguments
+(PAGE)
+** SET-PAGE-PROPERTY [PAGER] (method)
+*** Arguments
+(PAGE-NAME PROPERTY-KEYWORD VALUE)
+* =PROMPT= (prototype)
+** Parent prototype
+: =WIDGET=
+** Documentation
+The command prompt widget is a text input area with Emacs-like
+keybindings. It is used to send messages to objects. (For ease of
+use, prompt commands may also be bound to single keystrokes.)
+
+ The command syntax is:
+
+:  command-name arg1 arg2 ...
+
+All tokens must be Lisp-readable symbols, strings, or numbers.
+
+The command prompt will change its commands into message sends, and
+send them to a designated command receiver:
+
+:  yes             -->   [yes <receiver>]
+:  move :north     -->   [move <receiver> :north]
+:  attack :west :with :left-hand  --> [attack <receiver> :west 
+:                                             :with :left-hand]
+
+So the commands are just the receiver's methods. The command
+line's HELP system is just a method documentation browser
+ (i.e. SLOT-DESCRIPTORS.) 
+
+The prompt can bind single keystrokes (i.e. one or more modifiers
+and a keypress code) to the insertion of an arbitrary string at
+point in the prompt. A string that ends in a period is a
+"terminating" keybinding; a terminating keybinding also completes
+the command input, causing the resulting command to be executed.
+
+Examples: 
+
+:   <up>      -->    move :north .
+:  shift-<up> -->    push :north .
+:    C-q      -->    quaff         ;; also shows potion list as output
+:    M-1      -->    choose 1 .    ;; choose option 1 from output
+
+The prompt has two input modes; direct mode and forward mode. In
+direct mode, the prompt widget's own keymap is used. In forward
+mode, all keypresses (except for the mode escape key) are rejected
+by returning `nil' from `handle-key'.
+
+In the typical setup, the first widget to receive the keypress
+would be the default command prompt; a customized prompt, with
+game-specific keybindings, would come second. During play, the
+command prompt would reject all keypresses, which would pass on to
+the next widget in the frame (the customized prompt.) To 'escape'
+this and enter commands, hit ESCAPE (and again to return to forward
+mode.)
+
+The modes can be toggled with the ESCAPE key.
+*** Fields
+**** MODE (field)
+***** Documentation
+Either :direct or :forward.
+***** Initialization form
+: :DIRECT
+**** DEFAULT-KEYBINDINGS (field)
+***** Documentation
+Default keybindings bound during initialization.
+These are the arguments to `bind-key-to-prompt-insertion', which see.
+**** VISIBLE (field)
+***** Documentation
+When non-nil, the prompt is drawn.
+***** Initialization form
+: T
+**** RECEIVER (field)
+***** Documentation
+The object to send command messages to when in :forward mode.
+**** POINT (field)
+***** Documentation
+Integer index of cursor within prompt line.
+***** Initialization form
+: 0
+**** LINE (field)
+***** Documentation
+Currently edited command line.
+***** Initialization form
+: ""
+**** HISTORY (field)
+***** Documentation
+A queue of strings containing the command history.
+***** Initialization form
+: (MAKE-QUEUE :MAX *DEFAULT-PROMPT-HISTORY-SIZE*)
+**** HISTORY-POSITION (field)
+**** KEYMAP (field)
+***** Documentation
+A hash table mapping keylists to lambdas.
+**** IMAGE (field)
+***** Documentation
+The offscreen image buffer containing the widget's rendered output.
+**** WIDTH (field)
+***** Documentation
+The current allocated image width of the widget, in pixels.
+**** HEIGHT (field)
+***** Documentation
+The current allocated image height of the widget, in pixels.
+**** VISIBLE (field)
+***** Documentation
+The boolean visibility of the widget.
+***** Initialization form
+: T
+**** X (field)
+***** Documentation
+The screen x-coordinate of the left side of the widget's display area.
+**** Y (field)
+***** Documentation
+The screen y-coordinate of the top of the widget's display area.
+** BACKWARD-CHAR [PROMPT] (method)
+*** Arguments
+NIL
+** BACKWARD-DELETE-CHAR [PROMPT] (method)
+*** Arguments
+NIL
+** BACKWARD-HISTORY [PROMPT] (method)
+*** Arguments
+NIL
+** CLEAR [PROMPT] (method)
+*** Arguments
+NIL
+** ESCAPE [PROMPT] (method)
+*** Arguments
+NIL
+** EXECUTE [PROMPT] (method)
+*** Arguments
+NIL
+** FORWARD-CHAR [PROMPT] (method)
+*** Arguments
+NIL
+** FORWARD-HISTORY [PROMPT] (method)
+*** Arguments
+NIL
+** HANDLE-KEY [PROMPT] (method)
+*** Arguments
+(KEYLIST)
+*** Documentation
+Reject all keypresses when in :forward mode; otherwise handle them
+normally.
+** HISTORY-ITEM [PROMPT] (method)
+*** Arguments
+(N)
+** INITIALIZE [PROMPT] (method)
+*** Arguments
+NIL
+** INSERT [PROMPT] (method)
+*** Arguments
+(STRING)
+** INSTALL-DEFAULT-KEYBINDINGS [PROMPT] (method)
+*** Arguments
+NIL
+** INSTALL-KEYBINDINGS [PROMPT] (method)
+*** Arguments
+NIL
+** MOVE-BEGINNING-OF-LINE [PROMPT] (method)
+*** Arguments
+NIL
+** MOVE-END-OF-LINE [PROMPT] (method)
+*** Arguments
+NIL
+** RENDER [PROMPT] (method)
+*** Arguments
+NIL
+** SET-MODE [PROMPT] (method)
+*** Arguments
+(MODE)
+** SET-RECEIVER [PROMPT] (method)
+*** Arguments
+(RECEIVER)
+* =SPRITE= (prototype)
+** Parent prototype
+: =CELL=
+** Documentation
+Sprites are XE2 game objects derived from cells. Although most
+behaviors are compatible, sprites can take any pixel location in the
+world, and collision detection is performed between sprites and cells.
+*** Fields
+**** X (field)
+***** Documentation
+The world x-coordinate of the sprite.
+**** Y (field)
+***** Documentation
+The world y-coordinate of the sprite.
+**** SAVED-X (field)
+***** Documentation
+Saved x-coordinate used to jump back from a collision.
+**** SAVED-Y (field)
+***** Documentation
+Saved y-coordinate used to jump back from a collision.
+**** IMAGE (field)
+***** Documentation
+The arbitrarily sized image
+  resource. This determines the bounding box.
+**** WIDTH (field)
+***** Documentation
+The cached width of the bounding box.
+**** HEIGHT (field)
+***** Documentation
+The cached height of the bounding box.
+**** TYPE (field)
+**** TYPE (field)
+**** AUTO-LOADOUT (field)
+***** Documentation
+When non-nil, the :loadout method is invoked upon entry into a world.
+**** TEAM (field)
+***** Documentation
+Keyword symbol of team, if any.
+**** WEIGHT (field)
+***** Documentation
+Recursively calculate the weight of this cell.
+**** WIDGET (field)
+***** Documentation
+XE2 widget object, if any.
+**** TILE (field)
+***** Documentation
+Resource name of image. 
+When nil, the method DRAW is invoked instead of using a tile.
+**** RENDER-CELL (field)
+***** Documentation
+Subcell to render. See load-sprite-sheet-resource.
+**** ROW (field)
+***** Documentation
+When non-nil, the current row location of the cell.
+**** COLUMN (field)
+***** Documentation
+When non-nil, the current column of the cell.
+**** CATEGORIES (field)
+***** Documentation
+List of category keyword symbols
+**** LIGHT-RADIUS (field)
+***** Documentation
+Strength of light cast by this object.
+***** Initialization form
+: 0
+**** MENU (field)
+***** Documentation
+Menu objects.
+**** SPEED (field)
+***** Documentation
+The number of action points alloted each phase.
+***** Initialization form
+: '(:BASE 10)
+**** PHASE-NUMBER (field)
+***** Documentation
+An integer giving the last phase this cell has completed.
+***** Initialization form
+: 0
+**** ACTION-POINTS (field)
+***** Documentation
+An integer giving the ability of a cell to take turns on a given round.
+***** Initialization form
+: 0
+**** DEFAULT-COST (field)
+***** Documentation
+Cost for basic actions.
+***** Initialization form
+: '(:BASE 5 :MIN NIL :MAX NIL :DELTA NIL)
+**** STEPPING (field)
+***** Documentation
+Whether to generate step events where you walk.
+**** MOVEMENT-COST (field)
+***** Documentation
+Base cost of moving one square.
+***** Initialization form
+: '(:BASE 10 :MIN NIL :MAX NIL :DELTA NIL)
+**** TOOLTIP (field)
+***** Documentation
+A formatted line giving dev help or information about the cell.
+**** NAME (field)
+***** Documentation
+The name of this cell.
+**** DESCRIPTION (field)
+***** Documentation
+A description of the cell.
+**** UNKNOWN-NAME (field)
+***** Documentation
+The name of this cell, when it is unknown.
+**** UNKNOWN-DESCRIPTION (field)
+***** Documentation
+A description of the cell, when it is unknown.
+**** EQUIPMENT (field)
+***** Documentation
+Property list of :slot -> cell pairs.
+**** EQUIPMENT-SLOTS (field)
+***** Documentation
+List of keyword symbols identifying available equipment slots.
+***** Initialization form
+: '(:HEAD :NECK :LEFT-HAND :RIGHT-HAND :HANDS :FEET :LEGS :TORSO :ARMS :PACK
+    :BELT)
+**** USING-SLOT (field)
+***** Documentation
+Keyword symbol of the currently selected equipment slot.
+**** ATTACKING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected weapon slot.
+**** FIRING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected firing weapon slot.
+**** EQUIP-FOR (field)
+***** Documentation
+List of keyword symbols showing where this item may be equipped.
+**** EQUIPPER (field)
+***** Documentation
+When non-nil, the character currently equipping this item.
+**** INVENTORY (field)
+***** Documentation
+The contents (if any) of the cell.
+**** MAX-WEIGHT (field)
+***** Documentation
+Maximum weight this container can hold.
+**** MAX-ITEMS (field)
+***** Documentation
+Maximum number of items this container can hold.
+**** PARENT-CONTAINER (field)
+***** Documentation
+Link to containing cell, if any.
+**** LABEL (field)
+***** Documentation
+Label (string or formatted line) to be used as display in forms.
+**** OCCUPANT (field)
+***** Documentation
+Occupant cell, used to implement drivable vehicles.
+**** PROXY (field)
+***** Documentation
+Make this cell a proxy for OCCUPANT.
+**** COMBINATION-AMOUNT (field)
+***** Documentation
+Amount of item this cell represents.
+***** Initialization form
+: 0
+**** COMBINATION-KEY (field)
+***** Documentation
+Only items matching this key will be combined.
+**** EXCLUDED-FIELDS (field)
+** COLLIDE [SPRITE] (method)
+*** Arguments
+(SPRITE)
+** COLLIDE-* [SPRITE] (method)
+*** Arguments
+(O-TOP O-LEFT O-WIDTH O-HEIGHT)
+** DIE [SPRITE] (method)
+*** Arguments
+NIL
+** DISTANCE-TO-PLAYER [SPRITE] (method)
+*** Arguments
+NIL
+*** Documentation
+Calculate the distance from the current location to the player.
+** DO-COLLISION [SPRITE] (method)
+*** Arguments
+(OBJECT)
+*** Documentation
+Respond to a collision detected with OBJECT.
+** DROP [SPRITE] (method)
+*** Arguments
+(CELL &OPTIONAL (DELTA-ROW 0) (DELTA-COLUMN 0))
+** GRID-COORDINATES [SPRITE] (method)
+*** Arguments
+NIL
+** IMAGE-COORDINATES [SPRITE] (method)
+*** Arguments
+NIL
+** INITIALIZE [SPRITE] (method)
+*** Arguments
+NIL
+** MOVE [SPRITE] (method)
+*** Arguments
+(DIRECTION &OPTIONAL MOVEMENT-DISTANCE)
+** SAVE-EXCURSION [SPRITE] (method)
+*** Arguments
+NIL
+** UNDO-EXCURSION [SPRITE] (method)
+*** Arguments
+NIL
+** UPDATE-DIMENSIONS [SPRITE] (method)
+*** Arguments
+NIL
+** UPDATE-IMAGE [SPRITE] (method)
+*** Arguments
+(IMAGE)
+** UPDATE-POSITION [SPRITE] (method)
+*** Arguments
+(X Y &OPTIONAL IGNORE-OBSTACLES)
+** VIEWPORT-COORDINATES [SPRITE] (method)
+*** Arguments
+NIL
+** WOULD-COLLIDE [SPRITE] (method)
+*** Arguments
+(X0 Y0)
+** XY-COORDINATES [SPRITE] (method)
+*** Arguments
+NIL
+* =STACK= (prototype)
+** Parent prototype
+: =WIDGET=
+** Documentation
+Stack all the child widgets on top of one another in a column.
+*** Fields
+**** CHILDREN (field)
+***** Documentation
+The widgets in the stack.
+**** KEYMAP (field)
+***** Documentation
+A hash table mapping keylists to lambdas.
+**** IMAGE (field)
+***** Documentation
+The offscreen image buffer containing the widget's rendered output.
+**** WIDTH (field)
+***** Documentation
+The current allocated image width of the widget, in pixels.
+**** HEIGHT (field)
+***** Documentation
+The current allocated image height of the widget, in pixels.
+**** VISIBLE (field)
+***** Documentation
+The boolean visibility of the widget.
+***** Initialization form
+: T
+**** X (field)
+***** Documentation
+The screen x-coordinate of the left side of the widget's display area.
+**** Y (field)
+***** Documentation
+The screen y-coordinate of the top of the widget's display area.
+** HIT [STACK] (method)
+*** Arguments
+(X Y)
+** INITIALIZE [STACK] (method)
+*** Arguments
+(&REST CHILDREN)
+** RENDER [STACK] (method)
+*** Arguments
+NIL
+** SET-CHILDREN [STACK] (method)
+*** Arguments
+(CHILDREN)
+* =TEXTBOX= (prototype)
+** Parent prototype
+: =WIDGET=
+*** Fields
+**** FONT (field)
+**** BUFFER (field)
+**** BORDERED (field)
+**** MAX-DISPLAYED-ROWS (field)
+***** Documentation
+An integer when scrolling is enabled.
+**** MAX-DISPLAYED-COLUMNS (field)
+**** BACKGROUND-COLOR (field)
+**** FOREGROUND-COLOR (field)
+**** CURSOR-COLOR (field)
+**** POINT-ROW (field)
+**** POINT-COLUMN (field)
+**** VISIBLE (field)
+**** KEYMAP (field)
+***** Documentation
+A hash table mapping keylists to lambdas.
+**** IMAGE (field)
+***** Documentation
+The offscreen image buffer containing the widget's rendered output.
+**** WIDTH (field)
+***** Documentation
+The current allocated image width of the widget, in pixels.
+**** HEIGHT (field)
+***** Documentation
+The current allocated image height of the widget, in pixels.
+**** VISIBLE (field)
+***** Documentation
+The boolean visibility of the widget.
+***** Initialization form
+: T
+**** X (field)
+***** Documentation
+The screen x-coordinate of the left side of the widget's display area.
+**** Y (field)
+***** Documentation
+The screen y-coordinate of the top of the widget's display area.
+** AUTO-CENTER [TEXTBOX] (method)
+*** Arguments
+NIL
+*** Documentation
+Automatically center the textbox on the screen.
+** BACKWARD-CHAR [TEXTBOX] (method)
+*** Arguments
+NIL
+** BACKWARD-DELETE-CHAR [TEXTBOX] (method)
+*** Arguments
+NIL
+** FORWARD-CHAR [TEXTBOX] (method)
+*** Arguments
+NIL
+** GET-BUFFER-AS-STRING [TEXTBOX] (method)
+*** Arguments
+NIL
+** INITIALIZE [TEXTBOX] (method)
+*** Arguments
+NIL
+** INSERT [TEXTBOX] (method)
+*** Arguments
+(KEY)
+** INSTALL-KEYBINDINGS [TEXTBOX] (method)
+*** Arguments
+NIL
+** MOVE-BEGINNING-OF-LINE [TEXTBOX] (method)
+*** Arguments
+NIL
+** MOVE-END-OF-LINE [TEXTBOX] (method)
+*** Arguments
+NIL
+** NEWLINE [TEXTBOX] (method)
+*** Arguments
+NIL
+** NEXT-LINE [TEXTBOX] (method)
+*** Arguments
+NIL
+** PAGE-DOWN [TEXTBOX] (method)
+*** Arguments
+NIL
+*** Documentation
+Scroll down one page, only when <max-displayed-rows> is set.
+** PAGE-UP [TEXTBOX] (method)
+*** Arguments
+NIL
+*** Documentation
+Scroll up one page, only when <max-displayed-rows> is set.
+** PREVIOUS-LINE [TEXTBOX] (method)
+*** Arguments
+NIL
+** RENDER [TEXTBOX] (method)
+*** Arguments
+NIL
+** RESIZE-TO-FIT [TEXTBOX] (method)
+*** Arguments
+NIL
+*** Documentation
+Automatically resize the textbox to fit the text, and disable scrolling.
+This method allocates a new SDL surface when necessary.
+** RESIZE-TO-SCROLL [TEXTBOX] (method)
+*** Arguments
+(&KEY WIDTH HEIGHT)
+*** Documentation
+Resize the textbox to WIDTH * HEIGHT and enable scrolling of contents.
+This method allocates a new SDL surface.
+** SET-BUFFER [TEXTBOX] (method)
+*** Arguments
+(BUFFER)
+* =UNIVERSE= (prototype)
+** Documentation
+A collection of connected worlds.
+*** Fields
+**** WORLDS (field)
+***** Documentation
+Address-to-world mapping.
+***** Initialization form
+: (MAKE-HASH-TABLE :TEST 'EQUAL)
+**** PROMPT (field)
+**** VIEWPORT (field)
+**** CURRENT-ADDRESS (field)
+**** PLAYER (field)
+**** STACK (field)
+**** SPACE (field)
+***** Documentation
+When non-nil, this vector of worlds
+represents the z-axis of a euclidean 3-D space.
+** ADD-WORLD [UNIVERSE] (method)
+*** Arguments
+(ADDRESS WORLD)
+** DESTROY [UNIVERSE] (method)
+*** Arguments
+NIL
+** EXIT [UNIVERSE] (method)
+*** Arguments
+(&KEY PLAYER)
+*** Documentation
+Return the player to the previous world on the stack.
+** FIND-WORLD [UNIVERSE] (method)
+*** Arguments
+(ADDRESS)
+** GENERATE-WORLD [UNIVERSE] (method)
+*** Arguments
+(ADDRESS)
+** GET-CURRENT-ADDRESS [UNIVERSE] (method)
+*** Arguments
+NIL
+** GET-CURRENT-WORLD [UNIVERSE] (method)
+*** Arguments
+NIL
+** GET-NEXT-SPACE [UNIVERSE] (method)
+*** Arguments
+(INDEX)
+** GET-PLAYER [UNIVERSE] (method)
+*** Arguments
+NIL
+** GET-PREVIOUS-SPACE [UNIVERSE] (method)
+*** Arguments
+(INDEX)
+** GET-SPACE-AT [UNIVERSE] (method)
+*** Arguments
+(INDEX)
+** GET-WORLD [UNIVERSE] (method)
+*** Arguments
+(ADDRESS)
+** MAKE-EUCLIDEAN [UNIVERSE] (method)
+*** Arguments
+NIL
+** PLAY [UNIVERSE] (method)
+*** Arguments
+(&KEY ADDRESS PLAYER PROMPT NARRATOR VIEWPORT)
+*** Documentation
+Prepare a universe for play at the world identified by ADDRESS with
+PLAYER as the player, PROMPT as the prompt, NARRATOR as the
+narrator, and VIEWPORT as the viewport.
+** REMOVE-WORLD [UNIVERSE] (method)
+*** Arguments
+(ADDRESS)
+** SET-PLAYER [UNIVERSE] (method)
+*** Arguments
+(PLAYER)
+** SET-SPACE-AT [UNIVERSE] (method)
+*** Arguments
+(INDEX WORLD)
+* =VAR-CELL= (prototype)
+** Parent prototype
+: =CELL=
+*** Fields
+**** VARIABLE (field)
+**** TYPE (field)
+**** AUTO-LOADOUT (field)
+***** Documentation
+When non-nil, the :loadout method is invoked upon entry into a world.
+**** TEAM (field)
+***** Documentation
+Keyword symbol of team, if any.
+**** WEIGHT (field)
+***** Documentation
+Recursively calculate the weight of this cell.
+**** WIDGET (field)
+***** Documentation
+XE2 widget object, if any.
+**** TILE (field)
+***** Documentation
+Resource name of image. 
+When nil, the method DRAW is invoked instead of using a tile.
+**** RENDER-CELL (field)
+***** Documentation
+Subcell to render. See load-sprite-sheet-resource.
+**** ROW (field)
+***** Documentation
+When non-nil, the current row location of the cell.
+**** COLUMN (field)
+***** Documentation
+When non-nil, the current column of the cell.
+**** CATEGORIES (field)
+***** Documentation
+List of category keyword symbols
+**** LIGHT-RADIUS (field)
+***** Documentation
+Strength of light cast by this object.
+***** Initialization form
+: 0
+**** MENU (field)
+***** Documentation
+Menu objects.
+**** SPEED (field)
+***** Documentation
+The number of action points alloted each phase.
+***** Initialization form
+: '(:BASE 10)
+**** PHASE-NUMBER (field)
+***** Documentation
+An integer giving the last phase this cell has completed.
+***** Initialization form
+: 0
+**** ACTION-POINTS (field)
+***** Documentation
+An integer giving the ability of a cell to take turns on a given round.
+***** Initialization form
+: 0
+**** DEFAULT-COST (field)
+***** Documentation
+Cost for basic actions.
+***** Initialization form
+: '(:BASE 5 :MIN NIL :MAX NIL :DELTA NIL)
+**** STEPPING (field)
+***** Documentation
+Whether to generate step events where you walk.
+**** MOVEMENT-COST (field)
+***** Documentation
+Base cost of moving one square.
+***** Initialization form
+: '(:BASE 10 :MIN NIL :MAX NIL :DELTA NIL)
+**** TOOLTIP (field)
+***** Documentation
+A formatted line giving dev help or information about the cell.
+**** NAME (field)
+***** Documentation
+The name of this cell.
+**** DESCRIPTION (field)
+***** Documentation
+A description of the cell.
+**** UNKNOWN-NAME (field)
+***** Documentation
+The name of this cell, when it is unknown.
+**** UNKNOWN-DESCRIPTION (field)
+***** Documentation
+A description of the cell, when it is unknown.
+**** EQUIPMENT (field)
+***** Documentation
+Property list of :slot -> cell pairs.
+**** EQUIPMENT-SLOTS (field)
+***** Documentation
+List of keyword symbols identifying available equipment slots.
+***** Initialization form
+: '(:HEAD :NECK :LEFT-HAND :RIGHT-HAND :HANDS :FEET :LEGS :TORSO :ARMS :PACK
+    :BELT)
+**** USING-SLOT (field)
+***** Documentation
+Keyword symbol of the currently selected equipment slot.
+**** ATTACKING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected weapon slot.
+**** FIRING-WITH (field)
+***** Documentation
+Keyword symbol of the currently selected firing weapon slot.
+**** EQUIP-FOR (field)
+***** Documentation
+List of keyword symbols showing where this item may be equipped.
+**** EQUIPPER (field)
+***** Documentation
+When non-nil, the character currently equipping this item.
+**** INVENTORY (field)
+***** Documentation
+The contents (if any) of the cell.
+**** MAX-WEIGHT (field)
+***** Documentation
+Maximum weight this container can hold.
+**** MAX-ITEMS (field)
+***** Documentation
+Maximum number of items this container can hold.
+**** PARENT-CONTAINER (field)
+***** Documentation
+Link to containing cell, if any.
+**** LABEL (field)
+***** Documentation
+Label (string or formatted line) to be used as display in forms.
+**** OCCUPANT (field)
+***** Documentation
+Occupant cell, used to implement drivable vehicles.
+**** PROXY (field)
+***** Documentation
+Make this cell a proxy for OCCUPANT.
+**** COMBINATION-AMOUNT (field)
+***** Documentation
+Amount of item this cell represents.
+***** Initialization form
+: 0
+**** COMBINATION-KEY (field)
+***** Documentation
+Only items matching this key will be combined.
+**** EXCLUDED-FIELDS (field)
+** COMPUTE [VAR-CELL] (method)
+*** Arguments
+NIL
+** GET [VAR-CELL] (method)
+*** Arguments
+NIL
+** INITIALIZE [VAR-CELL] (method)
+*** Arguments
+(VARIABLE)
+** SET [VAR-CELL] (method)
+*** Arguments
+(VALUE)
+* =VIEWPORT= (prototype)
+** Parent prototype
+: =WIDGET=
+** Documentation
+A map display for XE2 worlds.
+*** Fields
+**** WORLD (field)
+***** Documentation
+The world object to be displayed.
+**** OVERLAYS (field)
+***** Documentation
+List of closures.
+**** USE-OVERLAYS (field)
+**** PENDING-DRAWS (field)
+**** MARGIN (field)
+***** Documentation
+Scroll margin.
+***** Initialization form
+: 6
+**** ORIGIN-X (field)
+***** Documentation
+The world x-coordinate of the tile at the viewport's origin.
+***** Initialization form
+: 0
+**** ORIGIN-Y (field)
+***** Documentation
+The world y-coordinate of the tile at the viewport's origin.
+***** Initialization form
+: 0
+**** ORIGIN-WIDTH (field)
+***** Documentation
+The width in tiles of the viewport.
+***** Initialization form
+: 10
+**** ORIGIN-HEIGHT (field)
+***** Documentation
+The height in tiles of the viewport.
+***** Initialization form
+: 10
+**** TILE-SIZE (field)
+***** Documentation
+Size in pixels of a tile. They must be square.
+***** Initialization form
+: 16
+**** EXCLUDED-FIELDS (field)
+**** KEYMAP (field)
+***** Documentation
+A hash table mapping keylists to lambdas.
+**** IMAGE (field)
+***** Documentation
+The offscreen image buffer containing the widget's rendered output.
+**** WIDTH (field)
+***** Documentation
+The current allocated image width of the widget, in pixels.
+**** HEIGHT (field)
+***** Documentation
+The current allocated image height of the widget, in pixels.
+**** VISIBLE (field)
+***** Documentation
+The boolean visibility of the widget.
+***** Initialization form
+: T
+**** X (field)
+***** Documentation
+The screen x-coordinate of the left side of the widget's display area.
+**** Y (field)
+***** Documentation
+The screen y-coordinate of the top of the widget's display area.
+** ADD-OVERLAY [VIEWPORT] (method)
+*** Arguments
+(OVERLAY)
+** ADJUST [VIEWPORT] (method)
+*** Arguments
+NIL
+*** Documentation
+Move the viewport's origin if required to keep the player onscreen.
+** DRAW-OVERLAYS [VIEWPORT] (method)
+*** Arguments
+NIL
+** GET-IMAGE-COORDINATES [VIEWPORT] (method)
+*** Arguments
+(CELL-ROW CELL-COLUMN)
+** GET-SCREEN-COORDINATES [VIEWPORT] (method)
+*** Arguments
+(CELL-ROW CELL-COLUMN)
+** GET-VIEWPORT-COORDINATES [VIEWPORT] (method)
+*** Arguments
+(CELL-ROW CELL-COLUMN)
+** GET-VIEWPORT-COORDINATES-* [VIEWPORT] (method)
+*** Arguments
+(X Y)
+** HIT [VIEWPORT] (method)
+*** Arguments
+(X Y)
+** RENDER [VIEWPORT] (method)
+*** Arguments
+NIL
+** SET-ORIGIN [VIEWPORT] (method)
+*** Arguments
+(&KEY X Y HEIGHT WIDTH)
+** SET-TILE-SIZE [VIEWPORT] (method)
+*** Arguments
+(&OPTIONAL SIZE)
+** SET-WORLD [VIEWPORT] (method)
+*** Arguments
+(WORLD)
+** UPDATE-GEOMETRY [VIEWPORT] (method)
+*** Arguments
+(&OPTIONAL RESIZE)
+* =WIDGET= (prototype)
+** Documentation
+A graphical element that responds to events and renders to an offscreen image.
+
+A game can draw directly to the screen if it wants. Widgets.lisp
+defines a reusable `widget' object where you draw to an offscreen
+image. Widgets are also designed to receive input events via the
+`handle-key' method; `define-key' and `undefine-key' can be used to
+manage keybindings.
+
+The main XE2 loop is set up to dispatch event messages to
+widgets. After the events have been processed and the widgets have
+drawn their images to their respective offscreen buffers, the
+engine copies the buffers to the screen. (see console.lisp)
+
+This module contains the basic widget code and some standard widgets,
+including an output formatter and a configurable command prompt.
+*** Fields
+**** KEYMAP (field)
+***** Documentation
+A hash table mapping keylists to lambdas.
+**** IMAGE (field)
+***** Documentation
+The offscreen image buffer containing the widget's rendered output.
+**** WIDTH (field)
+***** Documentation
+The current allocated image width of the widget, in pixels.
+**** HEIGHT (field)
+***** Documentation
+The current allocated image height of the widget, in pixels.
+**** VISIBLE (field)
+***** Documentation
+The boolean visibility of the widget.
+***** Initialization form
+: T
+**** X (field)
+***** Documentation
+The screen x-coordinate of the left side of the widget's display area.
+**** Y (field)
+***** Documentation
+The screen y-coordinate of the top of the widget's display area.
+** CLEAR [WIDGET] (method)
+*** Arguments
+(&OPTIONAL (COLOR .black))
+*** Documentation
+Clear the widget's offscreen buffer by drawing a rectangle of COLOR
+that covers the entire buffer.
+** CLEAR-KEYMAP [WIDGET] (method)
+*** Arguments
+NIL
+** DEFINE-KEY [WIDGET] (method)
+*** Arguments
+(KEY-NAME MODIFIERS FUNC)
+*** Documentation
+Bind the described keypress to invoke FUNC.
+KEY-NAME is a string giving the key name; MODIFIERS is a list of
+keywords like :control, :alt, and so on.
+** GET-IMAGE [WIDGET] (method)
+*** Arguments
+NIL
+*** Documentation
+Return the widget's offscreen drawing image.
+** HANDLE-KEY [WIDGET] (method)
+*** Arguments
+(KEYLIST)
+*** Documentation
+Look up and invoke the function (if any) bound to KEYLIST. Return t
+if a binding was found, nil otherwise.
+** HIDE [WIDGET] (method)
+*** Arguments
+NIL
+** HIT [WIDGET] (method)
+*** Arguments
+(X Y)
+*** Documentation
+Find a widget by screen position. The default implementation
+returns itself when the widget's own onscreen image is clicked.  Child
+implementations may do subsequent hit-testing on child widgets, and
+possibly return one of them.
+** INITIALIZE [WIDGET] (method)
+*** Arguments
+NIL
+** MOVE [WIDGET] (method)
+*** Arguments
+(&KEY X Y)
+*** Documentation
+Move the widget to the location X, Y.
+** RENDER [WIDGET] (method)
+*** Arguments
+NIL
+*** Documentation
+Render the widget to its image. The default implementation leaves
+the image blank.
+** RESIZE [WIDGET] (method)
+*** Arguments
+(&KEY HEIGHT WIDTH)
+*** Documentation
+Allocate an image buffer of HEIGHT by WIDTH pixels.
+** SHOW [WIDGET] (method)
+*** Arguments
+NIL
+** TOGGLE-VISIBLE [WIDGET] (method)
+*** Arguments
+NIL
+** UNDEFINE-KEY [WIDGET] (method)
+*** Arguments
+(KEY-NAME MODIFIERS)
+*** Documentation
+Remove the described keybinding.
+* =WORLD= (prototype)
+** Documentation
+An XE2 game world filled with cells and sprites.
+Worlds are the focus of the action in XE2. A world is a 3-D grid of
+interacting cells. The world object performs the following tasks:
+
+  - Keeps track of a single player in a world of cells
+  - Receives command messages from the user
+  - Handles some messages, forwards the rest on to the player cell.
+  - Runs the CPU phase so that all non-player :actor cells get their turns
+  - Keeps track of lit squares 
+  - Performs collision detection for sprites and cells
+*** Fields
+**** NAME (field)
+***** Documentation
+Name of the world.
+***** Initialization form
+: "Unknown"
+**** OVERWORLD (field)
+**** PAUSED (field)
+***** Documentation
+Non-nil when the game is paused.
+**** DESCRIPTION (field)
+***** Documentation
+Brief description of area.
+***** Initialization form
+: "Unknown area."
+**** TILE-SIZE (field)
+***** Documentation
+Size in pixels of a grid tile.
+***** Initialization form
+: 16
+**** REQUIRED-MODES (field)
+***** Documentation
+A list of keywords specifying which modes of transportation are
+required for travel here.
+**** CATEGORIES (field)
+***** Documentation
+The set of categories this world is in.
+**** GRAMMAR (field)
+***** Documentation
+Context-free grammar for level generation.
+***** Initialization form
+: 'NIL
+**** STACK (field)
+***** Documentation
+Stack for logo system.
+***** Initialization form
+: 'NIL
+**** ROW (field)
+**** COLUMN (field)
+**** DIRECTION (field)
+**** PAINT (field)
+**** SCALE (field)
+***** Documentation
+Scale per square side in the form (N UNIT) where UNIT is m, km, ly etc.
+***** Initialization form
+: '(1 M)
+**** PLAYER (field)
+***** Documentation
+The player cell (or sprite).
+**** WIDTH (field)
+***** Documentation
+The width of the world map, measured in tiles.
+***** Initialization form
+: 16
+**** HEIGHT (field)
+***** Documentation
+The height of the world map, measured in tiles.
+***** Initialization form
+: 16
+**** GRID (field)
+***** Documentation
+A two-dimensional array of adjustable vectors of cells.
+**** SERIALIZED-GRID (field)
+***** Documentation
+A serialized sexp version.
+**** SPRITES (field)
+***** Documentation
+A list of sprites.
+**** SPRITE-GRID (field)
+***** Documentation
+Grid for collecting sprite collision information.
+**** SPRITE-TABLE (field)
+***** Documentation
+Hash table to prevent redundant collisions.
+**** VARIABLES (field)
+***** Documentation
+Hash table mapping values to values, local to the form.
+**** ENVIRONMENT-GRID (field)
+***** Documentation
+A two-dimensional array of environment data cells.
+**** AUTOMAPPED (field)
+***** Documentation
+Show all previously lit squares.
+**** LIGHT-GRID (field)
+***** Documentation
+A 2d array of integers giving the light level at that point in <grid>.
+At the moment, only 0=off and 1=on are supported.
+**** AMBIENT-LIGHT (field)
+***** Documentation
+Radius of ambient visibility. :total means that lighting is turned off.
+***** Initialization form
+: :TOTAL
+**** PHASE-NUMBER (field)
+***** Documentation
+Integer number of current phase.
+***** Initialization form
+: 1
+**** TURN-NUMBER (field)
+***** Documentation
+Integer number of elapsed user turns (actions).
+***** Initialization form
+: 1
+**** MESSAGE-QUEUE (field)
+**** NARRATOR (field)
+***** Documentation
+The narration widget object.
+**** BROWSER (field)
+***** Documentation
+The browser object.
+**** VIEWPORT (field)
+***** Documentation
+The viewport object.
+**** EDGE-CONDITION (field)
+***** Documentation
+Either :block the player, :exit the world, or :wrap around.
+***** Initialization form
+: :EXIT
+**** EXITED (field)
+***** Documentation
+Non-nil when the player has exited. See also `forward'.
+**** PLAYER-EXIT-ROW (field)
+**** PLAYER-EXIT-COLUMN (field)
+**** EXCLUDED-FIELDS (field)
+** ADD-SPRITE [WORLD] (method)
+*** Arguments
+(SPRITE)
+** ADJACENT-TO-PLAYER [WORLD] (method)
+*** Arguments
+(ROW COLUMN)
+*** Documentation
+Return non-nil when ROW, COLUMN is adjacent to the player.
+** AFTER-START-METHOD [WORLD] (method)
+*** Arguments
+NIL
+** BEGIN-AMBIENT-LOOP [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Begin looping your music for this world here.
+** CATEGORY-AT-P [WORLD] (method)
+*** Arguments
+(ROW COLUMN CATEGORY)
+*** Documentation
+Returns non-nil if there is any cell in CATEGORY at ROW, COLUMN.
+CATEGORY may be a list of keyword symbols or one keyword symbol.
+** CATEGORY-IN-DIRECTION-P [WORLD] (method)
+*** Arguments
+(ROW COLUMN DIRECTION CATEGORY)
+*** Documentation
+Return non-nil when there is a cell in CATEGORY one step in
+DIRECTION from ROW, COLUMN. CATEGORY may be a list as well.
+** CELLS-AT [WORLD] (method)
+*** Arguments
+(ROW COLUMN)
+*** Documentation
+Return the vector of cells at ROW, COLUMN in the world SELF.
+** CLEAR-LIGHT-GRID [WORLD] (method)
+*** Arguments
+NIL
+** CLEAR-SPRITE-GRID [WORLD] (method)
+*** Arguments
+NIL
+** COLLIDE-SPRITES [WORLD] (method)
+*** Arguments
+(&OPTIONAL SPRITES)
+*** Documentation
+Perform collision detection between sprites and the grid.
+Sends a :do-collision message for every detected collision.
+** COLOR [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Set the color to =FOO= where FOO is the prototype symbol on top of
+the stack.
+** CREATE-DEFAULT-GRID [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+If height and width have been set in a world's definition,
+initialize the arrays for a world of the size specified there.
+** CREATE-GRID [WORLD] (method)
+*** Arguments
+(&KEY WIDTH HEIGHT)
+*** Documentation
+Initialize all the arrays for a world of WIDTH by HEIGHT cells.
+** DELETE-CATEGORY-AT [WORLD] (method)
+*** Arguments
+(ROW COLUMN CATEGORY)
+*** Documentation
+Delete all cells in CATEGORY at ROW, COLUMN in the grid.
+The cells' :cancel method is invoked.
+** DELETE-CELL [WORLD] (method)
+*** Arguments
+(CELL ROW COLUMN)
+*** Documentation
+Delete CELL from the grid at ROW, COLUMN.
+** DESCRIBE [WORLD] (method)
+*** Arguments
+(&OPTIONAL DESCRIPTION)
+** DESERIALIZE [WORLD] (method)
+*** Arguments
+(SEXP)
+*** Documentation
+Load a saved world from Lisp data.
+** DIRECTION-TO-PLAYER [WORLD] (method)
+*** Arguments
+(ROW COLUMN)
+*** Documentation
+Return the general compass direction of the player from ROW, COLUMN.
+** DISTANCE-TO-PLAYER [WORLD] (method)
+*** Arguments
+(ROW COLUMN)
+*** Documentation
+Return the straight-line distance to the player from ROW, COLUMN.
+** DRAW [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Move N squares forward while painting cells. Clones N cells where N
+is the integer on the top of the stack.
+** DROP [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Clone the current <paint> object and drop it at the current turtle
+location.
+** DROP-CELL [WORLD] (method)
+*** Arguments
+(CELL ROW COLUMN &OPTIONAL &KEY LOADOUT NO-STEPPING NO-COLLISIONS (EXCLUSIVE T)
+ (PROBE T))
+*** Documentation
+Put the cell CELL on top of the stack of cells at ROW,
+COLUMN. If LOADOUT is non-nil, then the `loadout' method of the
+dropped cell is invoked after dropping. If the field <auto-loadout> is
+non-nil in the CELL, then the `loadout' method is invoked regardless
+of the value of LOADOUT.
+
+If NO-COLLISIONS is non-nil, then an object is not dropped on top of
+an obstacle. If EXCLUSIVE is non-nil, then two objects with
+category :exclusive will not be placed together. If PROBE is non-nil,
+try to place the cell in the immediate neighborhood.  Return T if a
+cell is placed; nil otherwise.
+** DROP-ENTRY-POINT [WORLD] (method)
+*** Arguments
+(ROW COLUMN)
+** DROP-PLAYER-AT-ENTRY [WORLD] (method)
+*** Arguments
+(PLAYER)
+*** Documentation
+Drop the PLAYER at the first entry point.
+** DROP-PLAYER-AT-LAST-LOCATION [WORLD] (method)
+*** Arguments
+(PLAYER)
+** DROP-SPRITE [WORLD] (method)
+*** Arguments
+(SPRITE X Y &KEY NO-COLLISIONS LOADOUT)
+*** Documentation
+Add a sprite to the world. When NO-COLLISIONS is non-nil, then the
+object will not be dropped when there is an obstacle. When LOADOUT is
+non-nil, the :loadout method is invoked on the sprite after
+placement.
+** ENVIRONMENT-AT [WORLD] (method)
+*** Arguments
+(ROW COLUMN)
+** ENVIRONMENT-CONDITION-AT [WORLD] (method)
+*** Arguments
+(ROW COLUMN CONDITION)
+** EXIT [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Leave the current world.
+** FORWARD [WORLD] (method)
+*** Arguments
+(METHOD-KEY &REST ARGS)
+*** Documentation
+Send unhandled messages to the player object.
+** GENERATE [WORLD] (method)
+*** Arguments
+(&REST PARAMETERS)
+*** Documentation
+Generate a world, reading generation parameters from the plist
+PARAMETERS and interpreting the world's grammar field <GRAMMAR>.
+** GENERATE-WITH [WORLD] (method)
+*** Arguments
+(PARAMETERS)
+** GET-PHASE-NUMBER [WORLD] (method)
+*** Arguments
+NIL
+** GET-PLAYER [WORLD] (method)
+*** Arguments
+NIL
+** GET-VARIABLE [WORLD] (method)
+*** Arguments
+(VAR)
+** IN-BOUNDS-P [WORLD] (method)
+*** Arguments
+(ROW COLUMN)
+*** Documentation
+Return non-nil if ROW and COLUMN are valid coordinates.
+** IN-CATEGORY [WORLD] (method)
+*** Arguments
+(CATEGORY)
+*** Documentation
+Returns non-nil when the cell SELF is in the category CATEGORY.
+** INITIALIZE [WORLD] (method)
+*** Arguments
+NIL
+** JUMP [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Jump N squares forward where N is the integer on the top of the stack.
+** LEFT [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Turn N degrees counter-clockwise, where N is 0, 45, or 90.
+** LINE-OF-SIGHT [WORLD] (method)
+*** Arguments
+(R1 C1 R2 C2 &OPTIONAL (CATEGORY OBSTACLE))
+*** Documentation
+Return non-nil when there is a direct Bresenham's line of sight
+along grid squares between R1,C1 and R2,C2.
+** LOCATION-NAME [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Return the location name.
+** MOVE-CELL [WORLD] (method)
+*** Arguments
+(CELL ROW COLUMN)
+*** Documentation
+Move CELL to ROW, COLUMN.
+** NOOP [WORLD] (method)
+*** Arguments
+NIL
+** NTH-CELL [WORLD] (method)
+*** Arguments
+(N ROW COLUMN)
+** OBSTACLE-AT-P [WORLD] (method)
+*** Arguments
+(ROW COLUMN)
+*** Documentation
+Returns non-nil if there is any obstacle in the grid at ROW, COLUMN.
+** OBSTACLE-IN-DIRECTION-P [WORLD] (method)
+*** Arguments
+(ROW COLUMN DIRECTION)
+*** Documentation
+Return non-nil when there is an obstacle one step in DIRECTION from ROW, COLUMN.
+** ORIGIN [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Move the turtle to its default location (0,0) and orientation (east).
+** PAUSE [WORLD] (method)
+*** Arguments
+(&OPTIONAL ALWAYS)
+*** Documentation
+Toggle the pause state of the world.
+** PLAYER-COLUMN [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Return the grid column the player is on.
+** PLAYER-ROW [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Return the grid row the player is on.
+** POPLOC [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Jump to the location on the top of the stack, and pop the stack.
+** PROCESS-MESSAGES [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Process, narrate, and send all the messages in the queue.
+The processing step allows the sender to specify the receiver
+indirectly as a keyword symbol (like `:world', `:player', or
+`:output'.) Any resulting queued messages are processed and sent, and
+so on, until no more messages are generated.
+** PUSH-COLOR [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Push the symbol name of the current <paint> object onto the stack.
+** PUSHLOC [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Push the current row,col location (and direction) onto the stack.
+** RANDOM-PLACE [WORLD] (method)
+*** Arguments
+(&OPTIONAL &KEY AVOIDING DISTANCE)
+** REMOVE-SPRITE [WORLD] (method)
+*** Arguments
+(SPRITE)
+** RENDER-LIGHTING [WORLD] (method)
+*** Arguments
+(CELL)
+*** Documentation
+When lighting is activated, calculate lit squares using light
+sources and ray casting.
+** REPLACE-CELL [WORLD] (method)
+*** Arguments
+(CELL NEW-CELL ROW COLUMN &OPTIONAL &KEY LOADOUT NO-COLLISIONS)
+*** Documentation
+Replace the CELL with NEW-CELL at ROW, COLUMN in this world.
+** REPLACE-CELLS-AT [WORLD] (method)
+*** Arguments
+(ROW COLUMN DATA)
+*** Documentation
+Destroy the cells at ROW, COLUMN, invoking CANCEL on each,
+replacing them with the single cell (or vector of cells) DATA.
+** RESOLVE-RECEIVER [WORLD] (method)
+*** Arguments
+(RECEIVER)
+** RIGHT [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Turn N degrees clockwise, where N is 0, 45, or 90.
+** RUN-CPU-PHASE [WORLD] (method)
+*** Arguments
+(&OPTIONAL TIMER-P)
+*** Documentation
+Run all non-player actor cells.
+** RUN-CPU-PHASE-MAYBE [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+If this is the player's last turn, run the cpu phase. otherwise,
+stay in player phase and exit. Always runs cpu when the engine is in
+realtime mode.
+** SERIALIZE [WORLD] (method)
+*** Arguments
+NIL
+** SET-BROWSER [WORLD] (method)
+*** Arguments
+(BROWSER)
+** SET-ENVIRONMENT-CONDITION-AT [WORLD] (method)
+*** Arguments
+(ROW COLUMN CONDITION VALUE)
+** SET-NARRATOR [WORLD] (method)
+*** Arguments
+(NARRATOR)
+** SET-PLAYER [WORLD] (method)
+*** Arguments
+(PLAYER)
+*** Documentation
+Set PLAYER as the player object to which the World will forward
+most user command messages. (See also the method `forward'.)
+** SET-VARIABLE [WORLD] (method)
+*** Arguments
+(VAR VALUE)
+** SET-VIEWPORT [WORLD] (method)
+*** Arguments
+(VIEWPORT)
+*** Documentation
+Set the viewport widget.
+** START [WORLD] (method)
+*** Arguments
+NIL
+*** Documentation
+Prepare the world for play.
+** TARGET-IN-DIRECTION-P [WORLD] (method)
+*** Arguments
+(ROW COLUMN DIRECTION)
+*** Documentation
+Return non-nil when there is a target one step in DIRECTION from ROW, COLUMN.
+** TOP-CELL-AT [WORLD] (method)
+*** Arguments
+(ROW COLUMN)
+* Symbols
+** *ACTIVE-WIDGETS* (variable)
+*** Documentation
+List of active widget objects. 
+These widgets receive input events and are rendered to the screen by
+the console. See also `send-event-to-widgets'.
+
+Do not set this variable directly from a module; instead, call
+`install-widgets'.
+** *BROWSER* (variable)
+** *CHOOSE-DIRECTION-MENU* (variable)
+** *COLORS* (variable)
+** *COMPASS-DIRECTIONS* (variable)
+*** Documentation
+List of keywords representing the eight compass directions, plus :here.
+** *COMPASS-OPPOSITES* (variable)
+*** Documentation
+Property list mapping direction keywords to their 180-degree
+opposites.
+** *DEFAULT-ACTION-POINTS* (variable)
+** *DEFAULT-FONT* (variable)
+** *DEFAULT-FRAME-HEIGHT* (variable)
+** *DEFAULT-FRAME-WIDTH* (variable)
+** *DEFAULT-MESSAGE-VERBOSITIES* (variable)
+** *DEFAULT-WORLD-AXIS-SIZE* (variable)
+** *DEFAULT-WORLD-Z-SIZE* (variable)
+** *DT* (variable)
+** *EVENT-HANDLER-FUNCTION* (variable)
+*** Documentation
+Function to be called with keypress events. This function should
+accept an event list of the form
+
+  (STRING . MODIFIERS)
+
+where STRING is a string representing the key, and MODIFIERS is a list
+of key modifier symbols like :shift, :control, :alt, and so on.
+
+The modifier list is sorted; thus, events can be compared for
+equality with `equal' and used as hashtable keys.
+
+The default event handler is `send-event-to-widgets', which see. An
+XE2 game can use the widget framework to do its drawing and event
+handling, or override `*event-handler-function*' and do something
+else.
+** *EXECUTABLE* (variable)
+** *FRAME-RATE* (variable)
+*** Documentation
+The intended frame rate of the game. Recommended value is 30.
+Don't set this variable directly; use `set-frame-rate' instead.
+** *FREQUENCY* (variable)
+** *FULLSCREEN* (variable)
+*** Documentation
+When non-nil, attempt to use fullscreen mode.
+** *GENERIC-JOYSTICK-MAPPING* (variable)
+** *GRAMMAR* (variable)
+*** Documentation
+The current context-free grammar used for sentence generation.
+This is an association list of the form:
+
+    ((VARIABLE >> EXPANSIONS)
+     (VARIABLE >> EXPANSIONS)
+     ...)
+
+Where EXPANSIONS is a list of alternatives, each of which may be
+either (1) single symbols or (2) a list of symbols, representing
+concatenation.
+** *INITIALIZATION-HOOK* (variable)
+*** Documentation
+This hook is run after the XE2 console is initialized.
+Set timer parameters and other settings here.
+** *JOYSTICK-MAPPING* (variable)
+** *LAST-EVENT* (variable)
+** *LEFT-TURN* (variable)
+** *MESSAGE-LOGGING* (variable)
+** *MESSAGE-SEND-SYMBOL-SUFFIX* (variable)
+** *MESSAGE-SENDER* (variable)
+** *MESSAGE-VERBOSITIES* (variable)
+*** Documentation
+Property list mapping message keywords to the integers from 1-3.
+A message outputs if its verbosity level is less than or equal to the
+narration window's verbosity level. Level 1 is normal gameplay output,
+while levels 2 and 3 offer increading debug information. Values of nil
+and t mean to never (and always, respectively) output, regardless of
+verbosity level.
+** *MODULE-DIRECTORIES* (variable)
+*** Documentation
+List of directories where XE2 will search for modules.
+Directories are searched in list order.
+** *MODULE-WIDGETS* (variable)
+*** Documentation
+List of widget objects in the current module.
+** *NEXT-MODULE* (variable)
+** *OUTPUT-CHANNELS* (variable)
+** *OUTPUT-CHUNKSIZE* (variable)
+** *PAK-FILE-EXTENSION* (variable)
+*** Documentation
+PAK is a simple Lisp data interchange file format readable and
+writable by both Emacs Lisp and Common Lisp. A PAK file can contain
+one or more data resources. A 'resource' is an image, sound, text,
+font, lisp program, or other data whose interpretation is up to the
+client.
+
+A PAK resource can be either self-contained, or point to an
+external file for its data.
+
+A 'resource record' defines a resource. A resource record is a
+structure with the following elements:
+
+ :NAME    A string; the name of the resource.
+          The colon character : is reserved and used to specify 
+          resource transformations; see below.
+ :TYPE    A keyword symbol identifying the data type.
+          Corresponding handlers are the responsibility of the client.
+          See also `*resource-handlers*' and `load-resource'.
+
+          The special type :pak is used to load the pak file
+          specified in :FILE, from (optionally) another module
+          whose name is given in :DATA.
+
+          The special type :alias is used to provide multiple names
+          for a resource. The :DATA field contains the name of the
+          target resource. This name can specify resource
+          transformations, see below. 
+
+ :PROPERTIES  Property list with extra data; for example :copyright,
+              :license, :author. 
+              The special property :AUTOLOAD, when non-nil causes
+              the resource to be loaded automatically upon startup 
+              (the default is to load resources on demand.)
+
+ :FILE    Name of file to load data from, if any. 
+          Relative to directory of PAK file.
+ :DATA    Lisp data encoding the resource itself, if any.
+
+In memory, these will be represented by resource structs (see below).
+On disk, it's Lisp data printed as text. This text will compress very
+well.
+
+The string '()' is a valid .PAK file; it contains no resources.
+** *PHYSICS-FUNCTION* (variable)
+** *PS3-JOYSTICK-MAPPING* (variable)
+** *QUITTING* (variable)
+** *RESOURCE-HANDLERS* (variable)
+*** Documentation
+A property list mapping resource type keywords to handler functions.
+Each function should accept one resource record, and return an
+object (possibly driver-dependent). When a resource is loaded (with
+`load-resource'), the appropriate handler is looked up, and invoked on
+the resource record.  The return value is stored in the OBJECT field
+of the record.
+** *RESOURCE-TABLE* (variable)
+*** Documentation
+A hash table mapping resource names to resource records. All loaded
+resources go in this one hash table.
+
+The `resource table' maps resource names to their corresponding
+records. `Indexing' a resource means that its resource record is
+added to the resource table. `Loading' a resource means that any
+associated driver-dependent object (SDL image surface, audio buffer
+object, etc) is created. This value is stored into the OBJECT field
+of the resource record upon loading; see `load-resource'.
+
+The loading operation may be driver-dependent, so each resource
+type (i.e. :image, :text, :sound) is handled by its own plugin
+function (see `*resource-handlers*').
+
+`Finding' a resource means looking up its record in the resource
+table, and loading the resource if it hasn't been loaded already.
+A lookup failure results in an error. See `find-resource'.
+
+A `module' is a directory full of resource files. The name of the
+module is the name of the directory. Each module must contain a
+file called {module-name}.pak, which should contain an index of
+all the module's resources. Multiple modules may be loaded at one
+time. In addition the special resource .startup will be loaded;
+if this is type :lisp, the startup code for your game can go in
+that external lisp file.
+** *RIGHT-TURN* (variable)
+** *SCREEN-HEIGHT* (variable)
+*** Documentation
+The height (in pixels) of the game
+window. Set this in the game startup file.
+** *SCREEN-WIDTH* (variable)
+*** Documentation
+The width (in pixels) of the game
+window. Set this in the game startup file.
+** *SENDER* (variable)
+*** Documentation
+This variable is bound to the object (if any) to
+receive sent messages.
+** *STANDARD-CATEGORIES* (variable)
+** *STARTUP* (variable)
+** *TIMER-INTERVAL* (variable)
+*** Documentation
+Number of frames to wait before sending each timer event.
+Set this to 0 to get a timer event every frame.
+Don't set this yourself; use `set-timer-interval'.
+** *UNIVERSE* (variable)
+** *USE-SOUND* (variable)
+*** Documentation
+Non-nil (the default) is to use sound. Nil disables sound.
+** *USER-INIT-FILE-NAME* (variable)
+** *USER-KEYBOARD-LAYOUT* (variable)
+** *WINDOW-POSITION* (variable)
+*** Documentation
+Controls the position of the game window. Either a list of coordinates or the symbol :center.
+** *WINDOW-TITLE* (variable)
+** *WORKBOOK* (variable)
+*** Documentation
+Hash table mapping string page names to world objects.
+** *WORLD* (variable)
+*** Documentation
+The current world object. Only one may be active at a time. See also
+worlds.lisp. Cells are free to send messages to `*world*' at
+any time, because it is always bound to the world containing the cell
+at the time the cell method is run.
+** *X11-COLOR-DATA* (variable)
+** *ZOOM-FACTOR* (variable)
+*** Documentation
+When set to some integer greater than 1, all image resources are
+scaled by that factor unless marked with the property :nozoom t.
+** ADD-HOOK (function)
+*** Arguments
+(HOOK FUNC)
+*** Documentation
+Hooks are special variables whose names are of the form
+`*foo-hook*' and whose values are lists of functions taking no
+arguments. The functions of a given hook are all invoked (in list
+order) whenever the hook is run with `run-hook'.
+
+This function arranges for FUNC to be invoked whenever HOOK is triggered with
+`run-hook'. The function should have no arguments.
+** ADD-MESSAGE-VERBOSITIES (function)
+*** Arguments
+(PLIST)
+** ADD-OVERLAY (variable)
+** BIND-KEY-TO-METHOD (function)
+*** Arguments
+(P KEY MODIFIERS METHOD-KEYWORD)
+** BIND-KEY-TO-PROMPT-INSERTION (function)
+*** Arguments
+(P KEY MODIFIERS &OPTIONAL (INSERTION KEY))
+*** Documentation
+For prompt P ensure that the event (KEY MODIFIERS) causes the
+text INSERTION to be inserted at point.
+** BROWSER (variable)
+** CLONE (function)
+*** Arguments
+(PROTOTYPE &REST INITARGS)
+*** Documentation
+Create a new object from PROTOTYPE and pass INITARGS to the
+initializer. The new object is created with fields for which INITFORMS
+were specified (if any; see `define-prototype'); the INITFORMS are
+evaluated, then any applicable initializer is triggered.
+** COMPOSE-BLANK-FIELDS (function)
+*** Arguments
+(&OPTIONAL DESCRIPTORS (TYPE HASH))
+** CREATE-IMAGE (function)
+*** Arguments
+(WIDTH HEIGHT)
+*** Documentation
+Create a new XE2 image of size (* WIDTH HEIGHT).
+** DEFCELL (macro)
+*** Arguments
+(&REST ARGS)
+*** Documentation
+Define a cell named NAME, with the fields ARGS as in a normal
+prototype declaration. This is a convenience macro for defining new
+cells.
+** DEFINE-METHOD (macro)
+*** Arguments
+(&REST ARGS)
+*** Documentation
+Define a new method.
+
+METHOD-NAME is a symbol naming the method.  PROTOTYPE-NAME is the name
+of the prototype you are defining a method for. This should be a
+symbol (without equals signs---see Prototype Names. ARGLIST is
+the argument list for the method. If METHOD-BODY begins with a string,
+this string becomes the documentation string for the method.
+
+Any DECLARE forms must appear as the first non-string sexp.
+
+The forms in METHOD-BODY are executed when the method is invoked.
+The hidden argument `self' may be referred to as needed within
+the method body; it is bound to the object upon which the method
+was invoked.
+** DEFINE-PROTOTYPE (macro)
+*** Arguments
+(&REST ARGS)
+*** Documentation
+Create a new object prototype (possibly based on another prototype).
+
+NAME should be a symbol naming the prototype. A special variable is
+created, with equals signs bracketing the name; this variable's value
+is the resulting prototype. For example, if your prototype is named
+`foo', the special variable will be named `=foo=', and you create
+objects with:
+
+ (clone =foo=)
+
+See also `clone'. 
+
+The second argument is a property list of options for the
+prototype. Valid keys are:
+
+ :DOCUMENTATION     The documentation string for this prototype.
+ :PARENT            The parent prototype from which the new prototype will 
+                    inherit fields. This form is evaluated.
+                     
+DECLARATION-FIELD-DESCRIPTORS should be a list, each entry of which is
+either a list of the form
+
+  (FIELD-NAME . OPTIONS)
+
+or, simply a symbol naming the field---a shorthand for declaring a
+field with that name and no options. See also
+`transform-declaration-field-descriptor'.
+
+OPTIONS is a property list of field options. Valid keys are:
+
+ :INITFORM          A form evaluated to initialize the field
+                    upon cloning. If :initform is not provided,
+                    the value is inherited from the PARENT.
+                    With ":initform nil", the field is initialized 
+                    with the value nil.
+ :DOCUMENTATION     Documentation string for the field.
+** DEFSPRITE (macro)
+*** Arguments
+(&REST ARGS)
+** DIRECTION-TO (function)
+*** Arguments
+(R1 C1 R2 C2)
+*** Documentation
+Return general direction of the ray from R1,C1 to R2,C2.
+** DIRECTORY-IS-MODULE-P (function)
+*** Arguments
+(DIR)
+*** Documentation
+Test whether a PAK index file exists in a directory.
+** DISABLE-CLASSIC-KEY-REPEAT (function)
+** DISABLE-HELD-KEYS (function)
+*** Documentation
+Disable key repeat.
+** DISABLE-TIMER (function)
+*** Documentation
+Disable timer events.
+** DISPATCH-EVENT (function)
+*** Arguments
+(EVENT)
+*** Documentation
+Send EVENT to the handler function.
+** DISTANCE (function)
+*** Arguments
+(X1 Y1 X2 Y2)
+*** Documentation
+Compute the distance between the points X1,Y1 and X2,Y2.
+** DO-CELLS (macro)
+*** Arguments
+(&REST ARGS)
+*** Documentation
+Execute the forms in BODY with VAR bound successively to the
+elements of the vector produced by evaluating EXPR.
+** DRAW-BOX (function)
+*** Arguments
+(X Y WIDTH HEIGHT &KEY (STROKE-COLOR .white) (COLOR .black) DESTINATION)
+*** Documentation
+Draw a filled rectangle at (X Y) of size (* WIDTH HEIGHT).
+** DRAW-CIRCLE (function)
+*** Arguments
+(X Y RADIUS &KEY (COLOR .white) DESTINATION)
+** DRAW-IMAGE (function)
+*** Arguments
+(IMAGE X Y &KEY (DESTINATION *DEFAULT-SURFACE*) (RENDER-CELL NIL))
+*** Documentation
+Draw the IMAGE at offset (X Y) on the image DESTINATION.
+The default destination is the main window.
+** DRAW-LINE (function)
+*** Arguments
+(X0 Y0 X1 Y1 &KEY (COLOR .white) DESTINATION)
+** DRAW-PIXEL (function)
+*** Arguments
+(X Y &KEY (COLOR .white) DESTINATION)
+** DRAW-RECTANGLE (function)
+*** Arguments
+(X Y WIDTH HEIGHT &KEY (COLOR .white) DESTINATION)
+** DRAW-RESOURCE-IMAGE (function)
+*** Arguments
+(NAME X Y &KEY (DESTINATION *DEFAULT-SURFACE*) (RENDER-CELL NIL))
+*** Documentation
+Draw the image named by NAME at offset (X Y) on the image DESTINATION.
+The default destination is the main window.
+** DRAW-STRING-SHADED (function)
+*** Arguments
+(STRING X Y &OPTIONAL (FOREGROUND .white) (BACKGROUND .black) &KEY DESTINATION
+        (FONT *DEFAULT-FONT*))
+** DRAW-STRING-SOLID (function)
+*** Arguments
+(STRING X Y &KEY DESTINATION (FONT *DEFAULT-FONT*) (COLOR .white))
+** ENABLE-CLASSIC-KEY-REPEAT (function)
+*** Arguments
+(DELAY INTERVAL)
+** ENABLE-HELD-KEYS (function)
+*** Arguments
+(&REST ARGS)
+*** Documentation
+Enable key repeat on every frame when held. Arguments are ignored
+for backward-compatibility.
+** ENABLE-TIMER (function)
+*** Documentation
+Enable timer events. The next scheduled event will be the first sent.
+** EXPANSIONS (function)
+*** Arguments
+(VARIABLE)
+** FIELD-OPTION-VALUE (function)
+*** Arguments
+(FIELD OBJECT OPTION)
+*** Documentation
+Return the value of the OPTION for FIELD in OBJECT.
+** FIELD-OPTIONS (function)
+*** Arguments
+(FIELD OBJECT)
+*** Documentation
+Obtain the options property list for FIELD in OBJECT.
+** FIELD-REFERENCE-P (function)
+*** Arguments
+(FORM)
+*** Documentation
+Return non-nil if FORM is a symbol like <foo>.
+** FIELD-VALUE (function)
+*** Arguments
+(FIELD OBJECT &OPTIONAL NOERROR)
+*** Documentation
+Return the value of FIELD in OBJECT.
+If the FIELD has no value in OBJECT, then the object's parent is also
+checked, and so on. If a value is found during these checks, it is
+returned. If a value cannot be found, an error of type `no-such-field'
+is signaled, unless NOERROR is non-nil; in that case,
+`*lookup-failure*' is returned. See also `has-field'.
+** FIND-ALL-MODULES (function)
+** FIND-MODULE-PATH (function)
+*** Arguments
+(MODULE-NAME)
+*** Documentation
+Search the `*module-directories*' path for a directory with the
+name MODULE-NAME. Returns the pathname if found, otherwise nil.
+** FIND-MODULES-IN-DIRECTORY (function)
+*** Arguments
+(DIR)
+*** Documentation
+Search DIR for modules and return a list of their names.
+** FIND-RESOURCE (function)
+*** Arguments
+(NAME &OPTIONAL NOERROR)
+*** Documentation
+Obtain the resource named NAME, performing any necessary loading
+and/or transformations. Unless NOERROR is non-nil, signal an error
+when NAME cannot be found.
+** FIND-RESOURCE-OBJECT (function)
+*** Arguments
+(NAME)
+*** Documentation
+Obtain the resource object named NAME, or signal an error if not
+found.
+** FIND-RESOURCE-PROPERTY (function)
+*** Arguments
+(RESOURCE-NAME PROPERTY)
+*** Documentation
+Read the value of PROPERTY from the resource RESOURCE-NAME.
+** FONT-HEIGHT (function)
+*** Arguments
+(FONT)
+** FONT-TEXT-EXTENTS (function)
+*** Arguments
+(STRING FONT)
+** FONT-WIDTH (function)
+*** Arguments
+(FONT)
+** FORMATTED-LINE-HEIGHT (function)
+*** Arguments
+(LINE)
+** FORMATTED-LINE-WIDTH (function)
+*** Arguments
+(LINE)
+** FORMATTED-STRING-HEIGHT (function)
+*** Arguments
+(S)
+** FORMATTED-STRING-WIDTH (function)
+*** Arguments
+(S)
+** GENERATE (function)
+*** Arguments
+(PHRASE)
+*** Documentation
+Generate a random phrase using the grammar in `*grammar*'.
+** GENSEQ (function)
+*** Arguments
+(&OPTIONAL (X 0))
+*** Documentation
+Generate an all-purpose sequence number.
+** GET-COLOR (variable)
+** GET-SOME-OBJECT-NAME (function)
+*** Arguments
+(OB)
+** GOAL (variable)
+** HALT-MUSIC (function)
+*** Arguments
+(FADE-MILLISECONDS)
+*** Documentation
+Stop all music playing.
+** HALT-SAMPLE (function)
+*** Arguments
+(CHANNEL &REST ARGS)
+** HAS-FIELD (function)
+*** Arguments
+(FIELD OBJECT)
+*** Documentation
+Return non-nil if FIELD has any value in OBJECT.
+** ICON-IMAGE (function)
+*** Arguments
+(KEY)
+*** Documentation
+Return an icon image name for KEY.
+** ICON-RESOURCE (function)
+*** Arguments
+(KEY)
+*** Documentation
+Return an icon resource for the key KEY.
+The standard GEAR icon is used when no other applicable icon can be
+found.
+** INDEX-MODULE (function)
+*** Arguments
+(MODULE-NAME)
+*** Documentation
+Add all the resources from the module MODULE-NAME to the resource
+table.
+** INDEX-RESOURCE (function)
+*** Arguments
+(RESOURCE)
+*** Documentation
+Add the RESOURCE's record to the resource table.
+If a record with that name already exists, it is replaced.  However,
+if the resource is an :alias, just the string name of the target
+resource is stored; see also `find-resource'.
+** INITIALIZE-COLORS (function)
+*** Documentation
+Load the X11 color data into the resource table.
+** INITIALIZE-ENGINE (variable)
+** INITIALIZE-RESOURCE-TABLE (function)
+*** Documentation
+Create a new empty resource table.
+** INSTALL-WIDGET (function)
+*** Arguments
+(WIDGET)
+** INSTALL-WIDGETS (function)
+*** Arguments
+(&REST WIDGETS)
+*** Documentation
+User-level function for setting the active widget set. Note that
+XE2 may override the current widget set at any time for system menus
+and the like.
+** IS-ZOOMED-RESOURCE (function)
+*** Arguments
+(RESOURCE)
+*** Documentation
+Return non-nil if the RESOURCE should be zoomed by `*zoom-factor*'.
+** LEFT-HAND-SIDE (function)
+*** Arguments
+(RULE)
+** LOAD-FONT-RESOURCE (function)
+*** Arguments
+(RESOURCE)
+** LOAD-IMAGE-RESOURCE (function)
+*** Arguments
+(RESOURCE)
+*** Documentation
+Loads an :IMAGE-type pak resource from a :FILE on disk.
+** LOAD-LISP-RESOURCE (function)
+*** Arguments
+(RESOURCE)
+** LOAD-MODULE (function)
+*** Arguments
+(MODULE)
+*** Documentation
+Load the module named MODULE. Load any resources marked with a
+non-nil :autoload property. This operation also sets the default
+object save directory (by setting the current `*module*'. See also
+`save-object-resource').
+** LOAD-RESOURCE (function)
+*** Arguments
+(RESOURCE)
+*** Documentation
+Load the driver-dependent object of RESOURCE into the OBJECT field
+so that it can be fed to the console.
+** LOAD-USER-INIT-FILE (function)
+** MAKE-EVENT (function)
+*** Arguments
+(SDL-KEY SDL-MODS)
+*** Documentation
+Create a normalized event out of the SDL data SDL-KEY and SDL-MODS.
+The purpose of putting events in a normal form is to enable their use
+as hash keys.
+** MAKE-FIELD-INITIALIZER (function)
+*** Arguments
+(DESCRIPTOR)
+*** Documentation
+Create a setf statement that initializes a field.
+The initform is taken from DESCRIPTOR. If there is no initform
+specified, no setf statement is generated, because in this case the
+slot value is inherited.
+** MAKE-FIELD-INITIALIZER-BODY (variable)
+** MAKE-FORMATTED-STRING (variable)
+** MAKE-KEY-MODIFIER-SYMBOL (function)
+*** Arguments
+(SDL-MOD)
+*** Documentation
+Translate from the SDL key modifier symbol SDL-MOD to our own
+key event symbols.
+** MAKE-KEY-STRING (function)
+*** Arguments
+(SDL-KEY)
+*** Documentation
+Translate from :SDL-KEY-X to the string "X".
+** MAKE-KEYWORD (function)
+*** Arguments
+(S)
+*** Documentation
+Make the symbol or string S into a keyword symbol.
+** MAKE-OBJECT (variable)
+** MAKE-OBJECT-RESOURCE (function)
+*** Arguments
+(NAME OBJECT)
+*** Documentation
+Make an object resource named NAME (a string) with the CLON object
+OBJECT as the data.
+** MAKE-QUEUE (function)
+*** Arguments
+(&KEY ((HEAD DUM470) NIL) ((TAIL DUM471) NIL) ((COUNT DUM472) NIL)
+ ((MAX DUM473) NIL))
+** MAKE-RESOURCE (function)
+*** Arguments
+(&KEY ((NAME DUM430) NIL) ((TYPE DUM431) NIL) ((PROPERTIES DUM432) NIL)
+ ((FILE DUM433) NIL) ((DATA DUM434) NIL) ((OBJECT DUM435) NIL))
+** MAKE-SPECIAL-VARIABLE-NAME (function)
+*** Arguments
+(S)
+*** Documentation
+Make the symbol S into a special variable name. This is used to
+make the names of the objects made with `define-prototype'.
+** MAKE-STAT (function)
+*** Arguments
+(&KEY BASE MIN MAX DELTA UNIT)
+*** Documentation
+Create a stat. Use this as an initialization form in cell declarations.
+You must provide at least a :base value.
+** MESSAGE (function)
+*** Arguments
+(FORMAT-STRING &REST ARGS)
+*** Documentation
+Print a log message to the standard output. The FORMAT-STRING and
+remaining arguments are passed to `format'.
+
+When the variable `*message-logging*' is nil, this output is
+disabled.
+** MESSAGE-SYMBOL (function)
+*** Arguments
+(STRING DELIMITER)
+** MIDPOINT (function)
+*** Arguments
+(A B)
+** NO-SUCH-FIELD (variable)
+** NORMALIZE-EVENT (function)
+*** Arguments
+(EVENT)
+*** Documentation
+Convert EVENT to a normal form suitable for `equal' comparisons.
+** NULL-PARENT (variable)
+** OBJECT (function)
+*** Arguments
+(CONDITION)
+** OBJECT-ADDRESS-STRING (function)
+*** Arguments
+(OB)
+** OBJECT-FIELDS (function)
+*** Arguments
+(INSTANCE)
+** OBJECT-NAME (function)
+*** Arguments
+(INSTANCE)
+** OBJECT-PARENT (function)
+*** Arguments
+(INSTANCE)
+** ONE-OF (function)
+*** Arguments
+(SET)
+** OPERATION-SYMBOL (function)
+*** Arguments
+(STRING DELIMITER)
+** OPPOSITE-DIRECTION (function)
+*** Arguments
+(DIRECTION)
+*** Documentation
+Return the direction keyword that is the opposite direction from
+DIRECTION.
+** OVERLAY (variable)
+** PERCENT-OF-TIME (macro)
+*** Arguments
+(&REST ARGS)
+** PLASMA-RECT (variable)
+** PLAY (function)
+*** Arguments
+(&OPTIONAL (MODULE-NAME standard))
+*** Documentation
+This is the main entry point to XE2. MODULE-NAME is loaded 
+and its .startup resource is loaded.
+** PLAY-MUSIC (function)
+*** Arguments
+(MUSIC-NAME &REST ARGS)
+*** Documentation
+Begin playing the music resource MUSIC-NAME. If the resource
+MUSIC-NAME has the property :volume, its value is used as the volume
+of the music.
+** PLAY-SAMPLE (function)
+*** Arguments
+(SAMPLE-NAME &REST ARGS)
+*** Documentation
+When sound is enabled, play the sample resource SAMPLE-NAME.
+** POLL-JOYSTICK-AXIS (function)
+*** Arguments
+(AXIS)
+** QUEUE (function)
+*** Arguments
+(ITEM Q)
+** QUEUE-COUNT (variable)
+** QUEUE-HEAD (variable)
+** QUEUE-MAX (variable)
+** QUEUE-MESSAGE (function)
+*** Arguments
+(SENDER METHOD-KEY RECEIVER ARGS)
+*** Documentation
+Enter a message into the current `*message-queue*'.
+** QUEUE-TAIL (variable)
+** QUEUED-MESSAGES-P (function)
+*** Documentation
+Return non-nil if there are queued messages.
+** QUIT (function)
+*** Arguments
+(&OPTIONAL SHUTDOWN)
+** RANDOM-DIRECTION (function)
+** READ-PAK (function)
+*** Arguments
+(FILENAME)
+*** Documentation
+Return a list of resources from the PAK file FILENAME.
+** READ-SEXP-FROM-FILE (function)
+*** Arguments
+(FILENAME)
+** RENDER-FORMATTED-LINE (function)
+*** Arguments
+(LINE X Y &KEY DESTINATION (FONT *DEFAULT-FONT*))
+*** Documentation
+Render the formatted LINE at position X,Y on the image DESTINATION.
+Return the height of the rendered line.
+** RENDER-FORMATTED-PARAGRAPH (variable)
+** RENDER-FORMATTED-STRING (function)
+*** Arguments
+(FORMATTED-STRING X Y &KEY (TEXT-OFFSET 0) DESTINATION)
+*** Documentation
+Render the FORMATTED-STRING to position X,Y on the image DESTINATION.
+If TEXT-OFFSET is provided, add that many pixels to the Y coordinate
+for rendered text in the line. (This is used to make text align with
+inline images that are larger than the text height---see also
+`render-formatted-line').
+** RENDER-PLASMA (function)
+*** Arguments
+(HEIGHT WIDTH &KEY (GRAININESS 1.0) ARRAY)
+** RESET (function)
+*** Arguments
+(&OPTIONAL (MODULE-NAME standard))
+** RESET-JOYSTICK (function)
+*** Documentation
+Re-open the joystick device and re-initialize the state.
+** RESOURCE (variable)
+** RESOURCE-TO-PLIST (function)
+*** Arguments
+(RES)
+*** Documentation
+Convert the resource record RES into a property list.
+
+This prepares it for printing as part of a PAK file.
+** RIGHT-HAND-SIDE (function)
+*** Arguments
+(RULE)
+** ROLL (function)
+*** Arguments
+(ROLLS &OPTIONAL (SIDES 6) (ADDS 0))
+*** Documentation
+Total ROLLS rolls of a SIDES-sided die, then add ADDS.
+So 2d6+2 would be (roll 2 6 2).
+** ROLL-UNDER (function)
+*** Arguments
+(N SIDES)
+** RUN-HOOK (function)
+*** Arguments
+(HOOK)
+*** Documentation
+Call all the functions in HOOK, in list order.
+** SAVE-OBJECT-RESOURCE (function)
+*** Arguments
+(RESOURCE &OPTIONAL (MODULE *MODULE*))
+*** Documentation
+Save an object resource to disk as {RESOURCE-NAME}.PAK.
+** SEEK-MUSIC (variable)
+** SELF (variable)
+** SEND (function)
+*** Arguments
+(SENDER METHOD OBJECT &REST ARGS)
+*** Documentation
+Invoke the method identified by the keyword METHOD on the OBJECT with ARGS.
+If the method is not found, attempt to forward the message. The SENDER
+argument is ignored for now.
+** SEND-EVENT-TO-WIDGETS (function)
+*** Arguments
+(EVENT)
+*** Documentation
+Keyboard, mouse, joystick, and timer events are represented as
+event lists of the form:
+
+:      (STRING . MODIFIERS)
+
+Where MODIFIERS is a list of symbols like :shift, :control, :alt,
+ :timer, :system, :mouse, and so on.
+
+The default event handler attempts to deliver a keypress to one of
+the widgets in `*active-widgets*'. See widgets.lisp and the docstrings
+below for more information.
+
+This function attempts to deliver EVENT to each of the *active-widgets*
+one at a time (in list order) until one of them is found to have a
+matching keybinding, in which case the keybinding's corresponding
+function is triggered. If none of the widgets have a matching
+keybinding, nothing happens, and this function returns nil.
+** SEND-QUEUE (function)
+*** Arguments
+(SENDER METHOD-KEY OBJECT &REST ARGS)
+*** Documentation
+Queue a message. Returns nil.
+** SEND-SUPER (variable)
+** SET-BROWSER (variable)
+** SET-FIELD-OPTION-VALUE (function)
+*** Arguments
+(FIELD OBJECT OPTION VALUE)
+*** Documentation
+Set the value of the OPTION for FIELD in OBJECT to VALUE.
+** SET-FIELD-OPTIONS (function)
+*** Arguments
+(FIELD OBJECT OPTIONS)
+*** Documentation
+Set the options property list to OPTIONS for FIELD in OBJECT.
+** SET-FIELD-VALUE (function)
+*** Arguments
+(FIELD OBJECT VALUE)
+*** Documentation
+Set OBJECT's FIELD to VALUE.
+The new value overrides any inherited value.
+** SET-FRAME-RATE (function)
+*** Arguments
+(RATE)
+*** Documentation
+Set the frame rate for the game. The recommended default is 30.
+You only need to set the frame rate if you are using the timer; see
+`enable-timer'.
+** SET-MESSAGE-VERBOSITIES (function)
+*** Arguments
+(PLIST &OPTIONAL (INCLUDE-DEFAULT T))
+** SET-MUSIC-VOLUME (function)
+*** Arguments
+(NUMBER)
+*** Documentation
+Set the mixer music volume between 0 (silent) and 255 (full volume).
+** SET-SCREEN-HEIGHT (function)
+*** Arguments
+(HEIGHT)
+** SET-SCREEN-WIDTH (function)
+*** Arguments
+(WIDTH)
+** SET-TIMER-INTERVAL (function)
+*** Arguments
+(INTERVAL)
+*** Documentation
+Set the number of frames to wait before sending each timer event.
+Set it to 0 to get a timer event every frame.
+** SHOW-WIDGETS (function)
+*** Documentation
+Draw the active widgets to the screen.
+** SPLIT-STRING-ON-LINES (function)
+*** Arguments
+(STRING)
+** STAT-VALUE (variable)
+** STEP-IN-DIRECTION (function)
+*** Arguments
+(ROW COLUMN DIRECTION &OPTIONAL (N 1))
+*** Documentation
+Return the point ROW, COLUMN moved by n squares in DIRECTION.
+** SUBDIVIDE-RECT (function)
+*** Arguments
+(R)
+*** Documentation
+Subdivide rectangle R into four rectangles joined at the
+center point of the original R, and return the list of four
+rectangles, or NIL if they would be smaller than one pixel.
+** TRACE-COLUMN (function)
+*** Arguments
+(TRACE-FUNCTION COLUMN Y0 Y1)
+** TRACE-LINE (function)
+*** Arguments
+(TRACE-FUNCTION X0 Y0 X1 Y1)
+*** Documentation
+Trace a line between X0,Y0 and X1,Y1.
+calling TRACE-FUNCTION at each point of the line.
+** TRACE-OCTAGON (function)
+*** Arguments
+(TRACE-FUNCTION CENTER-ROW CENTER-COLUMN RADIUS &OPTIONAL THICKEN)
+*** Documentation
+Call TRACE-FUNCTION for each point on the octagon of radius RADIUS
+centered at row ROW, column COLUMN. When THICKEN is non-nil, thicken
+the diagonals of the rectangle in order to facilitate raycasting.
+It's an ugly hack, but it helps reduce artifacts.
+** TRACE-RECTANGLE (function)
+*** Arguments
+(TRACE-FUNCTION ROW COLUMN HEIGHT WIDTH &OPTIONAL FILL)
+*** Documentation
+Call TRACE-FUNCTION for each point on the rectangle of HEIGHT and
+WIDTH with top left corner at ROW COLUMN. When FILL is non-nil, fill
+the rectangle.
+** TRACE-ROW (function)
+*** Arguments
+(TRACE-FUNCTION ROW X0 X1)
+** TRANSFORM-DECLARATION-FIELD-DESCRIPTOR (function)
+*** Arguments
+(D)
+*** Documentation
+Convert the declaration-field-descriptor D into a canonical field
+descriptor.
+
+The descriptor D must be either a symbol, in which case a field is
+defined with no options, or a list of the form:
+
+ (:FIELD-NAME . OPTIONS)
+
+Where OPTIONS is a property list of field options.
+
+The returned entry will be of the form:
+
+ (:FIELD-NAME OPTIONS) 
+
+and will be suitable for use with the functions that operate on field
+descriptors, and for inclusion in the association list
+<field-descriptors>.
+
+See also `define-prototype'.
+** TRANSFORM-FIELD-REFERENCE (function)
+*** Arguments
+(REF)
+*** Documentation
+Change the symbol REF from <foo> to (field-value :foo self).
+** TRANSFORM-METHOD-BODY (function)
+*** Arguments
+(BODY)
+*** Documentation
+Process the forms in BODY to transform field references.
+** TRANSFORM-TREE (function)
+*** Arguments
+(TESTER TRANSFORMER TREE)
+** UNINSTALL-WIDGET (function)
+*** Arguments
+(WIDGET)
+** UNQUEUE (function)
+*** Arguments
+(Q)
+** UNQUEUE-MESSAGE (function)
+*** Documentation
+Remove the next message from the queue. The returned message is a
+list of the form (METHOD-KEY RECEIVER ARGS).
+** WHILE (macro)
+*** Arguments
+(&REST ARGS)
+** WITH-FIELD-VALUES (macro)
+*** Arguments
+(&REST ARGS)
+*** Documentation
+Bind the names in FIELDS to the values of the corresponding fields
+in EXPRESSION, in evaluating BODY. Each slot is accessed only once,
+upon binding.
+** WITH-FIELDS (macro)
+*** Arguments
+(&REST ARGS)
+*** Documentation
+Bind FIELDS from the object EXPRESSION to names in the local
+environment in evaluating BODY. Local symbol macros are used, meaning
+that each reference (get or set) is a slot access on the object.
+** WITH-MESSAGE-QUEUE (macro)
+*** Arguments
+(&REST ARGS)
+*** Documentation
+Run the BODY forms, capturing any queued output messages to the
+message queue resulting from the evaluation of EXPR.
+** WITH-MESSAGE-SENDER (variable)
+** WORLD (function)
+*** Documentation
+Return the current world.
+** WRITE-PAK (function)
+*** Arguments
+(FILENAME RESOURCES)
+*** Documentation
+Write the RESOURCES to the PAK file FILENAME.
+** WRITE-SEXP-TO-FILE (function)
+*** Arguments
+(FILENAME SEXP)
+** ZOOM-IMAGE (function)
+*** Arguments
+(IMAGE &OPTIONAL (FACTOR *ZOOM-FACTOR*))
+*** Documentation
+Return a zoomed version of IMAGE, zoomed by FACTOR.
+Allocates a new image.

@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>VM0 Design version 2</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:22:56 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">VM0 Design version 2</h1>
+
+<p>This is another design document for the RLX demo game Void Mission
+Zero.
+</p>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Setting </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+You are a humanoid mercenary equipped with a rusty wrench, a basic
+environment suit, and a particle gun. You work for a powerful
+megacorporation as they battle with other companies to monopolize and
+exploit the technology and resources of a newly discovered ancient
+"machine planet".
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Stats </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+You have the following stats to keep track of:
+</p>
+<ul>
+<li>Action points (AP). Every action has an AP cost.
+</li>
+<li>Speed (SPD).  Number of action points to spend each turn.
+</li>
+<li>Hit points (HP). When this reaches zero, you die.
+</li>
+<li>Energy (EN).  Energy weapons use up these points when fired. When
+     this reaches zero, you cannot fire energy weapons until you
+     recharge at least part of the gauge.
+</li>
+<li>Oxygen level (OX). When this reaches zero, you rapidly lose HP
+    until you die.
+</li>
+</ul>
+
+
+<p>
+You can pick up items like Energy capsules to refill the EN gauge,
+Oxygen tanks for the OX gauge, and Medpacks for the HP gauge.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Terrain </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+At the beginning of each randomly generated mission, the Corporation
+will air-drop you into the area of operations, and you begin fighting.
+</p>
+<p>
+Mission terrain varies, and will include sand with rocky outcroppings,
+ice canyons, machine highways, deep mazes, and massive droid-infested
+factories.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Combat </h2>
+<div class="outline-text-2" id="text-4">
+
+
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="todo TODO"> TODO</span> Ranged combat &nbsp;&nbsp;&nbsp;<span class="tag"><span class="alpha">alpha</span></span></h3>
+<div class="outline-text-3" id="text-4-1">
+
+
+<p>
+Ranged combat dominates the game. There are two firing modes;
+directional mode, in which you fire in a straight line along one of
+the eight compass directions; and targeted mode, in which a targeting
+cursor can be moved around the screen to fire at particular enemies:
+</p>
+<pre class="example">
+
+              $
+   @.
+     ......
+          ..:::
+         $  :$:
+            :::
+
+   KEY: @=player $=enemy .=shot :=cursor
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="todo TODO"> TODO</span> Melee combat &nbsp;&nbsp;&nbsp;<span class="tag"><span class="alpha">alpha</span></span></h3>
+<div class="outline-text-3" id="text-4-2">
+
+
+<p>
+Melee combat serves two purposes:
+</p>
+<ol>
+<li>The rusty wrench is a ready fall-back weapon in situations where
+     you run out of ammo or energy.
+</li>
+<li>Balancing powerful weapons. For example an energy blade weapon
+     could be very devastating, but not useful against very fast
+     opponents.
+</li>
+</ol>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="done DONE"> DONE</span> Wrench &nbsp;&nbsp;&nbsp;<span class="tag"><span class="alpha">alpha</span></span></h3>
+<div class="outline-text-3" id="text-4-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="todo TODO"> TODO</span> Energy blade &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h3>
+<div class="outline-text-3" id="text-4-4">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Enemies </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+The enemies may be human employees of other corporations, or hostile
+alien/robot forms.
+</p>
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="todo TODO"> TODO</span> Perceptors &nbsp;&nbsp;&nbsp;<span class="tag"><span class="alpha">alpha</span></span></h3>
+<div class="outline-text-3" id="text-5-1">
+
+
+<p>
+"Perceptors" are (floating spheroid eye-bots with shock probes). Red
+perceptors tend to seek the player even when far away, but purple
+perceptors wander around randomly until the player comes near. These
+are very dangerous to the player, and he must have a ranged weapon in
+order to deal with them effectively.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="todo TODO"> TODO</span> Rooks &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h3>
+<div class="outline-text-3" id="text-5-2">
+
+
+<p>
+Rooks are large, slow, tank-like turrets-on-wheels. Their roof-mounted
+particle cannons are accurate and extremely deadly, but have two
+disadvantages.  First, they cannot target immediately adjacent
+squares, so the player can survive by getting close and attacking with
+a melee weapon. Second, the particle cannon is slow to recharge,
+allowing a shot only once every few turns.
+</p>
+<p>
+Being in an open area with several rooks is a bad idea&mdash;they'll blow
+you away. Instead you must lure them one by one into corridors and
+fight in close range&mdash;or freeze the group with EMP grenades and blast
+away.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="todo TODO"> TODO</span> Bases &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h3>
+<div class="outline-text-3" id="text-5-3">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="todo TODO"> TODO</span> Shield &nbsp;&nbsp;&nbsp;<span class="tag"><span class="alpha">alpha</span></span></h2>
+<div class="outline-text-2" id="text-6">
+
+
+<p>
+The shield creates a barrier around you.
+</p>
+<pre class="example">
+
+ +-----+
+ |     |
+ |  @  |
+ |     |
+ +-----+
+
+ KEY: @=player +-|=shield
+</pre>
+
+
+<p>
+The shield doesn't move with you.
+</p>
+<pre class="example">
+
+ +-----+
+ |     |
+ |     |
+ |   @ |
+ +-----+
+
+ KEY: @=player +-|=shield
+</pre>
+
+
+<p>
+The shield fades after a few turns. It can also be damaged by shots:
+</p>
+<pre class="example">
+
+
+                  ...$
+            .......
+ +-- --......
+ |     |
+ |  @ ...........$
+ |     |
+ +-----+
+
+ KEY: @=player .=shot $=enemy
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="todo TODO"> TODO</span> Environmental Conditions &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h2>
+<div class="outline-text-2" id="text-7">
+
+
+
+</div>
+
+<div id="outline-container-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="todo TODO"> TODO</span> Oxygen </h3>
+<div class="outline-text-3" id="text-7-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="todo TODO"> TODO</span> Pressure </h3>
+<div class="outline-text-3" id="text-7-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="todo TODO"> TODO</span> Contaminants </h3>
+<div class="outline-text-3" id="text-7-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-7-4" class="outline-3">
+<h3 id="sec-7-4"><span class="todo TODO"> TODO</span> Radioactivity </h3>
+<div class="outline-text-3" id="text-7-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-7-5" class="outline-3">
+<h3 id="sec-7-5"><span class="todo TODO"> TODO</span> Temperature </h3>
+<div class="outline-text-3" id="text-7-5">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="todo TODO"> TODO</span> Lighting and Radar &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h2>
+<div class="outline-text-2" id="text-8">
+
+
+
+</div>
+
+<div id="outline-container-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="todo TODO"> TODO</span> Write this </h3>
+<div class="outline-text-3" id="text-8-1">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="todo TODO"> TODO</span> Music and SFX &nbsp;&nbsp;&nbsp;<span class="tag"><span class="beta">beta</span></span></h2>
+<div class="outline-text-2" id="text-9">
+
+
+
+
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:22:56 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

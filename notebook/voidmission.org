@@ -1,0 +1,190 @@
+* Overview
+
+Void Mission is a science-fiction game inspired by roguelikes. It is
+in an early stage of development right now because I am still working
+on the [[file:RogueLike.org][engine.]] But my notes are here for you to enjoy (and perhaps
+comment upon?)
+
+The main ideas of Void Mission are:
+
+ - Exploration and discovery
+ - Turn-based strategic combat utilizing hand weapons, robot suits,
+   and vehicles, often with dozens of enemies at once
+ - Destructible and persistent environments
+ - Diverse gameplay styles (shooter, stealth, rpg)
+ - Randomly generated settings for a new experience each time.
+ - Atmospheric enhancement, with optional mood music. 
+
+* Setting and structure
+
+The story of Void Mission takes place in a remote research outpost
+called Installation 774. It is the size of a small city and is
+composed of square, uniformly-sized, interconnected modules whose
+interiors may be configured for different purposes and environmental
+conditions. For example:
+
+ - Cold storage
+ - Datacenter
+ - Crew barracks
+ - Recreation area
+ - Command center 
+ - Laboratory
+ - Garage (armored suits, trucks, repair)
+ - Medical (health items)
+ - Robotics lab
+
+These modules are about the size of one city block, approx 60x60
+cells. Various airlocks separate the modules from one another. Some
+modules have become depressurized and therefore you need an armored
+robo suit to explore them. Some areas are so radioactive or toxic that
+only a remote-controlled bot can enter.
+
+The city is designed to house about 1,000 employees, contractors,
+military personnel, and various visitors.
+
+* Ideas for roguelike activities
+
+ - Confront dozens or even hundreds of enemies at a time
+ - Wreak havoc in highly destructible environments
+ - Mine minerals and manufacture stuff with them
+ - Run around placing bombs on other objects/enemies, then run away
+   and explode them! This idea is stolen from the PlayStation game
+   "Silent Bomber."
+ - Feel the paranoia of never knowing what is around the corner
+ - Pit yourself against time as maps fill up with water or poison gas
+ - Destroy security cameras to prevent the BLS from seeing you
+ - Create temporary force fields to block enemies and protect yourself.
+ - Upgrade skills with chips/software/modules. You can find them by
+   taking apart other machines.
+ - Locate schematics for fantastic devices and build them using raw
+   materials and manufacturing work stations.
+ - Remote-control a limited robot in areas with too much radiation for humans to explore
+ - Get radiation sickness and take antidotes
+ - Experience and deal with extremes of temperature
+ - Researching objects, requires a workstation and research skill
+ - Stealth play, sneaking through dark areas to avoid detection
+ - Explore a machine-hollowed planetoid whose surface is speckled with
+   numerous robotic installations and mysterious crash sites from a
+   previous expedition
+ - Homage to Compile: a roguelike inspired by Zanac, Aleste, and Guardian Legend
+   (this could absorb many of the ideas above)
+ - Surround yourself with slave robots who do your bidding and defend you from enemies
+ - Wear mecha suits of different types and capabilities. 
+ - Dyson sphere exploration (whoa)
+ - Opening of game: ship runs out of fuel soon after. You're stuck
+   with no weapons, no fuel = no unassisted overworld travel.
+ - The ship in orbit guides you through the early part of the game and
+   helps introduce the backplot, via radio, but they are destroyed by
+   the BLS after the game's first real challenge.
+ - OK so i'm going to steal the rather cliche concept of a
+   hyper-powerful race of Ancients who leave artifacts behind. Except,
+   they did not inhabit our galaxy and only left behind a few sites,
+   maybe three, which are jealously guarded and exploited by the
+   Corporation for their technological value. What you discover is
+   that this planet was a research station for the ancients, which
+   makes it extraordinarily valuable in terms of technology and
+   information.  Thus, the Corporation and the Authority, already in
+   deep conflict, are both vying for control of this planet. The
+   ancients are not gone, they just left the milky way out of fear of
+   the BLS once it took over. The BLS is one of their experiments gone
+   wrong. The Ancients created the faster-than-light drive, which
+   humans discovered in a ship floating derelict. In fact perhaps the
+   Corporation and the Authority have a monopoly on FTL travel and
+   control it very strictly.
+
+* Roleplaying system
+
+The roleplaying system is a property of a particular RLX game, not of
+RLX itself. This allows different games to use different and unrelated
+roleplaying systems. This section of the document is about the
+particular roleplaying system I am going to develop for my game. One
+underlying principle is that there is no "character generation
+screen". The character's attributes result entirely from in-game
+actions over time.
+
+At first I will just develop the basics, the raw minimum for a sci-fi
+game to work, then develop it further. 
+
+** Stats
+   
+In the RPG system for Void Mission, numeric quantities like skills and
+characteristics are subsumed into one idea: *stats*.
+
+Both characteristics and skills enable you to do something, and can
+change:
+        - permanently, as when leveling up
+	- temporarily while certain items are equipped 
+	- temporarily while a certain effect is active
+
+Stat values factor into various computations: for example, eyesight
+could determine the radius of your vision under normal lighting. 
+
+*** Basic stats
+      
+ - Strength (attack power).			
+ - Intelligence (perception, etc)
+ - Dexterity (attack/defence success)
+ - Constitution
+
+*** Secondary stats 
+
+ - Hit Points (HP) - from Constitution and Strength
+ - Psi Points - from Constitution and Intelligence
+ - Fatigue Points - From Constitution and battle fatigue
+ - Speed - From Dexterity and Strength and Intelligence
+
+*** Skills
+
+ - Eyesight (intelligence)
+ - Hacking (intelligence, dexterity)
+ - Research (intelligence)
+ - Close combat (strength, dexterity)
+ - Ranged combat (strength, dexterity)
+ - Stealth (dexterity, intelligence)
+ - Vehicles (dexterity)
+ - Medicine (intelligence) 
+
+** Rolls
+
+Make it so that "average" skill of 10 is about equally likely to fail
+as succeed. Must roll less than or equal to controlling stat to succeed. 
+
+** Improving stats and skills: experience and leveling up
+
+** Combat 
+
+ - Player signals attack with M-direction
+
+ : :action :attack :to attacker :from direction
+
+ - This is resolved to: 
+
+ : :action :attack :to attacker :from defender 
+
+ - Attacker rolls dexterity for hit/miss. 
+ - Attacker hits!
+ - Attacker rolls Strength for damage power, add to weapon roll
+ - Defender rolls Dexterity for dodge
+ - If hit, roll Strength, modify by weapon strength and close/ranged combat skill  
+
+ : :action :defend :to defender :from attacker :detail points
+
+ - Defender rolls Strength to resist damage, modify by armor class, sends to self: 
+
+ : :action damage :to self(defender) :detail points
+
+Is this too complicated? 
+
+* Places to visit
+
+Each place will have associated enemies, items, and a selection of
+special things to do.
+
+ - Cold storage 665... find strange items
+ - Highway 291-M (randomly generated name).. with a vehicle you can
+   speedily navigate the universe
+ - Caves with minerals to mine and freaky insects to defeat
+ - Power transfer stations... radiation!
+ - There was originally just an outpost on this planet, a research
+   station... but eventually IT took over and hollowed out the
+   planet...

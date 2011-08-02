@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>voidmission</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:22:54 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">voidmission</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Overview </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+Void Mission is a science-fiction game inspired by roguelikes. It is
+in an early stage of development right now because I am still working
+on the <a href="RogueLike.html">engine.</a> But my notes are here for you to enjoy (and perhaps
+comment upon?)
+</p>
+<p>
+The main ideas of Void Mission are:
+</p>
+<ul>
+<li>Exploration and discovery
+</li>
+<li>Turn-based strategic combat utilizing hand weapons, robot suits,
+   and vehicles, often with dozens of enemies at once
+</li>
+<li>Destructible and persistent environments
+</li>
+<li>Diverse gameplay styles (shooter, stealth, rpg)
+</li>
+<li>Randomly generated settings for a new experience each time.
+</li>
+<li>Atmospheric enhancement, with optional mood music. 
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Setting and structure </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+The story of Void Mission takes place in a remote research outpost
+called Installation 774. It is the size of a small city and is
+composed of square, uniformly-sized, interconnected modules whose
+interiors may be configured for different purposes and environmental
+conditions. For example:
+</p>
+<ul>
+<li>Cold storage
+</li>
+<li>Datacenter
+</li>
+<li>Crew barracks
+</li>
+<li>Recreation area
+</li>
+<li>Command center 
+</li>
+<li>Laboratory
+</li>
+<li>Garage (armored suits, trucks, repair)
+</li>
+<li>Medical (health items)
+</li>
+<li>Robotics lab
+</li>
+</ul>
+
+
+<p>
+These modules are about the size of one city block, approx 60x60
+cells. Various airlocks separate the modules from one another. Some
+modules have become depressurized and therefore you need an armored
+robo suit to explore them. Some areas are so radioactive or toxic that
+only a remote-controlled bot can enter.
+</p>
+<p>
+The city is designed to house about 1,000 employees, contractors,
+military personnel, and various visitors.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Ideas for roguelike activities </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<ul>
+<li>Confront dozens or even hundreds of enemies at a time
+</li>
+<li>Wreak havoc in highly destructible environments
+</li>
+<li>Mine minerals and manufacture stuff with them
+</li>
+<li>Run around placing bombs on other objects/enemies, then run away
+   and explode them! This idea is stolen from the PlayStation game
+   "Silent Bomber."
+</li>
+<li>Feel the paranoia of never knowing what is around the corner
+</li>
+<li>Pit yourself against time as maps fill up with water or poison gas
+</li>
+<li>Destroy security cameras to prevent the BLS from seeing you
+</li>
+<li>Create temporary force fields to block enemies and protect yourself.
+</li>
+<li>Upgrade skills with chips/software/modules. You can find them by
+   taking apart other machines.
+</li>
+<li>Locate schematics for fantastic devices and build them using raw
+   materials and manufacturing work stations.
+</li>
+<li>Remote-control a limited robot in areas with too much radiation for humans to explore
+</li>
+<li>Get radiation sickness and take antidotes
+</li>
+<li>Experience and deal with extremes of temperature
+</li>
+<li>Researching objects, requires a workstation and research skill
+</li>
+<li>Stealth play, sneaking through dark areas to avoid detection
+</li>
+<li>Explore a machine-hollowed planetoid whose surface is speckled with
+   numerous robotic installations and mysterious crash sites from a
+   previous expedition
+</li>
+<li>Homage to Compile: a roguelike inspired by Zanac, Aleste, and Guardian Legend
+   (this could absorb many of the ideas above)
+</li>
+<li>Surround yourself with slave robots who do your bidding and defend you from enemies
+</li>
+<li>Wear mecha suits of different types and capabilities. 
+</li>
+<li>Dyson sphere exploration (whoa)
+</li>
+<li>Opening of game: ship runs out of fuel soon after. You're stuck
+   with no weapons, no fuel = no unassisted overworld travel.
+</li>
+<li>The ship in orbit guides you through the early part of the game and
+   helps introduce the backplot, via radio, but they are destroyed by
+   the BLS after the game's first real challenge.
+</li>
+<li>OK so i'm going to steal the rather cliche concept of a
+   hyper-powerful race of Ancients who leave artifacts behind. Except,
+   they did not inhabit our galaxy and only left behind a few sites,
+   maybe three, which are jealously guarded and exploited by the
+   Corporation for their technological value. What you discover is
+   that this planet was a research station for the ancients, which
+   makes it extraordinarily valuable in terms of technology and
+   information.  Thus, the Corporation and the Authority, already in
+   deep conflict, are both vying for control of this planet. The
+   ancients are not gone, they just left the milky way out of fear of
+   the BLS once it took over. The BLS is one of their experiments gone
+   wrong. The Ancients created the faster-than-light drive, which
+   humans discovered in a ship floating derelict. In fact perhaps the
+   Corporation and the Authority have a monopoly on FTL travel and
+   control it very strictly.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Roleplaying system </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+The roleplaying system is a property of a particular RLX game, not of
+RLX itself. This allows different games to use different and unrelated
+roleplaying systems. This section of the document is about the
+particular roleplaying system I am going to develop for my game. One
+underlying principle is that there is no "character generation
+screen". The character's attributes result entirely from in-game
+actions over time.
+</p>
+<p>
+At first I will just develop the basics, the raw minimum for a sci-fi
+game to work, then develop it further. 
+</p>
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1">Stats </h3>
+<div class="outline-text-3" id="text-4-1">
+
+
+<p>   
+In the RPG system for Void Mission, numeric quantities like skills and
+characteristics are subsumed into one idea: <b>stats</b>.
+</p>
+<p>
+Both characteristics and skills enable you to do something, and can
+change:
+</p><ul>
+<li>permanently, as when leveling up
+</li>
+<li>temporarily while certain items are equipped 
+</li>
+<li>temporarily while a certain effect is active
+</li>
+</ul>
+
+
+<p>
+Stat values factor into various computations: for example, eyesight
+could determine the radius of your vision under normal lighting. 
+</p>
+
+</div>
+
+<div id="outline-container-4-1-1" class="outline-4">
+<h4 id="sec-4-1-1">Basic stats </h4>
+<div class="outline-text-4" id="text-4-1-1">
+
+
+<ul>
+<li>Strength (attack power).                     
+</li>
+<li>Intelligence (perception, etc)
+</li>
+<li>Dexterity (attack/defence success)
+</li>
+<li>Constitution
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4-1-2" class="outline-4">
+<h4 id="sec-4-1-2">Secondary stats </h4>
+<div class="outline-text-4" id="text-4-1-2">
+
+
+<ul>
+<li>Hit Points (HP) - from Constitution and Strength
+</li>
+<li>Psi Points - from Constitution and Intelligence
+</li>
+<li>Fatigue Points - From Constitution and battle fatigue
+</li>
+<li>Speed - From Dexterity and Strength and Intelligence
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4-1-3" class="outline-4">
+<h4 id="sec-4-1-3">Skills </h4>
+<div class="outline-text-4" id="text-4-1-3">
+
+
+<ul>
+<li>Eyesight (intelligence)
+</li>
+<li>Hacking (intelligence, dexterity)
+</li>
+<li>Research (intelligence)
+</li>
+<li>Close combat (strength, dexterity)
+</li>
+<li>Ranged combat (strength, dexterity)
+</li>
+<li>Stealth (dexterity, intelligence)
+</li>
+<li>Vehicles (dexterity)
+</li>
+<li>Medicine (intelligence) 
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2">Rolls </h3>
+<div class="outline-text-3" id="text-4-2">
+
+
+<p>
+Make it so that "average" skill of 10 is about equally likely to fail
+as succeed. Must roll less than or equal to controlling stat to succeed. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3">Improving stats and skills: experience and leveling up </h3>
+<div class="outline-text-3" id="text-4-3">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4">Combat </h3>
+<div class="outline-text-3" id="text-4-4">
+
+
+<ul>
+<li>Player signals attack with M-direction
+</li>
+</ul>
+
+
+<pre class="example">
+:action :attack :to attacker :from direction
+</pre>
+
+
+<ul>
+<li>This is resolved to: 
+</li>
+</ul>
+
+
+<pre class="example">
+:action :attack :to attacker :from defender 
+</pre>
+
+
+<ul>
+<li>Attacker rolls dexterity for hit/miss. 
+</li>
+<li>Attacker hits!
+</li>
+<li>Attacker rolls Strength for damage power, add to weapon roll
+</li>
+<li>Defender rolls Dexterity for dodge
+</li>
+<li>If hit, roll Strength, modify by weapon strength and close/ranged combat skill  
+</li>
+</ul>
+
+
+<pre class="example">
+:action :defend :to defender :from attacker :detail points
+</pre>
+
+
+<ul>
+<li>Defender rolls Strength to resist damage, modify by armor class, sends to self: 
+</li>
+</ul>
+
+
+<pre class="example">
+:action damage :to self(defender) :detail points
+</pre>
+
+
+<p>
+Is this too complicated? 
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Places to visit </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+Each place will have associated enemies, items, and a selection of
+special things to do.
+</p>
+<ul>
+<li>Cold storage 665&hellip; find strange items
+</li>
+<li>Highway 291-M (randomly generated name).. with a vehicle you can
+   speedily navigate the universe
+</li>
+<li>Caves with minerals to mine and freaky insects to defeat
+</li>
+<li>Power transfer stations&hellip; radiation!
+</li>
+<li>There was originally just an outpost on this planet, a research
+   station&hellip; but eventually IT took over and hollowed out the
+   planet&hellip;
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:22:54 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

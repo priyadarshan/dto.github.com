@@ -1,0 +1,181 @@
+#+TITLE: XIOTANK: An audio roguelike puzzle game in Common Lisp
+
+* About
+
+XIOTANK is my [[http://www.roguetemple.com/7drl/][2010 7-Day Roguelike Challenge]] entry.  The game is *NOW
+RELEASED AS OF Sunday, March 14 2010* (US Eastern Time) for Linux,
+with Windows and Mac OSX versions following soon after.
+
+* Screenshots
+
+| file:../images/xiotank1.png | file:../images/xiotank2.png |
+| file:../images/xiotank3.png | file:../images/xiotank4.png |
+
+See also http://youtube.com/dto1138 for contest videos.
+
+* Download XIOTANK
+
+XIOTANK 7DRL is released, for Microsoft Windows, Macintosh OSX (Intel),
+and GNU/Linux.
+
+Please visit the [[http://github.com/dto/xe2/downloads][downloads page]] to choose the right file for your
+platform.
+
+** Notes on the downloads---PLEASE READ
+
+*** Windows users:
+
+Right now there is no fancy installer, but you can still download and
+run the game with a few clicks.
+
+First, your browser will probably ask you whether to *Open* the
+download, or *Save* it to disk. *CHOOSE SAVE TO DISK* and put it
+wherever you want. If you are just trying out the game, you can put it
+on your Windows desktop.
+
+Second, *RIGHT-CLICK* the =XIOTANK-win32.zip= file and choose EXTRACT or EXPAND or UNZIP
+(this may vary depending on your version of Windows.) If it asks for a
+destination folder, choose the Desktop.
+
+Third and finally, *DOUBLE-CLICK* the =xiotank-win32= folder that
+should now be on the Desktop. The folder should open into an Explorer
+window. Scroll down to *XIOTANK.EXE* and double-click it. That's it!
+Sorry, we are working on improving the installer.
+
+*** Mac OSX users:
+
+Use CONTROL-P to pause, as there is no "pause" key on the Mac.
+
+*** Linux users:
+
+   1. You need the libsdl, libsdl-mixer, libsdl-image, and libsdl-gfx
+      libraries installed via your distribution's package manager.
+   
+   2. If the game complains about =libsdl_gfx= not found, it will give
+      you the option at the command line to choose between several
+      restarts. Choose CONTINUE and it should work. 
+
+   3. *If you get errors about paths and configuration* when trying to
+      start up, see [[http://github.com/dto/xe2/blob/master/BINARY-README][these notes]] for a fix. In particular, you can add
+      a line like:
+
+: (setf xe2:*module-directories* '(#P"/home/dto/xe2/"))
+
+      to a file called =.xe2rc= in your home directory. We are working
+      on fixing this bug.
+
+   4. *If you get no sound*, you may need to install the pulseaudio
+      version of SDL-MIXER from your distribution's package library.
+      This will replace the raw ALSA version of SDL-MIXER and fix the
+      problem. The package name you want on Ubuntu Karmic is 
+      =libsdl1.2debian-pulseaudio=
+
+   5. If you still can't get any of the binaries running, or if there
+      is no binary for your system, see [[http://github.com/dto/xe2/blob/master/INSTALL][the developer's install guide]]
+      for instructions on making your own binary.
+
+* Support
+
+ - irc.freenode.org#lispgames
+ - [[mailto:dto1138@gmail.com][email me]]
+
+
+* Future
+
+
+I have quite a few plans for improvements. Who knows!?
+
+
+* Overview
+
+In another world, digital audio phenomena war against one
+another. It's one pilot against the Noise Armada in the battle for
+dominance of Blue Space.
+
+You control a tank with 8-way movement and firing. The tank can fire
+sound waves in order to destroy enemies or activate objects. Each area
+is tuned to a given "tone cluster", and you must turn on oscillators
+to produce just the right tones in order to unlock gates. You are
+trying to create ordered tone signals, whereas the enemies try to
+create dissonance and even data corruption.
+
+Out of the mad chaos of fractured signals and white noise, you must
+restore ordered tones and steady beats. Objects respond to tones and
+beats, enabling puzzles to be solved.
+
+* Sound waves
+
+Sound waves are the primary means of attacking enemies and interacting
+with objects in the game. Press CONTROL (or ALT) along with a
+directional key in order to fire in the corresponding direction.
+
+* Tone clusters
+
+A tone cluster is a set of distinct musical notes, usually three or
+more. The key to solving each level is sounding all the correct tones
+(via Oscillators, see below.)  and silencing tones that are not part
+of the cluster. This will open gates that lead to the exit. However,
+activating non-cluster tones may be required during the solution of a
+puzzle.
+
+* Oscillators
+
+Oscillators are objects that generate a pure tone when hit with a
+sound wave. A second wave hit will toggle the tone off. Each
+oscillator is tuned to a specific note; this note is displayed
+onscreen while the oscillator is on, and the corresponding tone is
+heard.
+
+Since sound waves toggle oscillators, enemy activity and combat can
+disupt your plans.
+
+* Pulsators
+
+The pulsator establishes a beat. There is only one pulsator on any
+given level. Other objects respond to the beat. The pulsator can be
+toggled on and off by hitting it with sound waves.
+
+* Delays
+
+Delays are impassable wall objects which are nonetheless permeable to
+light waves---with a delay imposed. The pulsating beat causes any
+previous wave fired in to be released.
+
+* Turrets
+
+Turrets fire waves with the beat. These also turn ninety degrees
+clockwise when fired upon. Use these when continuous fire is required
+to activate an element (for example, Gate elements.)
+
+* TODO Gate
+
+The Gate element opens for a brief time when hit with a wave.
+
+* Fences
+
+Fences are data elements that project an electrified instakill wire
+into the room, possibly obstructing access to important stuff. Each
+fence is attuned to a particular note, and the fence goes down (or
+up!) when the note is sounded.
+
+* Shockers
+
+Shockers are creepy magenta square wave shooters. These tend to wander
+unless the player gets near, then they pursue and fire. 
+
+* Corruptors
+
+Corruptors navigate the level leaving digital audio corruption. This is instakill.
+
+* Drones
+
+Drones are robotic brainlike entities who monitor hallways and spawn
+countless copies of other evil programs.
+
+* TODO Particles
+* Resonators
+
+Resonators emit light and energy when a corresponding tone is heard.
+
+* TODO Trigger (activates adjacent objects)
+* Exit

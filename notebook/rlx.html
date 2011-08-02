@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>RLX: a cross-platform graphical roguelike engine </title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-01 20:23:00 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">RLX: a cross-platform graphical roguelike engine </h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Intro </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+Welcome to the RLX project page. RLX is a next-generation roguelike
+game engine currently being ported to Common Lisp.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Screenshots </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+<img src="../images/berserk.png"  alt="../images/berserk.png" />
+</p>
+<p>
+<img src="../images/endurium.png"  alt="../images/endurium.png" />
+</p>
+<p>
+<img src="../images/freighter.png"  alt="../images/freighter.png" />
+</p>
+<p>
+<img src="../images/nebula.png"  alt="../images/nebula.png" />
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Important links </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<ul>
+<li><a href="http://dto.github.com/notebook/invader.html">http://dto.github.com/notebook/invader.html</a> &ndash; Invader Tactics home page (game using RLX)
+</li>
+<li><a href="http://dto.github.com/notebook/blast.html">http://dto.github.com/notebook/blast.html</a> &ndash; Blast Tactics homepage (another RLX demo)
+</li>
+<li><a href="http://github.com/dto/rlx/tree/master/INSTALL">http://github.com/dto/rlx/tree/master/INSTALL</a> &ndash; QUICK START INSTALL GUIDE
+</li>
+<li><a href="http://dto.github.com/notebook/rlx.html">http://dto.github.com/notebook/rlx.html</a> &mdash; this page
+</li>
+<li><a href="http://dto.github.com/notebook/rlx-todo.html">http://dto.github.com/notebook/rlx-todo.html</a> &mdash; the public RLX todo list and note file
+</li>
+<li><a href="http://www.youtube.com/dto1138">http://www.youtube.com/dto1138</a> &mdash; Standard-definition youtube videos
+</li>
+<li>high-def videos are down for now&hellip;
+</li>
+<li><a href="http://github.com/dto/rlx/tree/master">http://github.com/dto/rlx/tree/master</a> &mdash; github repo page
+</li>
+<li><a href="http://github.com/dto/clon/tree/master">http://github.com/dto/clon/tree/master</a> &mdash; you also need this small CL program
+</li>
+<li><a href="http://common-lisp.net/cgi-bin/mailman/listinfo/rlx">http://common-lisp.net/cgi-bin/mailman/listinfo/rlx</a> &mdash; public mailing list
+</li>
+<li>irc.freenode.net, channel #rlx &mdash; discussion and socializing
+</li>
+<li><a href="http://www.assembla.com/spaces/rlx/stream">http://www.assembla.com/spaces/rlx/stream</a> &mdash; assembla.com development group thing
+</li>
+<li><a href="mailto:dto@gnu.org">mailto:dto@gnu.org</a> &mdash; me
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Status </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+About 85% ported to Common Lisp. Many things are working (see the
+images and video links above.)
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">About </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+RLX is a portable <a href="http://en.wikipedia.org/wiki/Free_software">free-software</a> graphical <a href="http://en.wikipedia.org/wiki/Roguelike">roguelike</a> engine written in
+<a href="http://en.wikipedia.org/wiki/Common_lisp">Common Lisp</a>. The system provides a number of tools to build graphical
+roguelikes:
+</p>
+<ul>
+<li>Graphical tile map display engine with transparent PNG overlays 
+</li>
+<li>Turn-based action
+</li>
+<li>In-game objects' properties and behaviors can be defined in Common Lisp
+</li>
+<li>Basic combat AI support and pathfinding 
+</li>
+<li>Line-of-sight and dynamic lighting
+</li>
+<li>Point light sources on any object 
+</li>
+<li>Heads-up-display (HUD)
+</li>
+<li>Terrain/dungeon generation and pattern-based map synthesis
+</li>
+<li>Integrated menu browser system
+</li>
+</ul>
+
+
+<p>
+RLX uses a <a href="http://github.com/dto/clon">custom object system</a> designed especially for games, and
+defines a reasonable set of default behaviors and functionalities for
+in-game objects:
+</p>
+<ul>
+<li>Object weight, containers, inventory, and weight calculation.
+</li>
+<li>Category keyword system for classifying cells.
+</li>
+<li>The "Action Points" system measures actor speed and event
+   durations, and thereby determines who gets the next turn.
+</li>
+<li>Configurable equipment and weapon system not restricted to humanoid
+   actors.
+</li>
+<li>Basic combat mechanics.
+</li>
+<li>"Stats" are numeric character attributes able to maintain specified
+   minimum and maximum values, as well as track both temporary and
+   permanent effects on the stat, such as stat-draining
+   monsters. Hit-points are also implemented as a stat.
+</li>
+<li>Ability for actor cells to move, search, and manipulate their
+   environment.
+</li>
+</ul>
+
+
+<p>
+The first RLX game is called <a href="vm0-design.html">Void Mission</a>. It's a sci-fi roguelike
+influenced by all the old-school 8-bit stuff I used to play as a
+kid. I use it to test RLX, but it is also my attempt to (eventually)
+redefine the boundaries of what is possible in a roguelike, and
+hopefully to create the best sci-fi roguelike ever!
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">Old Screenshots from the Emacs Lisp port </h2>
+<div class="outline-text-2" id="text-6">
+
+
+<p>
+<img src="../images/RogueLike-12.png"  alt="../images/RogueLike-12.png" />
+</p>
+<p>
+An outdoor scene. Note the cool transparent targeting reticle.
+<img src="../images/RogueLike-7.png"  alt="../images/RogueLike-7.png" />
+</p>
+<p>
+The ray-casting engine at work.
+<img src="../images/RogueLike-4.png"  alt="../images/RogueLike-4.png" />
+</p>
+<p>
+The emacs-based development system.
+<img src="../images/RogueLike-6.png"  alt="../images/RogueLike-6.png" />
+</p>
+<p>
+<img src="../images/RogueLike-9.png"  alt="../images/RogueLike-9.png" />
+</p>
+<p>
+<img src="../images/RogueLike-11.png"  alt="../images/RogueLike-11.png" />
+</p>
+<p>
+<img src="../images/RogueLike-13.png"  alt="../images/RogueLike-13.png" />
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7">Links </h2>
+<div class="outline-text-2" id="text-7">
+
+
+
+</div>
+
+<div id="outline-container-7-1" class="outline-3">
+<h3 id="sec-7-1">Mars terrain data sets </h3>
+<div class="outline-text-3" id="text-7-1">
+
+
+<p>  
+<a href="http://pdsimg.jpl.nasa.gov/data/vo1_vo2-m-vis-5-dim-v1.0/vo_2001/aareadme.txt">http://pdsimg.jpl.nasa.gov/data/vo1_vo2-m-vis-5-dim-v1.0/vo_2001/aareadme.txt</a>
+<a href="http://pdsimg.jpl.nasa.gov/data/vo1_vo2-m-vis-5-dim-v1.0/vo_2001/document/volinfo.txt">http://pdsimg.jpl.nasa.gov/data/vo1_vo2-m-vis-5-dim-v1.0/vo_2001/document/volinfo.txt</a>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7-2" class="outline-3">
+<h3 id="sec-7-2">Pixel Art </h3>
+<div class="outline-text-3" id="text-7-2">
+
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Pixel_art">http://en.wikipedia.org/wiki/Pixel_art</a>
+</li>
+<li><a href="http://www.derekyu.com/extras/pixel01.html">http://www.derekyu.com/extras/pixel01.html</a>
+</li>
+<li><a href="http://petesqbsite.com/sections/tutorials/tuts/tsugumo/">http://petesqbsite.com/sections/tutorials/tuts/tsugumo/</a>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7-3" class="outline-3">
+<h3 id="sec-7-3">Line of sight </h3>
+<div class="outline-text-3" id="text-7-3">
+
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Bresenham's_line_algorithm">http://en.wikipedia.org/wiki/Bresenham's_line_algorithm</a>
+</li>
+<li><a href="http://www.cs.helsinki.fi/group/goa/mallinnus/lines/bresenh.html">http://www.cs.helsinki.fi/group/goa/mallinnus/lines/bresenh.html</a>
+</li>
+<li><a href="http://en.wikipedia.org/wiki/Distance">http://en.wikipedia.org/wiki/Distance</a>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7-4" class="outline-3">
+<h3 id="sec-7-4">Pathfinding </h3>
+<div class="outline-text-3" id="text-7-4">
+
+
+<ul>
+<li><a href="http://home1.stofanet.dk/breese/aaai99.html">http://home1.stofanet.dk/breese/aaai99.html</a>
+</li>
+<li><a href="http://www.policyalmanac.org/games/aStarTutorial.htm">http://www.policyalmanac.org/games/aStarTutorial.htm</a>
+</li>
+<li>Steering alternatives: <a href="http://www.red3d.com/cwr/steer/">http://www.red3d.com/cwr/steer/</a>
+</li>
+<li>LPA*: <a href="http://idm-lab.org/applet.html">http://idm-lab.org/applet.html</a>
+</li>
+<li><a href="http://theory.stanford.edu/~amitp/GameProgramming/">http://theory.stanford.edu/~amitp/GameProgramming/</a>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7-5" class="outline-3">
+<h3 id="sec-7-5">Terrain generation and mapping </h3>
+<div class="outline-text-3" id="text-7-5">
+
+
+<ul>
+<li>Plasma fractals: <a href="http://www2.vo.lu/homepages/phahn/fractals/plasma.htm">http://www2.vo.lu/homepages/phahn/fractals/plasma.htm</a>
+</li>
+<li><a href="http://en.wikipedia.org/wiki/Procedural_generation">http://en.wikipedia.org/wiki/Procedural_generation</a>
+</li>
+<li><a href="http://en.wikipedia.org/wiki/Fractals">http://en.wikipedia.org/wiki/Fractals</a>
+</li>
+<li><a href="http://en.wikipedia.org/wiki/Fractal_landscape">http://en.wikipedia.org/wiki/Fractal_landscape</a>
+</li>
+<li><a href="http://en.wikipedia.org/wiki/L-System">http://en.wikipedia.org/wiki/L-System</a>
+</li>
+<li><a href="http://www.geocities.com/area51/6902/t_subdiv.html">http://www.geocities.com/area51/6902/t_subdiv.html</a>
+</li>
+<li><a href="http://www.geocities.com/Area51/6902/terrain.html">http://www.geocities.com/Area51/6902/terrain.html</a>
+</li>
+<li><a href="http://citeseer.ifi.unizh.ch/727893.html">http://citeseer.ifi.unizh.ch/727893.html</a>
+</li>
+<li><a href="http://citeseer.ifi.unizh.ch/499084.html">http://citeseer.ifi.unizh.ch/499084.html</a>
+</li>
+<li><a href="http://www.cs.cmu.edu/~mzucker/code/perlin-noise-math-faq.html">http://www.cs.cmu.edu/~mzucker/code/perlin-noise-math-faq.html</a>
+</li>
+<li>cities: <a href="http://www.centralpictures.com/ce/tp/paper.pdf">http://www.centralpictures.com/ce/tp/paper.pdf</a>
+</li>
+<li>dungeons: <a href="http://www.aarg.net/~minam/dungeon_design.html">http://www.aarg.net/~minam/dungeon_design.html</a>
+</li>
+<li>mazes: <a href="http://www.astrolog.org/labyrnth/algrithm.htm">http://www.astrolog.org/labyrnth/algrithm.htm</a>
+</li>
+</ul>
+
+
+</div>
+
+<div id="outline-container-7-5-1" class="outline-4">
+<h4 id="sec-7-5-1">Procedural content generation </h4>
+<div class="outline-text-4" id="text-7-5-1">
+
+
+<ul>
+<li><a href="http://hypertext.rmit.edu.au/dac/papers/Greuter.pdf">http://hypertext.rmit.edu.au/dac/papers/Greuter.pdf</a>
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-7-6" class="outline-3">
+<h3 id="sec-7-6">AI </h3>
+<div class="outline-text-3" id="text-7-6">
+
+
+<ul>
+<li><a href="http://www.gameai.com/nk.paper.html">http://www.gameai.com/nk.paper.html</a>
+</li>
+<li>comp.games.ai faq: <a href="http://www.geocities.com/cagfaq/cf1.htm">http://www.geocities.com/cagfaq/cf1.htm</a>
+</li>
+<li>Subsumption: <a href="http://ai.eecs.umich.edu/cogarch3/Brooks/Brooks.html">http://ai.eecs.umich.edu/cogarch3/Brooks/Brooks.html</a>
+</li>
+<li>ATLANTIS: <a href="http://ai.eecs.umich.edu/cogarch3/Gat/Gat.htm">http://ai.eecs.umich.edu/cogarch3/Gat/Gat.htm</a>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-7-7" class="outline-3">
+<h3 id="sec-7-7">Roleplaying </h3>
+<div class="outline-text-3" id="text-7-7">
+
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/GURPS">http://en.wikipedia.org/wiki/GURPS</a>
+</li>
+<li><a href="http://www.starfrontiers.com/rules">http://www.starfrontiers.com/rules</a>
+</li>
+<li><a href="http://www.starfrontiers.com/modules">http://www.starfrontiers.com/modules</a>
+</li>
+<li><a href="http://www.starfrontiers.com/rules/ADXTOC/SFAD_ExpandedRules.pdf">http://www.starfrontiers.com/rules/ADXTOC/SFAD_ExpandedRules.pdf</a>
+</li>
+<li><a href="http://www.starfrontiers.com/rules/SFAD_Basic.pdf">http://www.starfrontiers.com/rules/SFAD_Basic.pdf</a> 
+</li>
+<li><a href="http://www.starfrontiers.com/modules/SF0/SF0.pdf">http://www.starfrontiers.com/modules/SF0/SF0.pdf</a>
+</li>
+<li><a href="http://www.starfrontiers.com/modules/SFKH1/SFKH1.pdf">http://www.starfrontiers.com/modules/SFKH1/SFKH1.pdf</a>
+</li>
+<li><a href="http://www.starfrontiers.com/modules/SFKH0/SFKH0.pdf">http://www.starfrontiers.com/modules/SFKH0/SFKH0.pdf</a>
+</li>
+<li><a href="http://www.starfrontiers.com/rules/ZEBTOC/SFAD_ZebulonsGuide.pdf">http://www.starfrontiers.com/rules/ZEBTOC/SFAD_ZebulonsGuide.pdf</a>
+</li>
+<li><a href="http://www.centralpictures.com/ce/tp/paper.pdf">http://www.centralpictures.com/ce/tp/paper.pdf</a>
+</li>
+<li><a href="http://www.ludism.org/rpg/osprey.pdf">http://www.ludism.org/rpg/osprey.pdf</a>
+</li>
+<li><a href="http://www.vanguardrpg.com/vspace.pdf">http://www.vanguardrpg.com/vspace.pdf</a>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7-8" class="outline-3">
+<h3 id="sec-7-8">Simulations </h3>
+<div class="outline-text-3" id="text-7-8">
+
+
+<ul>
+<li><a href="http://citeseer.ist.psu.edu/256619.html">Agentsheets paper</a>
+</li>
+<li><a href="http://www.itee.uq.edu.au/~penny/_papers/ICEC2005-sweetser.pdf">http://www.itee.uq.edu.au/~penny/_papers/ICEC2005-sweetser.pdf</a>
+</li>
+<li><a href="http://www.itee.uq.edu.au/~penny/_papers/IDEAL05-Sweetser-revised.pdf">http://www.itee.uq.edu.au/~penny/_papers/IDEAL05-Sweetser-revised.pdf</a>
+</li>
+<li>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7-9" class="outline-3">
+<h3 id="sec-7-9">Roguelike resources </h3>
+<div class="outline-text-3" id="text-7-9">
+
+
+<ul>
+<li><a href="http://www.statslab.cam.ac.uk/~eva/nhvsadom.html">http://www.statslab.cam.ac.uk/~eva/nhvsadom.html</a> Comparison of ADOM and Nethack
+</li>
+<li><a href="http://roguelikedevelopment.org/">http://roguelikedevelopment.org/</a> - Roguelike development resource
+</li>
+<li><a href="http://roguelikedevelopment.org/php/category/showCategory.php?path=development/&amp;category=MAP">Map generation links @ roguelikedevelopment.org</a>
+</li>
+<li><a href="http://rltiles.sourceforge.net/">http://rltiles.sourceforge.net/</a> - Freely usable fantasy
+   tiles. Initially I may wish to develop my own abstract sci-fi
+   tileset in the graphical style of Zanac / Guardian Legend. I would
+   of course make these freely available.
+</li>
+<li><a href="http://roguebasin.roguelikedevelopment.org/index.php?title=Graphical_tiles">http://roguebasin.roguelikedevelopment.org/index.php?title=Graphical_tiles</a>
+</li>
+<li><a href="http://roguebasin.roguelikedevelopment.org/index.php?title=Articles">http://roguebasin.roguelikedevelopment.org/index.php?title=Articles</a>
+</li>
+<li><a href="http://roguebasin.roguelikedevelopment.org/index.php?title=Monster_attacks">http://roguebasin.roguelikedevelopment.org/index.php?title=Monster_attacks</a>
+</li>
+<li><a href="http://roguebasin.roguelikedevelopment.org/index.php?title=Simple_Combat_in_the_Dungeon">http://roguebasin.roguelikedevelopment.org/index.php?title=Simple_Combat_in_the_Dungeon</a> 
+</li>
+<li><a href="http://roguebasin.roguelikedevelopment.org/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels">http://roguebasin.roguelikedevelopment.org/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels</a>
+</li>
+<li><a href="http://roguebasin.roguelikedevelopment.org/index.php?title=Roguelike_Intelligence_-_Stateless_AIs">http://roguebasin.roguelikedevelopment.org/index.php?title=Roguelike_Intelligence_-_Stateless_AIs</a>
+</li>
+</ul>
+
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-01 20:23:00 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

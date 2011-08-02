@@ -1,0 +1,201 @@
+* TODO BOSTON LISP CONFERENCE PREP
+** DONE tracing macros
+CLOSED: [2009-01-11 Sun 17:48]
+** TODO struct-pool allocator thing
+*** DONE common data structure for reusing slots. (each slot is a pair of bool, any-datum
+CLOSED: [2009-01-12 Mon 06:48]
+*** DONE request initial allocation and growth rate
+CLOSED: [2009-01-12 Mon 06:48]
+*** TODO reread pool.lisp
+*** TODO Test pool structure
+** TODO reread math.lisp
+*** TODO point data structure for certain tasks
+** TODO port plasma stuff
+** TODO port pathfinding
+** TODO port crater / mars generation stuff
+
+* TODO ALPHA RELEASE
+** TODO RLX dev manual, document the API
+** TODO temporary dialog widget allows numeric input
+** TODO improve equipment/firing controls/menu system
+*** TODO enter menu with tab
+*** TODO hierarchical menus
+*** TODO select option or menu with space
+*** TODO define faces
+** DONE fix crash when shield pops up off map edge
+CLOSED: [2008-12-31 Wed 16:58]
+** TODO fix render-formatted-line warning error null string thing bug 
+** TODO implement 3 new gameplay ideas
+*** TODO oxygen death
+*** TODO environment suit uses energy every turn to resist cold
+*** TODO dangerous firing rook!
+** TODO parameterized levels with colors
+** TODO metaworld for installation 774
+** TODO implement drop-cell with no-collisions
+** TODO find equipment in remodeled green crates
+** TODO fix monsters attacking non-targets
+** TODO <actions> should be a plist of :key -> AP cost
+** TODO remappable per-module command input symbols
+** TODO change narration excluded keywords to INcluded
+** TODO per-module post load hook (for remapping keys etc)
+** TODO better maze walls
+** TODO oxygen death
+** TODO loadout by default?
+** TODO Review codebase
+** TODO port pathfinding code
+** TODO define browser keys (instead of queueing to :browser)
+** TODO fix lighting artifacts (light all possible destination squares within radius)
+** TODO Fix monsters jumping on me
+** TODO container sorting
+** TODO Refactor browser line render strategy for :equipment and :inventory modes
+** TODO Action menu browser
+** TODO browser item inspection
+** TODO Browser history
+** TODO fix equipment plist weirdness
+** TODO [#C] improve radio.el
+** TODO [#C] improve CLON object printing/inspection
+** TODO [#A] examine current square
+** TODO [#B] monster generators, speed determined by game level
+** TODO [#B] infinite levels, color changes, you can't win!
+** TODO [#C] support colored border around formatters
+** TODO [#C] support titled formatters
+** TODO map overlays 
+** TODO targeting reticle
+** TODO select a square
+** TODO pathfinding white graviceptor 
+** TODO design overview in rlx.lisp
+** TODO [#C] prompt arrow keybindings
+** TODO check weight on container add
+** TODO store container-parent link
+** TODO [#C] add console-style menus to output widget? probably simpler...
+** TODO [#C]  elisp for auto-updating PAK files to grab new images in dirs
+** TODO [#C] change index.pak to vm0.pak
+** TODO [#B] get rid of eon slot descriptor specs?
+** TODO :controller events for dvorak/svorak fun
+
+* OLD TASKS, IGNORE THIS
+** TODO http://roguelikedeveloper.blogspot.com/\
+** TODO http://www.squidi.net/three/index.php
+** TODO Establish RLX mailing list
+** TODO Implement metaworld planet generator / serialization manager
+*** TODO Implement plasma planet map and "metatiles"
+*** TODO Template for world generation/deserialization function
+*** TODO Serialization
+** TODO Implement all ops, including :erase
+** TODO Add new grid operations for world building
+* Void Mission Tasks
+** TODO Create laptop keymap alternatives
+** TODO Complete Outpost
+*** TODO "Described" command allows object to give knowledge
+*** TODO Allow equipping both handst
+**** TODO [ and ] to choose attacking hand, other hand is Using hand
+*** TODO Make lanterns and batteries work properly
+**** TODO Properly compute items in containers
+**** TODO Battery should receive turns while contained. 
+*** TODO Revise outpost rendering routine
+** TODO Update HUD when contained object is destroyed
+*** TODO Use some kind of Observer pattern?
+** TODO Fix picking up more than one item, doesn't work...
+** TODO Implement :replace-top in editor
+** --------------------------------------------------------
+** TODO Implement overworld map and generation of wilderness regions
+** TODO Implement :created action for cells when cloned
+** TODO Refine combat model and formulas
+** TODO Implement more sophisticated attack system with hit/miss/dodge
+** DONE [#C] Bugfix: max-appearances not being honored in metamap generator
+   CLOSED: [2006-10-04 Wed 06:16]
+** TODO [#B] Implement item collections that aggregate, via :quantity property
+** TODO [#C] Implement slave AI players who cluster around and defend player
+* Artificial Intellgence
+** TODO FSM framework built into RLX? 
+- http://en.wikipedia.org/wiki/Finite_state_machine
+- http://www-ccrma.stanford.edu/~cburns/220b/probmachine.lisp
+- http://www.mail-archive.com/gnu-emacs-sources@gnu.org/msg00308/fsm.el
+
+** TODO Implement better wandering where wander direction is related to last
+** TODO Implement LOS-based simple seeking with latency
+** TODO Make enemies that only wake up on LOS / nearness
+** TODO Behaviors
+ - stop stay flee retreat explore wander search
+ - spy patrol defend guard attack surround shun avoid 
+ - follow group work
+ - use a stack so that it can go back to what it was doing
+ - allow to alter cost function to penalize light areas, for hiding, etc
+* Enhancements and fixes 
+** TODO Add colors to status display
+** TODO Allow property sheet editor to edit multiple cells on a grid
+** TODO red asterisks, allow to edit text lambdas in editor
+** TODO Come up with better scheme for spraying fractal terrain.
+** TODO Metamap: Allow really low and really high / required probability maps
+** TODO Use horizontal space in narration window to summarize encounter. 
+** TODO Cells that prevent ships from entering. Ship checks for :vehicle-obstacle
+** TODO Synthesize :step events to all cells in a grid when you step
+** TODO Hierarchical HUD: with back button
+** TODO You shouldn't be able to see through the floor to the icy surface.
+** TODO Properly move things out of containers
+** TODO [#C] Fix narration getting into/out of vehicles
+** TODO [#C] Fix lines between tile rows when font is too big
+** TODO [#C] Read Braitenberg's "Vehicles"
+** TODO [#C] Make rlx-load-game use completing-read
+** TODO Implement formatted sensor values by returning more stuff in plist
+** TODO [#C] Implement cellular automata terrain
+** TODO Implement floating light sources
+** TODO Use make-progress-reporter
+** TODO Don't allow targeting of shadowed areas. 
+** TODO [#C] Implement wiki backlink search (for categories etc.)
+** TODO Quickly navigate wiki: hotkey for front page ("/") and right-click to follow
+** TODO [#C] rlx-grid-paint-replace-all
+** TODO Combine the duplicated HUD move functions into one
+** TODO Write specifications for all events and use (let) to rename "to" and "from"
+** TODO Evaluate non-spec values in defcell
+** TODO Always return next-player from rlx-run-world? 
+** TODO Make utility defsubsts for forwarding commands to self
+* CellMode Tasks
+** TODO Use symbol-macrolet to bind instance vars in (cell-mode-define 
+** TODO Add documentation to each section of cell.el
+** TODO Docstrings!
+** TODO Rename things for more consistent naming convention... make-cell-sheet
+** TODO Try to split it into three parts: UI, dataflow, wiki
+** TODO Elisp Cell: Don't blitz buffer when already open
+** TODO Add buffer-undo-list progammable elements
+* Optimization
+*** TODO Use macros to eliminate zillion funcalls in rlx-trace-*
+*** TODO Don't cons so much during lighting process
+*** TODO Use diagonal distance as heuristic in rlx-path
+  - h(n) = D * max(abs(n.x-goal.x), abs(n.y-goal.y))
+*** DONE Add heuristic tie-breaker in rlx-path
+    CLOSED: [2006-09-28 Thu 05:03]
+  - h(n) *= (1.0 + p), example p=step_cost/expected max path length
+*** TODO Don't call rlx-default-event for commands or :turn
+*** DONE Replace BLOCK by COND in defcell expansion
+    CLOSED: [2006-09-14 Thu 07:43]
+*** DONE Render tiles by replacing text properties
+    CLOSED: [2006-09-11 Mon 08:18]
+*** TODO Make sure :tile and :event are at start of plists
+*** TODO Don't send :turn to non :cpu/:player cells
+*** TODO More defsubst
+*** TODO Speed up cell-image-compute: don't use temp-buffer/insert-image
+*** TODO (info "(elisp)Forcing Redisplay")
+*** TODO Speed up rlx-invoke-event
+*** TODO Profile and optimize cell-mode
+*** TODO Don't use (append) in rlx-run-events
+*** TODO Use integer math in (rlx-trace) 
+*** DONE Don't narrate enemy turns
+    CLOSED: [2006-09-08 Fri 11:38]
+*** DONE Turn off undo information in rlx-mode buffre
+    CLOSED: [2006-09-06 Wed 23:20]
+*** DONE Don't use (rlx-grid-get) in (rlx-grid-render)
+    CLOSED: [2006-09-06 Wed 23:32]
+
+This looks up the same row every time... instead i should try mapc or
+something, loading each row just once.
+
+
+* TODO Documentation
+** TODO Examples of prototype at prototype section
+** TODO Examples of each cell type
+** TODO Explain default events better
+
+* TODO RLX2
+** DONE Choose a Common Lisp implementation
+   CLOSED: [2006-10-20 Fri 17:42]
