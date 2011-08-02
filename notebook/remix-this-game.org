@@ -1,0 +1,179 @@
+#+TITLE: REMIX THIS GAME
+#+AUTHOR: David O'Toole <dto1138@gmail.com>
+
+* What is REMIX THIS GAME?
+
+file:../images/xong.png
+
+REMIX THIS GAME is an experimental game design contest where
+participants can re-mix and re-cycle my free-software self-published
+PC game, [[http://dto.github.com/notebook/xong.html][XONG]]. XONG is available under permissive licenses allowing
+remixes and derivative works of the code, graphics, sound effects, and
+music---even for commercial use. The source code license is the [[http://en.wikipedia.org/wiki/GNU_General_Public_License][GNU
+GPL Version 3]], and the media is covered by the [[http://creativecommons.org/licenses/by-sa/3.0/us/][Creative Commons BY-SA
+license]].
+
+No special software or programming experience are needed---XONG
+has been packaged up so that you can just download the game and edit
+the graphics/code/music/sounds in place, and re-start the game to see
+your changes. Plus, it is available for Windows, Mac OSX, and GNU/Linux,
+so you can remix it on whichever OS you use, using whatever programs
+you like.
+
+Registration is now open; [[http://www.cliki.net/RemixThisGame][sign yourself up here]]. As the author of
+XONG, I will choose the winner and three runners up, and do a blog
+post about each entry with (if you choose) an interview or other
+info. *NOTE: The deadline for submission has been extended to August
+10, 2010.* There is no real prize other than participation in something
+new, and possible notoriety for doing something interesting.
+
+See "How do I get started?"  below for more details on how to remix
+the game.
+
+REMIX THIS GAME is part of the [[http://dto.github.com/notebook/2010expo.html][2010 International Lisp Games Expo.]]
+
+For information relating to Apple developers, please also see [[http://dto.github.com/notebook/apple.html][Thoughts
+on iOS games]], an opinion essay about the iOS SDK development terms.
+
+* What is XONG?
+
+XONG is a [[http://en.wikipedia.org/wiki/Free_software][free]], fast-moving procedurally-generated puzzle combat game
+for Microsoft Windows, Mac OSX, and GNU/Linux. XONG is for one player
+using a keyboard and mouse. See the [[http://dto.github.com/notebook/xong.html][XONG page]] for information,
+downloads, and links to what people are saying about XONG.
+
+* Why?
+
+REMIX THIS GAME is inspired by a [[http://trsp.net/teaching/gamemod/][university experiment]] I read about,
+in which a classroom full of mixed programmer and non-programmer
+students were given a short [[http://en.wikipedia.org/wiki/Breakout_clone][Breakout clone]] written in the [[http://en.wikipedia.org/wiki/Processing_(programming_language)][Processing
+language]], and spent a few hours making various code changes
+interactively to the game while it ran. A few helpers went around to
+troubleshoot issues, but almost everyone came up with something cool,
+with some entries seeming radically unrelated to the original program.
+
+So I invite you to [[http://dto.github.com/notebook/xong.html][download XONG]] and:
+
+  - Change the rules of player, object, and enemy behavior
+  - Add new objects and enemies
+  - Speed it up or slow it down or sync it to a beat
+  - Resize/redraw the graphics, color schemes, redesign the level
+    generator
+  - Add a compelling story with non-player characters and heavy
+    exploration
+  - Implement gravity and change it to a platformer
+  - Implement a completely different game using the same graphics
+  - Remix the songs (XM tracker format included for most songs)
+  - Share your new creations with the world!
+
+XONG has a few bugs and problems, and players have had many
+suggestions for changes. So you will probably think of things to
+change about the game. Furthermore, it's relatively simple and small
+(only 2257 lines of game-specific code.)
+
+I'd like to assemble a gallery and video compilation of people's
+entries when the contest is over.
+
+* How do I get started?
+
+Just download [[http://dto.github.com/notebook/xong.html][XONG]] for your platform, extract the files, and start
+editing! All the objects and images are in standard PNG format; the
+sounds are WAV; the music is OGG Vorbis (with source XM files for many
+songs.) The source code is distributed among several text files such
+as [[http://github.com/dto/xe2/blob/master/xong/player.lisp][player.lisp]] and [[http://github.com/dto/xe2/blob/master/xong/enemy.lisp][enemy.lisp]], and also a human-editable resource data
+file called [[http://github.com/dto/xe2/blob/master/xong/xong.pak][xong.pak]].
+
+As an example from XONG, just below is the complete code for an enemy
+called the Oscillator. See the documentation in [[http://github.com/dto/xe2/blob/master/cells.lisp][cells.lisp]] for more
+detailed information on what each field means---for now, just remember
+that "cells" are generic game objects, and the "defcell" below defines
+a new kind of cell with specified properties. The "define-method"
+forms add actions to cells.
+    
+: (defcell oscillator 
+:   (tile :initform "oscillator") 
+:   (categories :initform '(:actor :obstacle :target :enemy :opaque :oscillator :puck))
+:   (speed :initform (make-stat :base 3))
+:   (movement-cost :initform (make-stat :base 20))
+:   (default-cost :initform (make-stat :base 20))
+:   (direction :initform (car (one-of '(:south :west))))
+:   (stepping :initform t)
+:   (dead :initform nil)
+:   (name :initform "Oscillator")
+:   (description :initform 
+: "These bounce back and forth very quickly, firing muon particles if
+: the player gets too close."))
+: 
+: (define-method get-nasty oscillator ()
+:   [damage [get-player *world*] 1])
+: 
+: (define-method loadout oscillator ()
+:   (incf *enemies*))
+: 
+: (define-method cancel oscillator ()
+:   (decf *enemies*))
+: 
+: (define-method run oscillator ()
+:   (if [obstacle-in-direction-p *world* <row> <column> <direction>]
+:       (setf <direction> (opposite-direction <direction>))
+:       (progn [move self <direction>]
+: 	     (if (and (> 8 [distance-to-player self])
+: 		      [line-of-sight *world* <row> <column> 
+: 				     [player-row *world*]
+: 				     [player-column *world*]])
+: 		 [fire self [direction-to-player self]]))))
+: 
+: (define-method fire oscillator (direction)
+:   (let ((muon (clone =muon-particle=)))
+:     [drop self muon]
+:     [expend-action-points self 100]
+:     [impel muon direction] ))
+: 
+: (define-method damage oscillator (points)
+:   [get-nasty self])
+: 
+: (define-method die oscillator ()
+:   (unless <dead>
+:     (decf *enemies*)
+:     (score 5000)
+:     [play-sample self "death-alien"]
+:     [parent>>die self]))
+:   
+: (define-method kick oscillator (direction)
+:   (setf <direction> direction)
+:   [move self direction])
+
+You can edit and/or replace the game logic and rules with any text
+editor, and alter the images/sounds with your favorite tools. The game
+logic is written in [[http://en.wikipedia.org/wiki/Common_Lisp][the Common Lisp programming language]], but because
+the XONG executable contains an embedded Lisp compiler, restarting the
+game will cause your code changes to be recompiled when you restart
+the game. No Lisp experience or special software is required---just
+make backups, and start tweaking!  You can also [[http://github.com/dto/xe2/tree/master/xong/][browse the XONG source]]
+online.  The [[http://en.wikipedia.org/wiki/Common_Lisp][wikipedia page on Common Lisp]] has more than enough
+information to help you read the game's source code and start making
+significant changes. Detailed documentation on the underlying [[http://dto.github.com/notebook/xe2-reference.html][XE2 game
+engine]] is also available, with specific advice on tools if you decide
+to tweak heavily or set up a proper Common Lisp development
+environment. There is also a good [[http://www.cliki.net/Education][cliki page]] about getting started
+with Common Lisp.
+
+* What if I need help?
+
+If the links above and the source comments are not enough, or if you
+encounter errors, I will be happy to answer questions via [[mailto:dto1138@gmail.com][email]] and
+interactively on IRC. Our community's IRC channel is at
+irc.freenode.net, and the channel name is #lispgames. I go by the
+hacker alias "DTO" there. (Actually it's just my initials.)
+
+If you decide to participate, please sign yourself up at the
+[[http://www.cliki.net/RemixThisGame][RemixThisGame registration page on Cliki]]. Please also [[mailto:dto1138@gmail.com][email me]] if you
+decide to give it a shot, so I can keep track of participation and
+post updates on my [[http://lispgamesdev.blogspot.com/][blog]]. 
+
+Let the remix begin! Contest entries must be finished by August 10, 2010.
+
+* Links
+
+ - [[http://dto.github.com/notebook/xong.html][XONG home page]]
+ - Tigpeeps can discuss the game in our [[http://forums.tigsource.com/index.php?topic=13941.0][Tigsource forums thread]]

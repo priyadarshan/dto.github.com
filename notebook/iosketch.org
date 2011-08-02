@@ -1,0 +1,80 @@
+#+TYP_TODO: PLANNED WORKING ALPHA BETA
+#+TITLE: IOSKETCH
+
+* Overview
+
+IOSKETCH is a cross-platform visual authoring tool for games and other
+interactive media. The design of IOSKETCH expands on [[http://scratch.mit.edu][MIT Scratch]],
+and is built on a 2D game engine written in [[http://en.wikipedia.org/wiki/Common_Lisp][Common Lisp]].
+
+IOSKETCH can be used in tandem with [[http://www.gnu.org/software/emacs][GNU Emacs]], with live integration
+between the two via [[http://en.wikipedia.org/wiki/Emacs_Lisp][SLIME]] and custom code.
+
+IOSKETCH is [[http://en.wikipedia.org/wiki/Free_software][free software]]. Read on for videos, features, and links to
+more information.
+
+* History
+
+ - 2006: Game engine and interactive editor were prototyped in Emacs Lisp.
+ - 2007-2009: Ported to Common Lisp, two games released (see links below.)
+ - 2010: Two more games released. Engine greatly expanded with new
+   functionality and new roadmap. Renamed to IOSKETCH and began
+   implementing a Lispy visual programming language on top of the
+   existing game engine and editor.
+
+* Features
+
+ - Custom [[http://en.wikipedia.org/wiki/Prototype-based_programming][prototype-based]] object system with built in serialization;
+   save and load full state of game worlds.
+ - Object-oriented 2D game engine with support for both tiles and
+   sprites, scrolling backgrounds, and basic procedural generation
+   tools.  [[http://www.youtube.com/watch?v=6AGInhs2gaM][Video 1]] --- [[http://www.youtube.com/watch?v=MJHxUrMuVUI][Video 2]] --- [[http://www.youtube.com/watch?v=kh7JJgwENBM][Video 3]] --- [[http://www.youtube.com/watch?v=WHmbuhBVtEU][Video 4]] --- [[http://www.youtube.com/watch?v=CvN4zPGyCv0][Video 5]] ---
+   [[http://www.youtube.com/watch?v=MapxH02RehY][Video 6]] --- [[http://www.youtube.com/watch?v=Q2CbufwmMjI][Video 7]]
+ - Visual development environment, assembling behaviors from
+   color-coded blocks representing Common Lisp objects. This is the
+   newest part of IOSKETCH and a work-in-progress video may be seen here:
+   [[http://www.youtube.com/watch?v=DmtALHVRSTU][Youtube video of in-progress IOSKETCH GUI]].
+ - Emacs for code editing, asset management, version control, workflow
+   via [[http://www.orgmode.org][Org-mode]], and integration with external programs. See [[http://www.youtube.com/watch?v=43IiSvbyIZY][my screencast]] 
+   about game development in Emacs.
+ - LISPBUILDER-SDL for graphics, sound, joystick etc.
+ - Compilation to efficient machine code via [[http://www.sbcl.org/][SBCL]].
+ - Resulting apps run (so far) on Windows, Mac OSX, and Linux.
+ - Creation of redistributable standalone apps for any platform
+   IOSKETCH runs on.
+ - Or, distribution and sharing of projects separately from the IOSKETCH
+   runtime as compressed archives.
+ - Interactive command prompt with history, help, etc.
+ - Generic media spreadsheet model and accompanying graphical editor.
+ - "Modules" are like workbooks composed of many spreadsheets
+ - 2D game world editor 
+   [[http://www.youtube.com/watch?v=XAUWw61urNM][Video 1]] --- [[http://www.youtube.com/watch?v=E5KmZxQxiJ0][Video 2]] --- [[http://www.youtube.com/watch?v=XAUWw61urNM][Video 3]]
+ - Reasonably sized, at about 10,000 lines of Lisp code.
+ - Fully free software (GPLv3) and based on open standards.
+
+* Current status
+
+ - Working alpha with [[http://dto.github.com/notebook/games.html][several games]] released.
+ - Moving toward beta is now the focus.
+
+* Learn more
+
+ - [[http://github.com/dto/iosketch][source code repository]] at github
+ - [[http://lispgamesdev.blogspot.com/][development blog]]
+ - irc.freenode.org, channel #iosketch
+
+* Future plans
+
+ - OpenGL support.
+ - Improved audio support and music editing.
+ - More sophisticated asset pipeline with external programs.
+ - More platform support.
+ - Motion control support. See [[http://lispgames.org/index.php/CloMotion][the CloMotion page]].
+
+* References
+
+ - http://www.lispgames.org
+ - [[http://www.ircam.fr/equipes/repmus/bresson/docs/om-hosc.pdf][Visual Lisp/CLOS Programming in OpenMusic]]
+ - http://squeak.org/
+ - http://scratch.mit.edu/
+

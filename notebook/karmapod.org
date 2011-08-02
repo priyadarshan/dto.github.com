@@ -1,0 +1,536 @@
+
+* The ALL NEW KARMAPOD 2!
+
+file:../images/podpan2-edit-small.jpg
+
+ - Athlon 64-X2 Dual Core 3.0GHz-per-core CPU
+ - 4GB RAM
+ - ATI RADEON HD2600PRO PCI-Express graphics card with Zalman passive cooler
+ - Dual-DVI, HDMI, S-Video out
+ - HP Multi-format DVD ReWriter with LightScribe
+ - Standard DVD reader for ripping
+ - 9 USB ports onboard (6 rear, 3 front)
+ - Front-panel CF/SD/MMC reader
+ - All drives are mounted in cooling units with fans
+ - 8 controllable fans with Zalman front-panel fan control
+ - 160GB Seagate SATA system drive
+ - 2x 200GB Seagate SATA RAID array
+ - Hauppauge TV encoder
+ - M-Audio Delta 1010 rackmount audio interface
+ - SKB 8U 19" eack case with waterproof seals and shock-absorbers
+ - Raxxess rackmount power distribution and lighting
+ - 13-port USB hub
+ - 2x Audio Buddy preamps
+ - M-Audio Axiom 29 USB MIDI Controller/Interface
+ - 2x Tripp-Lite USB UPS
+ - Logitech DiNovo Bluetooth keyboard and mouse 
+ - Ion USB turntable
+ - Brother USB label printer (for inventory tagging)
+ - 13-port external USB hub
+
+file:../images/x2-preview-000.jpg
+
+file:../images/x2-preview-001.jpg
+
+file:../images/x2-preview-002.jpg
+
+file:../images/x2-preview-003.jpg
+
+file:../images/x2-preview-004.jpg
+
+file:../images/x2-preview-005.jpg
+
+* COMING SOON:
+
+I'm going to update the essay below
+for the new pod and Debian.
+
+* Introduction
+
+Over the last few years I've watched the GNU/Linux audio software
+scene produce a wide array of professional-quality products. To use
+these products to their fullest capacity you must have a machine that
+runs them well, and this can mean a great deal of time spent choosing
+the right parts and configuring the system's software to ensure the
+best performance. 
+
+Aside from a few public mailing lists, there didn't seem to be any
+good comprehensive source of help for building a really solid Linux
+Audio Workstation that Just Works. Despite being quite experienced
+with Linux configuration I found it a challenge to get everything
+working right. But over time my knowledge grew, I started making the
+right choices in hardware and software, and before I knew it I was
+ready to build a workstation that /really/ worked.
+
+This is the story of *the Pod*, my own foray into custom audio
+workstation design.
+
+file:http://dto.twu.net/images/pod-front.jpg
+
+I've decided to share my experiences building, configuring, and using
+the Pod, in the hope that it will help create a community of people
+sharing their own custom creations.
+ 
+** Design criteria
+
+Several criteria guided the design of the Pod as I moved from the
+initial concept, to the frantic writing down of ideas, to a detailed
+budget spreadsheet, and finally to the purchase of parts and assembly
+of the final product.
+
+*** Build it powerful
+
+The Pod must be capable of recording many channels of audio to disk
+simultaneously, with attendant effects processing, while playing back
+even more channels---all with minimal latency. (This is the typical
+use case for multitrack recording from multiple audio-producing
+applications.)
+
+Therefore, the machine should be fast and have a good amount of
+memory, with fast disk drives, well-matched memory modules, and a good
+motherboard.  It should also be equipped with as many discrete audio
+input/output channels as are practical for the size and cost of the
+machine.
+
+*** Build it tough
+
+Like much of a band's gear, the system may be transported in
+less-than-ideal conditions (for example, the back of a pickup truck.)
+Therefore the system should be ruggedized, shock-resistant, and
+reasonably weatherproof. The system should store crucial audio data in
+redundant RAID arrays to help prevent data loss in cases of equipment
+damage or drive failure.
+
+*** Build it sexy
+
+The machine should have a unified, professional appearance. Therefore,
+cool-looking, color-coordinating components are chosen, even when this
+results in additional cost. Parts that show externally should be
+chosen with care to ensure that colors and textures match.
+
+file:http://dto.twu.net/images/pod-open.jpg
+
+*** Spare no expense
+
+The balance between function and cost should be tipped toward
+function. Therefore, when choosing between parts of significantly
+different price, choose the one that better fits the criteria listed
+above.
+
+
+* Choosing hardware
+
+** System core
+
+At the time I built the Pod, the Athlon64 had only recently been
+introduced, and there were great deals available on Athlon XP
+hardware. I chose a
+ *SOYO Dragon II* motherboard, 1 gigabyte of memory modules
+recommended by SOYO, and an *AMD Athlon XP 3200* CPU. In retrospect
+the system might have longer life had I gone with an Athlon 64, but in
+truth, I haven't begun to tax the CPU power of the Pod even in complex
+recording situations.
+
+** Enclosures
+
+After a great deal of deliberation I settled on the
+ *R908U20 Roto Shock Rack Case* from SKB Corporation, manufacturers of
+a wide variety of protective cases for everything from guitars to
+guns. I paid over US $400 for it, but as this protects a significant
+hardware investment mounted inside, it's quite worth the money.
+
+At 8 rack units high and with rack mounts in both front and rear, this
+puppy is more than big enough to mount a full-size server PC chassis,
+audio interface, power conditioner, and patch bay---and that leaves a unit
+to spare! The case also includes tightly-locking rubber-sealed lids
+to prevent water getting in during transport. They even included a set
+of nice black rackmount screws with matching washers. 
+
+The PC chassis took some time to select. Most rackmount PC cases are
+meant for server use, and are thus quite ugly because nobody will ever
+look at them. I finally found a sleek, black 4-unit-high chassis from
+Athena Power corporation.
+
+file:http://dto.twu.net/images/pod-pc-out.jpg
+
+This is just about the sturdiest and roomiest PC case I have ever
+handled, and probably the last I will buy for years. It's got a
+great-looking front panel, lockable swinging front doors, along with
+six full 5.25" and two 3.5" disk drive bays. Considering that I needed
+to install three hard drives and two DVD drives, this was more than
+enough and left room for future expansion.
+
+One drawback: the chassis is quite heavy even without components
+installed, and it became necessary to buy a pair of
+ *Chatsworth equipment support brackets* (see [[http://www.chatsworth.com][Chatsworth.com]]) to
+support the weight of the completed PC's rear half. These are a
+specialty product and I had to hunt for them, eventually finding a
+supplier in [[http://www.graybar.com/][Graybar Telecom]] of Somerville, Massachusetts.
+
+** Storage
+
+I chose a *Seagate 80GB 7200RPM ATA/133 hard disk drive* to store the
+operating system, applications, and home directories. 
+
+For audio files, I purchased 
+ *two Seagate 200GB ATA/133 hard disk drives* and installed them as a
+RAID-1 array, with the same data always stored on both drives. Not
+only does this help prevent data loss if a drive dies, but it also
+improves reading speed because the system can read simultaneously from
+both disks. Think of multitrack recording, where many tracks are being
+played back into monitor headphones while the vocal part is being
+recorded.
+
+** DVD reading/writing
+
+I purchased two DVD drives from LITE-ON corporation--- one high-speed
+reader for ripping discs, and one dual-layer burner for creating
+mixdown CD's, DVD backups, and video DVD's. 
+
+** Audio I/O
+
+Of course, an audio workstation PC is only as good as its audio input
+and output devices. Due to the state of driver support on Linux, one
+must choose carefully. 
+
+*** M-Audio Delta 1010
+
+The *M-Audio Delta 1010* is, in my opinion, one of the finest PCI
+audio interfaces for the money (about US $400) available today. The
+Delta 1010 has 8 analog inputs and 8 analog outputs, along with a pair
+of digital I/Os and MIDI jacks. The sound quality is fantastic and the
+free Linux drivers support the card's great low-latency. 
+
+The 19" rackmount external box of the Delta 1010 is one of the main
+reasons I chose a rack case as the basis of the design.  
+
+One minor issue: all the 1/4" audio jacks are in back of the unit. I
+purchased a *Behringer Ultrapatch Pro* patch bay, simply to bring the
+input and output jacks to the front of the machine where musicians can
+easily plug in.
+
+*** KRK Rokit 8" self-powered monitors
+
+This is one of the rare instances where a Guitar Center employee
+actually influenced my buying decision. I fell in love with the 
+ *KRK Rokit 8" self-powered monitors* on first listen. Furthermore, I
+ found the black-and-yellow color scheme to be a nice addition to the
+ Pod's ambience. It was US $500 for the pair. 
+
+I also bought a set of *Auralex monitor isolation pads* to "float" the
+monitors and prevent their bases from transmitting too much
+vibration to the studio furniture. 
+
+*** Roland keyboard amplifier
+
+Since I don't want to take the delicate KRK monitors anywhere outside
+the studio, I picked up a used *Roland KC-300 Keyboard Amplifier* from
+a friend who was selling some gear. This is a sturdy keyboard amp,
+perfect for synth sounds in a live situation.
+
+
+** Cooling and noise management
+
+For a recording studio, all bets are off if the audio workstation
+sounds like a vaccuum cleaner. I took great pains to get the Pod's
+running noise level down to an absolute minimum.
+
+First, I replaced all the fans with ultra-quiet models from
+Zalman. They make a great "flower-shape" CPU cooler that makes
+virtually no noise when running at its lower speeds. 
+
+file:http://dto.twu.net/images/pod-zalman.jpg
+
+Second, I bought three *CoolerMaster CoolDrive* units, which cool and
+muffle the hard drives. One of them is also a 4-way fan controller and
+temperature monitor, wired up to all the fans in the system. In this
+way I can run the fans at the lowest possible speed while monitoring
+temperature safety. As usual, these fit into the black-and-silver
+color scheme I'd been developing for the whole system. 
+
+These were attached to the drive bay housings with rubber washers to
+help stop disk vibration noise transmitting to the case itself. 
+
+Third, I chose an ultra-quiet *Coolmax 550-watt ATX power supply*
+with a controllable fan. When set to its lowest speed, this power
+supply is virtually inaudible. 
+
+Finally, I lined the entire PC chassis interior with
+ *PAXmate adhesive noise insulation foam* to quiet any remaining
+ sound.
+
+As a result, the machine is almost completely silent when the front
+bay doors are closed. 
+
+** Power management
+
+I bought a *Raxxess PD-800L* rackmount power distribution unit. This
+is basically a rackmount surge protector and power strip, with plenty
+of wide-spaced grounded outlets on the back, and one on the front. The
+unit also has retractable lights on a dimmer switch, which can be used
+to light up your work area during a gig at a club (where the lighting
+situation is often less than optimal.)
+
+** MIDI controller
+
+I decided to buy the *M-Audio Keystation Pro 88 MIDI Controller*
+almost as soon as I felt its keys in the store. I was taught to play
+piano on rather stiff weighted keys, and can't stand the springy keys
+of a synth. The Keystation has quite heavy action and I couldn't
+resist buying it. It can also be powered via its USB connection,
+alleviating the need for a separate power cord. 
+
+file:http://dto.twu.net/images/pod-keys.jpg
+
+Furthermore, it's got plenty of assignable general-purpose knobs and
+buttons, offering the prospect of immediate tactile control over audio
+software.
+
+** Wireless keyboard/mouse combo
+
+And now for one of the finest keyboard/mouse combos available, the 
+ *Logitech DiNovo Wireless Desktop*. The keyboard is ultra-slim and
+ has laptop-like keys (but a decidedly desktop-esque full layout.)
+ Crucial for a recording studio, the keyboard is also very quiet while
+ typing at normal speeds. 
+
+** Miscellaneous
+
+At a local antique shop, I found a great set of chairs for the
+musicians to sit in. They're from the sixties and made of yellow
+vinyl---the exact same yellow as the cones on the KRK monitors! It was
+US $35 for the pair. The chairs are armless, perfect for holding a
+guitar while seated. 
+
+
+* Building the Pod
+
+Construction was, for the most part, a straightforward matter. Because
+the Athena Power case is so roomy, there were rarely any difficult
+fittings. One great feature of the chassis is that each of the two
+3x5.25" drive bay housings are removable, so you can mount the drives
+while the bays are outside the case. This prevents any difficult
+angles when driving screws. 
+
+file:http://dto.twu.net/images/pod-above.jpg
+
+I installed one RAID disk in each of the two housings, both for weight
+balance and to prevent both drives getting destroyed in case one whole
+side of the Pod were to be crushed or damaged by water. 
+
+One DVD drive went on each side, giving the retractable disc trays a
+side-by-side configuration.
+
+The system drive was installed inside the combination drive
+cooler/temperature monitor (the part with the LCD screen in the photos
+above.)
+
+Before filling up the case, I lined the *entire* interior with 
+ *PAXmate adhesive noise insulation foam*. This stuff is specifically
+ designed for the interior of computer cases, and cuts easily with
+ scissors. To stomp out all possible sources of noise, I covered every
+ aperture of the case (even ventilation holes) and left only the two
+ rear fans open for airflow. Combined with the air intake fans at the
+ front of the Pod, this gives a complete flow of air through the
+ inside of the chassis. The machine has an uptime of months, winter or
+ summer, and has never overheated. 
+
+Cable management was a bit difficult. There were five IDE devices
+(three HDD, two DVD) with data and power lines for each, four
+temperature probes, and four different fans to control. Furthermore I
+had internal USB port cables, various motherboard pin connections, and
+external lighting hookups to deal with. As you can see from the
+following rear view of the drive housings, it's quite a tangle:
+
+file:http://dto.twu.net/images/pod-drives.jpg
+
+I used cable ties and various other methods to keep things reasonably
+organized. You don't want a stray cable touching a hot area, or
+stopping a fan, so it's important to keep them from moving around
+during transport. I also used highly flexible round IDE cables
+wherever possible (they're gold and silver in the above photo.)
+
+For managing external power and data cables, I used flexible cable
+management tubes purchased at my local Staples office supply
+store. They are visible in this rear view of the Pod. 
+
+file:http://dto.twu.net/images/pod-rear.jpg
+
+
+* Software configuration
+
+I chose Fedora Core 3 (current at the time) as a base operating system
+for the Pod. However, much more configuration was needed to make the
+Pod a fully operational audio workstation. The typical stock Linux
+kernel does not support low-latency audio operation, nor are most of
+the more useful applications included with a default installation of
+Fedora. The following sections show what I did to get the Pod running.
+
+Please note: code snippets in this section will be specific to Fedora
+Core 3. Your mileage may vary with other versions. 
+
+** PlanetCCRMA
+
+The good news is that there's a great shortcut in setting up your
+machine. The folks at Stanford University's CCRMA have already done
+much of the hard work of configuring Fedora for audio workstation
+use. They run a sort of "meta-distribution" that installs on top of
+Fedora Core, called [[http://ccrma.stanford.edu/planetccrma/software/][PlanetCCRMA]] (pronounced "planet karma".) This work
+saves so much time and effort that I decided to informally name the
+Pod after it, sometimes calling such a machine a "KarmaPod".
+
+PlanetCCRMA installs an enhanced low-latency Linux kernel, updated
+ALSA drivers, and loads of high-quality audio and video
+applications. There is a vast amount to explore here, and it's all
+much easier than installing and configuring the packages
+yourself. PlanetCCRMA enables you to replicate the environment that
+computer music researchers have been using at Stanford, on your very
+own workstation!
+
+PlanetCCRMA is relatively easy to install. It involves first using RPM
+to install their special pre-configured version of *apt-get*. Then all
+you do is issue a few apt-get commands that will upgrade your system
+and then download all the applications and drivers you need.
+
+I will defer to CCRMA's web pages for more detailed install
+instructions, as these may vary per your specific version of Fedora
+Core. You can find the instructions at the [[http://ccrma.stanford.edu/planetccrma/software/][PlanetCCRMA homepage.]]
+
+** Creating the RAID array
+
+I used the Linux Software RAID tools to create the RAID array.  Once I
+had the device names of my two 200GB drives (/dev/hda and /dev/hdc) I
+just had to issue a few commands to get it working. 
+
+ *mdadm* is a program to create and manage RAID arrays under Linux
+ Software Raid. It should be included with Fedora. The following
+ command created the array:
+
+: /sbin/mdadm   --create /dev/md0 --auto=yes  \
+:               --level=1 --raid-devices=2 /dev/hda /dev/hdc
+
+The "level 1" is for mirroring. This means both drives will always
+hold the same data.
+
+** SGI XFS file system
+
+Next we must create a file system on the new device, *md0*. I chose
+the Silicon Graphics XFS file system due to its support for large
+files, crash recovery, and reportedly better data throughput. 
+
+The following command created the XFS file system:
+
+: /sbin/mkfs.xfs /dev/md0
+
+** Starting the RAID array
+
+Upon each bootup, we must "assemble" and mount the RAID array.
+
+: /sbin/mdadm -A /dev/md0 /dev/hda /dev/hdc
+: mount -t xfs /dev/md0 /md0
+
+** Mount configuration
+
+I don't like automatic updating of /etc/fstab. It can cause devices to
+be mounted at odd times, instead of when the user commands the machine
+to mount---which can cause latency problems. In Fedora Core 3, you can
+turn it off with these commands:
+
+: FSTAB_SYNC_SYM=/etc/hal/device.d/50-fstab-sync.hal
+: rm -f $FSTAB_SYNC_SYM
+: ln -s /bin/false $FSTAB_SYNC_SYM
+
+(See the manual on *fstab-sync* for more information on disabling it
+for your system.)
+
+I also decided I don't like DVD drives being under "/media". Instead I
+mount them at "/dvd1" and "/dvd2". These are easier to type than
+"/media/cdrecorder" and so on. The following commands accomplish this.
+
+: # make backup of fstab
+: cd /etc
+: cp fstab fstab.bak
+: 
+: # fix default mountpoints by filtering fstab
+: (cat /etc/fstab.bak | sed \
+: -e "s:/media/cdrom:/dvd1:g" \
+: -e "s:/media/cdrecorder:/dvd2:g" \
+: -e "s:,managed: :g") > fstab
+
+
+** Larswm 
+
+For fast, efficient management of windows and desktops, may I humbly
+recommend the [[http://home.earthlink.net/~lab1701/larswm/][Lars Window Manager]] (also known as Larswm.) Larswm is
+known for its speed of operation and efficient resource usage. I've
+found it to be a great companion to my audio work.
+
+Just one example: Larswm binds many actions to the status bar at the
+bottom of the screen. You don't have to actually find and hit a button
+to switch desktops---just sweep the mouse to anywhere at the bottom of
+the screen, and spin the mouse wheel to switch desktops quickly and
+silently (once again, important when recording in the same room.) The
+same goes for moving and resizing windows---you never have to hunt for
+the tiny corners or edges of a window again.
+
+** GNU Emacs and eev-mode
+
+[[file:GnuEmacs.org][GNU Emacs]] is a great text editor, but did you also know it's an online
+chat program, project management system, and enhanced system
+administration tool? 
+
+Emacs is also quite resource-efficient, when you consider how many
+things it can do. This is important on an audio machine that doubles
+as my personal PC. Emacs' variety of available tools makes it a viable
+alternative to resource-hungry environments like GNOME.
+
+I'll mention one other Emacs-related tool, called [[file:EevMode.org][EevMode]]. It's a sort
+of front end to the shell that helps in automating common tasks. I use
+it to launch other applications from within Emacs, and to script
+common tasks like CD/DVD burning. 
+
+To learn more about eev-mode, visit the [[http://angg.twu.net/#eev][eev home page.]]
+
+** Pure Data
+
+Miller Puckette's Pure Data is installed as part of PlanetCCRMA's
+collection of audio applications. It's a low-latency audio processing
+and synthesis environment designed around a graphical dataflow
+language. While the learning curve is a bit steep at first, I've found
+that Pure Data is a great environment for many types of audio
+work---effects processing, routing, and especially in building
+software synthesizers to control via MIDI. In fact, I specifically
+chose the M-Audio Keystation 88 Pro because I knew it'd have plenty of
+assignable knobs to control Pure Data. 
+
+You can find out more about Pure Data at [[http://www-crca.ucsd.edu/~msp/software.html][Miller Puckette's pd page.]]
+
+** Ardour
+
+Ardour, the indispensable multitrack hard-disk recording software for
+Linux, is also installed as part of PlanetCCRMA. This is the bread and
+butter of recording an album with Linux. 
+
+You can find out more about Ardour at [[http://ardour.org/][Ardour.org.]]
+
+
+* Results
+
+I did not consider the weight of parts in my design -- only
+correctness according to the criteria set out at the beginning of this
+essay. As a result, the Pod is so heavy I cannot lift it myself!  It
+has good handles on the sides, so that two people can easily carry it,
+but its weight must in all honesty be considered a drawback.
+
+But the most important thing is: it works! No glitches, no crashes, no
+problems. The Pod has been in the back of pickup trucks, SUV's, in
+attics and basements, all without a hitch. It's a great recording
+console and synthesis workstation for my own and my friends' musical
+projects. I consider it a success.
+
+file:http://dto.twu.net/images/pod-room1.jpg
+
+file:http://dto.twu.net/images/pod-room2.jpg
+
+
+

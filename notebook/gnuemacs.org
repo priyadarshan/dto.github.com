@@ -1,0 +1,230 @@
+#+TITLE: A personal view of GNU Emacs
+
+* What's it all about? 
+
+[[http://www.gnu.org/software/emacs][GNU Emacs]] is an alternative vision of [[http://en.wikipedia.org/wiki/Human-computer_interaction][human-computer interaction]]
+comparable to [[http://en.wikipedia.org/wiki/Smalltalk][Smalltalk.]] 
+
+At its core is an interpreter for [[http://en.wikipedia.org/wiki/Emacs_Lisp][Emacs Lisp]]. This rich, expressive
+language makes it easy to construct powerful interactive
+applications. Literally hundreds of such packages are available and
+more are being created all the time.
+
+In contrast to the icons, buttons, and menus of a [[http://en.wikipedia.org/wiki/Graphical_user_interface][graphical user
+interface]], Emacs and the user communicate largely through
+text. Because Emacs is a complete interface to the computer---with its
+own language, libraries, applications, and [[http://en.wikipedia.org/wiki/Windowing_systems][windowing system]]---some
+have even described it as an [[http://c2.com/cgi/wiki?EmacsAsOperatingSystem][operating system]] unto itself. When paired
+with a [[http://en.wikipedia.org/wiki/Unix-like][UNIX-like]] OS, in which text is often the primary means of
+both data storage and interaction with programs, Emacs becomes a
+unified general-purpose computing environment.
+
+Emacs is task-oriented and programmable. It lends itself to the
+extension of its capabilities by the experienced user. As its users'
+individual working styles and problems are diverse, so is the
+literature of the user community's program library. That collection of
+procedural knowledge is a sort of "collective consciousness" of
+Emacs. It has steadily grown in size and sophistication for more than
+[[http://www.emacswiki.org/cgi-bin/wiki?EmacsHistory][three decades]] now. It contains the distilled lessons and creative
+energy of countless people who have used Emacs in their daily work and
+who develop methods by which the most elegant and efficient possible
+usage of a computer may be effected.
+
+This is shown in the enormous variety
+of tasks which, in virtue of this program library, Emacs can tackle:
+general text editing, numerical and symbolic calculation, the
+preparation of technical documents, UNIX shell control, calendaring
+and project management, text outlining, online chat, internet
+publishing, audio synthesis and processing, and so on.  
+
+The notion of text Emacs employs is an extension of the common
+definition of text, in that one may also attach items of data called
+"properties" to groups of characters. The possible values of a
+property are precisely the set of valid Emacs Lisp objects. These
+"text properties" may be given different interpretations by the
+different programs that examine them.  The interpretations that are
+possible within Emacs are such that more advanced operations on, and
+more sophisticated views of, the data are possible than would be with
+plain text.
+
+* My own story 
+
+I never knew much about Emacs until recently. I had tried it in the
+late 1990s just to see what it was all about, but I found it
+bewildering; I just didn't know where to begin. Eventually I forgot
+all about it.
+
+** Getting started
+
+While working at the Boston studio of [[http://en.wikipedia.org/wiki/Irrational_Games][Irrational Games]] in 2003, I
+heard something about Emacs being able to run a command shell inside
+of it, and was quite intrigued. Meanwhile my [[http://en.wikipedia.org/wiki/Zire][Palm Zire]] was rapidly
+becoming inadequate as my responsibilities grew---I needed a better
+way to organize my work, and fast. Once I read about [[http://www.emacswiki.org/cgi-bin/wiki/PlannerMode][Planner]] I decided
+to give Emacs a try. 
+
+I was really impressed! Not only did I have a working todo-list and
+note-taking system, it even left behind a set of concise daily reports
+to show what you accomplished. Before long I was using Emacs for all
+of my work: correspondence (quite important when your supervisor lives
+in another hemisphere), remote system management, website development
+and maintenance, scheduling, and the preparation of numerous
+documents---everything from brief memoranda and itineraries, to much
+longer contract bid specifications and project status reports.
+
+Eventually I ran into a dead-end somewhere, and wrote a 10-line Emacs
+Lisp function to bridge the gap. I was impressed that I could
+just *make it do what i wanted.* Soon I was routinely writing my own
+Lisp code, and using [[file:EevMode.org][eev-mode]] to automate, organize, and document all
+the different things I had to do with shells on various
+machines. Discussions with [[http://angg.twu.net/][Eduardo Ochs]] and with the Emacs IRC
+community added immeasurably to my knowledge.  I fell in love with the
+Emacs Lisp language and realized that I was *excited* about
+programming for the first time in years. 
+
+** Mind-meld with Eduardo
+
+In 2005 I left Irrational to pursue other opportunities, and started
+working full-time on what would become known as the [[file:KarmaPod.org][KarmaPod]]---my
+GNU/Linux-based portable recording studio and [[http://en.wikipedia.org/wiki/Computer_music][computer music]] research
+workstation. 
+
+I wanted the Pod to look, act, and feel like Emacs. This meant
+carefully choosing and configuring applications to work seamlessly
+with Emacs, and involved a lot of false starts. Eventually I developed
+a [[http://dto.freeshell.org/e/color-theme-cl-frame.el][standard color theme]] and coordinated my [[http://fvwm.org][fvwm]] setup to match it. I
+installed [[http://ccrma.stanford.edu/software/snd/][Snd]]---a fully-featured multichannel audio editor
+and mixer loosely modeled after Emacs, and fully extensible with
+Scheme. For automated multitrack audio processing and live recording,
+I installed [[http://eca.cx][ecasound.]] This is a very useful, if a bit awkward,
+multipurpose command-line audio program. It includes Delysid's
+[[http://delysid.org/emacs/ecasound-el.html][ecasound.el]] so it can be fully controlled from Emacs.  (I have built
+some experimental tools on top of ecasound.el: see [[http://dto.freeshell.org/notebook/EcaSpace.html][Ecaspace]].)
+
+But much work was still ahead in making this UI vision into a
+reality. For months, Eduardo Ochs and I discussed the user interface
+design of the Pod.  During these intense IRC sessions I learned a lot
+about Lisp programming, software design, software documentation
+processes, and programming aesthetics---probably more than I had
+learned in my undergraduate program. Most of all I have been taught
+higher-level programming techniques, and as a result I believe I have
+become an order of magnitude more productive as a programmer. So I owe
+Eduardo my eternal thanks.
+
+** The search for a new conceptual framework
+
+By the time I quit my job, I had gotten a bit tired of Planner and
+wanted to try something new. I came across a strange and little-known
+Japanese mode called [[http://howm.sourceforge.jp/][howm]] and was intrigued by its radically different
+approach. Like Planner, it combined [[http://en.wikipedia.org/wiki/Wiki][wiki]] concepts with note-taking,
+task list, appointments, and links to various content types. Unlike
+Planner, the markup was very free-structured, and could be combined
+with any major mode. You could embed TODO items within lisp source
+code comments, for example. Howm's "goto links" and "come-from links"
+could be used to categorize notes and to navigate from one to
+another. Soon I discovered that I could freely mix eev-mode and
+howm-mode content into other files. I began to feel that some untapped
+potential lay deep within Emacs, ready to be teased out by a cowboy
+programmer.
+
+There was very little English-language documentation available for
+Howm, so I wrote a [[http://dto.freeshell.org/HowmTutorial.howm.html][Howm Tutorial.]] But before long I ran into some
+things that made Howm seem less palatable to me. It isn't suitable for
+structuring longer documents, and there are no export options (such as
+HTML.) I wrote a draft of an HTMLizer but soon gave up on Howm
+entirely.
+
+Then I found [[file:OrgMode.org][org-mode,]] which is a much better fit for my needs. It
+uses [[http://www.emacswiki.org/cgi-bin/wiki/OutlineMode][outline-mode]] to structure and navigate large projects. It has a
+simple markup syntax supporting bullets, emphasis, hyperlinks, tables,
+images, and multiple nested headings. Org-mode's workflow management
+is sophisticated and can be configured for a variety of work
+situations and personal styles. Project documents are easily exported
+to HTML. In fact, a given project's webpage, TODO-list, and research
+notes can all be maintained in the same .org file and published
+automatically to the web.
+
+I wrote a program called [[file:../e/org-publish.el][org-publish]] to automate the updates to my
+website. It keeps track of modification times of my publishable files,
+and converts/uploads pending changes upon request. After Carsten
+Dominik decided to include it in the org-mode distribution, I signed
+my Emacs copyright assignment papers with the [[http://www.fsf.org][Free Software Foundation]]
+and have since become a proud Emacs developer.
+
+** The road to eon
+
+** Teaching Emacs to a friend
+
+They say you never truly understand an idea until you have had to
+teach it to someone else. It forces you to grasp the concept and put
+it into your own words. Recently I have had some experience teaching
+Emacs to other people, including some who are not computer
+programmers.
+
+* Links
+
+ - [[http://www.emacswiki.org/cgi-bin/wiki?EmacsHistory][History of Emacs]]
+ - [[http://en.wikipedia.org/wiki/History_of_the_graphical_user_interface][History of the GUI]]
+
+------------------
+GNU Emacs is fantastic! I use it for all my programming, text editing,
+chat (with rcirc), email (Gnus), file management (dired-mode), shell
+automation ([[file:EevMode.org][eev-mode]]), calendar, appointments and project planning
+([[file:OrgMode.org][org-mode]]), writing, web development, music playlists (emms) and
+general organization of myself. Emacs even makes this website.
+
+** Links
+
+ - my [[file:../e/init.el][init.el]] 
+ - my [[file:../e/emacs.e.html][recipes]] for downloading and building GNU Emacs from CVS,
+   downloading and installing various other emacs packages
+ - my file:ColorThemes.org
+ - [[http://www.gnu.org/software/emacs][home page]] for GNU Emacs
+
+* Tasks
+
+
+** DONE Rewrite pretty-symbols.el for lispers
+   CLOSED: [2006-05-07 Sun 18:38]
+
+** DONE Try out pretty-symbols.el
+   CLOSED: [2006-05-07 Sun 14:51]
+** DONE Install latest emms
+   CLOSED: [2006-05-06 Sat 21:09]
+** DONE Install latest rcirc
+   
+** TODO Configure sensible query notifications
+
+** DONE Hack together mini-screenshots mode
+   CLOSED: [2006-05-04 Thu 15:34]
+** TODO [#C] Configure gnus spam handling
+** DONE Reorganize and clean up file:../e/init.el
+   CLOSED: [2006-04-27 Thu 19:04]
+SCHEDULED: <2006-04-27 Thu>
+
+* Notes
+  
+** Carsten's guide to writing elisp docstrings
+
+  + The first line of each documentation must be a self-contained
+    sentence because some commands only display that first line.
+
+  After the line you explain what is necessary:
+   
+  + For variables, what the variable holds, what are valid values for
+    it, what do the values mean.  If the variable is one that Users
+    are allowed to change, the documentation string should be
+    understandable by a normal user.
+
+  + For normal functions, explain the function arguments (using UPPER
+    CASE for the variable names.  Also document what the return value
+    of the function is.
+
+  + For interactive commands it is basically like functions, but keep
+    in mind that this is the information normal user look up.
+    Function documentation can assume that the reader reads lisp, for
+    commands it is nice if that is not required.
+
+
+
+

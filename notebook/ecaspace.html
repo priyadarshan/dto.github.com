@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>ecaspace</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:50 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">ecaspace</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">About </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+ <b>ecaspace</b> is a music creation tool built on <a href="http://www.eca.cx">Ecasound</a> and GNU Emacs.
+</p>
+<p>
+ <b>2007-01-25:</b> It is currently in pre-alpha but there is working
+ code. You can <a href="../e/ecaspace.el">download ecaspace.el</a>. Ecaspace depends on libraries
+ that are changing fast right now, so please wait a few days before
+ doing anything with it.
+</p>
+<p>
+ Until then, look at the screenshot:
+</p>
+<p>
+ <img src="../images/EcaSpace-alpha.png"  alt="../images/EcaSpace-alpha.png" />
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Design </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+An <b>ecaspace</b> is a library of sound projects and recordings.  A
+ <b>session</b> is a set of tracks. A <b>track</b> consists of an ecasound
+input, a corresponding output, a set of operations to be performed,
+and finally a collection of takes. A <b>take</b> identifies an individual
+audio file. A <b>take set</b> is the set of new takes created when the
+engine is started with record-enabled tracks.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Inspiration </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+I recently decided to stop using <a href="http://ardour.org">Ardour.</a> I have no use for
+punch-in/punch out, really complex automations, or sequencing of
+loops. Our band's style is about capturing the music as it happens,
+and throwing away whole takes if it doesn't work.
+</p>
+<p>
+I want to easily mix command-line batch processing tools (like
+"soundmosaic") with automated multitrack processing&hellip; I have become
+interested in the dialogue between live improvisation and "process
+music" (i.e. two ends of a spectrum)
+</p>
+<p>
+Playing with ecasound's Emacs Lisp interface has made me decide to
+develop some Lisp tools for automating my workflow and for creating
+new possibilities by integration with other tools (Snd, Common Lisp
+Music, soundmosaic, etc)
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Sketch of album process </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+When you're in between songs, it should feel like you're in between
+radio stations the way it happens when you move the dial around on an
+old radio. There should be a bit of static and maybe you hear a third
+song in there somewhere.
+</p>
+<p>
+ <b>ecaradio</b> is an ecaspace module for assembling music on this model.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="todo TODO"> TODO</span> Complete alpha </h2>
+<div class="outline-text-2" id="text-5">
+
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="todo TODO"> TODO</span> Buy "notes from the metalevel" </h3>
+<div class="outline-text-3" id="text-5-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="todo TODO"> TODO</span> Buy "microsound" </h3>
+<div class="outline-text-3" id="text-5-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="todo TODO"> TODO</span> Fix too much space after activated block </h3>
+<div class="outline-text-3" id="text-5-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="todo TODO"> TODO</span> Make hooks work so that blocks are properly saved </h3>
+<div class="outline-text-3" id="text-5-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="todo TODO"> TODO</span> Session save/load commands, auto-managing the .ecaspace files </h3>
+<div class="outline-text-3" id="text-5-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-6" class="outline-3">
+<h3 id="sec-5-6"><span class="todo TODO"> TODO</span> Create session from templates </h3>
+<div class="outline-text-3" id="text-5-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-7" class="outline-3">
+<h3 id="sec-5-7"><span class="todo TODO"> TODO</span> Ecaspace minor mode gives you a keymap with record/play/stop </h3>
+<div class="outline-text-3" id="text-5-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-8" class="outline-3">
+<h3 id="sec-5-8"><span class="todo TODO"> TODO</span> Allow file input for tracks in :import mode </h3>
+<div class="outline-text-3" id="text-5-8">
+
+
+</div>
+
+<div id="outline-container-5-8-1" class="outline-4">
+<h4 id="sec-5-8-1"><span class="todo TODO"> TODO</span> Notion of track "modes" like :normal and :import? </h4>
+<div class="outline-text-4" id="text-5-8-1">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5-9" class="outline-3">
+<h3 id="sec-5-9"><span class="todo TODO"> TODO</span> Widgets for global record-enable, play, stop </h3>
+<div class="outline-text-3" id="text-5-9">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-10" class="outline-3">
+<h3 id="sec-5-10"><span class="todo TODO"> TODO</span> General chain ops </h3>
+<div class="outline-text-3" id="text-5-10">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-11" class="outline-3">
+<h3 id="sec-5-11"><span class="todo TODO"> TODO</span> General controllers </h3>
+<div class="outline-text-3" id="text-5-11">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-12" class="outline-3">
+<h3 id="sec-5-12"><span class="todo TODO"> TODO</span> Pool inputs </h3>
+<div class="outline-text-3" id="text-5-12">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">Ecaradio tasks </h2>
+<div class="outline-text-2" id="text-6">
+
+
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="todo TODO"> TODO</span> Compress static </h3>
+<div class="outline-text-3" id="text-6-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="todo TODO"> TODO</span> Add morphing? </h3>
+<div class="outline-text-3" id="text-6-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="todo TODO"> TODO</span> assemble album v18 </h3>
+<div class="outline-text-3" id="text-6-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="todo TODO"> TODO</span> write UI for this functionality </h3>
+<div class="outline-text-3" id="text-6-4">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7">Links </h2>
+<div class="outline-text-2" id="text-7">
+
+
+<ul>
+<li>my hardware setup: <a href="http://dto.freeshell.org/notebook/KarmaPod.html">http://dto.freeshell.org/notebook/KarmaPod.html</a>
+</li>
+<li>some audio ramblings: <a href="http://dto.freeshell.org/notebook/ClFrame.html">http://dto.freeshell.org/notebook/ClFrame.html</a>
+</li>
+<li>some music we made: <a href="http://dto.freeshell.org/notebook/Excelsis.html">http://dto.freeshell.org/notebook/Excelsis.html</a>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8">ecasound.el tasks </h2>
+<div class="outline-text-2" id="text-8">
+
+
+</div>
+
+<div id="outline-container-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="todo TODO"> TODO</span> Flesh out defeci set </h3>
+<div class="outline-text-3" id="text-8-1">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9">Other Tasks </h2>
+<div class="outline-text-2" id="text-9">
+
+
+</div>
+
+<div id="outline-container-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="todo TODO"> TODO</span> Larger font status/clock window </h3>
+<div class="outline-text-3" id="text-9-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="todo TODO"> TODO</span> Review prior art </h3>
+<div class="outline-text-3" id="text-9-2">
+
+
+</div>
+
+<div id="outline-container-9-2-1" class="outline-4">
+<h4 id="sec-9-2-1"><a href="http://permalink.gmane.org/gmane.comp.audio.ecasound.general/1031">http://permalink.gmane.org/gmane.comp.audio.ecasound.general/1031</a> </h4>
+<div class="outline-text-4" id="text-9-2-1">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-9-3" class="outline-3">
+<h3 id="sec-9-3"><span class="todo TODO"> TODO</span> Try designing some basic multitrack overdub routines </h3>
+<div class="outline-text-3" id="text-9-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-4" class="outline-3">
+<h3 id="sec-9-4"><span class="todo TODO"> TODO</span> Design basic region editing &ndash;&gt; how it maps onto ecasound </h3>
+<div class="outline-text-3" id="text-9-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-5" class="outline-3">
+<h3 id="sec-9-5"><span class="todo TODO"> TODO</span> Define clips: sections of a take </h3>
+<div class="outline-text-3" id="text-9-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-6" class="outline-3">
+<h3 id="sec-9-6"><span class="todo TODO"> TODO</span> Allow to change sampling rate </h3>
+<div class="outline-text-3" id="text-9-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-7" class="outline-3">
+<h3 id="sec-9-7"><span class="todo TODO"> TODO</span> Beat/measure movement </h3>
+<div class="outline-text-3" id="text-9-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-8" class="outline-3">
+<h3 id="sec-9-8"><span class="todo TODO"> TODO</span> Add defeci's for sample accurate positioning? </h3>
+<div class="outline-text-3" id="text-9-8">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-9" class="outline-3">
+<h3 id="sec-9-9"><span class="todo TODO"> TODO</span> Resynthesis with external programs </h3>
+<div class="outline-text-3" id="text-9-9">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-10" class="outline-3">
+<h3 id="sec-9-10"><span class="todo TODO"> TODO</span> Explore combining Snd and ecasound </h3>
+<div class="outline-text-3" id="text-9-10">
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:50 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

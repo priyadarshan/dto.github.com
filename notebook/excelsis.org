@@ -1,0 +1,103 @@
+#+TITLE: Omnipotent Space Band: LIVE 1998-2008
+
+* About us
+
+This is the home page of the Omnipotent Space Band Recording
+Project. We are a group of American musicians who grew up in or near
+[[http://en.wikipedia.org/wiki/Northborough,_Massachusetts][Northboro, Massachusetts.]]
+
+Two years ago I built a [[file:KarmaPod.org][ruggedized audio workstation]] and
+began recording much more material. We are now developing a CD-length
+compilation of this music.
+
+My first task was to review and index our library of existing
+recordings. Most of the material existed on hard disks and old CDR's.
+We also did some basement box hunting to find analog cassettes. These
+were transferred to digital using a Marantz PMD101 cassette recorder.
+
+The process is still not finished. Our studio has many hours of live
+stereo recordings that we have not yet listened to, and we continue to
+find old CDRs with music we had thought to be lost.
+
+The next phase will involve transformation of these recordings through
+analysis and resynthesis. I have been writing custom software for the
+project (some notes [[file:EcaSpace.org][here]] and [[file:Ligeti.org][here.]])
+
+After that, there will be another round of studio sessions (most
+likely beginning in 2008) and subsequent mastering. Release on
+[[http://www.archive.org][archive.org]] will follow. A compact disc package, with cover art and
+photography by the band, will be sold directly to the public via an
+online store. Proceeds will fund further musical work.
+
+* Copyrighted music that is legal to share
+
+ Our music is copyrighted material. But unlike most albums, you are
+ permitted to *download the music* free of charge, and then *share it*
+ with your friends.
+
+ This works out well for several reasons. In the first place, we would
+ like more people to hear the music. Second, we couldn't stop you even
+ if we wanted to. Third, I don't have sufficient bandwidth to be the
+ only source of the file anyway. So go ahead and mirror it. 
+
+ You may read more about the License below.
+
+* Now listen
+
+ - *AUDIO DOWNLOADS TEMPORARILY UNAVAILABLE* --- Sorry folks, I've had
+   to take down the files due to lack of bandwidth. I will put them
+   back up somewhere soon with lots of new music.
+ - [[http://www.vorbis.com][Download player software]] for Ogg Vorbis files. If you are on Mac or
+   Windows you probably need this.
+
+* Licensing
+
+[[http://creativecommons.org/licenses/by-nc-nd/3.0/][http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png]]
+
+THE RECORDING IS PROVIDED TO YOU UNDER THE TERMS OF THE [[HTTP://CREATIVECOMMONS.ORG/LICENSES/BY-NC-ND/3.0/][CREATIVE
+ COMMONS ATTRIBUTION-NONCOMMERCIAL-NODERIVS 3.0]] LICENSE.
+
+  - PROPER ATTRIBUTION IS REQUIRED.
+  - THE MUSIC MAY BE USED AND PERFORMED FOR STRICTLY NONCOMMERCIAL PURPOSES.
+  - NO DERIVATIVE WORKS ARE ALLOWED.
+
+[[mailto:dto@gnu.org][Contact us]] if you wish to discuss other licensing options.
+
+
+* Credits
+
+** Alphabetical listing of performers
+ 
+ - Steve Benedetto (drums) 
+ - Ariane Charbonneau (keys, vocals, acoustic guitar)
+ - Michael Charbonneau (guitar, bass, drums, production)
+ - Philip Charbonneau (bass, various percussion)
+ - Ben Cummings (bass)
+ - David O'Toole (bass, synthesizers, keys, guitar, drums, vocals, production)
+ - Dana Scott (bass)
+
+** Partial list of equipment 
+
+ - Yamaha RGX-A2 electric guitar
+ - Remo dumbek, tambourines
+ - Dean fretless electric bass
+ - VOX tone processors and amps
+ - Fender amps
+ - 60's vintage Fender electric guitar
+ - Baldwin Pianovelle RP4LE
+ - G+L electric guitar
+ - G+L electric bass
+
+** Software
+
+ - csound
+ - Pure Data
+ - Hydrogen
+ - ecasound
+ - ecaspace
+ - Jeskola Buzz
+ - Snd
+ - Ardour
+ - GNU Emacs
+ - Soundmosaic
+ - Amber

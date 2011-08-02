@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>CL-FRAME: structured graphics for Lisp programs</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:51 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">CL-FRAME: structured graphics for Lisp programs</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Screenshot </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+<img src="../images/ClFrame.png"  alt="../images/ClFrame.png" />
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Status </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+ <b>2006-10-28</b> &mdash; CL-FRAME now runs Snd and tells it to start the
+ Snd-RT engine. I've got a few things to add to the interface to make
+ testing this easier, and then I'll see if I can create some
+ executable diagrams.  But it's the weekend, so it might wait until
+ Monday if I am lazy&hellip;
+</p>
+<p>
+ <b>2006-10-27</b> &mdash; A bit slow today, but still productive. I finally
+ wrapped my head around Snd-RT and got it making some noise. I've
+ realized that CL-FRAME's notions of dataflows and ports will
+ translate very naturally to Snd-RT's notions of <b>&lt;rt-play&gt;</b> instances
+ and buses. I also got rid of the flicker in CL-FRAME's redrawing.
+</p>
+<p>
+ <b>2006-10-20</b> &mdash; Spent some time today on refactoring and cleanups. I
+ also implemented a general-purpose keybinding mechanism quite similar
+ to that of Emacs, and a general-purpose text widget (similar to, but
+ much much simpler than, that of Emacs.) More to come&hellip;
+</p>
+<p>
+ You can download <a href="http://dto.freeshell.org/e/cl-frame.lisp">cl-frame.lisp</a> if you are curious, but right now it's
+ barely usable.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">What is CL-FRAME? </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+The truth is, I'm not entirely sure what is is yet. But here is an
+attempt to define it:
+</p>
+<p>
+CL-FRAME is an alternative user interface framework for Lisp programs
+and the X Window System. It provides a notion of "workspaces" composed
+of pages called "worksheets", upon which are inscribed arbitrary
+visual programming elements, user interface widgets, and commentary.
+</p>
+<p>
+The idea is that one constructs an application and its user interface
+by arranging and connecting these different pieces together, in some
+cases writing new widget subclasses in Common Lisp. Each worksheet can
+handle a task or a group of related tasks. Workspaces are saved in
+plain text files that may be shared and posted on the Web.
+</p>
+<p>
+An application may either accomplish its work in Common Lisp, or by
+controlling external programs, or by some combination of the two
+methods.
+</p>
+<p>
+The default interface is inspired by GNU Emacs. There is an
+interactive lisp listener where one may input commands, and a text
+editing feature with emacs-style default keybindings. 
+</p>
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1">Soundframe </h3>
+<div class="outline-text-3" id="text-3-1">
+
+
+<p>
+The first application for CL-FRAME (shown in the screenshot above) is
+called Soundframe, and implements subclasses for creating worksheets
+that perform realtime audio synthesis and processing with <a href="http://ccrma.stanford.edu/software/snd/">the Snd environment</a> and its new <a href="http://www.notam02.no/arkiv/doc/snd-rt/">realtime subsystem.</a> This program is currently
+under construction and may also include Ecasound support at some
+point.
+</p>
+<p>
+The goal is to create a comprehensive music creation interface that is
+suitable for non-programmer musicians. It is a platform for
+construction of tools for creating a whole album interactively,
+combining multiple techniques (jamming, recording, looping, layering,
+sampling, sequencing, stretching, processing, granulating) into an
+organic whole.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Some obsolete notes </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+These are some very early and obsolete notes on the project.
+</p>
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1">Inspiration </h3>
+<div class="outline-text-3" id="text-4-1">
+
+
+<ul>
+<li>We want emacs-style user interfaces for applications written in
+   either Emacs Lisp or Common Lisp.
+</li>
+<li>We want arbitrary structured graphical elements in our
+   buffers&mdash;something emacs does not support by itself. 
+</li>
+<li>We want to make interactive structured graphics available for use
+   in Emacs Lisp applications, and make it look like this is happening
+   inside an ordinary emacs frame.
+</li>
+<li>We want to make Emacs' text editing facilities available for use in
+   Common Lisp applications.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2">A sketch of the solution </h3>
+<div class="outline-text-3" id="text-4-2">
+
+
+<ul>
+<li>Implement a graphical Common Lisp "shell" that allows one to open
+   Emacs-style "frames" that can support arbitrary structured graphics
+   and user interface elements. Although emacs functionality is not
+   duplicated, the user interface style is&mdash;we have graphical
+   buffers, windows onto them, and frames that hold multiple windows.
+</li>
+<li>The program communicates with a <b>client lisp process</b> that
+   implements the application logic. This can be written in Emacs Lisp
+   or Common Lisp. They communicate through sockets or ssh.
+</li>
+<li>User interactions with the cl-frame (keypresses or mouse clicks) are
+   forwarded to the client lisp process.
+</li>
+<li>Events in the Emacs process can be forwarded to the cl-frame for
+   the purposes of updating the graphical display and/or updating the
+   internal state of the client lisp process. 
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Ideas </h2>
+<div class="outline-text-2" id="text-5">
+
+<ul>
+<li>Related Squeak/CSound things:
+  <a href="http://www.zogotounga.net/comp/squeak/csblocks.htm">http://www.zogotounga.net/comp/squeak/csblocks.htm</a>
+  <a href="http://www.zogotounga.net/GM/eGM0.html">http://www.zogotounga.net/GM/eGM0.html</a>
+</li>
+<li><a href="http://www.piksel.no/pwiki/DesireData">http://www.piksel.no/pwiki/DesireData</a>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="todo TODO"> TODO</span> Prototype Tasks </h2>
+<div class="outline-text-2" id="text-6">
+
+
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="todo TODO"> TODO</span> Bridge to Snd-RT </h3>
+<div class="outline-text-3" id="text-6-1">
+
+
+</div>
+
+<div id="outline-container-6-1-1" class="outline-4">
+<h4 id="sec-6-1-1"><span class="done DONE"> DONE</span> Open Snd from within CL-FRAME </h4>
+<div class="outline-text-4" id="text-6-1-1">
+
+<p>     <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-10-28 Sat 08:49</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-1-2" class="outline-4">
+<h4 id="sec-6-1-2"><span class="done DONE"> DONE</span> Properly initialize Snd </h4>
+<div class="outline-text-4" id="text-6-1-2">
+
+<p>     <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-10-28 Sat 16:47</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-1-3" class="outline-4">
+<h4 id="sec-6-1-3"><span class="todo TODO"> TODO</span> Get some realtime effect processor working in Snd-RT </h4>
+<div class="outline-text-4" id="text-6-1-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-1-4" class="outline-4">
+<h4 id="sec-6-1-4"><span class="todo TODO"> TODO</span> Map out each step in creation of flow-net as snd-scheme stuff </h4>
+<div class="outline-text-4" id="text-6-1-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-1-5" class="outline-4">
+<h4 id="sec-6-1-5"><span class="todo TODO"> TODO</span> Write adc~ definstrument </h4>
+<div class="outline-text-4" id="text-6-1-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-1-6" class="outline-4">
+<h4 id="sec-6-1-6"><span class="todo TODO"> TODO</span> Write dac~ definstrument </h4>
+<div class="outline-text-4" id="text-6-1-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-1-7" class="outline-4">
+<h4 id="sec-6-1-7"><span class="todo TODO"> TODO</span> Write freeverb~ definstrument </h4>
+<div class="outline-text-4" id="text-6-1-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-1-8" class="outline-4">
+<h4 id="sec-6-1-8"><span class="todo TODO"> TODO</span> Make connections work </h4>
+<div class="outline-text-4" id="text-6-1-8">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-1-9" class="outline-4">
+<h4 id="sec-6-1-9"><span class="todo TODO"> TODO</span> Try making realtime oscillator control </h4>
+<div class="outline-text-4" id="text-6-1-9">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="todo TODO"> TODO</span> Split soundframe classes into separate file </h3>
+<div class="outline-text-3" id="text-6-2">
+
+
+</div>
+
+<div id="outline-container-6-2-1" class="outline-4">
+<h4 id="sec-6-2-1"><span class="todo TODO"> TODO</span> Turn soundframe into a proper CL-FRAME "module" </h4>
+<div class="outline-text-4" id="text-6-2-1">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="todo TODO"> TODO</span> Clean up model folding / serialization stuff </h3>
+<div class="outline-text-3" id="text-6-3">
+
+
+</div>
+
+<div id="outline-container-6-3-1" class="outline-4">
+<h4 id="sec-6-3-1"><span class="todo TODO"> TODO</span> Allow reconstructor function to be something other than #'make-instance </h4>
+<div class="outline-text-4" id="text-6-3-1">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6-4" class="outline-3">
+<h3 id="sec-6-4">More stuff </h3>
+<div class="outline-text-3" id="text-6-4">
+
+
+</div>
+
+<div id="outline-container-6-4-1" class="outline-4">
+<h4 id="sec-6-4-1"><span class="todo TODO"> TODO</span> More defgenerics </h4>
+<div class="outline-text-4" id="text-6-4-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-4-2" class="outline-4">
+<h4 id="sec-6-4-2"><span class="todo TODO"> TODO</span> Message bar widget </h4>
+<div class="outline-text-4" id="text-6-4-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-4-3" class="outline-4">
+<h4 id="sec-6-4-3"><span class="todo TODO"> TODO</span> Command pattern -&gt; undo/redo support </h4>
+<div class="outline-text-4" id="text-6-4-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-4-4" class="outline-4">
+<h4 id="sec-6-4-4"><span class="todo TODO"> TODO</span> Visual focus indicator </h4>
+<div class="outline-text-4" id="text-6-4-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-4-5" class="outline-4">
+<h4 id="sec-6-4-5"><span class="todo TODO"> TODO</span> Allow color themes </h4>
+<div class="outline-text-4" id="text-6-4-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-4-6" class="outline-4">
+<h4 id="sec-6-4-6"><span class="todo TODO"> TODO</span> Abstraction patches </h4>
+<div class="outline-text-4" id="text-6-4-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-4-7" class="outline-4">
+<h4 id="sec-6-4-7"><span class="todo TODO"> TODO</span> "Hover" shows port labels </h4>
+<div class="outline-text-4" id="text-6-4-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-4-8" class="outline-4">
+<h4 id="sec-6-4-8"><span class="todo TODO"> TODO</span> Visual-eev </h4>
+<div class="outline-text-4" id="text-6-4-8">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-4-9" class="outline-4">
+<h4 id="sec-6-4-9"><span class="todo TODO"> TODO</span> Implement workspace: collection of worksheets </h4>
+<div class="outline-text-4" id="text-6-4-9">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-4-10" class="outline-4">
+<h4 id="sec-6-4-10"><span class="todo TODO"> TODO</span> Think about library vs. workspace distinction. </h4>
+<div class="outline-text-4" id="text-6-4-10">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-4-11" class="outline-4">
+<h4 id="sec-6-4-11"><span class="todo TODO"> TODO</span> Loading workspaces and libraries via http </h4>
+<div class="outline-text-4" id="text-6-4-11">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6-5" class="outline-3">
+<h3 id="sec-6-5">Future </h3>
+<div class="outline-text-3" id="text-6-5">
+
+
+</div>
+
+<div id="outline-container-6-5-1" class="outline-4">
+<h4 id="sec-6-5-1"><span class="todo TODO"> TODO</span> Use Ecasound for jam recording </h4>
+<div class="outline-text-4" id="text-6-5-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-5-2" class="outline-4">
+<h4 id="sec-6-5-2"><span class="todo TODO"> TODO</span> Autotimestamped Jams. Instant jam button, jam directory, etc. </h4>
+<div class="outline-text-4" id="text-6-5-2">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:51 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

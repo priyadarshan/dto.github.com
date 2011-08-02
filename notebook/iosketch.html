@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>IOSKETCH</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:44 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">IOSKETCH</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Overview </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+IOSKETCH is a cross-platform visual authoring tool for games and other
+interactive media. The design of IOSKETCH expands on <a href="http://scratch.mit.edu">MIT Scratch</a>,
+and is built on a 2D game engine written in <a href="http://en.wikipedia.org/wiki/Common_Lisp">Common Lisp</a>.
+</p>
+<p>
+IOSKETCH can be used in tandem with <a href="http://www.gnu.org/software/emacs">GNU Emacs</a>, with live integration
+between the two via <a href="http://en.wikipedia.org/wiki/Emacs_Lisp">SLIME</a> and custom code.
+</p>
+<p>
+IOSKETCH is <a href="http://en.wikipedia.org/wiki/Free_software">free software</a>. Read on for videos, features, and links to
+more information.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">History </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<ul>
+<li>2006: Game engine and interactive editor were prototyped in Emacs Lisp.
+</li>
+<li>2007-2009: Ported to Common Lisp, two games released (see links below.)
+</li>
+<li>2010: Two more games released. Engine greatly expanded with new
+   functionality and new roadmap. Renamed to IOSKETCH and began
+   implementing a Lispy visual programming language on top of the
+   existing game engine and editor.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Features </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<ul>
+<li>Custom <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based</a> object system with built in serialization;
+   save and load full state of game worlds.
+</li>
+<li>Object-oriented 2D game engine with support for both tiles and
+   sprites, scrolling backgrounds, and basic procedural generation
+   tools.  <a href="http://www.youtube.com/watch?v=6AGInhs2gaM">Video 1</a> &mdash; <a href="http://www.youtube.com/watch?v=MJHxUrMuVUI">Video 2</a> &mdash; <a href="http://www.youtube.com/watch?v=kh7JJgwENBM">Video 3</a> &mdash; <a href="http://www.youtube.com/watch?v=WHmbuhBVtEU">Video 4</a> &mdash; <a href="http://www.youtube.com/watch?v=CvN4zPGyCv0">Video 5</a> ---
+   <a href="http://www.youtube.com/watch?v=MapxH02RehY">Video 6</a> &mdash; <a href="http://www.youtube.com/watch?v=Q2CbufwmMjI">Video 7</a>
+</li>
+<li>Visual development environment, assembling behaviors from
+   color-coded blocks representing Common Lisp objects. This is the
+   newest part of IOSKETCH and a work-in-progress video may be seen here:
+   <a href="http://www.youtube.com/watch?v=DmtALHVRSTU">Youtube video of in-progress IOSKETCH GUI</a>.
+</li>
+<li>Emacs for code editing, asset management, version control, workflow
+   via <a href="http://www.orgmode.org">Org-mode</a>, and integration with external programs. See <a href="http://www.youtube.com/watch?v=43IiSvbyIZY">my screencast</a> 
+   about game development in Emacs.
+</li>
+<li>LISPBUILDER-SDL for graphics, sound, joystick etc.
+</li>
+<li>Compilation to efficient machine code via <a href="http://www.sbcl.org/">SBCL</a>.
+</li>
+<li>Resulting apps run (so far) on Windows, Mac OSX, and Linux.
+</li>
+<li>Creation of redistributable standalone apps for any platform
+   IOSKETCH runs on.
+</li>
+<li>Or, distribution and sharing of projects separately from the IOSKETCH
+   runtime as compressed archives.
+</li>
+<li>Interactive command prompt with history, help, etc.
+</li>
+<li>Generic media spreadsheet model and accompanying graphical editor.
+</li>
+<li>"Modules" are like workbooks composed of many spreadsheets
+</li>
+<li>2D game world editor 
+   <a href="http://www.youtube.com/watch?v=XAUWw61urNM">Video 1</a> &mdash; <a href="http://www.youtube.com/watch?v=E5KmZxQxiJ0">Video 2</a> &mdash; <a href="http://www.youtube.com/watch?v=XAUWw61urNM">Video 3</a>
+</li>
+<li>Reasonably sized, at about 10,000 lines of Lisp code.
+</li>
+<li>Fully free software (GPLv3) and based on open standards.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Current status </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<ul>
+<li>Working alpha with <a href="http://dto.github.com/notebook/games.html">several games</a> released.
+</li>
+<li>Moving toward beta is now the focus.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Learn more </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<ul>
+<li><a href="http://github.com/dto/iosketch">source code repository</a> at github
+</li>
+<li><a href="http://lispgamesdev.blogspot.com/">development blog</a>
+</li>
+<li>irc.freenode.org, channel #iosketch
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">Future plans </h2>
+<div class="outline-text-2" id="text-6">
+
+
+<ul>
+<li>OpenGL support.
+</li>
+<li>Improved audio support and music editing.
+</li>
+<li>More sophisticated asset pipeline with external programs.
+</li>
+<li>More platform support.
+</li>
+<li>Motion control support. See <a href="http://lispgames.org/index.php/CloMotion">the CloMotion page</a>.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7">References </h2>
+<div class="outline-text-2" id="text-7">
+
+
+<ul>
+<li><a href="http://www.lispgames.org">http://www.lispgames.org</a>
+</li>
+<li><a href="http://www.ircam.fr/equipes/repmus/bresson/docs/om-hosc.pdf">Visual Lisp/CLOS Programming in OpenMusic</a>
+</li>
+<li><a href="http://squeak.org/">http://squeak.org/</a>
+</li>
+<li><a href="http://scratch.mit.edu/">http://scratch.mit.edu/</a>
+</li>
+</ul>
+
+
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:44 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

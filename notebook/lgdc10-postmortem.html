@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>LGDC10 Postmortem</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:43 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">LGDC10 Postmortem</h1>
+
+<p> <b>Tuesday March 30, 2010</b>
+</p>
+<p>
+First let me thank everyone for participating in the 2010 Lisp Game
+Design Challenge! I think the whole contest has been a success. With
+ten registered entries (8 individuals and 2 teams), I think we'll have
+a lot to discuss in the coming days. The LGDC also brought some new
+people to the lispgames community, and we're continuing to build a
+knowledge base for developing and delivering games in Lisp across
+multiple platforms. For example the <a href="http://www.cliki.net/LispGameDesignChallenge">cliki registration page</a> now has a
+big list of links to various libraries and tools, and the IRC
+channel's ranks have swelled to an average of over 30 people. I've
+read the postmortems mailed so far and I think these documents
+will be a great contribution to the lispgames noosphere. 
+</p>
+<p>
+And now for my postmortem!
+</p>
+<p>
+For my 7-day Challenge entry I implemented the core gameplay mechanics
+and settings of a loosely Lisp-themed sci-fi combat game called CONS.
+I'm classifying my entry as a failure because I did not finish a
+complete game within the time limit. I will continue working on CONS
+though, and I'm looking forward to fleshing out the design.
+</p>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">What's lispy about my entry? </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+The player is a multi-segment Lisp list snake! See the design document
+at <a href="http://dto.github.com/notebook/cons.html">http://dto.github.com/notebook/cons.html</a> for details. In addition
+some interesting "minilanguage" techniques were used for this game,
+see the algorithms section below.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Tools and technology </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+My entry is programmed in Common Lisp running on SBCL. I used my own
+<a href="xe2-reference.html">XE2 game engine</a>, which is based on LISPBUILDER-SDL. Image editing was
+done with the GIMP, and program development with GNU Emacs and SLIME
+running on Ubuntu. For music and sound I used varying combinations of
+Hexter (a software Yamaha DX7 emulator), Audacity (digital audio
+editor), Ardour (digital audio recording workstation), and
+Milkytracker (MOD tracking application.)
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">What went right? </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<ul>
+<li>The 7-day process is good for focusing on the core play mechanics,
+   despite being a bit stressful at times. 
+</li>
+<li>My design called for five different level types plus an overworld
+   map. This forced me to focus on improving XE2's random level
+   generation framework, and led to some interesting new
+   functionality. See the "interesting algorithms" section below.
+</li>
+<li>Focusing on usability led to simplified controls&mdash;gameworld
+   interaction uses only the arrow keys, Z, X, and Shift. The number
+   one category of user feedback complaints about my games relate to
+   controls, so this is a big win. I also made the controls
+   user-configurable through an interactive spreadsheet screen, which
+   is also joystick-compatible (with some glitches at the moment.)
+   This is (finally) a port of my circa-2006 OO spreadsheet program
+   "Cellmode". However, this was a time-sink, see next section.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">What went wrong? </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+My only real mistake was developing CONS as a 7-day thing. The design
+is a bit larger than my recent games and only the skeleton was
+finished by that time. Also, I spent an inordinate amount of time on
+the input configuration screen, and on the music for the game, when I
+should have focused on fleshing out the gameplay. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">What did you learn? </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+Don't attempt to port major features from an old codebase while in the
+middle of a 7-day challenge. Although porting Cell-mode and creating
+the configuration UI was unquestionably time well spent, I should have
+waited until after my entry was complete to work on these features.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">What interesting algorithms or designs did i use? </h2>
+<div class="outline-text-2" id="text-6">
+
+
+<p>
+There are two main points here, one relates to level generation and
+the other to user interfaces. (The combination of both elements mean
+we will soon have a user interface for level generation.)
+</p>
+<p>
+Development on my 2010 7DRL challenge entry XIOTANK was troubled by
+the issue of how to generate solvable puzzles while still randomizing
+the layout. This is a hard problem, and occasionally-unsolvable levels
+have been a <a href="http://playthisthing.com/xong">criticism of XONG</a>. In XIOTANK the more elaborate
+combination-lock style puzzle was unexpectedly hard to implement, and
+the result was still less than satisfying. Late in development, I
+overemphasized combat to compensate for this, and the result was
+(according to some players) an overly difficult game.
+</p>
+<p>
+I realized I had a bunch of level generation tools but nothing to tie
+them together. With some new functionality implemented in XE2 this has
+changed. 
+</p>
+<p>
+First came support for randomly generating sentences (Lisp lists of
+individual words, strings, or symbols) according to simple
+<a href="http://en.wikipedia.org/wiki/Context-free_grammar">context-free grammars</a>. This is similar to L-systems except that
+substitutions are not simultaneous.
+</p>
+<p>
+Here's an example grammar for a fictional sci-mission:
+</p>
+<pre class="example">
+ (defparameter *test-grammar* 
+   '((mission &gt;&gt; (at location please goal+ in exchange for reward))
+     (location &gt;&gt; mars zeta-base nebula-m corva-3)
+     (goal+ &gt;&gt; goal (goal and goal+))
+     (goal &gt;&gt; (defeat foe) (defend friend) (activate button) (retrieve documents)
+      (collect mineral+))
+     (mineral+ &gt;&gt; mineral (mineral and mineral+))
+     (mineral &gt;&gt; endurium technetium molybdenum francium a-biosilicates)
+     (foe &gt;&gt; scanner biclops unique)
+     (friend &gt;&gt; transport skiff soldier scientist)
+     (unique &gt;&gt; zx-90 xioblade)
+     (reward &gt;&gt; money part)
+     (money &gt;&gt; 10000 20000 30000 40000 50000)
+     (part &gt;&gt; muon-pistol lepton-cannon ion-shield-belt)))
+</pre>
+
+
+<p>
+When "foe" is encountered for example, it is replaced with either
+"scanner" "biclops" or "unique". (Sublists represent concatenation.)
+</p>
+<p>
+A few example output sentences.
+</p>
+<pre class="example">
+ (AT MARS PLEASE COLLECT A-BIOSILICATES IN EXCHANGE FOR MUON-PISTOL)
+ (AT NEBULA-M PLEASE DEFEAT XIOBLADE IN EXCHANGE FOR MUON-PISTOL)
+ (AT CORVA-3 PLEASE RETRIEVE DOCUMENTS AND ACTIVATE BUTTON IN EXCHANGE FOR
+       ION-SHIELD-BELT)
+</pre>
+
+
+<p>
+These are unintepreted data, but it is straightforward to give them an
+interpretation. I haven't yet done this with mission structures as in
+the example, but I <b>have</b> made a working implementation of a simple LOGO-like language, 
+to interpret randomly-generated LOGO programs like this:
+</p>
+<pre class="example">
+  9 :JUMP :PUSHLOC CONS-GAME::=BARRIER= :COLOR 90 :RIGHT 7 :DRAW :POPLOC 9 :JUMP
+  :PUSHLOC CONS-GAME::=BARRIER= :COLOR 90 :RIGHT 7 :DRAW :POPLOC 9 :JUMP
+  :PUSHLOC CONS-GAME::=BARRIER= :COLOR 90 :RIGHT 7 :DRAW :POPLOC 9 :JUMP
+  :PUSHLOC CONS-GAME::=BARRIER= :COLOR 45 :RIGHT 7 :DRAW :POPLOC 10 :JUMP 90
+  :RIGHT :ORIGIN :PUSHLOC 45 :RIGHT 5 :JUMP CONS-GAME::=EXIT= :COLOR :DROP
+  :POPLOC 90 :RIGHT 20 :JUMP 90 :LEFT 25 :JUMP 90 :LEFT :PUSHLOC
+  CONS-GAME::=BARRIER= :COLOR 5 :DRAW :PUSH-COLOR :PUSHLOC 90 :LEFT
+  CONS-GAME::=BOMB-DEFUN= :COLOR 1 :JUMP 2 :DRAW :POPLOC :COLOR 5 :DRAW 90
+  :RIGHT 4 :DRAW 2 :JUMP 4 :DRAW 90 :RIGHT 10 :DRAW 90 :LEFT
+  CONS-GAME::=BARRIER= :COLOR 5 :DRAW :PUSH-COLOR :PUSHLOC 90 :LEFT
+  :RIGHT 4 :DRAW 2 :JUMP 4 :DRAW 90 :RIGHT 10 :DRAW 90 :RIGHT 6 :JUMP :PUSHLOC
+  CONS-GAME::=PURPLE-BRICK= :COLOR 5 :DRAW 90 :RIGHT 5 :DRAW 90 :RIGHT 2 :DRAW 1
+  :JUMP 2 :DRAW 90 :RIGHT 10 :DRAW 90 :LEFT CONS-GAME::=PURPLE-BRICK= :COLOR 5
+  :DRAW 90 :RIGHT 5 :DRAW 90 :RIGHT 2 :DRAW 1 :JUMP 2 :DRAW 90 :RIGHT 10 :DRAW
+  :POPLOC :PUSHLOC CONS-GAME::=BLUE-BRICK= :COLOR 5 :DRAW 90 :RIGHT 6 :DRAW 90
+  :RIGHT 5 :DRAW 90 :RIGHT 6 :DRAW 90 :LEFT CONS-GAME::=BLUE-BRICK= :COLOR 5
+  :DRAW 90 :RIGHT 6 :DRAW 90 :RIGHT 5 :DRAW 90 :RIGHT 6 :DRAW 90 :LEFT 1 :JUMP
+  :NOOP :PUSHLOC 90 :RIGHT 3 :JUMP :DROP-REACTOR :POPLOC :POPLOC :POPLOC
+  :DROP-DRONES
+</pre>
+
+
+<p> 
+The twist on LOGO is that it's a Forth-style prefix notation.
+I maintain a stack of data items for each world. The LOGO program
+is generated according to a supplied grammar. When a non-keyword
+symbol is encountered, push its value onto the stack. When a string or
+number is encountered, push it onto the stack also. But when a
+keyword-symbol is encountered, we invoke the correspondingly-named
+method on the <code>world</code> object, which may pull arguments from the
+stack. The operation :COLOR sets the "paint color", in this case the
+type of game object to draw. The operations :PUSHLOC and :POPLOC save
+and restore (respectively) the turtle's current position and
+orientation. :DRAW and :JUMP move N squares in the current direction,
+either painting (with :DRAW) or not painting
+(:JUMP).
+</p>
+<p>
+Here's part of a "reactor level" generation grammar: 
+</p>
+<pre class="example">
+ '((world &gt;&gt; (rod-square
+              :origin
+              :pushloc
+              45 :right 
+              5 :jump
+              =exit= :color :drop
+              :poploc
+              90 :right
+              20 :jump 
+              90 :left
+              25 :jump 
+              90 :left
+              :pushloc security-structure :poploc
+              :drop-drones))
+   (rod-angle &gt;&gt; 90 45)
+   (rod &gt;&gt; (9 :jump
+    :pushloc 
+    =barrier= :color 
+    rod-angle :right 
+    7 :draw
+    :poploc))
+   (rod-row &gt;&gt; (rod rod rod rod rod 10 :jump 90 :right))
+   (rod-square &gt;&gt; (rod-row rod-row rod-row rod-row))
+   (side-chamber &gt;&gt; (:pushloc
+          room3 90 random-turn
+          room3 90 :left
+          1 :jump
+          gun-maybe
+          :pushloc
+          90 :right
+          3 :jump
+          :drop-reactor
+          :poploc
+          :poploc))
+   (gun-maybe &gt;&gt; :noop :noop (=shocker= :color :drop))
+   (security-structure &gt;&gt; (room 90 :left 
+                room 90 :left 
+                room 90 :left
+                room 90 :right
+                6 :jump
+                :pushloc room2 90 random-turn room2 :poploc
+                side-chamber))
+   (random-turn &gt;&gt; :right :left)
+   (random-brick &gt;&gt; =purple-brick= =blue-brick=)
+</pre>
+
+
+<p>
+This is a big change for XE2. With turtle graphics it's easy to scale
+and rotate drawing elements, and express their mututal arrangement in
+both absolute and relative terms. But the drawing elements can be
+anything, because the keywords in the randomly generated sentences can
+trigger any method you choose to define&mdash;not just LOGO-like
+operations. So all the other existing tools in XE2 (lines, boxes,
+circles, plasma) are now tied together into a cohesive and extensible
+framework for procedural content generation of all kinds, not just
+levels. (I'm interested in seeing what can happen with procedural story
+elements.)
+</p>
+<p>
+A related development is the porting of cell-mode from Emacs Lisp into
+Common Lisp. It's a sort of object-oriented spreadsheet program with
+dataflow from left-to-right amongst cells of different types. Instead
+of implementing a new grid structure, I made a new system called
+"forms". One can build a spreadsheet UI out of game objects, or open an
+editable spreadsheet view of a game world. Combine this ability to
+hand-edit with the procedural generation tools, and we could have a
+very powerful interactive gamesdev environment. 
+</p>
+<p>
+Thanks for reading everyone. 
+</p>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:43 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

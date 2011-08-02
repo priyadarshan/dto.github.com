@@ -1,0 +1,34 @@
+#+TITLE: eon alpha release. ALSO: the emacs demoscene?
+#+DESCRIPTION: eon alpha release. ALSO: the emacs demoscene?
+
+This is the beginning of a DAILY blog series that will probably last
+about a week. I'll be building a new [[http://dto.freeshell.org/notebook/KarmaPod.html][Pod]] along with three satellite
+nodes, all running Debian. Along the way, I'll document and photograph
+every single step of its construction in what will become known as the
+"POD HOWTO". I'll have photos up within the next 48 hours...
+
+Also: is anyone interested in running an emacs 4k demoscene competition?
+
+The rules:
+
+  - Your entry must consist of a single foo.tar.gz file less than or
+    equal to 4096 bytes in length.
+  - The gz file should uncompress into a directory ./foo with
+    your files in it.
+  - The files may be anything whatsoever (audio, images, emacs lisp files).
+  - Your program must compile without errors or warnings, and must run
+    in a recent GNU Emacs 23.x (i.e. emacs-from-CVS). 
+  - Your program can (require) only those libraries that come with
+    GNU Emacs 23.x
+  - You must include a README file with your name and email address,
+    and any relevant copyright/license information (this is important
+    because we want to archive the entries and winners, etc, sort of
+    like the international interactive fiction contest.)
+  - You must include a file "foo-demo.el" that starts your demo when loaded.
+
+There is already one entry from Ryan Yeske:
+
+http://rcy.ath.cx/~rcy/elisp/hacks/rain.el
+
+
+

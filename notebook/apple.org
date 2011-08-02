@@ -1,0 +1,333 @@
+#+TITLE: Thoughts on iOS games
+#+AUTHOR: David O'Toole <dto1138@gmail.com>
+
+The encouraging response to our [[http://dto.github.com/notebook/remix-this-game.html][REMIX THIS GAME]] competition has
+provoked some thoughts about Apple, and I thought I'd just jot them
+down. Full disclosure: I have never owned any Apple product.
+
+As you may know, XONG is available for Mac OSX thanks to my friend
+Shawn Betts (of [[http://www.nongnu.org/stumpwm/][Stumpwm]] fame) compiling a Mac app version, and so Mac
+users can remix to their hearts' content. This is because the
+Macintosh is still a bonafide PC---a Personal Computer that you own
+and choose software for, and can actually create software with.
+
+But, you can add REMIX THIS GAME to the growing list of interesting
+things Apple will not allow on its [[http://en.wikipedia.org/wiki/IOS_(Apple)][iOS platform]], the operating
+system that runs the iPhone, iPod Touch, iPad, and possibly the next
+generation of Macintoshes.
+
+No, if you remix XONG for iOS, it will be rejected by Apple.
+First off, the remix-in-place functionality---where you can change the
+game's program code without special development tools---only works
+because we include the Lisp compiler and runtime environment with
+XONG. But Apple's iOS SDK terms ban compilers and interpreters
+outright---and in fact ban the use of any cross-platform development
+or compilation tool in iOS application development:
+
+: Applications may only use Documented APIs in the manner
+: prescribed by Apple and must not use or call any private
+: APIs. Applications must be originally written in Objective-C, C, C++,
+: or JavaScript as executed by the iPhone OS WebKit engine, and only
+: code written in C, C++, and Objective-C may compile and directly link
+: against the Documented APIs (e.g., Applications that link to
+: Documented APIs through an intermediary translation or compatibility
+: layer or tool are prohibited). 
+
+Immediately this rendered Adobe's automatic Flash-to-iPhone cross
+compiler useless. This tool would have made it possible to develop
+Flash applications (which already work on multiple platforms) by
+cross-compiling them to the iPhone's native format---just click and
+submit your App to the iOS developer program, and you can bring your
+software to iOS users. But Apple doesn't want it.
+
+Apple's SDK also makes [[http://dto.github.com/notebook/games.html][all my games]] forbidden on iOS, in any form. I
+wrote my cross-platform game engine in [[http://en.wikipedia.org/wiki/Common_Lisp][Common Lisp]], which is not one
+of the above "whitelisted" languages. Furthermore, Common Lisp
+specifies the semantics of both an interpreter and a compiler /as
+integral parts of the language./ But even if I contrive not to
+actually ship the library functions called "compile" and "eval" which
+are /part/ of the Common Lisp language definition, my app would still
+be rejected, because it is not "originally" written in "Objective-C,
+C, C++, or JavaScript as executed by the iPhone OS WebKit engine". So
+my options are now:
+
+ 1. The C language, which is often used as the language you
+    cross-compile other, better languages to in order to get them
+    running on something else, because C runs on everything. Examples
+    include [[http://ecls.sourceforge.net/][Embeddable Common Lisp]], which can translate Common Lisp
+    into standard C programs---and, surprise, two of Apple's
+    sanctioned languages, Objective-C and C++, were both implemented
+    first as translators to C---even though code translation is
+    forbidden.
+
+    Otherwise, C is not much of an App machine as against
+    modern tools. Besides, if you actually write C by hand, you have to use and
+    understand [[http://en.wikipedia.org/wiki/Pointer_(computing)][pointer arithmetic]], and you have to do it morning,
+    noon, and night. In short, program errors involving
+    pointers---which are extremely common, given how pervasively one
+    must use pointer arithmetic to do much of anything in C---are the
+    source of myriad security and stability problems. (This is why I'm
+    not convinced by the security and stability argument in Steve
+    Jobs' "Thoughts on Flash".)
+
+    (Pointers have their place in the conceptual scheme, and are
+    fundamental to programming. But naked, unmanaged pointer
+    arithmetic is problematic. When you identify the problem as
+    "pointer arithmetic" it makes more sense to leave the arithmetic
+    to the computer, and this is the whole meaning of the movement
+    toward automatic memory management.)
+
+ 2. Objective-C, a simple and elegant object-oriented extension to C
+    developed in the early 80's under the influence of Smalltalk. It's
+    nice, but all you can really do with it now is develop OSX and iOS
+    applications, so you lock yourself into developing for
+    Apple. (Remember, you can't /translate/ to Objective-C with Cocoa
+    under the new rules.) 
+
+    I'm not an expert on this, but I suspect that Objective C is the
+    only real option for developing Cocoa apps, and that's what I
+    would choose if I really had to develop for iOs. (I dislike C++,
+    and I see no reason to use plain C over Objective C.)
+    
+    (Apple has begun making extensions to the Objective-C language
+    that may very well be enhancements---they've added something
+    resembling first-class anonymous functions, from what I
+    gather. But these changes will also further idiosyncratize the
+    platform. This kind of lock-in is the same problem confronting
+    people who invest thousands of dollars in their locked iTunes
+    collections and apps---the cost of moving to another platform is
+    so high that you are much more likely to just pay Apple's boutique
+    premium for next year's model.)
+
+    You still have pointers in Objective C. 
+
+ 3. C++, a large and complex language designed in no particular
+    decade, under the influence of virtually every hot programming
+    idea that twitched between about 1980 and 2000. Its various
+    elaborations and patches to the C pointer concept apparently did
+    not make a dent in the stability or security of software written
+    in C++. And you still have naked pointers anyway because it's
+    backward compatible with C.
+
+ 4. "JavaScript as executed by the WebKit engine" which probably means
+    Apple JavaScript. I think JavaScript is used a lot as a
+    translation target, which is forbidden. Also, [[http://arstechnica.com/gadgets/news/2010/07/android-22-demolishes-ios4-in-javascript-benchmarks.ars][apparently]] it isn't
+    the fastest JavaScript engine around.
+
+Now, set aside the question whether or not XONG in particular would be
+playable on iPhone without significant changes, or whether this
+particular remix contest would be effective on the iPhone. We can't
+even /try/.  The underlying issue is Apple's [[http://www.ted.com/talks/larry_lessig_says_the_law_is_strangling_creativity.html]["read-only culture"]]
+problem and the rise of [[http://arstechnica.com/gadgets/news/2010/05/curated-computing-whats-next-for-devices-in-a-post-ipad-world.ars]["Curated computing"]]. But more about that
+later.
+
+Another problem arises. The GPLv3 license is apparently incompatible
+with the iOS SDK Terms of Use. Here is [[http://www.fsf.org/news/2010-05-app-store-compliance][an explanation from the people
+who wrote the GPL itself.]] So by all appearances, you can't remix XONG
+for the iPhone even if you port it to Objective-C, because of Apple's
+requirement that it be "originally" written in C, C++, Objective-C, or
+Apple JavaScript, AND because the translation would pretty arguably be
+a derivative work, which means GPL problems. (One remixer who
+contacted me is porting the game to Python, so this is not really a
+hypothetical situation.)
+
+It gets worse. We need not delve into philosophy of mathematics to see
+problems with Apple's use of "originally". The very nature of
+computing, literally its definition, is that the operations performed
+by a computer are, individually at least, /simple and mechanical
+operations/, and could be performed by anyone able to read and write
+and follow simple instructions.  You might need a lot of time, and a
+lot of paper and pencils, but you will reach exactly the same result
+as the computing machine so long as you follow the same computational
+procedure. Computing is /about the procedure/, not about the machine
+or person. The results being identical, you cannot determine whether a
+human or a CPU did the work. 
+
+(This is what I was getting at earlier when I pointed out that two of
+the languages on Apple's whitelist, Objective-C and C++, were both
+first implemented as preprocessors translating one language to
+another. The C compiler you /are/ permitted to use /is still a
+compiler/ and translates from C into something else that runs on the
+iPhone. /You/ are actually a code translator if you program, because
+you are translating ideas about a procedure, or even detailed written
+descriptions of a procedure from some other place on the continuum
+ranging from natural language to [[http://en.wikipedia.org/wiki/Pseudocode][pseudocode]] to C and so on.)
+
+So, above we have an example of someone translating the program XONG,
+by hand, into another language. Now say we decide to cross compile
+XONG into C (using Embeddable Common Lisp) or even Flash (via a
+certain Common Lisp to Flash compiler that I've heard about).
+
+All three such translations would be unacceptable to Apple. All would
+be translations of a program from a not "originally" sanctioned
+language, even if all manner of changes were made to conform to all
+the requirements Steve Jobs claims are the real point of the
+restictions---user interface guidelines, security, and stability. (You
+can go a long way toward the last two just by using languages that
+don't require pointers for everything.)
+
+Even though you could in principle write a valid Objective-C program,
+find or write a preprocessor translating it to a valid Plain C
+program, and it might be approved without Apple being the
+wiser---despite the use of code translation. 
+
+This is a bigger problem than it sounds like. It means Apple has no
+hope of establishing an /objective/ decision procedure for ensuring
+this required "originality" in an app. How we can empirically discover
+for sure how or even whether some program was translated into another
+language is not really something I envy Apple's lawyers having to
+argue in court if the FTC decides to act.
+
+The bottom lines for me as an indepedent game developer:
+
+ - Apple has just greatly increased the cost of developing an approved
+   iOS application, because now you have to use some variant of C and
+   deal with pointers. If you're already doing this, great, but this
+   sends a pretty clear signal to developers who have not gone mobile
+   yet---no ports, no cross-compiling, no Adobe flash
+   conversions---you need to essentially start from scratch. (Who is
+   Apple to tell "auteur" gamedevs what updated features of iOS their
+   introspective story-based exploration platformers should support?
+   This middleware argument is just garbage. What Steve Jobs
+   disparages as middleware is just the broad movement of the last
+   decade or two toward programming in diverse styles and delivering
+   applications that are increasingly independent of platform, device,
+   or vendor.)
+
+   As this App market grows (Windows 8 is supposed to have an app
+   store, the Android store which is growing and growing, Google is
+   investing in games, and so on) it'll have all kinds of new entrants
+   with new ideas to sell. Everybody wants to jump in these
+   days. Well, Apple has just erected a huge barrier to entry to the
+   newcomers who are probably the future of the App market, with this
+   remarkably counterproductive and short-sighted set of requirements.
+
+ - Apple has just greatly increased the risk of developing an approved
+   iOS application, because the "originally" concept is really
+   foggy, and probably will mean whatever Apple feels like it
+   means at that moment, so Apple has created uncertainty in its
+   dealings with people who do or who might want to develop iOS in the
+   future. It also pulled GNU Go from the App Store because of the GPL
+   conflict issue, adding more uncertainty for people who make use of
+   free software licenses for their work, or who use free libraries in
+   their game development.
+
+ - Apple has shown it is willing to carry out the policy rather
+   ruthlessly, and pulled such innovative applications as the
+   MIT-developed [[http://scratch.mit.edu/][Scratch]] programming environment. This means Apple can
+   retroactively declare wide swaths of modern programming practice,
+   and innumerable cool projects, forbidden, and pull them from the
+   shelves. Not even the worst game industry developer-publisher
+   relationship I can imagine would involve pulling product! Apple is
+   asking game developers to walk into just the kind of
+   publisher-slanted atmosphere the Scratchware Manifesto crowd have
+   been trying to dismantle for years.
+
+ - This "curated computing" thing is a scam, promoted by people who
+   love the idea of a software market with unlimited control and
+   essentially no consumer protections. My idea of independent games
+   development is as the French say, incompatible.
+
+So, while I am happy to continue releasing games for real Personal
+Computers like the Macintosh, my interest in iOS has gone from "let's
+do it" to "probably never". In making this move and then /making it
+stick/, Apple are encountering the same compulsion to get in between
+their own customers and /their/ software vendors (who have become
+competitors or otherwise threatening to Apple) that grips any software
+company finding itself in charge of an entire market. Jobs' "Thoughts
+on Flash" discloses what Apple obviously thinks is a profound threat
+to iOS---everything and everyone else who could possibly develop
+popular iPhone apps that are also available elsewhere. First, each
+app would make it incrementally easier and enticing for formerly
+locked-in iCustomers to switch to something else next year. Second,
+Apple is a hardware company and needs to sell /things/, so developers
+of Mac software such as myself---who do not even own Macs, but for
+whom it is very important to treat users equally regardless of their
+chosen platform and deliver the same experience to all comers---are
+not making them any money. Besides, if I started to sell Mac games,
+that could mean Mac people spending money on things other than Apps
+for their other iStuff.
+
+There is the argument that easy cross-compilation, combined with
+things like Scratch that dramatically lower the barrier to entry into
+programming and creative expression with computers, will result in a
+flood of crap. My advice is: let the users handle it exactly the way
+they do now. I am not a Mac user, but I think I can identify on at
+least one level. As a free software user, I want to use /the computer
+and software that I want to use/ and I want it now. The software I
+want is different, but I think I get the basic idea of Mac, and as far
+as I can tell they are quite capable of "curating" their Mac
+experience by themselves.
+
+There is also the argument that cross-compiled applications will not
+feel like Mac applications and thus ruin the harmony of the whole user
+experience. However, I see no reason why cross-compiled applications
+could not just use the Cocoa APIs, whether they compile to valid
+Objective-C Cocoa programs, or by some other method. I suspect this is
+possible, because Apple has seen fit to explicitly forbid it. Apple
+could think of collaborating with vendors to keep "middleware" updated
+with the latest iOS features, instead of saying, "We cannot be at the
+mercy of a third party deciding if and when they will make our
+enhancements available to our developers." But alas, Apple controls a
+software platform with developers it sees as competitors, so they
+treat them accordingly and interfere with them distributing their
+applications to Apple customers who want them.
+
+(It is true that I do not use Cocoa, but that is because my games are
+designed as experiences where I control the entire presentation
+window, optionally in full-screen mode, and thus I have no need of
+Cocoa. Occasionally there are hiccups, such as when one of my game's
+default keybindings conflicted with a common Mac shortcut. That is
+what user acceptance testing is for and all of this is completely
+ordinary.)
+
+The site AppleInsider [[http://www.appleinsider.com/articles/10/06/11/apple_relaxes_ios_sdk_to_allow_lua_but_block_flash.html][claims]] that the more recent June update of the
+iOS terms "relaxes iOS SDK terms to allow Lua but block Flash", in the
+words of the headline. The piece also suggests that all the noise from
+game developers is just a rumor spread by Adobe. Let's examine the
+actual SDK change here:
+
+: Notwithstanding the foregoing, with Apple's prior written
+: consent, an Application may use embedded interpreted code in a limited
+: way if such use is solely for providing minor features or
+: functionality that are consistent with the intended and advertised
+: purpose of the Application.
+
+The key words being "limited" and "minor". I don't see how this
+applies to any cross-platform game engine, especially where
+compilation is used instead of interpretation---compilation is still
+forbidden---and an interpreted game would mean shipping interpreted
+code implementing /the game itself, i.e. the major functionality/ of
+the Application, not "minor" and "limited". AppleInsider's spin here
+is unconvincing. Not only that, but in order to read the SDK's vague
+addendum as "allow popular game engines, block flash" the way
+AppleInsider does, they are admitting that Apple will play favorites
+with the clause's interpretation, by allowing Unity3D here, blocking
+Flash there, allowing Lua demos but blocking Scratch, and so on, in
+order to get what they want. Case closed. 
+
+All this reveals the sudden fragility of the iOS ecosystem. I don't
+think Jobs knows this, because he talks about "the PC era" in the past
+tense, and thinks something called the "mobile era" has succeeded
+it. I hope he is wrong, because if Apple walks away with mobile
+computing and replaces OSX with iOS, we'll be living in a read-only
+culture without personal computers that enable our creativity or
+communication. We'll be living in iWorld, where you need a Mac to
+create and an iDevice to consume, all running iOS. I'd honestly rather
+just go on using Ubuntu and cross-compile my games for whatever
+platform will have me, and report to no one.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

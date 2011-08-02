@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Eon and RLX move to Common Lisp</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:52 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content="Eon and RLX move to Common Lisp"/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Eon and RLX move to Common Lisp</h1>
+
+<p>I've ported the prototype-based Eon object system to Common Lisp. 
+</p>
+<p>
+There are several reasons why I've done this. Eon began its life in
+late 2006 as the core world-representation of the <a href="http://dto.mamalala.org/notebook/rlx.html">RLX roguelike engine</a>. This was a great working proof-of-concept, and taught me a lot
+about Lisp programming. But ultimately the limitations of Emacs have
+led me to abandon the idea of implementing the RLX engine itself in
+Emacs Lisp. Emacs' execution model is not suitable for realtime play,
+so the engine itself would have been limited to turn-based action.
+The display engine was limited to rectilinear grids of tiles, because
+Emacs can't overlap images at all&mdash;that's another limitation of
+roguelikes that I've been trying to move past. 
+</p>
+<p>
+Another big, obvious problem was speed. RLX could only handle
+relatively small maps, about 60x60 tiles&mdash;not the expansive
+landscapes I dream of. The ray-casting code was fast enough, but the
+<a href="http://en.wikipedia.org/wiki/A*">A-star pathfinding</a> code&mdash;for which I wrote my own optimized heap
+implementation&mdash;was just too slow, even with only a few enemies doing
+the pathfinding. This conflicted with my goal of having sophisticated
+AI with many enemies onscreen at once (see also my design notes for
+<a href="http://dto.mamalala.org/notebook/voidmission.html">Void Mission</a>.)
+</p>
+<p>
+The last straw was sound support. I run a small recording studio and
+have been producing sound effects and music for Void Mission all
+along. Emacs would have been up to the task of playing ogg files in
+the background, but sound effects synchronized with the action would
+have been nearly impossible.
+</p>
+<p>
+I'd already considered Common Lisp as the natural next step for RLX
+2.0, so I decided to get moving. I'm using <a href="http://sbcl.sourceforge.net/">SBCL</a> and <a href="http://common-lisp.net/project/slime/">SLIME</a> with
+<a href="http://lispbuilder.sourceforge.net/">Lispbuilder-SDL</a> as the graphics-and-sound library. Because I already
+used many Common Lisp idioms in my elisp programming (thanks to the
+Emacs CL package), the porting has been surprisingly easy.
+</p>
+<p>
+Emacs is still a crucial part of the picture. The RLX system will
+still contain a substantial portion of Emacs Lisp code, including
+<a href="http://dto.mamalala.org/notebook/cellmode.html">cell-mode</a> and possibly a pixel art editor, because GNU Emacs will
+remain as the integrated development environment for RLX game modules
+and their resources.
+</p>
+<p>
+I guess this represents a sea-change in my view of GNU Emacs. Before,
+it was a picture that was a bit too large for its frame; at this
+point, I see Emacs as one integral part of an ensemble that includes
+Common Lisp, Debian, and many other fine projects.
+</p>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:52 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

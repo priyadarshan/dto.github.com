@@ -1,0 +1,54 @@
+#+TITLE: State of the dto
+#+DESCRIPTION: State of the dto
+
+Hello [[http://planet.emacsen.org][Planet Emacsen]] readers,
+
+I thought I would post something because it's been a few weeks since
+my last message. 
+
+The [[http://emacs-ontology-project.googlecode.com][Eon project]] is in alpha and progressing at a reasonable pace. As I
+may have mentioned before, I'm taking some deliberate steps to improve
+my programming skills and development practices; working on Eon has
+become a good way to learn.  
+
+There's a lot of manual-reading, which is always healthy. But the most
+effective thing for me has been learning directly from other
+developers---by reading their code, or through discussions on
+IRC. I've always been one of the "lone programmer" types, but now Eon
+has two new developers (welcome Tom and Andre!) and a public
+[[http://emacs-ontology-project.googlecode.com/svn/trunk/][Subversion repository]]. With a few more decades of obsessive work and
+deep self-abnegation, I may yet become a "real programmer".
+
+Here's what I've been working on this week:
+
+ - *the eon object system:* is being revised a bit to change the
+   syntax of message sends and expand the notion of methods to include
+   something like the Symbolics Genera "Presentation Type" system.
+
+ - *vwindow* --- This is a virtual window library that can superimpose
+   what appear to be free-floating or pop-up Emacs windows on top of a
+   buffer without disturbing the text. It will also include a
+   preliminary replacement for the aging *widget.el* that comes with
+   Emacs, and an abstract spreadsheet editor derived from my old
+   [[http://dto.freeshell.org/notebook/CellMode.html][cell-mode stuff]]. My goal is much more than just to replace the X
+   toolkit menus (which inexplicably block Emacs and its subprocesses
+   while they are open) and the awful Customize interface with
+   something much more powerful. I also want to make it easy for Emacs
+   Lisp developers to separate their user interfaces from their
+   application logic. Most Emacs packages build their user interfaces
+   from scratch (possibly because the built-in widgets suck) which is
+   why we have 3 different implementations of a spreadsheet UI widget
+   (including mine) and God knows how many subtly different dired-like
+   modes.
+
+ - *ushell* --- A universal shell inspired by the Genera "Dynamic Lisp
+   Listener". This is intended to be a replacement for eshell (and
+   much else) with the ability to talk to multiple "backends" in the
+   same session. The =POSIX sh= backend works by talking to bash over
+   a pipe or socket, which probably works better in the long run than
+   trying to do serious process control or input redirection from
+   within native Emacs Lisp. But it can also talk to snd, or sbcl, or
+   stumpish, or any combination of the above---at the same command line.
+
+I'll keep you posted...
+

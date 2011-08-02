@@ -1,0 +1,27 @@
+#+TITLE: The 2010 Lisp Game Design Challenge
+
+Official mascot: Say hello to Biclops! 
+file:../images/avatar.png
+
+ *Challenge Instructions:*
+
+1. announce your entry and starting time on the Challenge's
+   [[http://www.cliki.net/LispGameDesignChallenge][cliki page]].
+2. design, create, and release a game in 7
+   days using any dialect of [[http://en.wikipedia.org/wiki/Lisp_%28programming_language%29][LISP]], between 18 March
+   and 1 April, 2010. (Choose your start time, and release 
+   your completed entry within 7 days.)
+
+Or, be a spectator and play/discuss the games!
+
+Join our [[http://common-lisp.net/mailman/listinfo/lisp-game-dev][mailing list]] and/or IRC channel, irc.freenode.net#lispgames
+to get involved.
+
+ *Banner logo:*
+
+file:../images/lgdc.png
+
+ *Previous entries:*
+ 
+ - Thopter (Elliott Slaughter, 2009). [[http://code.google.com/p/blackthorn-engine/wiki/Thopter][Website]] and [[http://www.youtube.com/watch?v=5MDqC6XG-Ag][Video]].
+ - Xiobreak (David O'Toole, 2009): [[http://www.youtube.com/dto1138#p/u/26/OGC9jPzuqug][Video]].

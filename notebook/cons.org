@@ -1,0 +1,175 @@
+#+TITLE: CONS
+
+* Overview
+
+In the game of CONS you are a sentient warrior [[http://en.wikipedia.org/wiki/Cons][cons cell]]. In each
+randomly generated mission you will infiltrate and sabotage an alien
+military installation. 
+
+CONS is in a playable alpha state and is available for Windows, Mac
+OSX (Intel only), and GNU/Linux. Please visit the [[http://github.com/dto/xe2/downloads][downloads page]] to
+choose the right file for your platform.
+
+This is not a finished game, but your comments and feedback are
+welcome. Many user requests and suggestions have made it into the
+game; tell me what you want and perhaps I'll implement it!
+
+My [[file:games.org][games page]] has links to my other games.
+
+* Screenshots and video
+
+file:../images/cons1.png
+file:../images/cons3.png
+file:../images/cons4.png
+file:../images/cons5.png
+file:../images/cons6.png
+file:../images/cons7.png
+
+ - [[http://www.youtube.com/watch?v=kh7JJgwENBM][Youtube video with sound]]
+
+* Play mechanics
+
+The player is composed of several square 16x16 pixel pieces whose
+movements follow one another like a centipede. At the start of the
+game, there is the "agent", i.e. the head of the snake, and three
+segments. Each body segment is one inventory slot; adding body
+segments upgrades one's inventory, but since segments are also
+susceptible to enemy fire, these upgrades also increase your
+vulnerability. 
+
+All gameworld interaction is accomplished with the arrow keys, shift,
+and the keys Z and X:
+
+  - Arrow keys (or numeric keypad) for movement.
+  - Shift-arrow for activating the selected inventory item.
+    If this is a gun for example, you fire in that direction.
+  - Z to change the selected inventory item
+  - X for picking up items, activating switches, and so on.
+  - C to drop the selected inventory item
+
+** Notes on the downloads---PLEASE READ
+
+Please visit the [[http://github.com/dto/xe2/downloads][downloads page]] to choose the right file for your
+platform.
+
+*** Windows users:
+
+Right now there is no fancy installer, but you can still download and
+run the game with a few clicks.
+
+First, your browser will probably ask you whether to *Open* the
+download, or *Save* it to disk. *CHOOSE SAVE TO DISK* and put it
+wherever you want. If you are just trying out the game, you can put it
+on your Windows desktop.
+
+Second, *RIGHT-CLICK* the CONS zip file and choose EXTRACT or EXPAND
+or UNZIP (this may vary depending on your version of Windows.) If it
+asks for a destination folder, choose the Desktop.
+
+Third and finally, *DOUBLE-CLICK* the CONS-alpha-N-win32 folder that
+should now be on the Desktop. The folder should open into an Explorer
+window. Scroll down to *CONS.EXE* and double-click it. That's it!
+Sorry, we are working on improving the installer.
+
+*** Mac OSX users:
+
+Use CONTROL-P to pause, as there is no "pause" key on the Mac.
+
+*** Linux users:
+
+   1. You need the libsdl, libsdl-mixer, libsdl-image, and libsdl-gfx
+      libraries installed via your distribution's package manager.
+   
+   2. If the game complains about =libsdl_gfx= not found, it will give
+      you the option at the command line to choose between several
+      restarts. Choose CONTINUE and it should work. 
+
+   3. *If you get errors about paths and configuration* when trying to
+      start up, see [[http://github.com/dto/xe2/blob/master/BINARY-README][these notes]] for a fix. In particular, you can add
+      a line like:
+
+: (setf xe2:*module-directories* '(#P"/home/dto/xe2/"))
+
+      to a file called =.xe2rc= in your home directory. We are working
+      on fixing this bug.
+
+   4. *If you get no sound*, you may need to install the pulseaudio
+      version of SDL-MIXER from your distribution's package library.
+      This will replace the raw ALSA version of SDL-MIXER and fix the
+      problem. The package name you want on Ubuntu Karmic is 
+      =libsdl1.2debian-pulseaudio=
+
+   5. If you still can't get any of the binaries running, or if there
+      is no binary for your system, see [[http://github.com/dto/xe2/blob/master/INSTALL][the developer's install guide]]
+      for instructions on making your own binary.
+
+* Support
+
+ - irc.freenode.org#lispgames
+ - [[mailto:dto1138@gmail.com][email me]]
+
+* The game world
+
+Each enemy base is rectangular in shape, where each grid square (or
+"sector") therein represents a different type of facility (and a
+different randomly-generated game level.)  This is the game's
+"overworld map" if you will, but it is limited in size to between 4x4
+and possibly as high as 16x16 on a higher difficulty setting. 
+
+In each sector, one or more goals must be completed, such as defeating
+all enemies, defeating a particular enemy, retrieving an item, or
+unlocking a doorway. Once your total mission is complete, a
+victory/scoring screen is displayed, and then the game ends. Death
+also ends the game.
+
+The different sector types are:
+
+  - Archive (AR)
+  - Security (SE)
+  - Storage (ST)
+  - Reactor (RX)
+  - Corridor (CO)
+
+(In addition there may be surprise sector types which occur rarely and
+may figure into an overarching story of some kind.)
+
+The contents and varying goals of each sector must be discovered as
+the player visits them; only squares adjacent to a sector whose
+objectives are completed, may be identified and visited. One may
+complete goals and sectors in any available order, and return to
+different areas as needed (for example, running back to an Archive to
+retrieve more healing items.)
+
+Each sector generator has a "level" parameter that can trigger
+additional behaviors intended to make a level more difficult and more
+rewarding. The general difficulty of the game can be ramped by
+generating map squares of appropriate difficulty levels.
+
+* Sector types
+
+** Archive (AR)
+
+These long-term data storage facilities can hold valuable secret
+data. In addition, repair programs may be available. 
+
+** Security (SE)
+
+The station's data security depends on the operation of the computers
+here. Important secret data files may sometimes be obtained, or even
+new abilities.
+
+** Storage (ST)
+
+You never know what you'll find in a storage chamber. All manner of
+supplies, ammunition, and sometimes special items may be found here.
+
+** Reactor (RX)
+
+The reactor cores contained in these chambers are the main source of
+the enemy's power.
+
+** Corridor (CO)
+
+These massive tube-like corridors are used to transport materials and
+vehicles all over the base. Steam flows upward along the sloped
+channel; corridors adjacent to a reactor are especially hot.

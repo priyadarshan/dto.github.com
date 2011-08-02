@@ -1,0 +1,142 @@
+#+title: My development postmortem for ILGE 2010
+#+author: David T. O'Toole
+
+* Overview 
+
+/Tuesday, August 17, 2010:/ My part in the [[file:2010expo.org][2010 International Lisp
+Games Expo]] comprises two roles, as I am both a contest organizer and a
+participant. In this postmortem I'll describe the various things I
+worked on, show the results, and talk about lessons learned.
+
+For various reasons I did not complete a playable game for ILGE this
+year; instead I have just several demos, some new code, and some new
+infrastructure changes. In this postmortem document I've decided to
+present what I have done even though it is not finished, and discuss
+future work.
+
+* Results
+
+** Organizing the expo
+
+Administrative tasks were mainly email and irc correspondence, plus
+some writing for the expo's various webpages. This was a lot of fun
+keeping in touch with people and seeing their various projects.
+
+** Tools and techniques
+
+Some work focused on libraries and other tools:
+
+*** Org-babel
+
+I've begun an experiment in "literate game programming" with
+Org-Babel. In particular I've been working with the Org developers to
+add Common Lisp support and several other improvements. See these links:
+
+ - [[http://orgmode.org/worg/org-contrib/babel/][Org-babel home page]]
+ - [[http://github.com/dto/xe2/raw/master/void/void.org][Unified literate source code for Void Mission]].
+
+*** Lisp games wiki
+
+User *sykopomp* (Josh) set up a [[http://lispgames.ath.cx/][Lisp Games Wiki]] for us, and it proved
+invaluable for sharing information and ideas. Several of the items
+described in this paper were influenced by wiki writing and
+discussions thereof, and I also really enjoyed making pages for
+various things.
+
+The wiki can be edited in the browser, or from within Emacs.
+
+*** Xiomacs
+
+My own entry to the collection of proposals for integrated [[http://lispgames.ath.cx/index.php/GameCreationEnvironments][Game
+creation environments]] written in Lisp.
+
+ - http://github.com/dto/xiomacs/blob/master/xiomacs.org
+
+*** LispPak
+
+A means of exchanging resource metadata between games. Related to the
+topic of [[http://lispgames.ath.cx/index.php/AssetManagement][digital asset management.]]
+
+http://github.com/dto/lisppak/blob/master/lisppak.org
+
+** Void Mission
+
+I wanted to add more story elements and some notion of objectives the
+player must accomplish to complete a mission. This led to some [[http://github.com/dto/xe2/blob/master/mission.lisp][code
+for missions]]. I also added scrolling backgrounds to my engine (see
+gameplay videos below.)
+
+Screenshots and links:
+
+ - file:../images/void1.png
+ - file:../images/void2.png
+ - [[http://dto.github.com/notebook/void.html][Void Mission page]] with more details.
+ - [[http://www.youtube.com/watch?v=DsNBCSa9Ils][Opening story movie]]
+ - [[http://www.youtube.com/watch?v=JsEEcrV8Qc8][Gameplay video 1]]
+ - [[http://www.youtube.com/watch?v=0zkcjxfCurA][Gameplay video 2]]
+
+The gameplay videos were captured losslessly with FFMPEG, and then
+converted to a lossy youtube-compatible format for upload. Using
+FFMPEG for both capture and conversion results in very high audio
+and video quality. 
+
+The opening story movie was made with various software including GIMP,
+OpenShot, and XAnalogTV.
+
+My new pressure-sensitive Wacom Bamboo Pen tablet has completely
+changed my idea of computer graphics editing. I reviewed my tablet on
+Youtube with a brief tutorial showing how I made the space clouds in
+Void Mission.
+
+ - [[http://www.youtube.com/watch?v=ePshzjCyg4o][My Bamboo Pen tablet review/tutorial]]
+
+** REMIX THIS GAME
+
+Although it attracted attention, not much happened, and my own entry
+prevented me from finishing Void Mission.
+
+http://dto.github.com/notebook/remix-this-game.html
+
+** Super Xong
+
+Did a lot of work on this, but didn't get anywhere near finished. Here
+is a video:
+
+ - [[http://www.youtube.com/watch?v=jFurp3vYUk0][Youtube video]]
+
+And my original description:
+
+SUPER XONG is a fast-moving procedurally-generated puzzle combat game
+presented in 720p High Definition for your PC or Mac. You control
+Puck, a pong paddle pilot waking up to life outside the screen. Armed
+only with your wits and a bouncing, color-changing ball, you rebel
+against the System Overlords and attempt escape to the place known as
+Outside.
+
+Each level fills the entire screen and no more; all enemies and
+objects are visible at all times.
+
+You can move and fire the ball in any of the 8 numeric keypad
+directions. The ball damages enemies, but you must catch the ball in
+order to use it again. If the ball is destroyed or eaten by an enemy,
+you have to find a new one.
+
+There are no hit points and there is no save function. Any hit kills
+you instantly, and completely ends your game. 
+
+There is no win condition; you simply encounter levels of increasing
+difficulty until you die.
+
+The enemies from original Xong are here with tweaked behaviors, plus 2
+new enemy types.
+
+* Lessons
+
+** Don't work on too many things
+
+I spread myself too thin and did several interesting things, but
+didn't finish anything yet.
+
+** Choose between working on infrastructure and working on specific games
+
+Doing both at once can lead to neither being very satisfying.

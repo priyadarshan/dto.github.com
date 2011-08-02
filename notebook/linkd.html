@@ -1,0 +1,1101 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>linkd</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:42 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">linkd</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">This is an obsolete page. </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+This code is being merged into <a href="http://dto.freeshell.org/notebook/Eon.html">Eon.</a> Visit that page instead.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Description </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+ <b>linkd-mode</b> is a system for recognizing special s-expressions in all
+kinds of text files, and causing these "lisp hot spots" to become
+interactive when viewed within <a href="GnuEmacs.html">GNU Emacs.</a> Several different activities
+are supported. The user may:
+</p>
+<ul>
+<li>Embed hypermedia links in any kind of text file. Follow the links
+   and navigate his/her own heterogeneous file web. Files can be in
+   any major mode.
+</li>
+<li>Delimit and name regions of text called "blocks" in any type of
+   text file.
+</li>
+<li>Send blocks to other programs (i.e. bash) for processing
+</li>
+<li>Identify concepts with "tags" and navigate to related code
+</li>
+<li>Optionally use icons so that links can be distinguished from each
+   other by color and shape
+</li>
+</ul>
+
+
+<p>
+ <img src="../images/linkd-wiki.png"  alt="../images/linkd-wiki.png" />
+</p>
+<p>
+ <b>linkd-mode</b> is <i>not</i> another publishing mode or personal information
+ management system. Instead it is designed to be used alongside the modes of
+ your choice. Download links, instructions, and more screenshots are below.
+</p>
+<p>
+Quite soon, linkd-mode will:
+</p>
+<ul>
+<li>Search and index blocks.
+</li>
+<li>Analyze and summarize links between blocks.
+</li>
+<li>Manufacture links related to the current context (a la remember-annotations.)
+</li>
+<li>Unify the linking schemes used by different emacs packages (for
+   example, eev, planner, howm, org)
+</li>
+</ul>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Acknowledgements </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+In designing linkd-mode I have drawn on <a href="EevMode.html">EevMode</a> and <a href="http://howm.sourceforge.jp">HowmMode</a>, among
+other things. Special thanks to <a href="http://angg.twu.net/">Eduardo Ochs</a> for writing eev and for
+many years of fruitful discussions, to <a href="http://www.stallman.org">Richard Stallman</a> for feedback
+and suggestions regarding golisp-mode, and to <a href="http://www.mwolson.org">Michael Olson</a> for coming
+up with the name and contributing ideas.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Status </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+I have made an early alpha release. Instructions follow. 
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Installation and configuration </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+ <b>NOTE: Linkd requires Emacs 22</b>.
+</p>
+<p>
+<a href="../e/linkd.el">Download linkd.el</a> and put it in your load-path. Then add 
+</p><pre class="example">
+(require 'linkd)
+</pre>
+
+<p>to your emacs initialization file, and execute the sexp with C-x C-e.
+</p>
+<p>
+If you want cool graphical icons, <a href="../packages/linkd-icons.tar.gz">download the icon collection</a> and
+unpack it in some suitable folder. Then add the following to your
+emacs initialization file:
+</p><pre class="example">
+(setq linkd-use-icons t)
+(setq linkd-icons-directory "~/.linkd-icons") ;; or wherever you put it
+</pre>
+
+
+<p>
+You can set up linkd-mode to turn on automatically whenever you enter
+certain major modes. Here is an example that causes linkd-mode to
+activate whenever you open an Emacs Lisp, Common Lisp, shell-script,
+or text-mode file:
+</p>
+<pre class="example">
+(add-hook 'emacs-lisp-mode-hook 'linkd-mode)
+(add-hook 'lisp-mode-hook 'linkd-mode)
+(add-hook 'sh-mode-hook 'linkd-mode)
+(add-hook 'text-mode-hook 'linkd-mode)
+</pre>
+
+
+<p>
+Linkd-mode's keybindings follow the standard conventions for minor
+modes: <b>C-c</b> followed by one of a set of reserved punctuation
+characters. For speed, I rebind some of them as follows: 
+</p>
+<pre class="example">
+(global-set-key [(control \&amp;)] 'linkd-follow-on-this-line)
+(global-set-key [(control f3)] 'linkd-process-block)
+(global-set-key (kbd "M-[") 'linkd-previous-link)
+(global-set-key (kbd "M-]") 'linkd-next-link)
+(global-set-key (kbd "M-RET") 'linkd-follow-at-point)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">Usage </h2>
+<div class="outline-text-2" id="text-6">
+
+
+<p>
+To use the features of linkd, you must turn on linkd-mode by issuing
+the command <b>M-x linkd-mode RET</b>. This will fontify the links and
+establish key bindings for linkd-mode's commands.
+</p>
+
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1">Basics of links </h3>
+<div class="outline-text-3" id="text-6-1">
+
+
+<p>
+Links look like this: 
+</p><pre class="example">
+(@file :file-name "/etc/fstab" :display "File System Table")
+</pre>
+
+
+<p>
+or sometimes just
+</p>
+<pre class="example">
+(@&gt; "font locking") 
+</pre>
+
+
+<p>
+They are typically embedded in the comments of source code files or
+configuration files.
+</p>
+<p>
+Here are a few examples: 
+</p><pre class="example">
+(@file :file-name "/etc/fstab")
+(@file :file-name "~/e/dtox.e" :to "ardour2") 
+(@file :file-name "~/e/rlx.el")
+(@file :file-name "~/org/RogueLike.org" :to "* Tasks")
+(@file :file-name "~/e/cl-frame.lisp")
+(@man :page "fvwm" :to "ButtonStyle") 
+(@&gt; "font locking")
+(@man :page "conky") 
+(@file :file-name "~/org/KarmaPod.org")
+(@info :file-name "elisp" :node "Display Property")
+</pre>
+
+<p>Try typing a few into a scratch buffer where linkd-mode is turned
+on. The moment you type the closing parenthesis, the link should
+fontify (and display an icon, if you have icons turned on.)
+</p>
+<p>
+To follow a link, place point on the link and press <b>C-c '*. This runs the command *(linkd-follow-at-point)</b>. If there is only one link on
+that line, you can just place point anywhere in the line and
+press <b>C-c {period}</b> to run the command <b>(linkd-follow-on-this-line)</b>. 
+</p>
+<p>      
+To edit a link, put point at the end of the link, and
+press <b>backspace</b> to delete the closing parenthesis&mdash;the link will
+turn back into plain text.
+</p>
+<p>
+Of course, you don't actually have to insert and edit links
+manually. It's cumbersome and in most cases unnecessary. See the
+section "Creating and editing links" below.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2">Blocks and stars </h3>
+<div class="outline-text-3" id="text-6-2">
+
+
+<p>
+Certain special links delimit regions of a file. These regions are
+called <b>blocks</b> and the delimiters are called <b>stars</b>. A block looks
+like this:
+</p>
+<pre class="example">
+(@* "block name")
+...
+... content of block
+... 
+(@*)
+</pre>
+
+
+<p>
+The key <b>C-c {asterisk}</b> executes the command <b>(linkd-process-block)</b>, which
+triggers an action on the block containing point. The action taken is
+controlled by the buffer-local
+variable <b>linkd-process-block-function</b>, whose value is the function
+that processes the block. An example of this is below in the section
+"Example Usages."
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6-3" class="outline-3">
+<h3 id="sec-6-3">Tags </h3>
+<div class="outline-text-3" id="text-6-3">
+
+
+<p>
+ <b>Tags</b> are special links that may appear multiple times in a
+file. They look like this:
+</p><pre class="example">
+(@&gt; "topic name")
+</pre>
+
+<p>Following a tag navigates the next instance of the tag with the same
+name. Repeatedly hitting *C-c '* will cycle through all instances of the
+tag in the file, also stopping at any blocks with the same name. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6-4" class="outline-3">
+<h3 id="sec-6-4">Creating and editing links </h3>
+<div class="outline-text-3" id="text-6-4">
+
+
+<p>
+There are several commands to insert new links. For most links you can
+use <b>C-c {comma} {comma}</b>. This runs the command <b>(linkd-insert-link)</b>
+</p>
+<p>
+For stars and tags, you can use <b>C-c , s (linkd-insert-star)</b> and 
+ <b>C-c , t  (linkd-insert-tag)</b> respectively. 
+</p>
+<p>
+You can interactively edit a link with <b>C-c , e</b> which runs the
+command <b>(linkd-edit-link-at-point)</b>. 
+</p>
+<p>
+If you use these functions to create and edit links, you can
+effectively ignore the link syntax.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6-5" class="outline-3">
+<h3 id="sec-6-5"><span class="todo TODO"> TODO</span> Handling files your way </h3>
+<div class="outline-text-3" id="text-6-5">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7">Examples </h2>
+<div class="outline-text-2" id="text-7">
+
+
+
+</div>
+
+<div id="outline-container-7-1" class="outline-4">
+<h4 id="sec-7-1">An interactive self-documenting installer script </h4>
+<div class="outline-text-4" id="text-7-1">
+
+
+<p>
+My other project <a href="Dtox.html">DTOX</a> revolves around an interactive
+installation/configuration script. It is a bash script split into
+named blocks by linkd stars. The blocks contain commentary and
+active links to related documentation and configuration files.
+</p>
+<p>
+<img src="../images/Linkd-1.png"  alt="../images/Linkd-1.png" />
+</p>
+<p>
+The <b>local variables</b> in the script set <b>linkd-process-block-function</b>
+to the value <b>linkd-send-block-to-shell</b>, which pops up an emacs shell
+window to execute the commands in the block.
+</p>
+<p>
+So the user can inspect the blocks, edit them if necessary, choose
+which blocks are to be executed, and watch the output of the
+commands. The user may also follow the links to learn more, or to
+tweak a configuration file after it has been installed.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7-2" class="outline-4">
+<h4 id="sec-7-2">Concept-oriented navigation in lisp source code </h4>
+<div class="outline-text-4" id="text-7-2">
+
+
+<p> 
+When writing a program, I often want to jump to related pieces of
+code. But I usually don't just want to jump to a function definition
+from one of its callers&mdash;more often I want to find pieces of code
+that are related in some more abstract sense.
+</p>
+<p>
+I use linkd-mode's <b>tags</b> and <b>stars</b> to relate pieces of code to one
+another and to navigate through related code. First I gather related
+functions and variables and put them in their own block, and name the
+block after the concept they embody. (Remember that stars are used to
+delimit and name blocks.) If I am writing an object-oriented program
+with CLOS, I will usually put a class and most of its methods in one
+block. 
+</p>
+<p>
+Then I place tags wherever a piece of code is related to the block in
+some sense. You can think of following a link as jumping between
+related ideas, because it will move point to the next tag or star with
+the same concept name (and back to the first when you reach the end of
+the file.)
+</p>
+<p>
+<img src="../images/Linkd-2.png"  alt="../images/Linkd-2.png" />
+</p>
+<p>
+I use linkd-mode to organize my lisp programs, be they 50 lines or
+5,000.  If you'd like to try out such a file with linkd-mode, you can
+<a href="../e/rlx.el">download rlx.el</a> (part of the <a href="RogueLike.html">RLX Project</a>) and follow the links in the
+file. There is even an index of program concepts that one can use to
+get an overview of the program's structure.
+</p>
+<p>
+I also insert links to pages of relevant documentation&mdash;for example
+the Emacs Lisp Manual or the ANSI Common Lisp Standard.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7-3" class="outline-4">
+<h4 id="sec-7-3">Creating a wiki-like personal "hyperweb" </h4>
+<div class="outline-text-4" id="text-7-3">
+
+
+<ul>
+<li><i>This section is under construction, as is the functionality described</i>.
+</li>
+</ul>
+
+
+<p>
+Many people use wikis as personal notebooks. They organize their
+knowledge, develop ideas, and keep web bookmarks in their wikis. With
+linkd-mode, any text file on your system can be a wiki page, including
+system configuration files. Wiki pages can link to any kind of
+resource, not just other pages. They can be in any major-mode you
+choose. And your wiki pages can contain interactive scripts (see the
+section about DTOX above.)
+</p>
+<p>
+<img src="../images/linkd-wiki.png"  alt="../images/linkd-wiki.png" />
+</p>
+<p>
+First you should create a directory called <b>~/linkd-wiki</b> (or
+set <b>linkd-wiki-directory</b> to your preferred location.) This is the
+default location for new wiki pages. 
+</p>
+<p>
+For fast access, I set a global key that navigates instantly to the
+wiki's <b>FrontPage</b>: 
+</p>
+<pre class="example">
+(global-set-key [(meta f8)] '(lambda () (interactive)
+                              (linkd-wiki-find-page "FrontPage")))
+</pre>
+
+
+<p>
+You can use <b>C-c , w</b> to create a link to a wiki page.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7-4" class="outline-4">
+<h4 id="sec-7-4">Indexing and annotating a library of audio recordings </h4>
+<div class="outline-text-4" id="text-7-4">
+
+
+<p>
+I run a <a href="KarmaPod.html">small recording studio</a> and have been working on an
+<a href="Excelsis.html">experimental album</a> with my musician friends. Over the last few years
+we have built up a large library of recordings. It became very
+difficult to organize the various files in preparation for compiling
+an album. In addition, we made detailed plans for the recording of new
+works, so we needed a tool to organize our ideas.
+</p>
+<p>
+I decided to use linkd-mode along with my favorite outliner/todo-list,
+the popular <a href="OrgMode.html">OrgMode.</a>
+</p>
+<p>
+<img src="../images/linkd-AlbumRecording.png"  alt="../images/linkd-AlbumRecording.png" />
+</p>
+<p>
+I created an index of all our <a href="http://www.ardour.org">Ardour2</a> sessions with comments and notes
+for further work. I am also adding links to mixdown wave files so that
+you can listen to sessions at a glance. Org-mode's outline visibility
+cycling allows us to quickly get an overview of our music library, and
+use keywords to find particular songs (especially those that don't
+have titles.)
+</p>
+<p>
+With <b>linkd-file-handler-alist</b> set up as follows, I use linkd-mode to
+launch Ardour and Snd:
+</p>
+
+<pre class="example">
+(setq linkd-file-handler-alist `(("wav" . ,(lambda (file)
+                                           (shell-command (format "snd %s &amp;" file nil nil))))
+                               ("ardour" . ,(lambda (file)
+                                           (shell-command (format "ardour2 %s &amp;" file nil nil))))))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7-5" class="outline-4">
+<h4 id="sec-7-5"><span class="todo TODO"> TODO</span> Making mixdiscs out of Ogg Vorbis files </h4>
+<div class="outline-text-4" id="text-7-5">
+
+
+<p>
+Here is an example using embedded shell scripts to make mixdiscs for
+my friends. 
+</p>
+<p>
+<img src="../images/linkd-MixDisc.png"  alt="../images/linkd-MixDisc.png" />
+</p>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8">Tasks </h2>
+<div class="outline-text-2" id="text-8">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="todo TODO"> TODO</span> Backlog </h2>
+<div class="outline-text-2" id="text-9">
+
+
+</div>
+
+<div id="outline-container-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="todo TODO"> TODO</span> Fix bizarre void function problem when saving </h3>
+<div class="outline-text-3" id="text-9-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="todo TODO"> TODO</span> Fix eaten RETs messing up links at end of lines </h3>
+<div class="outline-text-3" id="text-9-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-3" class="outline-3">
+<h3 id="sec-9-3"><span class="todo TODO"> TODO</span> Fix interactive edit bug in linkd </h3>
+<div class="outline-text-3" id="text-9-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-4" class="outline-3">
+<h3 id="sec-9-4"><span class="todo TODO"> TODO</span> Fix inability to RET through multiple links in some files </h3>
+<div class="outline-text-3" id="text-9-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-5" class="outline-3">
+<h3 id="sec-9-5"><span class="todo TODO"> TODO</span> Fix mouse binding issue </h3>
+<div class="outline-text-3" id="text-9-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-6" class="outline-3">
+<h3 id="sec-9-6"><span class="todo TODO"> TODO</span> Look at how org-mode implements freaky links </h3>
+<div class="outline-text-3" id="text-9-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-7" class="outline-3">
+<h3 id="sec-9-7"><span class="todo TODO"> TODO</span> Calendar integration </h3>
+<div class="outline-text-3" id="text-9-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-8" class="outline-3">
+<h3 id="sec-9-8"><span class="done DONE"> DONE</span> Single key actions </h3>
+<div class="outline-text-3" id="text-9-8">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2007-03-26 Mon 03:36</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-9-9" class="outline-3">
+<h3 id="sec-9-9"><span class="todo TODO"> TODO</span> Docstrings </h3>
+<div class="outline-text-3" id="text-9-9">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-10" class="outline-3">
+<h3 id="sec-9-10"><span class="todo TODO"> TODO</span> Rethink wiki stuff </h3>
+<div class="outline-text-3" id="text-9-10">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-11" class="outline-3">
+<h3 id="sec-9-11"><span class="done DONE"> DONE</span> Fix parenthesis-in-link-text problems </h3>
+<div class="outline-text-3" id="text-9-11">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2007-03-22 Thu 12:34</span></span><br/>
+</p><ul>
+<li><a href="http://darcs.informatimago.com/emacs/pjb-asm7090.el">http://darcs.informatimago.com/emacs/pjb-asm7090.el</a>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-9-12" class="outline-3">
+<h3 id="sec-9-12"><span class="done DONE"> DONE</span> Review linkd-related emails and respond </h3>
+<div class="outline-text-3" id="text-9-12">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">DEADLINE: </span> <span class="timestamp">2007-03-23 Fri</span></span>  <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2007-03-26 Mon 03:24</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-9-13" class="outline-3">
+<h3 id="sec-9-13"><span class="todo TODO"> TODO</span> New icon for datablock sexps </h3>
+<div class="outline-text-3" id="text-9-13">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-14" class="outline-3">
+<h3 id="sec-9-14"><span class="todo TODO"> TODO</span> Cleaner navigation in/out of datablocks </h3>
+<div class="outline-text-3" id="text-9-14">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-15" class="outline-3">
+<h3 id="sec-9-15"><span class="todo TODO"> TODO</span> Embedded cell mini-mode </h3>
+<div class="outline-text-3" id="text-9-15">
+
+
+</div>
+
+<div id="outline-container-9-15-1" class="outline-4">
+<h4 id="sec-9-15-1"><span class="done DONE"> DONE</span> Easily move cursor in and out of cell sheet </h4>
+<div class="outline-text-4" id="text-9-15-1">
+
+<p>     <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2007-01-24 Wed 00:50</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-9-15-2" class="outline-4">
+<h4 id="sec-9-15-2"><span class="todo TODO"> TODO</span> Paintbox </h4>
+<div class="outline-text-4" id="text-9-15-2">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-9-16" class="outline-3">
+<h3 id="sec-9-16"><span class="done DONE"> DONE</span> Embedded data blocks </h3>
+<div class="outline-text-3" id="text-9-16">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-17" class="outline-3">
+<h3 id="sec-9-17"><span class="todo TODO"> TODO</span> Manufacture links based on context </h3>
+<div class="outline-text-3" id="text-9-17">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-18" class="outline-3">
+<h3 id="sec-9-18"><span class="todo TODO"> TODO</span> Docstrings for minor mode, etc </h3>
+<div class="outline-text-3" id="text-9-18">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-19" class="outline-3">
+<h3 id="sec-9-19"><span class="todo TODO"> TODO</span> Defcustoms </h3>
+<div class="outline-text-3" id="text-9-19">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-20" class="outline-3">
+<h3 id="sec-9-20"><span class="todo TODO"> TODO</span> -&mdash;&mdash;&mdash; BETA RELEASE 1 &ndash;&mdash;&mdash;&mdash;&mdash;&mdash; </h3>
+<div class="outline-text-3" id="text-9-20">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-21" class="outline-3">
+<h3 id="sec-9-21"><span class="todo TODO"> TODO</span> Fix compilation warnings </h3>
+<div class="outline-text-3" id="text-9-21">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-22" class="outline-3">
+<h3 id="sec-9-22"><span class="todo TODO"> TODO</span> Star region should be composed of whole lines </h3>
+<div class="outline-text-3" id="text-9-22">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-23" class="outline-3">
+<h3 id="sec-9-23"><span class="todo TODO"> TODO</span> Review documentation and document new stuff </h3>
+<div class="outline-text-3" id="text-9-23">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-24" class="outline-3">
+<h3 id="sec-9-24"><span class="todo TODO"> TODO</span> Index blocks </h3>
+<div class="outline-text-3" id="text-9-24">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-25" class="outline-3">
+<h3 id="sec-9-25"><span class="todo TODO"> TODO</span> Make links re-fontify when yanking </h3>
+<div class="outline-text-3" id="text-9-25">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-26" class="outline-3">
+<h3 id="sec-9-26"><span class="todo TODO"> TODO</span> General link history </h3>
+<div class="outline-text-3" id="text-9-26">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-27" class="outline-3">
+<h3 id="sec-9-27"><span class="todo TODO"> TODO</span> Completion on file names when inserting file link </h3>
+<div class="outline-text-3" id="text-9-27">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-28" class="outline-3">
+<h3 id="sec-9-28"><span class="todo TODO"> TODO</span> Fix M-RET keybinding in org-mode buffers </h3>
+<div class="outline-text-3" id="text-9-28">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-29" class="outline-3">
+<h3 id="sec-9-29"><span class="todo TODO"> TODO</span> Configure auto-insert-mode with .linkd template </h3>
+<div class="outline-text-3" id="text-9-29">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-30" class="outline-3">
+<h3 id="sec-9-30"><span class="todo TODO"> TODO</span> C-u linkd-follow </h3>
+<div class="outline-text-3" id="text-9-30">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-31" class="outline-3">
+<h3 id="sec-9-31"><span class="todo TODO"> TODO</span> Reformat manual into Texinfo mode </h3>
+<div class="outline-text-3" id="text-9-31">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-32" class="outline-3">
+<h3 id="sec-9-32"><span class="todo TODO"> TODO</span> Link type definition shortcuts </h3>
+<div class="outline-text-3" id="text-9-32">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-33" class="outline-3">
+<h3 id="sec-9-33"><span class="todo TODO"> TODO</span> linkd-wikiword-map-functions </h3>
+<div class="outline-text-3" id="text-9-33">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-9-34" class="outline-3">
+<h3 id="sec-9-34"><span class="todo TODO"> TODO</span> Versioned release for mwolson </h3>
+<div class="outline-text-3" id="text-9-34">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-35" class="outline-3">
+<h3 id="sec-9-35"><span class="todo TODO"> TODO</span> Integrate with etags </h3>
+<div class="outline-text-3" id="text-9-35">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-36" class="outline-3">
+<h3 id="sec-9-36"><span class="todo TODO"> TODO</span> Use thing-at-point to properly fontify sexps-within-sexps? </h3>
+<div class="outline-text-3" id="text-9-36">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-37" class="outline-3">
+<h3 id="sec-9-37"><span class="todo TODO"> TODO</span> Implicit links </h3>
+<div class="outline-text-3" id="text-9-37">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-38" class="outline-3">
+<h3 id="sec-9-38"><span class="todo TODO"> TODO</span> Icons for Makefile, fstab, etc </h3>
+<div class="outline-text-3" id="text-9-38">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-39" class="outline-3">
+<h3 id="sec-9-39"><span class="todo TODO"> TODO</span> Icon for directory </h3>
+<div class="outline-text-3" id="text-9-39">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-40" class="outline-3">
+<h3 id="sec-9-40"><span class="todo TODO"> TODO</span> More link types </h3>
+<div class="outline-text-3" id="text-9-40">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-9-41" class="outline-3">
+<h3 id="sec-9-41"><span class="todo TODO"> TODO</span> Search blocks </h3>
+<div class="outline-text-3" id="text-9-41">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-42" class="outline-3">
+<h3 id="sec-9-42"><span class="todo TODO"> TODO</span> Header line effects for status </h3>
+<div class="outline-text-3" id="text-9-42">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-43" class="outline-3">
+<h3 id="sec-9-43"><span class="todo TODO"> TODO</span> Analyze and summarize links </h3>
+<div class="outline-text-3" id="text-9-43">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-44" class="outline-3">
+<h3 id="sec-9-44"><span class="todo TODO"> TODO</span> &mdash; Documentation and cleanup </h3>
+<div class="outline-text-3" id="text-9-44">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-45" class="outline-3">
+<h3 id="sec-9-45"><span class="done DONE"> DONE</span> Icon bullets to identify resource type. </h3>
+<div class="outline-text-3" id="text-9-45">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2007-01-12 Fri 07:15</span></span><br/>
+</p><ul>
+<li><a href="http://www.cit.gu.edu.au/~anthony/icons/appl/desktop/docs-cl/Icons.html">http://www.cit.gu.edu.au/~anthony/icons/appl/desktop/docs-cl/Icons.html</a>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-9-46" class="outline-3">
+<h3 id="sec-9-46"><span class="done DONE"> DONE</span> Basic set of file link types </h3>
+<div class="outline-text-3" id="text-9-46">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2007-01-09 Tue 09:50</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-9-47" class="outline-3">
+<h3 id="sec-9-47"><span class="done DONE"> DONE</span> Make a follow hotkey </h3>
+<div class="outline-text-3" id="text-9-47">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2007-01-09 Tue 09:50</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-9-48" class="outline-3">
+<h3 id="sec-9-48"><span class="done DONE"> DONE</span> Fontify the links </h3>
+<div class="outline-text-3" id="text-9-48">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2007-01-09 Tue 09:57</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-9-49" class="outline-3">
+<h3 id="sec-9-49"><span class="done DONE"> DONE</span> Fancier fontification </h3>
+<div class="outline-text-3" id="text-9-49">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2007-01-09 Tue 13:40</span></span><br/>
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="todo TODO"> TODO</span> RANDOM STUFF </h2>
+<div class="outline-text-2" id="text-10">
+
+
+</div>
+
+<div id="outline-container-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="done DONE"> DONE</span> Install <a href="http://tromey.com/elpa/install.html">http://tromey.com/elpa/install.html</a> </h3>
+<div class="outline-text-3" id="text-10-1">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2007-05-19 Sat 06:13</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="todo TODO"> TODO</span> Develop simple "plaintext" markup for use within linkd comments </h3>
+<div class="outline-text-3" id="text-10-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-10-3" class="outline-3">
+<h3 id="sec-10-3"><span class="todo TODO"> TODO</span> Convert my files to this markup </h3>
+<div class="outline-text-3" id="text-10-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-10-4" class="outline-3">
+<h3 id="sec-10-4"><span class="todo TODO"> TODO</span> Change exporters to use markup </h3>
+<div class="outline-text-3" id="text-10-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-10-5" class="outline-3">
+<h3 id="sec-10-5"><span class="todo TODO"> TODO</span> linkd-ify and then tex-ify my .emacs into an essay. </h3>
+<div class="outline-text-3" id="text-10-5">
+
+
+</div>
+
+<div id="outline-container-10-5-1" class="outline-4">
+<h4 id="sec-10-5-1"><span class="done DONE"> DONE</span> look at <a href="http://www.emacswiki.org/cgi-bin/wiki.pl?Htmlize">http://www.emacswiki.org/cgi-bin/wiki.pl?Htmlize</a> </h4>
+<div class="outline-text-4" id="text-10-5-1">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2007-05-18 Fri 18:49</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-10-5-2" class="outline-4">
+<h4 id="sec-10-5-2"><span class="done DONE"> DONE</span> linkd&ndash;&gt;html prettyprinter based on htmlize </h4>
+<div class="outline-text-4" id="text-10-5-2">
+
+<p>     <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2007-05-18 Fri 20:45</span></span><br/>
+</p><ul>
+<li>htmlize-before-hook htmlize-after-hook
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-10-5-3" class="outline-4">
+<h4 id="sec-10-5-3"><span class="todo TODO"> TODO</span> htmlize linkd links properly </h4>
+<div class="outline-text-4" id="text-10-5-3">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-10-6" class="outline-3">
+<h3 id="sec-10-6"><span class="todo TODO"> TODO</span> create a snarfer linkd link </h3>
+<div class="outline-text-3" id="text-10-6">
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:42 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

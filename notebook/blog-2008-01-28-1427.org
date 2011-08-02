@@ -1,0 +1,24 @@
+#+TITLE: Eon mini-beta release
+#+DESCRIPTION: Eon mini-beta release
+
+I would like to put two small files out for your review. This is a
+beta of Eon with some example code. Questions and comments on the
+design and implementation are welcome.
+
+I feel good enough about the state of Eon to start really building
+some applications, but I wanted to throw Eon out there for some peer
+review before I get going. It's been tremendously helpful in the past,
+so keep those comments coming!
+
+Downloads:
+
+ - [[file:../eon/eon.el][eon.el]] --- the eon object system
+ - [[file:../eon/eon-guide.el][eon-guide.el]] --- some working code examples to try
+
+Requirements:
+
+ - [[http://www.gnu.org/software/emacs/][GNU Emacs 22]] or later
+ - A method of generating UUIDs (Universally Unique Identifiers). By
+   default, the external program "uuidgen" is used; this comes with
+   the e2fsprogs package.
+

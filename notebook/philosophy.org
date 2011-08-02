@@ -1,0 +1,65 @@
+#+TITLE: My Study Plan for Modern Philosophy
+
+* Books
+
+** DONE Russell, "History of Western Philosophy"
+** DONE Russell, "Why I am Not a Christian"
+** DONE Lewis, "Mind and the World Order"
+** DONE Dewey, "How We Think"
+** DONE Descartes, "A Discourse on the Method"
+** DONE Wittgenstein, "The Blue Book"
+** DONE Ayer, "Language, Truth, and Logic"
+** DONE Ellis, "Against Deconstruction"
+** DONE Ellis, "Language, Thought, and Logic"
+** TODO Aristotle, "The Metaphysics"
+** TODO Descartes, "Meditations on the First Philosophy"
+** TODO Descartes, "Principles of Philosophy"
+** TODO Locke, "The Conduct of the Understanding"
+** TODO Locke, "An Essay Concerning Human Understanding"
+** TODO Spinoza, "On the Improvement of the Understanding"
+** TODO Leibniz, "Monadology"
+** TODO Berkeley, "A Treatise Concerning the Principles of Human Knowledge"
+** TODO Hume, "An Enquiry Concerning Human Understanding"
+** TODO Hume, "Dialogues Concerning Natural Religion"
+** TODO Goethe, "Theory of Colours"
+** TODO Kant, "Logic"
+** TODO Kant, "Critique of Pure Reason"
+** TODO Hegel, "Phenomenology of Mind"
+** TODO Hegel, "Science of Logic"
+** TODO Boole, "The Laws of Thought"
+** TODO Schopenhauer, "The World as Will and Representation"
+** TODO Russell, "Analysis of Mind"
+** TODO Russell, "Introduction to Mathematical Philosophy"
+** TODO Whitehead, "Introduction to Mathematics"
+** TODO Whitehead, "A Treatise on Universal Algebra"
+** DONE Whitehead, "Symbolism"
+   CLOSED: [2008-03-07 Fri 05:03]
+** TODO Whitehead, "Process and Reality"
+** TODO Wittgenstein, "Tractatus Logico-Philosophicus"
+** TODO Wittgenstein, "The Brown Book"
+** TODO Wittgenstein, "Philosophical Investigations"
+** TODO Carnap, "The Logical Syntax of Language"
+** TODO Carnap, "Introduction to Symbolic Logic with Applications"
+** TODO Quine, "Word and Object"
+** TODO Quine, "Philosophy of Logic"
+** TODO Heidegger, "Being and Time"
+** TODO Santayana, "The Sense of Beauty"
+
+
+* People to add
+
+** Pierce
+** James
+** Goedel
+** De Morgan
+** Kierkegaard
+** Tarski
+** Frege
+
+* Things to consider
+
+** http://www.londonexternal.ac.uk/prospective_students/undergraduate/birkbeck/philosophy/index.shtml
+** Master's is more doable than PhD
+** http://schwitzsplinters.blogspot.com/2007/10/applying-to-philosophy-phd-programs_16.html
+** http://www.bu.edu/summer/college_courses/philosophy/?source=google
+

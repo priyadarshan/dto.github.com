@@ -1,0 +1,179 @@
+#+title: Hypermedia programming with Hypo
+#+author: David T. O'Toole
+#+email: dto@gnu.org
+#+startup: hideblocks
+#+property: tangle no
+#+property: results silent
+
+#+source: legal-notices
+#+begin_src emacs-lisp
+;; Copyright (C) 2010  David O'Toole
+
+;; Author: David O'Toole <dto@gnu.org>
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#+end_src
+
+* Introduction
+
+This work-in-progress article describes my approach to designing and
+developing games in Common Lisp, in a so-called [[http://en.wikipedia.org/wiki/Literate_programming][literate]] style using
+[[http://www.gnu.org/software/emacs][GNU Emacs]] and [[http://orgmode.org/worg/org-contrib/babel/][Org Babel.]] My configurations and custom code are
+collected here in an org-mode essay containing executable Emacs Lisp
+code for a simple digital asset management (DAM) system called
+"Hypo". The name is short for "hypermedia programming".
+
+Some described features are not yet implemented; the various TODO and
+DONE tags below reflect the state of the project.
+
+* Motivation
+
+In games development, especially solo or small-team scenarios,
+organizing assets becomes a significant problem. The "assets" of most
+programming projects are code, and, if you're lucky,
+documentation. Each object of the problem domain is associated with
+(probably) a chunk of code and a chunk of documentation. 
+
+The typical literate programming solution covers relating and
+transforming related chunks of documentation and code, but there is no
+general notion of asset management where related assets can be of
+different types: Lisp code, Emacs Lisp code, C code, PNG images, WAV
+sounds, OGG music, plain text, formatted text, and more.
+
+In a video game, a game object (for example, an enemy spaceship) may
+be associated with any number of such resources. There will certainly
+be AI code (C, Lisp, etc), images, 3d models, textures, sounds, and so
+on. Creating, re-using, and re-mixing hundreds of game objects is hard
+when you have to maintain all these associations between files and
+code manually.  So that when I want to edit "the image associated with
+that yellow alien over there", I often have to hunt down the actual
+PNG files to edit, because the name of the PNG file never appears in
+the Lisp code---there's a third file mapping resource names to
+files. The indirection makes the engine more flexible, but it's
+another file to maintain.
+
+My experiments with Hypo are an attempt to apply [[http://orgmode.org/][Orgmode]]
+organizational, publishing, and workflow tools to the problems at
+hand, with custom code and the unifying theme of literate programming.
+
+* Prerequisites
+
+Hypo is based on [[http://orgmode.org][Orgmode]] and [[http://orgmode.org/worg/org-contrib/babel/][Org Babel]], which are both [[http://www.gnu.org/software/emacs][GNU Emacs]]
+packages. Being familiar with these programs will help understanding
+the rest of this document.
+
+* Hypermedia programming with Hypo
+
+There are a few new terms to worry about: workbook, entry, asset,
+link, and chunk.
+
+Each "workbook" is just an org file---a collection of org entries
+describing collections of related assets and metadata. An asset is any
+relevant fragment of data, whether an external binary file (PNG, WAV)
+or data embedded in the entry itself (lisp, html, plaintext.) Each
+entry is given a unique UUID ([[http://en.wikipedia.org/wiki/Universally_Unique_Identifier][Universally Unique Identifier)]] and the
+org entry with that UUID contains related asset data:
+
+     1. Properties: for metadata. stored in the org properties drawer
+     2. Links: to external assets, with operations possible on those.
+	       This is based on org's existing link functionality.
+     3. Chunks:" of embedded asset text (lisp code, plain text, c code, etc) with org-babel
+
+I use the term "workbook" because with Babel the workflow and project
+management features of Org are now integrated into the programming
+process. You can use org tags to categorize and search entries by
+category across multiple workbooks. You can use TODO and work logging,
+version control, and launch external editors like the Gimp and
+Audacity. Publishing support means you can share workbooks easily on
+the Web, and Babel's noweb-style tangling means you can use true
+Literate Programming (in the classic Knuthian sense). Collaboration is
+possible with worg, and so on. And using org properties drawers to
+store metadata enables property search and processing via the org
+Properties API. Command-line media transcoding tools can be triggered
+by Babel, allowing further media workflow management.
+
+There will also be support for managing asset libraries, and packaging
+workbooks into self-contained tarballs, with any linked resources
+being copied in.
+
+Because different kinds of media are being linked/embedded into one
+document, and because Org Babel can actually use external programs to
+execute and process all kinds of program data and files and commands,
+this could be a step toward a kind of language-agnostic "hypermedia
+programming".
+
+See also this [[http://en.wikipedia.org/wiki/Digital_asset_management][wikipedia article on Digital Asset Management.]]
+
+* Implementation
+
+Here is an outline of the 
+#+begin_src emacs-lisp
+<<legal-notices>>
+<<preamble>>
+<<chunk-highlighting>>
+<<postamble>>
+#+end_src
+
+#+source: preamble
+#+begin_src emacs-lisp
+  (require 'cl)
+  (require 'org-babel)
+  (require 'org-babel-lisp)
+#+end_src
+
+** Making chunk headers more visible
+
+#+source: chunk-highlighting
+#+begin_src emacs-lisp 
+  (defface hypo-chunk-header-face '((t (:foreground "red" :bold t :weight bold))) "Face for chunk header lines.")
+  (defvar hypo-chunk-header-face 'hypo-chunk-header-face)
+  
+  (defface hypo-hidden-face '((t (:foreground "yellow" :underline "red"))) "Face for org babel blocks.")
+  (defvar hypo-hidden-face 'hypo-hidden-face)
+
+  (defvar hypo-source-block-regexp "^#\\+\\(source:\\|srcname:\\|function:\\)")
+  
+  (defun* fontify-hypo-source-block (limit)
+    (while (re-search-forward hypo-source-block-regexp limit :noerror)
+      (let ((beg (match-beginning 1))
+            (end (match-end 1)))
+        (add-text-properties beg end (list 'display (propertize "source:" 'face hypo-source-block-face)
+                                           'font-lock-fontified t)))))
+#+end_src
+
+#+source:   
+ (add-hook 'org-font-lock-hook #'fontify-hypo-source-block)
+#+source:   
+ (remove-hook 'org-font-lock-hook #'fontify-hypo-source-block)
+
+** 
+#+source: visible-ellipsis
+ (setf org-ellipsis hypo-hidden-face)
+#+end_src
+
+#+source: postamble
+#+begin_src emacs-lisp
+  (provide 'hypo)
+#+end_src
+
+** Babel integration
+*** DONE Basic executing/tangling lisp support
+ - http://github.com/dto/org-babel-lisp
+** User interface
+*** DONE Highlighting of the #+source: lines, see org-babel-lisp.el
+*** DONE Recommend setting the variable "org-ellipsis" to some very visible face
+*** DONE hideblocks?
+*** TODO [#C] org-icons
+*** TODO [#C] mouse menu for the blocks
+*** TODO [#C] button toolbar? IDE? CEDET? 

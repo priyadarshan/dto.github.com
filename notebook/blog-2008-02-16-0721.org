@@ -1,0 +1,31 @@
+#+TITLE: Kant's "Logic" --- and an Eon update
+#+DESCRIPTION: Kant's "Logic" --- and an Eon update
+
+From the translator's introduction to Immanuel Kant's textbook of
+philosophy and logic (first published in 1800 as "Immanuel Kant's
+Logic: A Manual for Lectures" and now available in an inexpensive
+Dover edition as simply "Logic"):
+
+: The time will certainly come in philosophy when the one-sided 
+: emphasis on symbolic manipulations will be overcome and logic 
+: will be seen in its totality.
+
+and on the next page: 
+
+: The pretensions of modern logic, such as its simplification of
+: existence into a sign or the extension of a sign into metaphysics,
+: are foreign to [Kant's logic.]
+
+I mainly bought this book because it supposedly helps you understand
+Kant's /Critique of Pure Reason/, but it looks like it may be a
+fascinating read in and of itself. And its notion of logic seems quite
+different from what I've been reading elsewhere in Russell,
+Wittgenstein, Boole, and so on. I've been looking for a book to
+"settle into" and spend some time studying---perhaps something meant
+for students is a good idea.
+
+[[http://dto.mamalala.org/notebook/eon.html][Eon]] update: inching toward a 1.0 release. I'm writing a detailed
+specification and manual in texinfo.
+
+ 
+ 

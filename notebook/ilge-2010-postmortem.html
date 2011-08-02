@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>My development postmortem for ILGE 2010</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:45 EDT"/>
+<meta name="author" content="David T. O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">My development postmortem for ILGE 2010</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Overview </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+<i>Tuesday, August 17, 2010:</i> My part in the <a href="2010expo.html">2010 International Lisp Games Expo</a> comprises two roles, as I am both a contest organizer and a
+participant. In this postmortem I'll describe the various things I
+worked on, show the results, and talk about lessons learned.
+</p>
+<p>
+For various reasons I did not complete a playable game for ILGE this
+year; instead I have just several demos, some new code, and some new
+infrastructure changes. In this postmortem document I've decided to
+present what I have done even though it is not finished, and discuss
+future work.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Results </h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1">Organizing the expo </h3>
+<div class="outline-text-3" id="text-2-1">
+
+
+<p>
+Administrative tasks were mainly email and irc correspondence, plus
+some writing for the expo's various webpages. This was a lot of fun
+keeping in touch with people and seeing their various projects.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2">Tools and techniques </h3>
+<div class="outline-text-3" id="text-2-2">
+
+
+<p>
+Some work focused on libraries and other tools:
+</p>
+
+</div>
+
+<div id="outline-container-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1">Org-babel </h4>
+<div class="outline-text-4" id="text-2-2-1">
+
+
+<p>
+I've begun an experiment in "literate game programming" with
+Org-Babel. In particular I've been working with the Org developers to
+add Common Lisp support and several other improvements. See these links:
+</p>
+<ul>
+<li><a href="http://orgmode.org/worg/org-contrib/babel/">Org-babel home page</a>
+</li>
+<li><a href="http://github.com/dto/xe2/raw/master/void/void.org">Unified literate source code for Void Mission</a>.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-2-2" class="outline-4">
+<h4 id="sec-2-2-2">Lisp games wiki </h4>
+<div class="outline-text-4" id="text-2-2-2">
+
+
+<p>
+User <b>sykopomp</b> (Josh) set up a <a href="http://lispgames.ath.cx/">Lisp Games Wiki</a> for us, and it proved
+invaluable for sharing information and ideas. Several of the items
+described in this paper were influenced by wiki writing and
+discussions thereof, and I also really enjoyed making pages for
+various things.
+</p>
+<p>
+The wiki can be edited in the browser, or from within Emacs.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-2-3" class="outline-4">
+<h4 id="sec-2-2-3">Xiomacs </h4>
+<div class="outline-text-4" id="text-2-2-3">
+
+
+<p>
+My own entry to the collection of proposals for integrated <a href="http://lispgames.ath.cx/index.php/GameCreationEnvironments">Game creation environments</a> written in Lisp.
+</p>
+<ul>
+<li><a href="http://github.com/dto/xiomacs/blob/master/xiomacs.org">http://github.com/dto/xiomacs/blob/master/xiomacs.org</a>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-2-4" class="outline-4">
+<h4 id="sec-2-2-4">LispPak </h4>
+<div class="outline-text-4" id="text-2-2-4">
+
+
+<p>
+A means of exchanging resource metadata between games. Related to the
+topic of <a href="http://lispgames.ath.cx/index.php/AssetManagement">digital asset management.</a>
+</p>
+<p>
+<a href="http://github.com/dto/lisppak/blob/master/lisppak.org">http://github.com/dto/lisppak/blob/master/lisppak.org</a>
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3">Void Mission </h3>
+<div class="outline-text-3" id="text-2-3">
+
+
+<p>
+I wanted to add more story elements and some notion of objectives the
+player must accomplish to complete a mission. This led to some <a href="http://github.com/dto/xe2/blob/master/mission.lisp">code for missions</a>. I also added scrolling backgrounds to my engine (see
+gameplay videos below.)
+</p>
+<p>
+Screenshots and links:
+</p>
+<ul>
+<li><img src="../images/void1.png"  alt="../images/void1.png" />
+</li>
+<li><img src="../images/void2.png"  alt="../images/void2.png" />
+</li>
+<li><a href="http://dto.github.com/notebook/void.html">Void Mission page</a> with more details.
+</li>
+<li><a href="http://www.youtube.com/watch?v=DsNBCSa9Ils">Opening story movie</a>
+</li>
+<li><a href="http://www.youtube.com/watch?v=JsEEcrV8Qc8">Gameplay video 1</a>
+</li>
+<li><a href="http://www.youtube.com/watch?v=0zkcjxfCurA">Gameplay video 2</a>
+</li>
+</ul>
+
+
+<p>
+The gameplay videos were captured losslessly with FFMPEG, and then
+converted to a lossy youtube-compatible format for upload. Using
+FFMPEG for both capture and conversion results in very high audio
+and video quality. 
+</p>
+<p>
+The opening story movie was made with various software including GIMP,
+OpenShot, and XAnalogTV.
+</p>
+<p>
+My new pressure-sensitive Wacom Bamboo Pen tablet has completely
+changed my idea of computer graphics editing. I reviewed my tablet on
+Youtube with a brief tutorial showing how I made the space clouds in
+Void Mission.
+</p>
+<ul>
+<li><a href="http://www.youtube.com/watch?v=ePshzjCyg4o">My Bamboo Pen tablet review/tutorial</a>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-4" class="outline-3">
+<h3 id="sec-2-4">REMIX THIS GAME </h3>
+<div class="outline-text-3" id="text-2-4">
+
+
+<p>
+Although it attracted attention, not much happened, and my own entry
+prevented me from finishing Void Mission.
+</p>
+<p>
+<a href="http://dto.github.com/notebook/remix-this-game.html">http://dto.github.com/notebook/remix-this-game.html</a>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-5" class="outline-3">
+<h3 id="sec-2-5">Super Xong </h3>
+<div class="outline-text-3" id="text-2-5">
+
+
+<p>
+Did a lot of work on this, but didn't get anywhere near finished. Here
+is a video:
+</p>
+<ul>
+<li><a href="http://www.youtube.com/watch?v=jFurp3vYUk0">Youtube video</a>
+</li>
+</ul>
+
+
+<p>
+And my original description:
+</p>
+<p>
+SUPER XONG is a fast-moving procedurally-generated puzzle combat game
+presented in 720p High Definition for your PC or Mac. You control
+Puck, a pong paddle pilot waking up to life outside the screen. Armed
+only with your wits and a bouncing, color-changing ball, you rebel
+against the System Overlords and attempt escape to the place known as
+Outside.
+</p>
+<p>
+Each level fills the entire screen and no more; all enemies and
+objects are visible at all times.
+</p>
+<p>
+You can move and fire the ball in any of the 8 numeric keypad
+directions. The ball damages enemies, but you must catch the ball in
+order to use it again. If the ball is destroyed or eaten by an enemy,
+you have to find a new one.
+</p>
+<p>
+There are no hit points and there is no save function. Any hit kills
+you instantly, and completely ends your game. 
+</p>
+<p>
+There is no win condition; you simply encounter levels of increasing
+difficulty until you die.
+</p>
+<p>
+The enemies from original Xong are here with tweaked behaviors, plus 2
+new enemy types.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Lessons </h2>
+<div class="outline-text-2" id="text-3">
+
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1">Don't work on too many things </h3>
+<div class="outline-text-3" id="text-3-1">
+
+
+<p>
+I spread myself too thin and did several interesting things, but
+didn't finish anything yet.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2">Choose between working on infrastructure and working on specific games </h3>
+<div class="outline-text-3" id="text-3-2">
+
+
+<p>
+Doing both at once can lead to neither being very satisfying.
+</p></div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:45 EDT</p>
+<p class="author">Author: David T. O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

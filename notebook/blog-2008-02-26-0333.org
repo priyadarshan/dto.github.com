@@ -1,0 +1,6 @@
+#+TITLE: Boston Lisp Meeting
+#+DESCRIPTION: Boston Lisp Meeting
+
+I'll be attending next week's [[http://fare.livejournal.com/120393.html][Boston Lisp Meeting]]. I would love to run
+into some other Emacsers there!
+

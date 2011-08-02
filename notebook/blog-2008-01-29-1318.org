@@ -1,0 +1,25 @@
+#+TITLE: Boole's "Laws of Thought"
+#+DESCRIPTION: Boole's "Laws of Thought"
+
+I've been in the mood to dig a bit deeper into the past of mathematics
+and logic and philosophy. So I've taken a break from the early
+twentieth-century Russell and Wittgenstein to take a look at the
+origins of pure mathematics and logic---in George Boole's 1854
+treatise "An Investigation of the Laws of Thought, On Which are
+Founded the Mathematical Theories of Logic and Probabilities."
+
+A [[http://www.gutenberg.org/etext/15114][fully TeXed]] version is available free of charge from the Gutenberg
+Project.
+
+It's exciting to read the genesis of Boolean logic here:
+
+: "... instead of determining the measure of formal agreement of the
+: symbols of Logic with those of Number generally, it is more
+: immediately suggested to us to compare them with symbols of quantity
+: admitting only of the values 0 and 1. Let us conceive, then, of an
+: Algebra in which the symbols x, y, z etc. admit indifferently of the
+: values 0 and 1, and of these values alone."
+ 
+  - from Chapter 2, "Signs and their Laws"
+
+Fascinating stuff. 

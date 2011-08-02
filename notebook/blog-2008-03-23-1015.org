@@ -1,0 +1,48 @@
+#+TITLE: Eon and RLX move to Common Lisp
+#+DESCRIPTION: Eon and RLX move to Common Lisp
+
+I've ported the prototype-based Eon object system to Common Lisp. 
+
+There are several reasons why I've done this. Eon began its life in
+late 2006 as the core world-representation of the [[http://dto.mamalala.org/notebook/rlx.html][RLX roguelike
+engine]]. This was a great working proof-of-concept, and taught me a lot
+about Lisp programming. But ultimately the limitations of Emacs have
+led me to abandon the idea of implementing the RLX engine itself in
+Emacs Lisp. Emacs' execution model is not suitable for realtime play,
+so the engine itself would have been limited to turn-based action.
+The display engine was limited to rectilinear grids of tiles, because
+Emacs can't overlap images at all---that's another limitation of
+roguelikes that I've been trying to move past. 
+
+Another big, obvious problem was speed. RLX could only handle
+relatively small maps, about 60x60 tiles---not the expansive
+landscapes I dream of. The ray-casting code was fast enough, but the
+[[http://en.wikipedia.org/wiki/A%2A][A-star pathfinding]] code---for which I wrote my own optimized heap
+implementation---was just too slow, even with only a few enemies doing
+the pathfinding. This conflicted with my goal of having sophisticated
+AI with many enemies onscreen at once (see also my design notes for
+[[http://dto.mamalala.org/notebook/voidmission.html][Void Mission]].)
+
+The last straw was sound support. I run a small recording studio and
+have been producing sound effects and music for Void Mission all
+along. Emacs would have been up to the task of playing ogg files in
+the background, but sound effects synchronized with the action would
+have been nearly impossible.
+
+I'd already considered Common Lisp as the natural next step for RLX
+2.0, so I decided to get moving. I'm using [[http://sbcl.sourceforge.net/][SBCL]] and [[http://common-lisp.net/project/slime/][SLIME]] with
+[[http://lispbuilder.sourceforge.net/][Lispbuilder-SDL]] as the graphics-and-sound library. Because I already
+used many Common Lisp idioms in my elisp programming (thanks to the
+Emacs CL package), the porting has been surprisingly easy.
+
+Emacs is still a crucial part of the picture. The RLX system will
+still contain a substantial portion of Emacs Lisp code, including
+[[http://dto.mamalala.org/notebook/cellmode.html][cell-mode]] and possibly a pixel art editor, because GNU Emacs will
+remain as the integrated development environment for RLX game modules
+and their resources.
+
+I guess this represents a sea-change in my view of GNU Emacs. Before,
+it was a picture that was a bit too large for its frame; at this
+point, I see Emacs as one integral part of an ensemble that includes
+Common Lisp, Debian, and many other fine projects.
+

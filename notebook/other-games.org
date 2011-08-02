@@ -1,0 +1,30 @@
+The vegetable bin where other games are. 
+
+* Blast Tactics
+
+An ambitious but very incomplete title that's inspired several
+spin-offs.
+
+ - [[http://dto.github.com/notebook/blast.html][Webpage]]
+ 
+| file:../images/bt9.png | file:../images/bt2.png |
+| file:../images/bt3.png | file:../images/bt4.png |
+| file:../images/bt5.png | file:../images/bt6.png |
+| file:../images/bt7.png | file:../images/bt8.png |
+
+* XIOBREAK
+
+file:../images/xiobreak.png
+
+FLGC09 (Friendly Lisp Games Competition 2009) contest entry. See
+[[http://youtube.com/dto1138][youtube videos]].
+
+* Invader
+
+An older incomplete design that I may revisit soon.
+
+file:../images/invader.png
+
+http://dto.github.com/notebook/invader.html
+
+

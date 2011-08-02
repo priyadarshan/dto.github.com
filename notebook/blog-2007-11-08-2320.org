@@ -1,0 +1,6 @@
+#+TITLE: Building the X2: Part I
+#+DESCRIPTION: Building the X2: Part I
+
+The first mini-howto in the *Building the X2* series as been released!
+
+You can find it here: http://dto.freeshell.org/notebook/usb-drive-enclosures.html

@@ -1,0 +1,24 @@
+#+TITLE: Void Mission theme song, and more updates
+#+DESCRIPTION: Void Mission theme song, and more updates
+
+Screenshot of the SDL map renderer in the new Common Lisp port of [[http://dto.mamalala.org/notebook/rlx.html][RLX]]:
+
+file:../images/april-diary-1.png
+
+Potential album cover for our band project:
+
+file:../images/april-diary-2.jpg
+
+My new [[http://dto.mamalala.org/eon/schematic.el][color-theme-schematic]]:
+
+file:../images/april-diary-4.png
+
+The SDL command prompt and output formatting engine at work. Also
+shows a sketch of the Void Mission splash screen:
+
+file:../images/april-diary-5.png
+
+There's also now a Void Mission [[http://dto.mamalala.org/blue7998.ogg][theme song]].
+
+
+

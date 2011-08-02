@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>State of the dto</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:54 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content="State of the dto"/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">State of the dto</h1>
+
+<p>Hello <a href="http://planet.emacsen.org">Planet Emacsen</a> readers,
+</p>
+<p>
+I thought I would post something because it's been a few weeks since
+my last message. 
+</p>
+<p>
+The <a href="http://emacs-ontology-project.googlecode.com">Eon project</a> is in alpha and progressing at a reasonable pace. As I
+may have mentioned before, I'm taking some deliberate steps to improve
+my programming skills and development practices; working on Eon has
+become a good way to learn.  
+</p>
+<p>
+There's a lot of manual-reading, which is always healthy. But the most
+effective thing for me has been learning directly from other
+developers&mdash;by reading their code, or through discussions on
+IRC. I've always been one of the "lone programmer" types, but now Eon
+has two new developers (welcome Tom and Andre!) and a public
+<a href="http://emacs-ontology-project.googlecode.com/svn/trunk/">Subversion repository</a>. With a few more decades of obsessive work and
+deep self-abnegation, I may yet become a "real programmer".
+</p>
+<p>
+Here's what I've been working on this week:
+</p>
+<ul>
+<li><b>the eon object system:</b> is being revised a bit to change the
+   syntax of message sends and expand the notion of methods to include
+   something like the Symbolics Genera "Presentation Type" system.
+
+</li>
+<li><b>vwindow</b> &mdash; This is a virtual window library that can superimpose
+   what appear to be free-floating or pop-up Emacs windows on top of a
+   buffer without disturbing the text. It will also include a
+   preliminary replacement for the aging <b>widget.el</b> that comes with
+   Emacs, and an abstract spreadsheet editor derived from my old
+   <a href="http://dto.freeshell.org/notebook/CellMode.html">cell-mode stuff</a>. My goal is much more than just to replace the X
+   toolkit menus (which inexplicably block Emacs and its subprocesses
+   while they are open) and the awful Customize interface with
+   something much more powerful. I also want to make it easy for Emacs
+   Lisp developers to separate their user interfaces from their
+   application logic. Most Emacs packages build their user interfaces
+   from scratch (possibly because the built-in widgets suck) which is
+   why we have 3 different implementations of a spreadsheet UI widget
+   (including mine) and God knows how many subtly different dired-like
+   modes.
+
+</li>
+<li><b>ushell</b> &mdash; A universal shell inspired by the Genera "Dynamic Lisp
+   Listener". This is intended to be a replacement for eshell (and
+   much else) with the ability to talk to multiple "backends" in the
+   same session. The <code>POSIX sh</code> backend works by talking to bash over
+   a pipe or socket, which probably works better in the long run than
+   trying to do serious process control or input redirection from
+   within native Emacs Lisp. But it can also talk to snd, or sbcl, or
+   stumpish, or any combination of the above&mdash;at the same command line.
+</li>
+</ul>
+
+
+<p>
+I'll keep you posted&hellip;
+</p>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:54 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

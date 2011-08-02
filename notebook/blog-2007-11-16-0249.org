@@ -1,0 +1,16 @@
+#+TITLE: x2 pics
+#+DESCRIPTION: x2 pics
+
+New pics:
+
+file:../images/x2-preview-000.jpg
+
+file:../images/x2-preview-001.jpg
+
+file:../images/x2-preview-002.jpg
+
+file:../images/x2-preview-003.jpg
+
+file:../images/x2-preview-004.jpg
+
+file:../images/x2-preview-005.jpg

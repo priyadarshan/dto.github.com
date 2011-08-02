@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Hypermedia programming with Hypo</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:41 EDT"/>
+<meta name="author" content="David T. O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Hypermedia programming with Hypo</h1>
+
+
+
+
+<pre class="src src-emacs-lisp"><span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">Copyright (C) 2010  David O'Toole</span>
+
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">Author: David O'Toole &lt;<a href="mailto:dto&#64;gnu.org">dto&#64;gnu.org</a>&gt;</span>
+
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">This program is free software; you can redistribute it and/or modify</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">it under the terms of the GNU General Public License as published by</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">the Free Software Foundation, either version 3 of the License, or</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">(at your option) any later version.</span>
+
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">This program is distributed in the hope that it will be useful,</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">GNU General Public License for more details.</span>
+
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">You should have received a copy of the GNU General Public License</span>
+<span style="color: #999999; font-style: italic;">;; </span><span style="color: #7f7f7f; font-style: italic;">along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</span>
+</pre>
+
+
+
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Introduction </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+This work-in-progress article describes my approach to designing and
+developing games in Common Lisp, in a so-called <a href="http://en.wikipedia.org/wiki/Literate_programming">literate</a> style using
+<a href="http://www.gnu.org/software/emacs">GNU Emacs</a> and <a href="http://orgmode.org/worg/org-contrib/babel/">Org Babel.</a> My configurations and custom code are
+collected here in an org-mode essay containing executable Emacs Lisp
+code for a simple digital asset management (DAM) system called
+"Hypo". The name is short for "hypermedia programming".
+</p>
+<p>
+Some described features are not yet implemented; the various TODO and
+DONE tags below reflect the state of the project.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Motivation </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+In games development, especially solo or small-team scenarios,
+organizing assets becomes a significant problem. The "assets" of most
+programming projects are code, and, if you're lucky,
+documentation. Each object of the problem domain is associated with
+(probably) a chunk of code and a chunk of documentation. 
+</p>
+<p>
+The typical literate programming solution covers relating and
+transforming related chunks of documentation and code, but there is no
+general notion of asset management where related assets can be of
+different types: Lisp code, Emacs Lisp code, C code, PNG images, WAV
+sounds, OGG music, plain text, formatted text, and more.
+</p>
+<p>
+In a video game, a game object (for example, an enemy spaceship) may
+be associated with any number of such resources. There will certainly
+be AI code (C, Lisp, etc), images, 3d models, textures, sounds, and so
+on. Creating, re-using, and re-mixing hundreds of game objects is hard
+when you have to maintain all these associations between files and
+code manually.  So that when I want to edit "the image associated with
+that yellow alien over there", I often have to hunt down the actual
+PNG files to edit, because the name of the PNG file never appears in
+the Lisp code&mdash;there's a third file mapping resource names to
+files. The indirection makes the engine more flexible, but it's
+another file to maintain.
+</p>
+<p>
+My experiments with Hypo are an attempt to apply <a href="http://orgmode.org/">Orgmode</a>
+organizational, publishing, and workflow tools to the problems at
+hand, with custom code and the unifying theme of literate programming.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Prerequisites </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+Hypo is based on <a href="http://orgmode.org">Orgmode</a> and <a href="http://orgmode.org/worg/org-contrib/babel/">Org Babel</a>, which are both <a href="http://www.gnu.org/software/emacs">GNU Emacs</a>
+packages. Being familiar with these programs will help understanding
+the rest of this document.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Hypermedia programming with Hypo </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+There are a few new terms to worry about: workbook, entry, asset,
+link, and chunk.
+</p>
+<p>
+Each "workbook" is just an org file&mdash;a collection of org entries
+describing collections of related assets and metadata. An asset is any
+relevant fragment of data, whether an external binary file (PNG, WAV)
+or data embedded in the entry itself (lisp, html, plaintext.) Each
+entry is given a unique UUID (<a href="http://en.wikipedia.org/wiki/Universally_Unique_Identifier">Universally Unique Identifier)</a> and the
+org entry with that UUID contains related asset data:
+</p>
+<ol>
+<li>Properties: for metadata. stored in the org properties drawer
+</li>
+<li>Links: to external assets, with operations possible on those.
+               This is based on org's existing link functionality.
+</li>
+<li>Chunks:" of embedded asset text (lisp code, plain text, c code, etc) with org-babel
+</li>
+</ol>
+
+
+<p>
+I use the term "workbook" because with Babel the workflow and project
+management features of Org are now integrated into the programming
+process. You can use org tags to categorize and search entries by
+category across multiple workbooks. You can use TODO and work logging,
+version control, and launch external editors like the Gimp and
+Audacity. Publishing support means you can share workbooks easily on
+the Web, and Babel's noweb-style tangling means you can use true
+Literate Programming (in the classic Knuthian sense). Collaboration is
+possible with worg, and so on. And using org properties drawers to
+store metadata enables property search and processing via the org
+Properties API. Command-line media transcoding tools can be triggered
+by Babel, allowing further media workflow management.
+</p>
+<p>
+There will also be support for managing asset libraries, and packaging
+workbooks into self-contained tarballs, with any linked resources
+being copied in.
+</p>
+<p>
+Because different kinds of media are being linked/embedded into one
+document, and because Org Babel can actually use external programs to
+execute and process all kinds of program data and files and commands,
+this could be a step toward a kind of language-agnostic "hypermedia
+programming".
+</p>
+<p>
+See also this <a href="http://en.wikipedia.org/wiki/Digital_asset_management">wikipedia article on Digital Asset Management.</a>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Implementation </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+Here is an outline of the 
+</p>
+
+
+<pre class="src src-emacs-lisp">&lt;&lt;legal-notices&gt;&gt;
+&lt;&lt;preamble&gt;&gt;
+&lt;&lt;chunk-highlighting&gt;&gt;
+&lt;&lt;postamble&gt;&gt;
+</pre>
+
+
+
+
+
+<pre class="src src-emacs-lisp">(<span style="color: #f47321; font-weight: bold;">require</span> '<span style="color: #f68d47;">cl</span>)
+(<span style="color: #f47321; font-weight: bold;">require</span> '<span style="color: #f68d47;">org-babel</span>)
+(<span style="color: #f47321; font-weight: bold;">require</span> '<span style="color: #f68d47;">org-babel-lisp</span>)
+</pre>
+
+
+
+
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1">Making chunk headers more visible </h3>
+<div class="outline-text-3" id="text-5-1">
+
+
+
+
+
+<pre class="src src-emacs-lisp">(<span style="color: #f47321; font-weight: bold;">defface</span> <span style="color: #da70d6; font-weight: bold;">hypo-chunk-header-face</span> '((t (<span style="color: #62124b;">:foreground</span> <span style="color: #8b7d7b;">"red"</span> <span style="color: #62124b;">:bold</span> t <span style="color: #62124b;">:weight</span> bold))) <span style="color: #dd1144;">"Face for chunk header lines."</span>)
+(<span style="color: #f47321; font-weight: bold;">defvar</span> <span style="color: #da70d6; font-weight: bold;">hypo-chunk-header-face</span> 'hypo-chunk-header-face)
+
+(<span style="color: #f47321; font-weight: bold;">defface</span> <span style="color: #da70d6; font-weight: bold;">hypo-hidden-face</span> '((t (<span style="color: #62124b;">:foreground</span> <span style="color: #8b7d7b;">"yellow"</span> <span style="color: #62124b;">:underline</span> <span style="color: #8b7d7b;">"red"</span>))) <span style="color: #dd1144;">"Face for org babel blocks."</span>)
+(<span style="color: #f47321; font-weight: bold;">defvar</span> <span style="color: #da70d6; font-weight: bold;">hypo-hidden-face</span> 'hypo-hidden-face)
+
+(<span style="color: #f47321; font-weight: bold;">defvar</span> <span style="color: #da70d6; font-weight: bold;">hypo-source-block-regexp</span> <span style="color: #8b7d7b;">"^#\\+</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">(</span><span style="color: #8b7d7b;">source:</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">|</span><span style="color: #8b7d7b;">srcname:</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">|</span><span style="color: #8b7d7b;">function:</span><span style="color: #8b7d7b; font-weight: bold;">\\</span><span style="color: #8b7d7b; font-weight: bold;">)</span><span style="color: #8b7d7b;">"</span>)
+
+(<span style="color: #f47321; font-weight: bold;">defun*</span> <span style="color: #9370db; font-weight: bold;">fontify-hypo-source-block</span> (limit)
+  (<span style="color: #f47321; font-weight: bold;">while</span> (re-search-forward hypo-source-block-regexp limit <span style="color: #62124b;">:noerror</span>)
+    (<span style="color: #f47321; font-weight: bold;">let</span> ((beg (match-beginning 1))
+          (end (match-end 1)))
+      (add-text-properties beg end (list 'display (propertize <span style="color: #8b7d7b;">"source:"</span> 'face hypo-source-block-face)
+                                         'font-lock-fontified t)))))
+</pre>
+
+
+
+
+<p>
+ (add-hook 'org-font-lock-hook #'fontify-hypo-source-block)
+ (remove-hook 'org-font-lock-hook #'fontify-hypo-source-block)
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"></h3>
+<div class="outline-text-3" id="text-5-2">
+
+<p> (setf org-ellipsis hypo-hidden-face)
+</p>
+
+
+
+<pre class="src src-emacs-lisp">(<span style="color: #f47321; font-weight: bold;">provide</span> '<span style="color: #f68d47;">hypo</span>)
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-5-3" class="outline-3">
+<h3 id="sec-5-3">Babel integration </h3>
+<div class="outline-text-3" id="text-5-3">
+
+
+</div>
+
+<div id="outline-container-5-3-1" class="outline-4">
+<h4 id="sec-5-3-1"><span class="done DONE"> DONE</span> Basic executing/tangling lisp support </h4>
+<div class="outline-text-4" id="text-5-3-1">
+
+<ul>
+<li><a href="http://github.com/dto/org-babel-lisp">http://github.com/dto/org-babel-lisp</a>
+</li>
+</ul>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5-4" class="outline-3">
+<h3 id="sec-5-4">User interface </h3>
+<div class="outline-text-3" id="text-5-4">
+
+
+</div>
+
+<div id="outline-container-5-4-1" class="outline-4">
+<h4 id="sec-5-4-1"><span class="done DONE"> DONE</span> Highlighting of the #+source: lines, see org-babel-lisp.el </h4>
+<div class="outline-text-4" id="text-5-4-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-4-2" class="outline-4">
+<h4 id="sec-5-4-2"><span class="done DONE"> DONE</span> Recommend setting the variable "org-ellipsis" to some very visible face </h4>
+<div class="outline-text-4" id="text-5-4-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-4-3" class="outline-4">
+<h4 id="sec-5-4-3"><span class="done DONE"> DONE</span> hideblocks? </h4>
+<div class="outline-text-4" id="text-5-4-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-4-4" class="outline-4">
+<h4 id="sec-5-4-4"><span class="todo TODO"> TODO</span> org-icons </h4>
+<div class="outline-text-4" id="text-5-4-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-4-5" class="outline-4">
+<h4 id="sec-5-4-5"><span class="todo TODO"> TODO</span> mouse menu for the blocks </h4>
+<div class="outline-text-4" id="text-5-4-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-4-6" class="outline-4">
+<h4 id="sec-5-4-6"><span class="todo TODO"> TODO</span> button toolbar? IDE? CEDET? </h4>
+<div class="outline-text-4" id="text-5-4-6">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:41 EDT</p>
+<p class="author">Author: David T. O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

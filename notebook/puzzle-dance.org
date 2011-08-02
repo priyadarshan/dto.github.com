@@ -1,0 +1,9 @@
+#+TITLE: Puzzle Dance Party Extreme 
+
+* Concepts
+
+ - 8 way dance using up, down, left, right, upright, downright, downleft, upleft.
+ - DDR-style UI interface menus with digital announcer
+ - Color coded arrows like in Pump It Up
+ - Cross bar line for jumps
+ -  

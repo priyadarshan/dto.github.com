@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Eon alpha release, performance notes</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:54 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content="Eon alpha release, performance notes"/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Eon alpha release, performance notes</h1>
+
+<p>The <a href="http://dto.freeshell.org/notebook/Eon.html">eon object system</a> is now officially in alpha, whatever that means.
+Play with it if you like, let me know if you have any thoughts.
+</p>
+<p>
+I was a bit worried about performance because I use so many macros and
+so much indirection (in the form of objects forwarding zillions of
+messages to each other.) But after some tests, the compiled pixel-demo
+program seems to perform decently; it feels responsive enough. (See
+ELP results below for hard numbers). 
+</p>
+<p>
+The most frequently invoked function, namely (eon-read-slot), takes
+very little time&mdash;which was one of the main design goals. Once you
+have fast slot lookup, it becomes more reasonable to do proxying and
+all sorts of other neat stuff.
+</p>
+<p>
+Another tweak: I've decided to assign permanent Universally Unique
+Identifiers (UUID's) to EVERY EON OBJECT anybody ever
+creates. Furthermore you can assign yourself a UUID, and all the emacs
+peeps will have unique ID's. When you publish objects, they're tagged
+with your UUID in the :owner field (or something like that, I haven't
+decided yet.) I bet we could add object authentication and encryption, etc.
+</p>
+<pre class="example">
+Function Name                          Call Count  Elapsed Time  Average Time
+=====================================  ==========  ============  ============
+eon-deliver-message                    3451        2.9767450000  0.0008625746
+eon:method:cell-sheet:render           46          0.798569      0.0173601956
+eon:method:cell-sheet:move-cursor      31          0.44502       0.0143554838
+eon:method:cell-sheet:calculate        11          0.4162220000  0.0378383636
+eon-default-clone-method               257         0.316109      0.0012299961
+eon-clone                              1           0.299976      0.299976
+eon:method:pixel-sheet:initialize      1           0.2998929999  0.2998929999
+eon:method:cell-sheet:initialize       1           0.277868      0.277868
+eon-read-slot                          34184       0.1566370000  4.582...e-06
+eon:method:pixel:calculate             2816        0.0667159999  2.369...e-05
+eon:method:cell-sheet:clone-fill       1           0.021941      0.021941
+eon-find-prototype                     6366        0.0130439999  2.049...e-06
+eon-write-slot                         2869        0.0082790000  2.885...e-06
+eon:method:cell-sheet:apply-tool       10          0.0010609999  0.0001060999
+eon-default-initialize-method          256         0.0002339999  9.140...e-07
+eon:method:cell-sheet:show             1           0.000178      0.000178
+eon:method:cell-sheet:cell-at          10          0.000135      1.35e-05
+eon:method:pixel:set-color             10          0.000132      1.32e-05
+eon-find-object                        3           8e-06         2.666...e-06
+</pre>
+
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:54 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

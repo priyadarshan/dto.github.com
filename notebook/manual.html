@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Invader Tactics</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:40 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Invader Tactics</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">INSTALLATION </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+The separate file INSTALL has information on installing Invader and
+its prerequisites.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">STARTING THE GAME </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+For now, start SBCL and then at the REPL: 
+</p>
+<pre class="example">
+(require :rlx)
+(rlx:play "invader")
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">THE DISPLAY </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+Hit points (HP), Oxygen level (OX), and energy (EN) are displayed at
+the top of the screen. Next comes the map window showing the
+environment. You are the red diamond in the top left corner. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">CONTROLS </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+For directional control during movement and combat, you can choose
+between QWERTY and DVORAK layouts as follows:
+</p>
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1">QWERTY LAYOUT </h3>
+<div class="outline-text-3" id="text-4-1">
+
+
+<p>
+This is the default and adheres to the classic roguelike movement
+keymap.
+</p>
+<pre class="example">
+y k u
+ \|/
+h-.-l
+ /|\ 
+b j n
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2">ALTERNATE QWERTY LAYOUT </h3>
+<div class="outline-text-3" id="text-4-2">
+
+
+<p>
+To change to the alternate qwerty layout, add the following to your
+~/.rlxrc:
+</p>
+<pre class="example">
+(setf rlx:*user-keyboard-layout* :alternate-qwerty)
+</pre>
+
+
+<p>
+This is more like PC first-person shooter games, and has sensible diagonals.
+</p>
+<pre class="example">
+q w e
+ \|/
+a-.-d
+ /|\ 
+z x c
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3">DVORAK LAYOUT </h3>
+<div class="outline-text-3" id="text-4-3">
+
+
+<p>
+To change to DVORAK, add the following to your ~/.rlxrc:
+</p>
+<pre class="example">
+(setf rlx:*user-keyboard-layout* :dvorak)
+</pre>
+
+
+<p>
+Then use:
+</p>
+<pre class="example">
+g c r
+ \|/
+h-.-n
+ /|\ 
+m w v
+</pre>
+
+
+<p>   
+for directional control. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4">OTHER COMMANDS </h3>
+<div class="outline-text-3" id="text-4-4">
+
+
+<p>
+Alt-DIRECTION for melee attack with wrench, Control-DIRECTION to fire
+with an equipped gun (if any). To equip items, press the item's slot
+number (either 0 or 1). Press 2 (the digit two) to activate any
+equipped shield. Press Control-Q to quit at any time. Press Control-0
+to drop item 0, Control-1 to drop item 1.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">GAMEPLAY </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+You are a human infiltrating an enemy installation populated by
+psychotic robots. Use both melee attacks, ranged particle weapons, ion
+shields, and oxygen tanks in a hostile airless environment. The way is
+always down&mdash;try to reach the bottom and eliminate all the robots!
+</p>
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1">STARTING CONDITIONS </h3>
+<div class="outline-text-3" id="text-5-1">
+
+
+<p>
+You have 100 hit points, a supply of oxygen and energy, and a rusty
+wrench. Wrench attack is Alt-DIRECTION.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2">DEATH </h3>
+<div class="outline-text-3" id="text-5-2">
+
+
+<p>
+If your oxygen or hit-points reach zero, you die. Movement uses 1
+oxygen point per move; melee combat uses more. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-3" class="outline-3">
+<h3 id="sec-5-3">WEAPONS </h3>
+<div class="outline-text-3" id="text-5-3">
+
+
+
+</div>
+
+<div id="outline-container-5-3-1" class="outline-4">
+<h4 id="sec-5-3-1">Melee: the Rusty Wrench </h4>
+<div class="outline-text-4" id="text-5-3-1">
+
+
+<p>
+Melee combat is effective, but takes up more oxygen than ranged combat
+or movement.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5-4" class="outline-3">
+<h3 id="sec-5-4">ITEMS </h3>
+<div class="outline-text-3" id="text-5-4">
+
+
+
+</div>
+
+<div id="outline-container-5-4-1" class="outline-4">
+<h4 id="sec-5-4-1">Med hypo </h4>
+<div class="outline-text-4" id="text-5-4-1">
+
+
+<p>
+The medical hypo restores some hit points. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-4-2" class="outline-4">
+<h4 id="sec-5-4-2">Oxygen tank </h4>
+<div class="outline-text-4" id="text-5-4-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-4-3" class="outline-4">
+<h4 id="sec-5-4-3">Energy tank </h4>
+<div class="outline-text-4" id="text-5-4-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-4-4" class="outline-4">
+<h4 id="sec-5-4-4">Ion shield </h4>
+<div class="outline-text-4" id="text-5-4-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-4-5" class="outline-4">
+<h4 id="sec-5-4-5"><span class="todo TODO"> TODO</span> Electron bomb </h4>
+<div class="outline-text-4" id="text-5-4-5">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5-5" class="outline-3">
+<h3 id="sec-5-5">WHERE TO FIND ITEMS </h3>
+<div class="outline-text-3" id="text-5-5">
+
+
+
+</div>
+
+<div id="outline-container-5-5-1" class="outline-4">
+<h4 id="sec-5-5-1">The floor </h4>
+<div class="outline-text-4" id="text-5-5-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-5-2" class="outline-4">
+<h4 id="sec-5-5-2">Crates </h4>
+<div class="outline-text-4" id="text-5-5-2">
+
+
+<p>
+Some storage crates contain items. Smash them!
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-5-3" class="outline-4">
+<h4 id="sec-5-5-3">Dead crewmembers </h4>
+<div class="outline-text-4" id="text-5-5-3">
+
+
+<p>
+You can recover varying amounts of oxygen, energy, and sometimes medical
+hypos from the dead crewmembers strewn about the facility. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-5-4" class="outline-4">
+<h4 id="sec-5-5-4"><span class="todo TODO"> TODO</span> Wall cabinets </h4>
+<div class="outline-text-4" id="text-5-5-4">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5-6" class="outline-3">
+<h3 id="sec-5-6">ENEMIES </h3>
+<div class="outline-text-3" id="text-5-6">
+
+
+
+</div>
+
+<div id="outline-container-5-6-1" class="outline-4">
+<h4 id="sec-5-6-1">Berserkers </h4>
+<div class="outline-text-4" id="text-5-6-1">
+
+
+<p>
+The blue Berserkers run around looking for the player and will chase
+you if they get within sight distance. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-6-2" class="outline-4">
+<h4 id="sec-5-6-2">Biclops </h4>
+<div class="outline-text-4" id="text-5-6-2">
+
+
+<p>
+The purple Biclops are more dangerous, and chase the player from longer distances.
+Until then they hide around corners waiting for you.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-6-3" class="outline-4">
+<h4 id="sec-5-6-3">Scanners </h4>
+<div class="outline-text-4" id="text-5-6-3">
+
+
+<p>
+These yellow-eyed security drones explore the environment searching
+for you. Once you are detected, they stop and fire heat-seeking
+particles. Move in close and bash them with the wrench.
+</p>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:40 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

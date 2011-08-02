@@ -1,0 +1,48 @@
+#+TITLE: Invader Tactics
+
+* About
+
+ *Invader Tactics* is a sci-fi survival combat roguelike written in
+Common Lisp using the [[file:rlx.org][RLX game library.]]. You are a human infiltrating
+an enemy installation populated by psychotic robots. Use melee
+attacks, ranged particle weapons, ion shields, and oxygen tanks in a
+hostile airless environment. The way is always down---try to reach the
+bottom and eliminate all the robots!  Find powerups for strength,
+speed, and defense in order to turn the odds. Recover oxygen and
+energy from dead crewmembers' bodies.
+
+Invader is in an early alpha stage of development---quite playable,
+but not feature-complete and with some crashes/bugs. Please play
+Invader and provide feedback!
+
+* Screenshots
+
+ file:../images/scanners3.png
+
+ file:../images/scanners.png
+
+** Nifty title screen
+
+ file:../images/splash.png
+
+* Installation
+
+** UNIX / Linux
+
+http://github.com/dto/rlx/blob/master/INSTALL for instructions.
+
+** Windows 
+
+Special thanks to our friend [[http://emmett.ca/~sabetts][Shawn Betts]] for preparing the precompiled
+Windows builds. This is an early alpha stage build but is confirmed
+working on Windows Vista at least. 
+
+See http://github.com/dto/rlx/downloads for file links.
+
+** Macintosh OSX
+
+In preparation. 
+
+* Gameplay
+
+See the separate [[file:invader-manual.org][player's manual]].

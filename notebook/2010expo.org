@@ -1,0 +1,41 @@
+#+TITLE: The 2010 International Lisp Games Expo
+
+ *2010-07-20:* To allow for more participation, the Expo has been
+  extended until August 10, 2010. See also our [[http://dto.github.com/notebook/remix-this-game.html][REMIX THIS GAME]]
+  contest.
+
+The 2010 ILGE is a month-long exploration of programming and playing
+games in Lisp. This "virtual conference expo" is relatively free-form
+and self-assembling, something like the community it serves.
+
+All entries must be playable games written in some dialect of Lisp
+(Common Lisp, Scheme, Arc, Clojure, et cetera.) Multi-platform release
+is encouraged, but not required. 
+ 
+ *Official Banner:* 
+
+file:../images/2010expo.png
+
+ *Entry Instructions:*
+
+1. announce your entry and starting time on the Expo's
+   [[http://www.cliki.net/InternationalLispGameExpo2010][editable cliki page]].
+2. design, create, and release a game before 10 August 2010
+   using any dialect of [[http://en.wikipedia.org/wiki/Lisp_%28programming_language%29][Lisp.]]
+3. post a Postmortem to the mailing list, describing yourself, your
+   project, what tools and libraries you used, and analyze what went
+   wrong and what went right.
+
+Or, be a spectator and play/discuss the games! 
+Spectators can also register  [[http://www.cliki.net/InternationalLispGameExpo2010][via cliki]].
+
+No matter how you participate, we invite you to join our
+[[http://common-lisp.net/mailman/listinfo/lisp-game-dev][mailing
+list]] and/or IRC channel, irc.freenode.net#lispgames to get involved
+with our growing community. Feel free to introduce yourselves on the
+list. As the list will provide a permanent record of the contest, we
+strongly encourage using the mailing list for announcements, releases,
+and discussion of entries, as well as general chatter and meta-talk
+about contest guidelines.
+
+

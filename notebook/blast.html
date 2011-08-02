@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Blast Tactics Game Design Document</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:55 EDT"/>
+<meta name="author" content="David O'Toole <dto1138@gmail.com>"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Blast Tactics Game Design Document</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Overview </h2>
+<div class="outline-text-2" id="text-1">
+
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1">Summary </h3>
+<div class="outline-text-3" id="text-1-1">
+
+
+<p>
+Blast Tactics is a rogue-like tactical RPG. The user creates and names
+a character with various attributes like strength, dexterity, and
+piloting skill. Using a turn-based 2.5D roguelike tactics engine, the
+player's character explores interstellar space and conducts various
+combat, research, and espionage missions. The main story line is
+embedded throughout the game and woven together with procedurally
+generated maps and missions. Drivable vehicles protect the player,
+enable high-speed aerial combat, and are the primary means of
+traveling between different parts of the game. Spacesuit EVA
+(extra-vehicular activity) is available for indoor maps. Destructible
+environments and hostile conditions (heat, vacuum, radiation) add
+strategy to the game. The goal of the game is to complete missions,
+upgrade your character and ship, while managing resources like fuel
+and money. This non-linear RPG combines a main story with "sandbox"
+and varied mission-style gameplay.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2">Tactical roguelike gameplay engine </h3>
+<div class="outline-text-3" id="text-1-2">
+
+
+<p>
+Play occurs in a two-dimensional grid where each square can contain a
+stack of objects. Each object is represented onscreen by a 16x16 pixel
+tile, and where objects stack the tiles are overlaid. The player can
+inspect a stack of tiles and choose which to pick up or act upon.
+</p>
+<p>
+All movement and combat are turn-based, with actions using up a
+resource called AP (action points). Turn order is determined by a
+character's speed rating and AP reserve. Both melee and ranged attacks
+are supported.
+</p>
+<p>
+The game's procedurally-generated universe is composed of a set of
+arbitrarily interconnected 2D maps. Maps can have different scale
+factors, so one map may represent a star sector with several stars to
+visit, while each star may have its own map with planets to visit, all
+the way down to the corridors of a planetary base.
+</p>
+<p>
+Non-player characters (friend or foe) can speak and emote with
+onscreen balloons or animated icons. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3">Streamlined control interface with per-user configuration </h3>
+<div class="outline-text-3" id="text-1-3">
+
+
+<p>
+The game can be controlled with the keyboard and mouse, or via common
+USB gamepads. Users can configure the controls, and presets are
+included for common gamepads like the Playstation 3 controller and
+various Logitech models. For keyboard users, both QWERTY and DVORAK
+layouts are available, among others.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-4" class="outline-3">
+<h3 id="sec-1-4">Screen layout </h3>
+<div class="outline-text-3" id="text-1-4">
+
+
+<p>
+Blast Tactics is presented in high definition for PC screens.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Setting and story </h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1">The state of humanity, post-invasion </h3>
+<div class="outline-text-3" id="text-2-1">
+
+
+<p>
+It's 2061. If only there were enough endurium!
+</p>
+<p>
+It's been known for decades that Humanity's reach within the Milky Way
+is limited only by the supply of endurium, its rare and precious fuel.
+As endurium was first brought to Earth at the advent of the present
+Droid Plague, its discovery came indeed at the cost of billions of
+human lives. But the living space and vast resources of the Milky Way,
+and indeed possibly those of the Universe itself, beckon to us with
+their promise of the renewed expansion and survival of the human
+species.
+</p>
+<p>
+Early attempts at control and regulation of endurium met with initial
+success. The space-faring nations&mdash;Russia, China, India, Japan, and
+the United States&mdash;along with the ESA (European Space Agency), could
+quite naturally claim endurium for themselves. But economies of scale
+and espionage in spaceflight technology eventually brought smaller
+deposits and endurium dust streams throughout the interstellar
+neighborhood within the reach of multinational corporations and
+various non-state actors. The largest of these formed what they called
+a "sovereign" but otherwise open and successful market in endurium,
+spaceflight technology, and various otherwise-controlled
+materials. The split between the Spacefaring Nations on the one hand,
+and the United Nations on the other, threatens to break into
+full-scale interstellar war; as Earth's environment continues to
+decay, and as the Droid Plague appears to be with us for the long run,
+the demand for endurium has reached a critical point.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2">Biosilicates </h3>
+<div class="outline-text-3" id="text-2-2">
+
+
+<p>
+The Biosilicates are silicon-based lifeforms who have assimilated
+human microprocessor technology in an attempt to amplify their
+species' intelligence. But the result of this fusion is less than
+organized; a hive's vast mentality is the sum of thousands or even
+millions of conflicting sprout minds, each with many gigaflops of
+computing power. Still, hives have been seen to act with more
+intelligence, even working in concert on some occasions. Some
+researchers believe that the biosilicates are adapting to their new
+symbiotic environment. 
+</p>
+<p>
+These hives grow raw biosilicate plant material from pollen
+deposited by drones. When encountering these gargantuan, gelatinous
+hive sacs in space, one must puncture the outer membrane to gain access to
+the putrid world within.
+</p>
+<p>
+The green sprouts in grow for 6 generations, and then die. The
+generation number is incremented whenever the wandering sprout finds
+food (in this case, Biosilicate pollen.) At generation 3, the sprout
+becomes stronger (more HP) and also spawns a baby sprout. The result
+is a busy, but not explosive growth and propagation of cells as they
+consume food and move on. Places with plentiful food tend to form
+dense clumps of material, masses of plants which emergently extend
+tendrils of plant matter toward the player whenever he approaches.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3">The Droid Plague </h3>
+<div class="outline-text-3" id="text-2-3">
+
+
+<p>
+On December 23, 2019, a Chinese probe in lunar orbit observes an
+irregular black spot on the side of the Moon that permanently faces
+away from the Earth. As the probe was designed for high-resolution
+multi-wavelength imaging of the Moon's surface, scientists debate in
+secret whether the material is natural or artificial in
+origin. Although rivers and eddies of this coal-black, smooth material
+are visible, shifting geometric patterns are observed, with some
+groups of triangular features persisting for days or weeks. The black
+spot grows rapidly, prompting the NASA/ESA/Chinese working group to
+attempt lowering the satellite's orbit in order to take a closer look.
+</p>
+<p>
+The rest is history; the satellite's approach is interpreted as a
+threat, and before telemetry is lost, millions of pyramid-shaped
+drones are seen emerging from the blackness. A year later, humanity
+had shrunk to an estimated 1 billion people. The Lunar Black Spot is
+eventually destroyed by carpet-bombing it with nuclear warheads, and
+the immediate droid presence around Earth is brought under control,
+but the planet is decimated and the species on the verge of real
+decline. The manufacture of an estimated 4 billion drones during the
+war consumed 0.0002 percent of the Moon's mass and altered its
+rotation and orbit, wreaking havoc on Earth's climate.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-4" class="outline-3">
+<h3 id="sec-2-4">New opportunities </h3>
+<div class="outline-text-3" id="text-2-4">
+
+
+<p>
+The mineral Endurium is used as fuel by the Black Metal and by the
+drones it manufactures. The discovery of this vital energy source, and
+the faster-than-light travel made possible by Droid technology, have
+utterly transformed the prospects of the human species. The entire
+universe is now ours to explore, populate, and exploit&mdash;if the Black
+Metal can be contained in the long term.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-5" class="outline-3">
+<h3 id="sec-2-5">Origins of the blackness </h3>
+<div class="outline-text-3" id="text-2-5">
+
+
+<p>
+Thus far the droid plague has not been connected with any known
+purpose, but researchers believe that the Black Metal is artificial in
+origin and may in fact be a kind of liquid supercomputer. Radio decay
+dating techniques show that some deposits of the metal are as old as
+ten million years. The artificial nature of this computing substrate
+taken together with its extreme age led scientists to postulate a race
+of "Ancients" who created the Black Metal and either fled or were
+wiped out by it. It is unknown whether any other species have
+inherited the technology left behind by the Ancients.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-6" class="outline-3">
+<h3 id="sec-2-6">Making contact </h3>
+<div class="outline-text-3" id="text-2-6">
+
+
+<p>
+Researchers believe the Black Metal is dispersed throughout the
+galaxy, and it is believed that some larger deposits harbor a form of
+consciousness.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-7" class="outline-3">
+<h3 id="sec-2-7">The Black Sun </h3>
+<div class="outline-text-3" id="text-2-7">
+
+
+<p>
+Eventually the player discovers a supermassive star encased in a shell
+of Black Metal. The sheer volume of the black metal and the star's
+incredible energy output combine to create a terrifyingly vast
+intelligence that has observed the universe for 11 billion years.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Save system </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+That character death should incur a huge penalty is a major feature of
+the rogue-like genre. Blast Tactics's save system is a compromise
+between console-style "save points" and the roguelike "permadeath".
+</p>
+<p>
+There is no permadeath in Blast Tactics; but your opportunities to
+save a <i>restorable</i> game are limited. 
+</p>
+<p>
+A "game" of Blast Tactics runs from character creation until death.  A
+gameplay session lasts from when you start up Blast Tactics, until you
+either Save and Quit or just Quit. A "sortie" is the time between saves.
+</p>
+<p>
+An autosave system prevents crashes from destroying more than a few
+minutes of gameplay. The autosave is also used when you quit, so that
+a game can last many gameplay sessions.
+</p>
+<p>
+When you die, the current sortie is canceled out, and you can only
+restore from the last save point. So while there is a substantial
+penalty to death in Blast Tactics, the save system is tailored to
+balance this with the expectations of modern gamers while still
+presenting a challenge.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Locations and activities </h2>
+<div class="outline-text-2" id="text-4">
+
+
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1">Antares sector </h3>
+<div class="outline-text-3" id="text-4-1">
+
+
+<p>
+This is the overall setting of the game, and (unbeknownst to the
+player) the location of the Black Planet.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2">Nebulae </h3>
+<div class="outline-text-3" id="text-4-2">
+
+
+<p>
+These hot nebulae are sources of free fuel (though sometimes only in
+small amounts). Ancient artifact containers and other sundry
+curiosities may be found here.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3">Biosilicate hives </h3>
+<div class="outline-text-3" id="text-4-3">
+
+
+<p>
+These are described in the Story section above. Hives serve as a
+source of biosilicates, which may be either sold or manufactured into
+ammunition or other supplies.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4">Zeta Base </h3>
+<div class="outline-text-3" id="text-4-4">
+
+
+<p>
+Early in the game, the player must enter the droid-overrun Zeta Base
+and take it back by eliminating them all.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-5" class="outline-3">
+<h3 id="sec-4-5">Derelict freighters </h3>
+<div class="outline-text-3" id="text-4-5">
+
+
+<p>
+The player must leave the vehicle in a spacesuit, with an oxygen
+supply and gravity boots, in order to explore these dark
+environments. Droids designed for capturing freighters
+</p>
+<p>
+Some freighters are used by droids for reproduction, and these can
+never be fully cleared of droids. Sometimes more powerful droids are
+being manufactured in a given freighter, and this may result in player
+death, so each freighter should be taken carefully. Limited lighting
+and careful use of sound will create tension. 
+</p>
+<p>
+Freighters are a source of human supplies (medkits, upgrades,
+stim-packs, weapons, ammo) and in order to fully explore some
+freighters, the player must make use of oxygen tanks and even recover
+oxygen from dead crew members. (Some crewmembers are zombies and
+attack the player.)
+</p>
+<p>
+These ships also figure into the storyline, in that the huge increase
+in human shipping and exploration activity in the Antares sector
+awakened the Black Planet and caused it to begin using freighters as
+eggs for its "children".
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-6" class="outline-3">
+<h3 id="sec-4-6">Star corridors </h3>
+<div class="outline-text-3" id="text-4-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-7" class="outline-3">
+<h3 id="sec-4-7">Yellow Cubes </h3>
+<div class="outline-text-3" id="text-4-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-8" class="outline-3">
+<h3 id="sec-4-8">Hawk's Trading Post </h3>
+<div class="outline-text-3" id="text-4-8">
+
+
+<p>
+A busy frontier-town that has grown rapidly, this is where the player
+will do most of the buying and selling of resources. This is also
+probably the only place you will be able to save the game.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-9" class="outline-3">
+<h3 id="sec-4-9">Corva-3 </h3>
+<div class="outline-text-3" id="text-4-9">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-10" class="outline-3">
+<h3 id="sec-4-10">Green worlds </h3>
+<div class="outline-text-3" id="text-4-10">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-11" class="outline-3">
+<h3 id="sec-4-11">Mars-like planet </h3>
+<div class="outline-text-3" id="text-4-11">
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:55 EDT</p>
+<p class="author">Author: David O'Toole <dto1138@gmail.com></p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

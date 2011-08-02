@@ -1,0 +1,83 @@
+* About
+
+Org-mode is a great personal information manager and project planning
+tool for [[file:GnuEmacs.org][Gnu Emacs]]. You can get it from the [[http://staff.science.uva.nl/~dominik/Tools/org/][org-mode home page]]. I've
+also posted a brief [[file:OrgTutorial.org][illustrated tutorial for org-mode]].
+
+I've extended the HTML publishing support of Org-mode to allow
+configurable publishing of related sets of files as a complete
+website. My extension is called *org-publish*, and is used to upload
+and manage these very pages!
+
+ *Org-publish is now part of the org-mode distribution*. You no longer
+ need to download it separately. I will continue to host other
+ extensions, such as blogging and e-script publishing support, on this
+ page.
+
+[[file:../e/org-publish.el][org-publish.el]] can currently do the following: 
+
+ + Publish all one's org-files to html
+ + Upload html, images, attachments and other files to a web server
+ + Exclude selected private pages from publishing
+ + Publish a clickable index of pages
+ + Manage local timestamps, for publishing only changed files
+ + Accept plugin functions to extend range of publishable content
+
+Much more functionality is planned. 
+
+Special thanks to the org-mode maintainer, Carsten Dominik, for his
+ideas, enthusiasm, and cooperation.
+
+** Downloads
+
+ + [[file:../e/org-publish.el][org-publish.el]] -- Requires at least [[http://staff.science.uva.nl/~dominik/Tools/org/org-4.27.tar.gz][version 4.27]] of *org.el*.
+ + [[file:../e/org-publish-escript.el][org-publish-escript.el]] -- (experimental) support for publishing [[file:EevMode.org][EevMode]] e-scripts. requires *org-publish.el*.
+ + [[file:../e/org-blog.el][org-blog.el]] -- (experimental) blogging support. requires *org-publish.el*.
+ + [[file:../e/org-timeclock.el][org-timeclock.el]] -- (experimental) Basic support for timeclock.el
+
+** Useful links
+
+ + [[http://staff.science.uva.nl/~dominik/Tools/org/][org-mode home page]]
+ + my [[file:OrgTutorial.org][Org tutorial]]
+ + http://notes.aufrank.net/development/emacs/org.html
+
+* Tasks
+
+** TODO 
+** DONE Fix reported bugs
+   DEADLINE: <2007-03-21 Wed> CLOSED: [2007-03-21 Wed 22:31]
+*** DONE Save window configuration when org-publish-all
+    CLOSED: [2007-03-21 Wed 22:27]
+*** DONE Create missing directories in .org-timestamps when publishing
+    CLOSED: [2007-03-21 Wed 22:30]
+** TODO [#C] Handle subdirs.
+** TODO Syndication support
+*** TODO org-export-as-html region before publishing
+*** TODO Fix "description vs. body" issue
+*** TODO Date in RSS feed should be date of first publication, not last modification
+*** TODO Document RSS support
+*** DONE Basic RSS support
+    CLOSED: [2006-10-25 Wed 19:25]
+     - GData: http://code.google.com/apis/gdata/index.html
+     - Atom: http://www.atomenabled.org/developers/syndication/
+     - RSS: http://www.rssboard.org/rss-specification
+     - http://sacha.free.net.ph/notebook/darcs/dev/planner/planner-rss.el
+     - bbdb:zedek would like to work on RSS output.	
+*** TODO Grab first paragraph as synopsis...
+*** TODO [#C] Fix: kill .org buffers that were not open before publishing
+
+*** TODO [#C] Categorizing posts via org TAGS
+** TODO [#C] Record publishing status of subprojects so they don't get published twice
+** TODO Allow meta-indices of various depths (overview, sitemap)
+** TODO Allow publishing work reports
+** TODO Fix organization of big docstring
+** TODO [#B] Fix index.org buffers not getting blitzed.
+** DONE [#C] Simple blogging support
+   CLOSED: [2006-10-25 Wed 18:02]
+** TODO [#C] Image gallery indexes
+Make index functions pluggable. Then a project could publish the image
+files using org-publish-attachment, but the index could be generated
+by a special function that uses M-x thumbs mode to generate thumbnails
+and upload them into a gallery-type page.
+
+

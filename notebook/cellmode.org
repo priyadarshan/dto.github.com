@@ -1,0 +1,34 @@
+* This is an obsolete page. 
+
+This code is being merged into [[http://dto.freeshell.org/notebook/Eon.html][Eon.]] Visit that page instead.
+
+* Obsolete description
+
+Cell-mode is an experimental platform for interactively developing
+custom applications within GNU Emacs. Cell-mode embeds arbitrary code,
+data, and user interface elements into a grid of cells much like a
+spreadsheet. Unlike traditional spreadsheets, data flows to the right
+and downward between adjacent cells. Cell behaviors can be defined and
+customized with Emacs Lisp. Applications are constructed by arranging
+and connecting cells of different types. Sheets are organized into an
+interlinked web.
+
+Cell-mode combines ideas from dataflow languages like Miller
+Puckette's [[http://www-crca.ucsd.edu/~msp/software.html][Pure Data]], emacs packages like [[file:EevMode.org][EevMode]] and from wikis.
+
+ - Download it here: [[file:../e/cell.el][cell.el]]
+ - Also download the example file: [[file:../e/cell-wiki-example.cell][cell-wiki-example.cell]]
+
+For now the only documentation is the tutorial at the top of cell.el. 
+
+** Screenshots
+
+The welcome page:
+
+file:../images/cell-mode.png
+
+With RRDtool and [[file:../e/monitor.el][monitor.el]]
+
+file:../images/cell-mode-2.png
+
+

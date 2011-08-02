@@ -1,0 +1,92 @@
+#+TITLE: Why you should support ELPA
+#+DESCRIPTION: Why you should support ELPA
+
+ELPA is the [[http://tromey.com/elpa][Emacs Lisp Package Archive]]. 
+
+GNU Emacs---like every computing platform---sorely needs an official
+package system and software repository. This is no simple matter of
+convenience for users, although convenience is a big motivating
+factor. I argue that the official adoption of package.el and ELPA will
+have an enormously beneficial impact on the Emacs Lisp development
+community, and that not doing so will hold back Emacs as a development
+platform.
+
+It's common to base one's code on libraries included with Emacs (for
+example comint-mode) because you know they'll be available to all
+Emacs users. But building your application to re-use code from
+multiple non-FSF packages from all over the Internet isn't such a safe
+bet, because your users will have to locate and install these
+separately-maintained packages by themselves, and hope that the URLs
+don't change, and hope that when they're finally installed they will
+work together. As a result people play it safe, and thus there are 
+many different reimplementations of common things like dired-ish
+interfaces in the elisp space; countless packages have their
+own way of doing it, some more featureful, some less, all with
+different commands and faces (so that you cannot easily customize
+their behavior and appearance as a group.)  Such lack of re-use is, in
+my view, a drag on the overall development of Emacs Lisp as a language
+and as a computing platform. And I don't mean "re-use" in any sort of
+fancy object-technology brochure sense of the term, but rather simply
+recognizing that we don't have to reinvent the wheel.
+
+RMS is against adopting a package system, for several reasons. Here is the first:
+
+: 1. It could reduce the incentive for people to assign copyright on
+: their code.
+
+(Excerpted from [[http://thread.gmane.org/gmane.emacs.devel/70701/focus=71454][this rms email]]).
+
+There are so many things wrong with this first item that I need a bullet list:
+
+ - To the extent that we can view third-party packages as *potential*
+   FSF property, these packages becoming featureful, stable, and
+   standards-compliant enough for assignment to the FSF will actually
+   be *more likely* if it is easier for all those bug-finding and
+   feature-suggesting users to find, download, install, configure, and
+   use those packages by using ELPA.
+ - This argument does not account for packages that will likely
+   *never* be contributed to FSF. There are countless very useful and
+   popular packages whose authors will not or cannot assign their
+   copyright, for various reasons: I believe MULE is owned by the
+   government of Japan, for instance. To use a more widespread
+   example, the FSF disallows (require 'cl) in code included with GNU
+   Emacs, and so the many packages that do this (all of mine, for
+   example) will therefore not be assigned to the FSF in any case.
+ - Third-party elisp developers (which is probably most of them)
+   become "unsupported", i.e. second-class citizens. This is a snub to
+   the very community whose code the FSF seeks for inclusion in Emacs.
+ - For the software to be deliberately crippled in some way in order
+   to discourage the use of third-party packages is behavior I would
+   expect from Microsoft, not the FSF. And it is crippling---try to
+   imagine Debian without its package system.
+
+As for the second of RMS's reasons for not adopting a package
+system:
+
+: 2. It would mean that Emacs refers people very strongly to a site that
+: isn't run by the GNU Project.  I don't know what their policies are.
+: But even if they are good, now, we have no way to assure that remains
+: so.
+
+(Excerpted from [[http://thread.gmane.org/gmane.emacs.devel/70701/focus=71454][this rms email]]).
+
+This is pretty simple to deal with. We can have this problem with
+one site that is at least affiliated with the GNU project in some
+way (i.e. ELPA), or we can have this same problem with the thousand
+sites that currently distribute the non-FSF elisp that Emacs users use
+every day. We cannot wish away the user's need to develop and use
+third-party code, or their right to do so outside the FSF's umbrella.
+
+RMS presents an alternative:
+
+: These problems would be eliminated if we put the package repository on
+: gnu.org and limit it to packages that are copyright FSF.
+
+(Excerpted from [[http://thread.gmane.org/gmane.emacs.devel/70701/focus=71454][this rms email]]).
+
+But then the package system would be pointless---could it really be
+useful for installing just the software that already comes with GNU
+Emacs?
+
+You can help this situation by supporting [[http://tromey.com/elpa][ELPA]] and contributing your
+code. 

@@ -1,0 +1,44 @@
+#+TITLE: The Future of GNU Emacs
+#+DESCRIPTION: The Future of GNU Emacs
+
+I started a discussion page on the Emacswiki:
+http://www.emacswiki.org/cgi-bin/wiki/TheFutureOfGnuEmacs
+
+It'll be obliterated with edits soon I hope :-), so here is the
+original text I posted as a starting point for the discussion:
+
+** Don't rewrite or fork GNU Emacs
+
+GNU Emacs is basically the Right Thing, and we just need to keep
+improving it and adding new stuff. A fork would be a disaster, because
+we are trying to unify the Emacsverse.  
+
+** Standardize on GNU Emacs 22.x
+
+There is no point in trying to support any other flavor of Emacs than
+GNU Emacs 22-and-up, especially if we want to take advantage of all
+the new stuff (multitty, network servers, etc.) I want a single target
+platform, not the Java-esque “if I’m in xemacs, do such-and-such…”
+
+** We are stuck with Emacs Lisp
+
+It has a three-decades-deep archive of working code, and a thriving
+development community today, so it isn’t going anywhere. My solution
+is 1. develop workarounds for, and raise awareness of, what exactly
+these awful problems supposedly are with Emacs Lisp, and 2. promote
+cl.el and object-orientation.  
+
+** The CL policy sucks
+
+We all know about this one.  
+
+** We should push Emacs to its limits
+
+The problems we encounter will point the way to (and show the need
+for) changes in Emacs itself.  
+
+** Miscellaneous
+
+I want ELPA to integrate with the Debian packaging system somehow
+
+We need to improve the display engine. There was something in the Emacs TODO about emacs being able to absorb an X window within one of its windows.

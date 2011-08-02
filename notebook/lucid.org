@@ -1,0 +1,23 @@
+#+TITLE: Ubuntu 10.04 Review
+
+* Rhythmbox
+** last.fm (train the site, listen to the radio through rhythmbox, last.fm music info
+** facebook
+** rhythmbox->ps3
+** ubuntu one music store
+** ubuntu one storage
+** podcasts
+
+* Gwibber and Empathy
+
+* Compiz and Nvidia 
+
+* Chromium
+
+* Liferea RSS
+
+* F-spot
+
+* Videos folder with patent absurity / stonecutter
+
+* SD cards and MTP rhythmbox

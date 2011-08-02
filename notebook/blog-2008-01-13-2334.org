@@ -1,0 +1,14 @@
+#+TITLE: Eon creeps toward beta
+#+DESCRIPTION: Eon creeps toward beta
+
+There have been many changes in [[http://dto.mamalala.org/notebook/eon.html][the Eon object system]] since the alpha
+release. Some of it was refactoring; other parts were inspired by
+research into newer object-oriented languages like [[http://iolanguage.com][Io]], and a great
+deal of commentary and feedback from fellow developers. In any case,
+the design and implementation are firming up.
+
+Here's a screenshot of the new version:
+
+[[http://dto.mamalala.org/images/eon2.png][http://dto.mamalala.org/images/eon2-thumb.png]]
+
+More news soon...

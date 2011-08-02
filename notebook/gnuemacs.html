@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>A personal view of GNU Emacs</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:49 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">A personal view of GNU Emacs</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">What's it all about? </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+<a href="http://www.gnu.org/software/emacs">GNU Emacs</a> is an alternative vision of <a href="http://en.wikipedia.org/wiki/Human-computer_interaction">human-computer interaction</a>
+comparable to <a href="http://en.wikipedia.org/wiki/Smalltalk">Smalltalk.</a> 
+</p>
+<p>
+At its core is an interpreter for <a href="http://en.wikipedia.org/wiki/Emacs_Lisp">Emacs Lisp</a>. This rich, expressive
+language makes it easy to construct powerful interactive
+applications. Literally hundreds of such packages are available and
+more are being created all the time.
+</p>
+<p>
+In contrast to the icons, buttons, and menus of a <a href="http://en.wikipedia.org/wiki/Graphical_user_interface">graphical user interface</a>, Emacs and the user communicate largely through
+text. Because Emacs is a complete interface to the computer&mdash;with its
+own language, libraries, applications, and <a href="http://en.wikipedia.org/wiki/Windowing_systems">windowing system</a>&mdash;some
+have even described it as an <a href="http://c2.com/cgi/wiki?EmacsAsOperatingSystem">operating system</a> unto itself. When paired
+with a <a href="http://en.wikipedia.org/wiki/Unix-like">UNIX-like</a> OS, in which text is often the primary means of
+both data storage and interaction with programs, Emacs becomes a
+unified general-purpose computing environment.
+</p>
+<p>
+Emacs is task-oriented and programmable. It lends itself to the
+extension of its capabilities by the experienced user. As its users'
+individual working styles and problems are diverse, so is the
+literature of the user community's program library. That collection of
+procedural knowledge is a sort of "collective consciousness" of
+Emacs. It has steadily grown in size and sophistication for more than
+<a href="http://www.emacswiki.org/cgi-bin/wiki?EmacsHistory">three decades</a> now. It contains the distilled lessons and creative
+energy of countless people who have used Emacs in their daily work and
+who develop methods by which the most elegant and efficient possible
+usage of a computer may be effected.
+</p>
+<p>
+This is shown in the enormous variety
+of tasks which, in virtue of this program library, Emacs can tackle:
+general text editing, numerical and symbolic calculation, the
+preparation of technical documents, UNIX shell control, calendaring
+and project management, text outlining, online chat, internet
+publishing, audio synthesis and processing, and so on.  
+</p>
+<p>
+The notion of text Emacs employs is an extension of the common
+definition of text, in that one may also attach items of data called
+"properties" to groups of characters. The possible values of a
+property are precisely the set of valid Emacs Lisp objects. These
+"text properties" may be given different interpretations by the
+different programs that examine them.  The interpretations that are
+possible within Emacs are such that more advanced operations on, and
+more sophisticated views of, the data are possible than would be with
+plain text.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">My own story </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+I never knew much about Emacs until recently. I had tried it in the
+late 1990s just to see what it was all about, but I found it
+bewildering; I just didn't know where to begin. Eventually I forgot
+all about it.
+</p>
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1">Getting started </h3>
+<div class="outline-text-3" id="text-2-1">
+
+
+<p>
+While working at the Boston studio of <a href="http://en.wikipedia.org/wiki/Irrational_Games">Irrational Games</a> in 2003, I
+heard something about Emacs being able to run a command shell inside
+of it, and was quite intrigued. Meanwhile my <a href="http://en.wikipedia.org/wiki/Zire">Palm Zire</a> was rapidly
+becoming inadequate as my responsibilities grew&mdash;I needed a better
+way to organize my work, and fast. Once I read about <a href="http://www.emacswiki.org/cgi-bin/wiki/PlannerMode">Planner</a> I decided
+to give Emacs a try. 
+</p>
+<p>
+I was really impressed! Not only did I have a working todo-list and
+note-taking system, it even left behind a set of concise daily reports
+to show what you accomplished. Before long I was using Emacs for all
+of my work: correspondence (quite important when your supervisor lives
+in another hemisphere), remote system management, website development
+and maintenance, scheduling, and the preparation of numerous
+documents&mdash;everything from brief memoranda and itineraries, to much
+longer contract bid specifications and project status reports.
+</p>
+<p>
+Eventually I ran into a dead-end somewhere, and wrote a 10-line Emacs
+Lisp function to bridge the gap. I was impressed that I could
+just <b>make it do what i wanted.</b> Soon I was routinely writing my own
+Lisp code, and using <a href="EevMode.html">eev-mode</a> to automate, organize, and document all
+the different things I had to do with shells on various
+machines. Discussions with <a href="http://angg.twu.net/">Eduardo Ochs</a> and with the Emacs IRC
+community added immeasurably to my knowledge.  I fell in love with the
+Emacs Lisp language and realized that I was <b>excited</b> about
+programming for the first time in years. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2">Mind-meld with Eduardo </h3>
+<div class="outline-text-3" id="text-2-2">
+
+
+<p>
+In 2005 I left Irrational to pursue other opportunities, and started
+working full-time on what would become known as the <a href="KarmaPod.html">KarmaPod</a>&mdash;my
+GNU/Linux-based portable recording studio and <a href="http://en.wikipedia.org/wiki/Computer_music">computer music</a> research
+workstation. 
+</p>
+<p>
+I wanted the Pod to look, act, and feel like Emacs. This meant
+carefully choosing and configuring applications to work seamlessly
+with Emacs, and involved a lot of false starts. Eventually I developed
+a <a href="http://dto.freeshell.org/e/color-theme-cl-frame.el">standard color theme</a> and coordinated my <a href="http://fvwm.org">fvwm</a> setup to match it. I
+installed <a href="http://ccrma.stanford.edu/software/snd/">Snd</a>&mdash;a fully-featured multichannel audio editor
+and mixer loosely modeled after Emacs, and fully extensible with
+Scheme. For automated multitrack audio processing and live recording,
+I installed <a href="http://eca.cx">ecasound.</a> This is a very useful, if a bit awkward,
+multipurpose command-line audio program. It includes Delysid's
+<a href="http://delysid.org/emacs/ecasound-el.html">ecasound.el</a> so it can be fully controlled from Emacs.  (I have built
+some experimental tools on top of ecasound.el: see <a href="http://dto.freeshell.org/notebook/EcaSpace.html">Ecaspace</a>.)
+</p>
+<p>
+But much work was still ahead in making this UI vision into a
+reality. For months, Eduardo Ochs and I discussed the user interface
+design of the Pod.  During these intense IRC sessions I learned a lot
+about Lisp programming, software design, software documentation
+processes, and programming aesthetics&mdash;probably more than I had
+learned in my undergraduate program. Most of all I have been taught
+higher-level programming techniques, and as a result I believe I have
+become an order of magnitude more productive as a programmer. So I owe
+Eduardo my eternal thanks.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3">The search for a new conceptual framework </h3>
+<div class="outline-text-3" id="text-2-3">
+
+
+<p>
+By the time I quit my job, I had gotten a bit tired of Planner and
+wanted to try something new. I came across a strange and little-known
+Japanese mode called <a href="http://howm.sourceforge.jp/">howm</a> and was intrigued by its radically different
+approach. Like Planner, it combined <a href="http://en.wikipedia.org/wiki/Wiki">wiki</a> concepts with note-taking,
+task list, appointments, and links to various content types. Unlike
+Planner, the markup was very free-structured, and could be combined
+with any major mode. You could embed TODO items within lisp source
+code comments, for example. Howm's "goto links" and "come-from links"
+could be used to categorize notes and to navigate from one to
+another. Soon I discovered that I could freely mix eev-mode and
+howm-mode content into other files. I began to feel that some untapped
+potential lay deep within Emacs, ready to be teased out by a cowboy
+programmer.
+</p>
+<p>
+There was very little English-language documentation available for
+Howm, so I wrote a <a href="http://dto.freeshell.org/HowmTutorial.howm.html">Howm Tutorial.</a> But before long I ran into some
+things that made Howm seem less palatable to me. It isn't suitable for
+structuring longer documents, and there are no export options (such as
+HTML.) I wrote a draft of an HTMLizer but soon gave up on Howm
+entirely.
+</p>
+<p>
+Then I found <a href="OrgMode.html">org-mode,</a> which is a much better fit for my needs. It
+uses <a href="http://www.emacswiki.org/cgi-bin/wiki/OutlineMode">outline-mode</a> to structure and navigate large projects. It has a
+simple markup syntax supporting bullets, emphasis, hyperlinks, tables,
+images, and multiple nested headings. Org-mode's workflow management
+is sophisticated and can be configured for a variety of work
+situations and personal styles. Project documents are easily exported
+to HTML. In fact, a given project's webpage, TODO-list, and research
+notes can all be maintained in the same .org file and published
+automatically to the web.
+</p>
+<p>
+I wrote a program called <a href="../e/org-publish.el">org-publish</a> to automate the updates to my
+website. It keeps track of modification times of my publishable files,
+and converts/uploads pending changes upon request. After Carsten
+Dominik decided to include it in the org-mode distribution, I signed
+my Emacs copyright assignment papers with the <a href="http://www.fsf.org">Free Software Foundation</a>
+and have since become a proud Emacs developer.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-4" class="outline-3">
+<h3 id="sec-2-4">The road to eon </h3>
+<div class="outline-text-3" id="text-2-4">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5" class="outline-3">
+<h3 id="sec-2-5">Teaching Emacs to a friend </h3>
+<div class="outline-text-3" id="text-2-5">
+
+
+<p>
+They say you never truly understand an idea until you have had to
+teach it to someone else. It forces you to grasp the concept and put
+it into your own words. Recently I have had some experience teaching
+Emacs to other people, including some who are not computer
+programmers.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Links </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<ul>
+<li><a href="http://www.emacswiki.org/cgi-bin/wiki?EmacsHistory">History of Emacs</a>
+</li>
+<li><a href="http://en.wikipedia.org/wiki/History_of_the_graphical_user_interface">History of the GUI</a>
+</li>
+</ul>
+
+
+
+<hr/>
+<p>
+GNU Emacs is fantastic! I use it for all my programming, text editing,
+chat (with rcirc), email (Gnus), file management (dired-mode), shell
+automation (<a href="EevMode.html">eev-mode</a>), calendar, appointments and project planning
+(<a href="OrgMode.html">org-mode</a>), writing, web development, music playlists (emms) and
+general organization of myself. Emacs even makes this website.
+</p>
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1">Links </h3>
+<div class="outline-text-3" id="text-3-1">
+
+
+<ul>
+<li>my <a href="../e/init.el">init.el</a> 
+</li>
+<li>my <a href="../e/emacs.e.html">recipes</a> for downloading and building GNU Emacs from CVS,
+   downloading and installing various other emacs packages
+</li>
+<li>my <a href="ColorThemes.html">ColorThemes</a>
+</li>
+<li><a href="http://www.gnu.org/software/emacs">home page</a> for GNU Emacs
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Tasks </h2>
+<div class="outline-text-2" id="text-4">
+
+
+
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="done DONE"> DONE</span> Rewrite pretty-symbols.el for lispers </h3>
+<div class="outline-text-3" id="text-4-1">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-07 Sun 18:38</span></span><br/>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="done DONE"> DONE</span> Try out pretty-symbols.el </h3>
+<div class="outline-text-3" id="text-4-2">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-07 Sun 14:51</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="done DONE"> DONE</span> Install latest emms </h3>
+<div class="outline-text-3" id="text-4-3">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-06 Sat 21:09</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="done DONE"> DONE</span> Install latest rcirc </h3>
+<div class="outline-text-3" id="text-4-4">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="todo TODO"> TODO</span> Configure sensible query notifications </h3>
+<div class="outline-text-3" id="text-4-5">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="done DONE"> DONE</span> Hack together mini-screenshots mode </h3>
+<div class="outline-text-3" id="text-4-6">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-05-04 Thu 15:34</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-7" class="outline-3">
+<h3 id="sec-4-7"><span class="todo TODO"> TODO</span> Configure gnus spam handling </h3>
+<div class="outline-text-3" id="text-4-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-8" class="outline-3">
+<h3 id="sec-4-8"><span class="done DONE"> DONE</span> Reorganize and clean up <a href="../e/init.el">../e/init.el</a> </h3>
+<div class="outline-text-3" id="text-4-8">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-04-27 Thu 19:04</span></span><br/>
+ <span class="timestamp-wrapper"><span class="timestamp-kwd">SCHEDULED: </span> <span class="timestamp">2006-04-27 Thu</span></span><br/>
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Notes </h2>
+<div class="outline-text-2" id="text-5">
+
+
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1">Carsten's guide to writing elisp docstrings </h3>
+<div class="outline-text-3" id="text-5-1">
+
+
+<ul>
+<li>The first line of each documentation must be a self-contained
+    sentence because some commands only display that first line.
+</li>
+</ul>
+
+
+<p>
+  After the line you explain what is necessary:
+</p>
+<ul>
+<li>For variables, what the variable holds, what are valid values for
+    it, what do the values mean.  If the variable is one that Users
+    are allowed to change, the documentation string should be
+    understandable by a normal user.
+
+</li>
+<li>For normal functions, explain the function arguments (using UPPER
+    CASE for the variable names.  Also document what the return value
+    of the function is.
+
+</li>
+<li>For interactive commands it is basically like functions, but keep
+    in mind that this is the information normal user look up.
+    Function documentation can assume that the reader reads lisp, for
+    commands it is nice if that is not required.
+</li>
+</ul>
+
+
+
+
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:49 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

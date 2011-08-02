@@ -1,0 +1,11 @@
+#+TITLE: RLX progress report
+#+DESCRIPTION: RLX progress report
+
+I've got about half of [[http://dto.mamalala.org/notebook/rlx.html][my graphical roguelike engine]] ported to Common
+Lisp. Enough is working to have a world of little robots moving around
+as the player explores, but there isn't really a "game" happening, as
+I haven't yet ported over many of the required features. But the
+hardest parts are done now. Here's a screenshot (click to zoom):
+
+[[file:../images/rlx9.png][file:../images/rlx9-thumb.jpg]]
+

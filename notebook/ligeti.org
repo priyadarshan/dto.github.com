@@ -1,0 +1,82 @@
+#+TITLE: Ligeti: a process-music composition system
+* Status
+
+ *2007-05-20* -- I'm close to completing an 0.9 release.  You can
+check out http://dto.freeshell.org/e/ligeti.el but it is not usable
+yet. I need to write the GUI using cell-mode...
+
+* About 
+
+Ligeti is a system for the composition of [[http://en.wikipedia.org/wiki/Process_music][process music]]. It is named
+after the composer [[http://en.wikipedia.org/wiki/Gy%C3%B6rgy_Ligeti][György Ligeti.]] The musician selects from a library
+of audio "activities". An activity is a template for an audio
+synthesis process. The activities are arranged into a unified whole
+through manual sequencing, automated composition, or a combination of
+the two. The piece is then rendered to disk using [[http://en.wikipedia.org/wiki/Csound][csound]]. The user may
+create new activities and compositional algorithms.
+
+Ligeti and its user interface are
+implemented in Emacs Lisp. The
+following programs are required:
+
+ - [[http://www.gnu.org/software/emacs][GNU Emacs]] 22.X
+ - Stéphane Rollandin's [[http://www.zogotounga.net/comp/csoundx.html][csound-x for Emacs]] 
+ - [[http://www.csounds.com][csound]]
+
+* Design
+
+ - An "activity" is an abstraction of a csound instrument.  Activities
+   are represented as lisp functions that produce csound instrument
+   definitions suitable for csound-x's orchestra code transcription
+   engine. These functions accept full Common Lisp keyword parameter
+   lists and are fully documented.
+
+   + (find-function 'csl-transcribe-to-code)
+
+ - An "event" is an abstraction of a csound i-statement. It triggers
+   an activity, causing it to generate sound. 
+ - A "sequence" is a set of events taken together as a bundle. These
+   are simply lisp lists of events.
+ - A sequence may also be an event, i.e. the sequence itself is
+   triggered at a certain time
+
+* Music concepts
+
+ - oscillating loops
+ - drones
+ - melodic fragments, pointillism
+ - arhythmic ambient pieces, also technoish stuff
+
+* TODO ROUGH DRAFT OF LIGETI
+* TODO Create a working activity that renders to a working csound document.
+** DONE Function to create new cell sheets based on a ligeti activity
+   CLOSED: [2007-05-19 Sat 10:26]
+** TODO Test rendering named columns
+** TODO header-line docs in cell-mode
+** TODO Load project .el file upon startup.
+** TODO Ligeti mini mode
+** TODO proper saving and loading of .ligeti.cell sheets
+** TODO Allow "default cell type" that can automatically replace blanks
+** TODO [#C] Make the default faces look cool
+** TODO [#C] Standardized sexp inlet editing function?
+* TODO Rendering to csound
+** DONE activities --> instruments
+   CLOSED: [2007-05-16 Wed 06:42]
+** DONE samples --> function tables
+   CLOSED: [2007-05-16 Wed 06:42]
+** TODO sequences --> i-statements
+* TODO Dumbek activity
+* TODO Etudes
+** TODO Loop a warped sample
+** TODO Write a simple composition with 3 different sounds
+*** TODO Drone
+*** TODO Flourish
+*** TODO Fadeout hum
+
+*** TODO Sample player/looper/distorter
+** TODO Try to compose in elisp
+
+** DONE Email stef about stuff hepta@zogotounga.net
+   CLOSED: [2007-05-07 Mon 08:43]	
+* Algorithmic composition
+ - http://www.flexatone.net/algoNet/

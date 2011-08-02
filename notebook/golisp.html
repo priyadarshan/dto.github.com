@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>golisp</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-02 19:51:49 EDT"/>
+<meta name="author" content="David O'Toole"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<link rel='stylesheet' href="/eon.css" type="text/css"/><link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">golisp</h1>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Notice </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+Golisp-mode has been deprecated in favor of a new project called
+<a href="Linkd.html">linkd-mode</a>. It is a much more general mechanism. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Overview </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+ <b>Golisp-mode</b> is for writing lisp programs. It helps you document,
+ navigate, and analyze Common Lisp and Emacs Lisp source code from
+ within GNU Emacs. Using golisp-mode, you can see how different pieces
+ of code are related to one another, and jump quickly to related
+ code. 
+</p>
+<p>
+ For more detail on the features of golisp-mode, see the section on
+ "Using golisp-mode" below.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Screenshot </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+<img src="../images/GoLisp.png"  alt="../images/GoLisp.png" />
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Known issues </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<ul>
+<li>Sometimes the font-locking goes wacky.
+</li>
+<li>CLOS is not handled properly yet.
+</li>
+<li>Needs a tutorial. 
+</li>
+<li>Doesn't handle multi-file projects yet.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Download </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<ul>
+<li><a href="../e/golisp.el">golisp.el</a>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">Installation </h2>
+<div class="outline-text-2" id="text-6">
+
+
+<p>
+Put golisp.el somewhere in your load-path, and then add 
+</p><pre class="example">
+(require 'golisp) 
+</pre>
+
+<p>to your .emacs initialization file.
+</p>
+<p>
+The default bullets work in ASCII but they don't look very nice.
+You may need to determine what fancy characters are available in
+your default Emacs font, and set the appropriate variables:
+</p>
+<pre class="example">
+(setq golisp-xref-bullet 342435)
+(setq golisp-anchor-bullet 343416)
+</pre>
+
+
+<p>
+Those values work for me in the standard X "fixed" font.
+</p>
+<p>
+ <b>NOTE:</b> You should set these BEFORE golisp.el is loaded.
+</p>
+<p>
+To turn on golisp-mode in a lisp source code buffer, use M-x
+golisp-mode.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7">Using golisp-mode </h2>
+<div class="outline-text-2" id="text-7">
+
+
+<p>
+When writing a program, I find I am likely to want to jump to a
+related piece of code, but I often want "related" to be a bit more
+abstract than simply determining which functions call what.
+</p>
+<p>
+Golisp-mode can try to guess ahead and suggest places I might want to
+jump to. I try to provide several ways of helping it do this. The
+simplest way is to decorate your source code comments with little tags
+like this:
+</p>
+<pre class="example">
+;; {{topic name}}
+</pre>
+
+
+<p>
+This is an "anchor". For a given topic name, there should be only one
+anchor. 
+</p>
+<p>
+You can use them like section headings. You could think of a section
+as the text between one anchor and the next.  
+</p>
+<p>
+I gather related functions and variables and put them into their own
+section. When I am writing an object-oriented program with CLOS, I
+will usually put a class and most of its methods in one section.
+</p>
+<p>
+An "xref" tag links to a topic. They look like this:
+</p>
+<pre class="example">
+;; &lt;&lt;topic name&gt;&gt;
+</pre>
+
+
+<p>
+You can have as many of these as you need. When point is on a line
+with such a tag, pressing C-* will move point to the anchor with the
+same topic name. So you can think of an xref tag as a hypertext link
+to a section.
+</p>
+<p>
+Pressing C-&amp; will navigate to the next xref tag with the same name. If
+there are several xref tags with the same name, repeatedly pressing
+C-&amp; will move point to each in turn, and also through the anchor with
+that name. It starts over at the beginning when you reach the end.
+</p>
+<p>
+If you so choose, you can have a section for each idea in your
+program, and where those ideas are related in some sense, you can
+place xref tags that point to the related idea. In this way you can
+think of C-&amp; as jumping between related ideas, and C-* as finding the
+definition of an idea (i.e. the collection of functions and variables
+that capture the idea.)
+</p>
+<p>
+There is another pair of tag types one can use to relate parts of
+files. These are "definition tags" and "definition xrefs."
+</p>
+<p>
+You don't have to write definition tags explicitly, because they look
+like this:
+</p>
+<pre class="example">
+(defun foo (...
+(defclass bar (...
+</pre>
+
+
+<p>
+These are just the top-level forms that define functions, variables,
+classes, methods, and so on. 
+</p>
+<p>
+Definition xref tags look like this:
+</p>
+<pre class="example">
+;; &lt;(function baz)&gt;
+;; &lt;(macro plic)&gt;
+</pre>
+
+
+<p>
+As one might expect, C-* moves point to the definition, C-&amp; moves to
+the next such xref. 
+</p>
+<p>
+But for the most part you don't have to write these explicitly
+either. Golisp-mode can see when a definition refers to other
+definitions&mdash;for example one function calling another, or referring
+to a global variable. When you do M-x golisp-show-related, golisp-mode
+will pop up a buffer with links showing cross references to and from
+the area at point. You can hit C-&amp; or C-* on the links in the popup
+buffer.
+</p>
+<p>
+The first time you run M-x golisp-show-related there will be a brief
+pause while golisp-mode analyzes the buffer. To refresh the cache
+(after heavy editing, for example) you may use M-x golisp-analyze.
+</p>
+<p>
+You can insert a table-of-contents for a file with M-x
+golisp-insert-toc.
+</p>
+<p>
+Golisp-mode is inspired in part by the ideas of <a href="http://angg.twu.net/">Eduardo Ochs.</a> It is
+currently under construction.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8">Links </h2>
+<div class="outline-text-2" id="text-8">
+
+
+<ul>
+<li>A related literate programming system:
+  <a href="http://anny.kinjo-u.ac.jp/~houser/llpe/Welcome.html">http://anny.kinjo-u.ac.jp/~houser/llpe/Welcome.html</a>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9">Tasks </h2>
+<div class="outline-text-2" id="text-9">
+
+
+
+</div>
+
+<div id="outline-container-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="todo TODO"> TODO</span> Handle identifiers that are same as class names (just don't do it) </h3>
+<div class="outline-text-3" id="text-9-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="todo TODO"> TODO</span> Handle multi-file projects </h3>
+<div class="outline-text-3" id="text-9-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-3" class="outline-3">
+<h3 id="sec-9-3"><span class="done DONE"> DONE</span> Golisp-make-toc shouldn't insert anchors! </h3>
+<div class="outline-text-3" id="text-9-3">
+
+<p>    <span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2006-10-26 Thu 08:46</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-9-4" class="outline-3">
+<h3 id="sec-9-4"><span class="todo TODO"> TODO</span> Pop up buffer with index </h3>
+<div class="outline-text-3" id="text-9-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-5" class="outline-3">
+<h3 id="sec-9-5"><span class="todo TODO"> TODO</span> C-&amp; works on ordinary lines by finding last anchor </h3>
+<div class="outline-text-3" id="text-9-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-6" class="outline-3">
+<h3 id="sec-9-6"><span class="todo TODO"> TODO</span> With universal argument, C-&amp; finds last xref (more specific) </h3>
+<div class="outline-text-3" id="text-9-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-7" class="outline-3">
+<h3 id="sec-9-7"><span class="todo TODO"> TODO</span> Improvements </h3>
+<div class="outline-text-3" id="text-9-7">
+
+
+</div>
+
+<div id="outline-container-9-7-1" class="outline-4">
+<h4 id="sec-9-7-1"><span class="todo TODO"> TODO</span> Number the links in <b>golisp-related</b> for fast access </h4>
+<div class="outline-text-4" id="text-9-7-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-7-2" class="outline-4">
+<h4 id="sec-9-7-2"><span class="todo TODO"> TODO</span> Restore completing read functionality </h4>
+<div class="outline-text-4" id="text-9-7-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-7-3" class="outline-4">
+<h4 id="sec-9-7-3"><span class="todo TODO"> TODO</span> Docstrings and section headers </h4>
+<div class="outline-text-4" id="text-9-7-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-7-4" class="outline-4">
+<h4 id="sec-9-7-4"><span class="todo TODO"> TODO</span> Fix regexps so that things match within a line with text on it </h4>
+<div class="outline-text-4" id="text-9-7-4">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-9-8" class="outline-3">
+<h3 id="sec-9-8"><span class="todo TODO"> TODO</span> Properly handle CLOS </h3>
+<div class="outline-text-3" id="text-9-8">
+
+
+</div>
+
+<div id="outline-container-9-8-1" class="outline-4">
+<h4 id="sec-9-8-1"><span class="todo TODO"> TODO</span> Handle multiple methods with same name when symbol-xreffing </h4>
+<div class="outline-text-4" id="text-9-8-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-9-8-2" class="outline-4">
+<h4 id="sec-9-8-2"><span class="todo TODO"> TODO</span> Analyze class relationships </h4>
+<div class="outline-text-4" id="text-9-8-2">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-9-9" class="outline-3">
+<h3 id="sec-9-9"><span class="todo TODO"> TODO</span> Write tutorial </h3>
+<div class="outline-text-3" id="text-9-9">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="todo TODO"> TODO</span> Release 2 &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; </h2>
+<div class="outline-text-2" id="text-10">
+
+
+</div>
+
+<div id="outline-container-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="todo TODO"> TODO</span> Hiding large documentation sections </h3>
+<div class="outline-text-3" id="text-10-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="todo TODO"> TODO</span> Sexp buttons </h3>
+<div class="outline-text-3" id="text-10-2">
+
+
+</div>
+
+<div id="outline-container-10-2-1" class="outline-4">
+<h4 id="sec-10-2-1"><span class="todo TODO"> TODO</span> Temporary buffer with foldable outline of program </h4>
+<div class="outline-text-4" id="text-10-2-1">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-10-3" class="outline-3">
+<h3 id="sec-10-3"><span class="todo TODO"> TODO</span> Other stuff </h3>
+<div class="outline-text-3" id="text-10-3">
+
+
+</div>
+
+<div id="outline-container-10-3-1" class="outline-4">
+<h4 id="sec-10-3-1"><span class="todo TODO"> TODO</span> Properly turn off mode </h4>
+<div class="outline-text-4" id="text-10-3-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-10-3-2" class="outline-4">
+<h4 id="sec-10-3-2"><span class="todo TODO"> TODO</span> Allow general media inclusion </h4>
+<div class="outline-text-4" id="text-10-3-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-10-3-3" class="outline-4">
+<h4 id="sec-10-3-3"><span class="todo TODO"> TODO</span> General structured text files, leveraging outline-mode </h4>
+<div class="outline-text-4" id="text-10-3-3">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-10-4" class="outline-3">
+<h3 id="sec-10-4"><span class="todo TODO"> TODO</span> Some way to implement eev files with lisp instead of shell </h3>
+<div class="outline-text-3" id="text-10-4">
+
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-08-02 19:51:49 EDT</p>
+<p class="author">Author: David O'Toole</p>
+<p class="creator">Org version 7.7 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>
