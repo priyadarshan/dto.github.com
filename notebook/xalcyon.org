@@ -32,14 +32,16 @@ page]] to find the appropriate download for your system.
 
 * Gameplay 
 
-Xalcyon requires a USB (or other compatible) game controller with dual
-analog sticks and at least three buttons. The player uses the analog
-sticks to independently control both movement and aiming/firing of his
-robot as it fights through a series of ten increasingly difficult
-levels. The sector maps are randomly generated from a library of
-templates specifying different terrain and enemy combinations. Once
-all enemies on a level are destroyed, the gateway to the next level
-will appear.
+Xalcyon requires a USB (or other compatible) gamepad with dual analog
+sticks and at least three buttons. *Press F1 to configure the
+gamepad.*
+
+The player uses the analog sticks to independently control both
+movement and aiming/firing of his robot as it fights through a series
+of ten increasingly difficult levels. The sector maps are randomly
+generated from a library of templates specifying different terrain and
+enemy combinations. Once all enemies on a level are destroyed, the
+gateway to the next level will appear.
 
 As in XONG, one single hit from any bullet or enemy or explosion will
 kill you and completely end the current game. However, you can simply
