@@ -3,6 +3,9 @@
 
 * News
 
+ *2012-02-10: "XALCYON," THE SEQUEL TO XONG!* Is now in beta release!
+See [[file:xalcyon.org][XALCYON home page]] for details and downloads.
+
  *2009-12-12: XONG 1.4 RELEASED* for Windows, Mac OSX Intel, and GNU/Linux.
 See the Downloads section below for more information. 
 
