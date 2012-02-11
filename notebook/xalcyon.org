@@ -20,6 +20,10 @@ file:../images/Screenshot-3.png
 
 (There are many more screenshots at the bottom of the page.)
 
+* Video
+
+Check out the [[https://github.com/downloads/dto/xalcyon.blocky/xalcyon-beta-promo.ogv][gameplay video]].
+
 * Status and Download
 
 As of February 10, 2012 the game is in beta release for Windows and
