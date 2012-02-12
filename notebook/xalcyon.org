@@ -12,6 +12,11 @@ retro voice synthesis!
 Xalcyon is [[http://en.wikipedia.org/wiki/Free_software][free software]] built with the free [[http://blocky.io][Blocky game engine]], and
 is programmed entirely in [[http://en.wikipedia.org/wiki/Common_lisp][Common Lisp]].
 
+Xalcyon been deliberately designed to involve simultaneous
+movement and aiming at many different angles so that *the game
+requires dual-analog sticks to play*. Hence, there are no other
+control options. Sorry.
+
 * Screenshots
 
 file:../images/Screenshot-1.png 
