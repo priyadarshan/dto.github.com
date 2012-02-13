@@ -27,13 +27,13 @@ file:../images/Screenshot-3.png
 
 * Video
 
-Check out the [[https://github.com/downloads/dto/xalcyon.blocky/xalcyon-beta-promo.ogv][gameplay video]].
+Check out [[https://github.com/downloads/dto/xalcyon.blocky/xalcyon-megavideo.ogv][a video of xalcyon]].
 
 * Status and Download
 
 As of February 10, 2012 the game is in beta release for Windows and
 GNU/Linux. A Mac build is in the works. Please visit [[https://github.com/dto/xalcyon.blocky/downloads][the downloads
-page]] to find the appropriate download for your system.
+page]] to find the appropriate download for your system. 
 
 * Gameplay 
 
