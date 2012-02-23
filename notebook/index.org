@@ -11,10 +11,10 @@ file:../images/dto-xface-orange-big.png
   You can [[mailto:dto@ioforms.org][email me]]. I can also be reached as "dto" on Internet Relay
   Chat, freenode channel #lispgames.
   
-  I also maintain a [[http://blocky.io/blog/][Lisp games development blog.]]
-
   My main software development project right now is [[http://blocky.io][Blocky]], a visual
   programming language based on Common Lisp.
+
+  I also maintain a [[http://blocky.io/blog/][Lisp games development blog.]]
 
 * Pages on this site
 
