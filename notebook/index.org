@@ -13,6 +13,9 @@ file:../images/dto-xface-orange-big.png
   
   I also maintain a [[http://blocky.io/blog/][Lisp games development blog.]]
 
+  My main software development project right now is [[http://blocky.io][Blocky]], a visual
+  programming language based on Common Lisp.
+
 * Pages on this site
 
  - [[file:games.org][Games page]], with screenshots and free downloads for my games. You
