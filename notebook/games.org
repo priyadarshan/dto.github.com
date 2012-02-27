@@ -6,19 +6,16 @@ I am an independent games developer in the U.S. Northeast, and work
 primarily in [[http://en.wikipedia.org/wiki/Common_Lisp][Common Lisp]]. Since 2008 I have worked on several projects
 for the PC platform. All my games are available for free and are
 compatible with Microsoft Windows, Mac OSX, and GNU/Linux. You can
-catch the latest news on my [[http://lispgamesdev.blogspot.com/][development blog]], and my [[http://youtube.com/dto1138][YouTube channel]].
-
-I've been writing computer games since I was a kid, in whatever
-programming language I could get my hands on. Eventually I went to
-school to learn computer science and set out to get involved with the
-industry. I worked for [[http://en.wikipedia.org/wiki/Irrational_Games][Irrational Games]] in Boston for about 2 years,
-but it was a busy job, and I did not have the time or opportunity to
-work on my own game designs there. 
-
-If you want instant gratification, check out the [[http://www.youtube.com/watch?v=Nr3piK3T6a8][DTO Game Design
-Retrospective]] video at Youtube.
+catch the latest news on my [[http://blocky.io/blog/][game development blog]].
 
 And now a bit about each game, with appropriate links:
+
+* Xalcyon
+
+Multi-directional dual analog stick shooter. Work-in-progress. Check
+out the [[http://dto.github.com/notebook/xalcyon.html][Xalcyon page]] for more pics, info, and downloads.
+
+| file:../images/Screenshot-12.png |  file:../images/Screenshot-14.png |
 
 * XONG
 
@@ -28,23 +25,8 @@ XONG is a fast-paced colorful puzzle combat roguelike. Die a million deaths
 in this mashup of fragmented 8-bit games.
 
  - [[http://dto.github.com/notebook/xong.html][Download from the XONG home page]].
- - [[http://www.youtube.com/watch?v=CvN4zPGyCv0][Gameplay video]] with commentary, at youtube
- - [[http://www.youtube.com/watch?v=FOrJays3tQw][Youtube video]] showing progressive stages of development from start to finish.
  - [[http://playthisthing.com/xong][Play This Thing review]]
  - [[http://www.gamesetwatch.com/2010/02/xong_combines_breakout_snake_a.php][GameSetWatch review]]
-
-* CONS
-
-In the game of CONS you are a sentient warrior [[http://en.wikipedia.org/wiki/Cons][cons cell]]. In each
-randomly generated mission you will infiltrate and sabotage an alien
-military installation. 
-
-file:../images/cons1.png
- file:../images/cons4.png
-
-CONS is in a playable alpha state and is available for Windows, Mac
-OSX (Intel only), and GNU/Linux. Please visit the [[file:cons.org][cons page]] for
-information.
 
 * Sanctuary
 
@@ -55,24 +37,7 @@ file:../images/snow.png
 file:../images/tundra.png
 
  - [[http://dto.github.com/notebook/sanctuary.html][Download from the Sanctuary home page]].
- - [[http://www.youtube.com/watch?v=yytT3B2UnxA][gameplay video at youtube]]. This video includes the sound from the actual game, with no commentary.
- - [[http://www.youtube.com/watch?v=V_EGvdM5s6Q][commentary video at youtube]]. Better video quality, but not the sound of the game---it's a voiceover instead, explaining the game.
- - [[http://www.youtube.com/watch?v=MapxH02RehY][2nd gameplay video]] With game sound AND commentary.
-
-* XIOTANK
-
-XIOTANK is an audio-oriented multi-directional puzzle shooter set in
-an alternate universe where digital audio phenomena (samples, waves,
-beats) fight against one another. Originally created in 7 days for the
-2010 7DRL contest. See also the [[file:xiotank.org][Xiotank page]].
-
-file:../images/xiotank1.png 
-file:../images/xiotank3.png  
-
-Gameplay video with sound: http://www.youtube.com/watch?v=WHmbuhBVtEU
-
-[[http://dto.github.com/notebook/xiotank.html][Download from the XIOTANK home page.]]
 
 * Other projects
 
-See the [[file:other-projects.org][other projects]] page for various unreleased stuff.
+See the [[file:other-projects.org][other projects]] page for various other stuff.

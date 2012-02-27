@@ -1,4 +1,5 @@
-The vegetable bin where other games are. 
+Other games I've made, or partially made. Some of them are even
+playable.
 
 * Blast Tactics
 
@@ -26,5 +27,32 @@ An older incomplete design that I may revisit soon.
 file:../images/invader.png
 
 http://dto.github.com/notebook/invader.html
+
+* CONS
+
+In the game of CONS you are a sentient warrior [[http://en.wikipedia.org/wiki/Cons][cons cell]]. In each
+randomly generated mission you will infiltrate and sabotage an alien
+military installation. 
+
+file:../images/cons1.png
+file:../images/cons4.png
+
+CONS is in a playable alpha state and is available for Windows, Mac
+OSX (Intel only), and GNU/Linux. Please visit the [[file:cons.org][cons page]] for
+information.
+
+* XIOTANK
+
+XIOTANK is an audio-oriented multi-directional puzzle shooter set in
+an alternate universe where digital audio phenomena (samples, waves,
+beats) fight against one another. Originally created in 7 days for the
+2010 7DRL contest. See also the [[file:xiotank.org][Xiotank page]].
+
+file:../images/xiotank1.png 
+file:../images/xiotank3.png  
+
+Gameplay video with sound: http://www.youtube.com/watch?v=WHmbuhBVtEU
+
+[[http://dto.github.com/notebook/xiotank.html][Download from the XIOTANK home page.]]
 
 
