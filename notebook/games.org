@@ -15,7 +15,8 @@ And now a bit about each game, with appropriate links:
 Multi-directional dual analog stick shooter. Work-in-progress. Check
 out the [[http://dto.github.com/notebook/xalcyon.html][Xalcyon page]] for more pics, info, and downloads.
 
-file:../images/Screenshot-12.png file:../images/Screenshot-14.png 
+file:../images/Screenshot-12.png 
+file:../images/Screenshot-13.png 
 
 * XONG
 
