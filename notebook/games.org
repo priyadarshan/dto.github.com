@@ -41,4 +41,4 @@ file:../images/tundra.png
 
 * Other projects
 
-See the [[file:other-projects.org][other projects]] page for various other stuff.
+See the [[file:other-games.org][other games]] page for various other stuff.
