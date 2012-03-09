@@ -55,4 +55,4 @@ file:../images/dto-xface-orange-big.png
     evangelist conducting research into [[http://en.wikipedia.org/wiki/Human-computer_interaction][human-computer interaction.]]
   + [[http://en.wikipedia.org/wiki/Brian_Jonestown_Massacre][The Brian Jonestown Massacre]] are an awesome band.
   + Ryan Yeske, who wrote [[http://www.nongnu.org/nethack-el/][nethack-el]]
-  + ME! I can be reached at [[mailto:dto@gnu.org][dto1138@gmail.org]]
+  + ME! I can be reached at [[mailto:dto@ioforms.org][dto@ioforms.org]]
